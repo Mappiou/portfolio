@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "siteTitle": "Mathieu Diep — AI Engineer",
+    "siteDescription": "Portfolio of Mathieu Diep, AI Engineer specialized in LLM and RAG. Browse my journey and download my Android apps."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "language": {
+    "fr": "French",
+    "en": "English",
+    "es": "Spanish",
+    "fr_short": "FR",
+    "en_short": "EN",
+    "es_short": "ES"
+  },
+  "home": {
+    "intro": "Hey ! ✎",
+    "heroLine1": "I'm Mathieu,",
+    "heroLine2": "and I sketch",
+    "heroLine3": "ideas into code.",
+    "bio": "AI Engineer at Hexamind. I design and ship LLM/RAG systems for real user-facing apps — like a chatbot serving 90,000+ people in production. On the side, I build mobile apps for volleyball, document scanning, and language learning.",
+    "ctaProjects": "→ flip through my projects",
+    "ctaConjunction": "or",
+    "ctaContact": "drop me a line",
+    "available": "Open to new missions"
+  },
+  "sections": {
+    "projects": "Personal projects —",
+    "projectsAccent": "scan to install ✎",
+    "experiences": "Career",
+    "education": "Education",
+    "skills": "Skills",
+    "page": "Page"
+  },
+  "projects": {
+    "downloadHint": "← scan me",
+    "downloadApk": "Download APK",
+    "viewSource": "Source code",
+    "scanQr": "Scan to download",
+    "androidNote": "Android only. Allow unknown sources during install.",
+    "stack": "Stack",
+    "features": "Features",
+    "back": "← Back to home",
+    "seeProject": "→ see project"
+  },
+  "footer": {
+    "endNote": "— end of notebook —",
+    "rights": "© 2026 Mathieu Diep — Made with ♡ in Barcelona"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "This page doesn't exist in the notebook.",
+    "back": "← back home"
+  },
+  "contact": {
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "location": "Location"
+  }
+}

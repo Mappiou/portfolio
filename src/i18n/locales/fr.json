@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "siteTitle": "Mathieu Diep — AI Engineer",
+    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer spécialisé en LLM et RAG. Découvrez mon parcours et téléchargez mes apps Android."
+  },
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "contact": "Contact",
+    "language": "Langue"
+  },
+  "language": {
+    "fr": "Français",
+    "en": "Anglais",
+    "es": "Espagnol",
+    "fr_short": "FR",
+    "en_short": "EN",
+    "es_short": "ES"
+  },
+  "home": {
+    "intro": "Hey ! ✎",
+    "heroLine1": "Je m'appelle Mathieu,",
+    "heroLine2": "et je dessine",
+    "heroLine3": "des idées avec du code.",
+    "bio": "AI Engineer chez Hexamind. Je conçois et déploie des systèmes LLM/RAG pour de vraies applications utilisateur — comme un chatbot servant 90 000+ personnes en production. Le reste du temps, je construis des apps mobiles côté volley, scan de documents et apprentissage des langues.",
+    "ctaProjects": "→ voir mon carnet de projets",
+    "ctaConjunction": "ou bien",
+    "ctaContact": "écris-moi un mot",
+    "available": "Disponible pour de nouvelles missions"
+  },
+  "sections": {
+    "projects": "Mes projets perso —",
+    "projectsAccent": "à scanner ✎",
+    "experiences": "Mon parcours",
+    "education": "Études",
+    "skills": "Compétences",
+    "page": "Page"
+  },
+  "projects": {
+    "downloadHint": "← scan me",
+    "downloadApk": "Télécharger l'APK",
+    "viewSource": "Voir le code",
+    "scanQr": "Scanner pour télécharger",
+    "androidNote": "Android uniquement. Active les sources inconnues lors de l'installation.",
+    "stack": "Stack",
+    "features": "Fonctionnalités",
+    "back": "← Retour à l'accueil",
+    "seeProject": "→ voir le projet"
+  },
+  "footer": {
+    "endNote": "— fin du carnet —",
+    "rights": "© 2026 Mathieu Diep — Made with ♡ in Barcelona"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "subtitle": "Cette page n'existe pas dans le carnet.",
+    "back": "← retour à l'accueil"
+  },
+  "contact": {
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "location": "Localisation"
+  }
+}

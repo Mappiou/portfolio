@@ -1,22 +1,47 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Fraunces", "EB Garamond", Georgia, serif;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-hand: "Caveat", "Patrick Hand", cursive;
-  --font-mono: "IBM Plex Mono", "Geist Mono", ui-monospace, monospace;
-  --font-pixel: "VT323", "Press Start 2P", monospace;
-}
-
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   min-height: 100dvh;
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: "Lora", Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #d97757;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: #1a1a1a;
+  color: #f5ebd9;
+  text-decoration: none;
 }

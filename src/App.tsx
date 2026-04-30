@@ -1,26 +1,32 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import PreviewIndex from "./pages/PreviewIndex";
-import VariantA from "./variants/VariantA";
-import VariantB from "./variants/VariantB";
-import VariantC from "./variants/VariantC";
-import VariantD from "./variants/VariantD";
-import VariantE from "./variants/VariantE";
-import VariantF from "./variants/VariantF";
+import { Analytics } from "@vercel/analytics/react";
+import { Layout } from "./components/layout/Layout";
+import Home from "./pages/Home";
+import ProjectDetail from "./pages/ProjectDetail";
+import NotFound from "./pages/NotFound";
+import { DEFAULT_LANGUAGE, isSupportedLanguage } from "./i18n";
+
+function detectInitialLanguage(): string {
+  if (typeof window === "undefined") return DEFAULT_LANGUAGE;
+  const stored = window.localStorage.getItem("i18nextLng");
+  if (stored && isSupportedLanguage(stored)) return stored;
+  const nav = window.navigator.language.slice(0, 2).toLowerCase();
+  return isSupportedLanguage(nav) ? nav : DEFAULT_LANGUAGE;
+}
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/preview" replace />} />
-        <Route path="/preview" element={<PreviewIndex />} />
-        <Route path="/preview/a-pastel" element={<VariantA />} />
-        <Route path="/preview/b-memphis" element={<VariantB />} />
-        <Route path="/preview/c-sketchbook" element={<VariantC />} />
-        <Route path="/preview/d-y2k" element={<VariantD />} />
-        <Route path="/preview/e-minimal-light" element={<VariantE />} />
-        <Route path="/preview/f-minimal-dark" element={<VariantF />} />
-        <Route path="*" element={<Navigate to="/preview" replace />} />
+        <Route path="/" element={<Navigate to={`/${detectInitialLanguage()}`} replace />} />
+        <Route path="/:lang" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="projects/:projectId" element={<ProjectDetail />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route path="*" element={<Navigate to={`/${DEFAULT_LANGUAGE}`} replace />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }

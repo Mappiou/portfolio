@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "siteTitle": "Mathieu Diep — AI Engineer",
+    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer especializado en LLM y RAG. Descubre mi trayectoria y descarga mis apps Android."
+  },
+  "nav": {
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "contact": "Contacto",
+    "language": "Idioma"
+  },
+  "language": {
+    "fr": "Francés",
+    "en": "Inglés",
+    "es": "Español",
+    "fr_short": "FR",
+    "en_short": "EN",
+    "es_short": "ES"
+  },
+  "home": {
+    "intro": "¡Hola ! ✎",
+    "heroLine1": "Soy Mathieu,",
+    "heroLine2": "y dibujo",
+    "heroLine3": "ideas con código.",
+    "bio": "AI Engineer en Hexamind. Diseño y despliego sistemas LLM/RAG para apps reales — como un chatbot que sirve a más de 90 000 personas en producción. En paralelo, construyo apps móviles de voleibol, escaneo de documentos y aprendizaje de idiomas.",
+    "ctaProjects": "→ ver mis proyectos",
+    "ctaConjunction": "o bien",
+    "ctaContact": "escríbeme",
+    "available": "Disponible para nuevas misiones"
+  },
+  "sections": {
+    "projects": "Mis proyectos —",
+    "projectsAccent": "para escanear ✎",
+    "experiences": "Trayectoria",
+    "education": "Estudios",
+    "skills": "Competencias",
+    "page": "Página"
+  },
+  "projects": {
+    "downloadHint": "← escanéame",
+    "downloadApk": "Descargar APK",
+    "viewSource": "Ver el código",
+    "scanQr": "Escanear para descargar",
+    "androidNote": "Sólo Android. Activa fuentes desconocidas al instalar.",
+    "stack": "Stack",
+    "features": "Funciones",
+    "back": "← Volver al inicio",
+    "seeProject": "→ ver el proyecto"
+  },
+  "footer": {
+    "endNote": "— fin del cuaderno —",
+    "rights": "© 2026 Mathieu Diep — Made with ♡ in Barcelona"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "subtitle": "Esta página no existe en el cuaderno.",
+    "back": "← volver al inicio"
+  },
+  "contact": {
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "location": "Ubicación"
+  }
+}
