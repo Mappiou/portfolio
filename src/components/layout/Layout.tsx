@@ -1,28 +1,42 @@
 import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Header } from "./Header";
+import { palette, tokens } from "../../styles/palette";
+import { AuraCanvas } from "../ui/AuraCanvas";
+import { PillNav } from "./PillNav";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Footer } from "./Footer";
-import { sketchbook, paperBackground } from "../../styles/sketchbook";
 
 export function Layout() {
   const { t } = useTranslation();
   return (
     <div
-      className="min-h-dvh"
       style={{
-        background: `${sketchbook.paper} url("${paperBackground}")`,
-        color: sketchbook.ink,
-        fontFamily: "Lora, Georgia, serif",
+        background: palette.beige,
+        color: palette.textPrimary,
+        fontFamily: tokens.fontBody,
+        minHeight: "100dvh",
+        position: "relative",
+        overflowX: "hidden",
       }}
     >
-      <a className="skip-link" href="#main-content">
+      <a href="#main-content" className="skip-link">
         {t("nav.home")} ↓
       </a>
-      <Header />
-      <main id="main-content">
+
+      <AuraCanvas colors={[palette.mint, palette.rust, palette.lilac]} opacity={0.5} />
+
+      <header className="relative z-30">
+        <PillNav theme="light" />
+        <div className="absolute right-6 top-7" style={{ zIndex: 31 }}>
+          <LanguageSwitcher theme="light" />
+        </div>
+      </header>
+
+      <main id="main-content" className="relative z-10">
         <Outlet />
       </main>
-      <Footer />
+
+      <Footer theme="light" />
     </div>
   );
 }

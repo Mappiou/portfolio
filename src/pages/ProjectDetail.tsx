@@ -1,12 +1,21 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { GithubIcon } from "../components/ui/BrandIcons";
 import { useLanguageRoute } from "../hooks/useLanguageRoute";
 import { getProjectById } from "../data/projects";
-import { sketchbook, accentMap } from "../styles/sketchbook";
+import { palette, tokens } from "../styles/palette";
 import { QRCode } from "../components/projects/QRCode";
 import { DownloadButton } from "../components/projects/DownloadButton";
+import { MegaButton } from "../components/ui/MegaButton";
 import { SEO } from "../components/seo/SEO";
+
+const cardBg: Record<string, string> = {
+  red: palette.rust,
+  green: palette.mint,
+  blue: palette.babyblue,
+  yellow: palette.yellow,
+};
 
 export default function ProjectDetail() {
   const { t } = useTranslation();
@@ -15,7 +24,7 @@ export default function ProjectDetail() {
   const project = projectId ? getProjectById(projectId) : undefined;
 
   if (!project) return <Navigate to={`/${lang}`} replace />;
-  const accent = accentMap[project.accent];
+  const bg = cardBg[project.accent] ?? palette.mint;
 
   return (
     <>
@@ -23,96 +32,164 @@ export default function ProjectDetail() {
         title={`${project.name} — ${project.tagline[lang]} · Mathieu Diep`}
         description={project.description[lang]}
       />
-      <article className="max-w-4xl mx-auto px-6 pt-6 pb-16">
+      <article
+        className="relative z-10 mx-auto px-6 pt-12 pb-24"
+        style={{ maxWidth: tokens.pageMaxWidth }}
+      >
         <Link
           to={`/${lang}`}
-          className="text-base inline-flex items-center gap-1 hover:underline"
-          style={{ fontFamily: "Caveat, cursive", fontSize: "1.4rem" }}
+          className="inline-flex items-center gap-1.5 text-sm hover:underline mb-8"
+          style={{ color: palette.textSecondary }}
         >
-          {t("projects.back")}
+          <ArrowLeft size={14} /> {t("projects.back")}
         </Link>
 
-        <motion.header
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-8 grid md:grid-cols-[100px_1fr] gap-6 items-start"
-        >
+        <header className="text-center mb-12">
+          <p
+            className="inline-block px-4 py-1.5 rounded-full mb-5"
+            style={{
+              background: "rgba(255,255,255,0.55)",
+              color: palette.textSecondary,
+              fontSize: 13,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 600,
+            }}
+          >
+            {project.stack.join(" · ")}
+          </p>
           <div
-            className="w-20 h-20 rounded-full flex items-center justify-center text-5xl border-2"
-            style={{ borderColor: sketchbook.ink, background: `${accent}33` }}
+            className="mx-auto mb-6 inline-flex items-center justify-center rounded-3xl"
+            style={{
+              width: 100,
+              height: 100,
+              background: bg,
+              fontSize: 56,
+            }}
             aria-hidden="true"
           >
             {project.emoji}
           </div>
+          <h1
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontWeight: 600,
+              fontSize: "clamp(48px, 7vw, 96px)",
+              lineHeight: 0.95,
+              letterSpacing: "-0.04em",
+              color: palette.textPrimary,
+              margin: 0,
+            }}
+          >
+            {project.name}
+            <span style={{ color: palette.teal, opacity: 0.7 }}>.</span>
+          </h1>
+          <p
+            className="mt-5 mx-auto"
+            style={{
+              fontFamily: tokens.fontItalic,
+              fontStyle: "italic",
+              fontSize: "clamp(20px, 2vw, 28px)",
+              color: palette.textSecondary,
+              maxWidth: 640,
+            }}
+          >
+            {project.tagline[lang]}
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
           <div>
-            <h1 className="text-5xl md:text-6xl font-medium tracking-tight mb-2">{project.name}</h1>
-            <p style={{ fontFamily: "Caveat, cursive", color: accent }} className="text-3xl">
-              {project.tagline[lang]}
+            <p
+              style={{
+                fontFamily: tokens.fontTitle,
+                fontWeight: 500,
+                fontSize: "clamp(22px, 2.4vw, 30px)",
+                lineHeight: 1.3,
+                letterSpacing: "-0.015em",
+                color: palette.textPrimary,
+              }}
+            >
+              {project.description[lang]}
             </p>
-          </div>
-        </motion.header>
 
-        <section className="mt-10 grid md:grid-cols-2 gap-10 items-start">
-          <div>
-            <p className="text-lg leading-relaxed italic opacity-90">{project.description[lang]}</p>
-
-            <h2 className="mt-8 text-2xl font-medium">{t("projects.features")}</h2>
-            <ul className="mt-3 space-y-2 list-none">
+            <h2
+              className="mt-10 mb-4"
+              style={{
+                fontFamily: tokens.fontTitle,
+                fontWeight: 600,
+                fontSize: 26,
+                color: palette.textPrimary,
+                letterSpacing: "-0.015em",
+              }}
+            >
+              {t("projects.features")}
+            </h2>
+            <ul className="space-y-3" style={{ listStyle: "none", padding: 0 }}>
               {project.features.map((f, i) => (
-                <li key={i} className="flex gap-3 leading-relaxed">
-                  <span style={{ color: accent }}>✎</span>
+                <li
+                  key={i}
+                  className="flex gap-3 items-baseline"
+                  style={{ fontSize: 17, lineHeight: 1.55, color: palette.textSecondary }}
+                >
+                  <span style={{ color: palette.teal, fontWeight: 700 }}>✱</span>
                   <span>{f[lang]}</span>
                 </li>
               ))}
             </ul>
-
-            <h2 className="mt-8 text-2xl font-medium">{t("projects.stack")}</h2>
-            <div className="flex gap-2 mt-3 flex-wrap">
-              {project.stack.map((s) => (
-                <span
-                  key={s}
-                  className="text-sm px-3 py-1 border"
-                  style={{
-                    borderColor: `${sketchbook.ink}55`,
-                    borderRadius: "999px",
-                  }}
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
           </div>
 
           <aside
-            className="border-2 p-6 text-center"
+            className="rounded-[28px] p-8 text-center"
             style={{
-              borderColor: sketchbook.ink,
-              background: `${sketchbook.paperDark}88`,
-              borderRadius: "16px 4px 16px 4px",
+              background: bg,
+              boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
             }}
             aria-label={t("projects.scanQr")}
           >
-            <p style={{ fontFamily: "Caveat, cursive" }} className="text-2xl mb-3">
+            <p
+              style={{
+                fontFamily: tokens.fontTitle,
+                fontSize: 22,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                color: palette.textPrimary,
+                marginBottom: 16,
+              }}
+            >
               {t("projects.scanQr")}
             </p>
-            <div className="flex justify-center mb-4">
-              <QRCode value={project.apkUrl} size={200} ariaLabel={`QR ${project.name}`} />
+            <div className="flex justify-center mb-5">
+              <QRCode
+                value={project.apkUrl}
+                size={200}
+                bg="#FFFFFF"
+                fg={palette.teal}
+                ariaLabel={`QR ${project.name}`}
+              />
             </div>
-            <p className="text-sm opacity-70 mb-5 leading-relaxed">{t("projects.androidNote")}</p>
+            <p
+              className="text-sm mb-5"
+              style={{ color: palette.textPrimary, opacity: 0.8, lineHeight: 1.5 }}
+            >
+              {t("projects.androidNote")}
+            </p>
             <div className="flex flex-col gap-3 items-center">
               <DownloadButton href={project.apkUrl} filename={`${project.id}.apk`} />
-              <a
+              <MegaButton
                 href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm underline opacity-70 hover:opacity-100"
+                external
+                variant="outline"
+                bg={palette.teal}
+                fg={palette.teal}
+                borderColor="rgba(14,83,77,0.3)"
               >
-                {t("projects.viewSource")} ↗
-              </a>
+                <GithubIcon size={14} />
+                {t("projects.viewSource")}
+              </MegaButton>
             </div>
           </aside>
-        </section>
+        </div>
       </article>
     </>
   );

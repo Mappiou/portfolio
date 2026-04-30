@@ -1,13 +1,14 @@
 {
   "meta": {
     "siteTitle": "Mathieu Diep — AI Engineer",
-    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer spécialisé en LLM et RAG. Découvrez mon parcours et téléchargez mes apps Android."
+    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer LLM/RAG basé à Barcelone. Parcours, principes, et 3 apps Android téléchargeables par QR code."
   },
   "nav": {
     "home": "Accueil",
     "projects": "Projets",
     "contact": "Contact",
-    "language": "Langue"
+    "language": "Langue",
+    "downloadCv": "Télécharger le CV"
   },
   "language": {
     "fr": "Français",
@@ -17,44 +18,52 @@
     "en_short": "EN",
     "es_short": "ES"
   },
-  "home": {
-    "intro": "Hey ! ✎",
-    "heroLine1": "Je m'appelle Mathieu,",
-    "heroLine2": "et je dessine",
-    "heroLine3": "des idées avec du code.",
-    "bio": "AI Engineer chez Hexamind. Je conçois et déploie des systèmes LLM/RAG pour de vraies applications utilisateur — comme un chatbot servant 90 000+ personnes en production. Le reste du temps, je construis des apps mobiles côté volley, scan de documents et apprentissage des langues.",
-    "ctaProjects": "→ voir mon carnet de projets",
-    "ctaConjunction": "ou bien",
-    "ctaContact": "écris-moi un mot",
-    "available": "Disponible pour de nouvelles missions"
+  "hero": {
+    "kicker": "À propos",
+    "title": "Salut, je suis <italic>Mathieu.</italic>"
   },
-  "sections": {
-    "projects": "Mes projets perso —",
-    "projectsAccent": "à scanner ✎",
-    "experiences": "Mon parcours",
-    "education": "Études",
-    "skills": "Compétences",
-    "page": "Page"
+  "bio": {
+    "intro": "AI Engineer basé à Barcelone, je conçois et déploie des systèmes LLM/RAG que de vraies personnes utilisent, tous les jours.",
+    "paragraphs": [
+      "Je travaille actuellement chez Hexamind sur la generative AI — entre autres, un chatbot servant 90 000+ utilisateurs en production, articulé autour d'une architecture RAG et d'OpenAI.",
+      "Mon obsession : la couture entre la recherche AI et les apps qu'on peut tendre à quelqu'un. J'écris beaucoup de Python, je sors des apps mobiles en Flutter en parallèle, et je cherche à rendre les choses techniques calmes et un peu joueuses."
+    ]
+  },
+  "timeline": {
+    "title": "Quelques étapes <italic>en chemin.</italic>",
+    "note": "5 expériences · 6 années dans l'IA appliquée"
+  },
+  "principles": {
+    "kicker": "Principes de travail",
+    "title": "Quatre choses<br /> auxquelles <italic>je reviens.</italic>"
   },
   "projects": {
-    "downloadHint": "← scan me",
+    "kicker": "Projets perso",
+    "title": "Trois apps, <italic>scannables.</italic>",
+    "intro": "Trois apps Android que je construis sur mon temps libre. Scannez le QR code pour installer directement, ou cliquez pour les détails.",
+    "viewMore": "Voir le projet",
+    "downloadHint": "Scanner pour installer",
     "downloadApk": "Télécharger l'APK",
-    "viewSource": "Voir le code",
+    "viewSource": "Code source",
     "scanQr": "Scanner pour télécharger",
-    "androidNote": "Android uniquement. Active les sources inconnues lors de l'installation.",
+    "androidNote": "Android uniquement. Activez « sources inconnues » lors de l'installation.",
     "stack": "Stack",
     "features": "Fonctionnalités",
-    "back": "← Retour à l'accueil",
-    "seeProject": "→ voir le projet"
+    "back": "Retour à l'accueil"
+  },
+  "contactSection": {
+    "kicker": "Contact",
+    "title": "Construisons<br /> <italic>quelque chose ensemble.</italic>",
+    "body": "Je suis ouvert à discuter d'un nouveau poste, d'une mission, ou simplement d'un café (vrai ou virtuel) si vous travaillez sur des choses intéressantes."
   },
   "footer": {
-    "endNote": "— fin du carnet —",
-    "rights": "© 2026 Mathieu Diep — Made with ♡ in Barcelona"
+    "signature": "— Mathieu, à Barcelone.",
+    "rights": "© 2026 Mathieu Diep. Tous droits réservés."
   },
   "notFound": {
     "title": "Page introuvable",
-    "subtitle": "Cette page n'existe pas dans le carnet.",
-    "back": "← retour à l'accueil"
+    "subtitle": "Cette page n'existe pas. Peut-être un mauvais lien, ou peut-être que je l'ai déplacée ?",
+    "back": "← Retour à l'accueil"
   },
   "contact": {
     "email": "Email",

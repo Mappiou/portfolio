@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { sketchbook } from "../../styles/sketchbook";
+import { Download } from "lucide-react";
+import { palette } from "../../styles/palette";
 
 type Props = {
   href: string;
@@ -12,17 +13,19 @@ export function DownloadButton({ href, filename }: Props) {
     <a
       href={href}
       download={filename}
-      className="inline-flex items-center gap-2 px-5 py-3 border-2 hover:opacity-80 transition"
-      style={{
-        borderColor: sketchbook.ink,
-        background: sketchbook.red,
-        color: sketchbook.paper,
-        fontFamily: "Caveat, cursive",
-        fontSize: "1.5rem",
-      }}
       rel="noreferrer"
+      className="inline-flex items-center gap-2 rounded-full font-medium transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      style={{
+        background: palette.teal,
+        color: palette.beige,
+        border: `1.5px solid ${palette.teal}`,
+        padding: "14px 26px",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: 16,
+        textDecoration: "none",
+      }}
     >
-      <span>↓</span>
+      <Download size={16} />
       <span>{t("projects.downloadApk")}</span>
     </a>
   );

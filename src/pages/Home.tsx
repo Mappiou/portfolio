@@ -1,11 +1,11 @@
-import { Hero } from "../components/home/Hero";
-import { ProjectsSection } from "../components/projects/ProjectsSection";
-import { ExperienceSection } from "../components/home/ExperienceSection";
-import { EducationSection } from "../components/home/EducationSection";
-import { SkillsSection } from "../components/home/SkillsSection";
-import { PageTear } from "../components/illustrations/Illustrations";
-import { SEO } from "../components/seo/SEO";
 import { useTranslation } from "react-i18next";
+import { Hero } from "../components/sections/Hero";
+import { BioSection } from "../components/sections/BioSection";
+import { TimelineSection } from "../components/sections/TimelineSection";
+import { PrinciplesSection } from "../components/sections/PrinciplesSection";
+import { ProjectsSection } from "../components/sections/ProjectsSection";
+import { ContactSection } from "../components/sections/ContactSection";
+import { SEO } from "../components/seo/SEO";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -13,14 +13,11 @@ export default function Home() {
     <>
       <SEO title={t("meta.siteTitle")} description={t("meta.siteDescription")} />
       <Hero />
-      <PageTear />
+      <BioSection />
+      <TimelineSection />
+      <PrinciplesSection />
       <ProjectsSection />
-      <PageTear />
-      <ExperienceSection />
-      <PageTear />
-      <EducationSection />
-      <PageTear />
-      <SkillsSection />
+      <ContactSection />
     </>
   );
 }

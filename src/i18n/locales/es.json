@@ -1,13 +1,14 @@
 {
   "meta": {
     "siteTitle": "Mathieu Diep — AI Engineer",
-    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer especializado en LLM y RAG. Descubre mi trayectoria y descarga mis apps Android."
+    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer LLM/RAG basado en Barcelona. Trayectoria, principios, y 3 apps Android descargables por QR."
   },
   "nav": {
     "home": "Inicio",
     "projects": "Proyectos",
     "contact": "Contacto",
-    "language": "Idioma"
+    "language": "Idioma",
+    "downloadCv": "Descargar CV"
   },
   "language": {
     "fr": "Francés",
@@ -17,44 +18,52 @@
     "en_short": "EN",
     "es_short": "ES"
   },
-  "home": {
-    "intro": "¡Hola ! ✎",
-    "heroLine1": "Soy Mathieu,",
-    "heroLine2": "y dibujo",
-    "heroLine3": "ideas con código.",
-    "bio": "AI Engineer en Hexamind. Diseño y despliego sistemas LLM/RAG para apps reales — como un chatbot que sirve a más de 90 000 personas en producción. En paralelo, construyo apps móviles de voleibol, escaneo de documentos y aprendizaje de idiomas.",
-    "ctaProjects": "→ ver mis proyectos",
-    "ctaConjunction": "o bien",
-    "ctaContact": "escríbeme",
-    "available": "Disponible para nuevas misiones"
+  "hero": {
+    "kicker": "Sobre mí",
+    "title": "Hola, soy <italic>Mathieu.</italic>"
   },
-  "sections": {
-    "projects": "Mis proyectos —",
-    "projectsAccent": "para escanear ✎",
-    "experiences": "Trayectoria",
-    "education": "Estudios",
-    "skills": "Competencias",
-    "page": "Página"
+  "bio": {
+    "intro": "AI Engineer basado en Barcelona, construyendo sistemas LLM/RAG que personas reales usan, cada día.",
+    "paragraphs": [
+      "Actualmente lidero el trabajo de IA generativa en Hexamind — entre otras cosas, un chatbot que sirve a más de 90 000 usuarios en producción, construido sobre arquitecturas RAG y OpenAI.",
+      "Mi obsesión es la costura entre la IA de investigación y las apps que se le pueden pasar a un amigo. Escribo mucho Python, lanzo apps móviles en Flutter en paralelo, y trabajo en hacer que las cosas técnicas se sientan calmadas y un poco juguetonas."
+    ]
+  },
+  "timeline": {
+    "title": "Algunas paradas <italic>en el camino.</italic>",
+    "note": "5 puestos · 6 años de IA aplicada"
+  },
+  "principles": {
+    "kicker": "Principios de trabajo",
+    "title": "Cuatro cosas a las que<br /> <italic>siempre vuelvo.</italic>"
   },
   "projects": {
-    "downloadHint": "← escanéame",
+    "kicker": "Proyectos personales",
+    "title": "Tres apps, <italic>escaneables.</italic>",
+    "intro": "Tres apps Android que construyo en mi tiempo libre. Escanea el QR para instalar directamente, o haz clic para los detalles.",
+    "viewMore": "Ver el proyecto",
+    "downloadHint": "Escanear para instalar",
     "downloadApk": "Descargar APK",
-    "viewSource": "Ver el código",
+    "viewSource": "Código fuente",
     "scanQr": "Escanear para descargar",
-    "androidNote": "Sólo Android. Activa fuentes desconocidas al instalar.",
+    "androidNote": "Solo Android. Activa «fuentes desconocidas» al instalar.",
     "stack": "Stack",
     "features": "Funciones",
-    "back": "← Volver al inicio",
-    "seeProject": "→ ver el proyecto"
+    "back": "Volver al inicio"
+  },
+  "contactSection": {
+    "kicker": "Contacto",
+    "title": "Construyamos<br /> <italic>algo juntos.</italic>",
+    "body": "Estoy abierto a hablar de un nuevo puesto, una misión, o simplemente un café (real o virtual) si trabajas en algo interesante."
   },
   "footer": {
-    "endNote": "— fin del cuaderno —",
-    "rights": "© 2026 Mathieu Diep — Made with ♡ in Barcelona"
+    "signature": "— Mathieu, en Barcelona.",
+    "rights": "© 2026 Mathieu Diep. Todos los derechos reservados."
   },
   "notFound": {
     "title": "Página no encontrada",
-    "subtitle": "Esta página no existe en el cuaderno.",
-    "back": "← volver al inicio"
+    "subtitle": "Esta página no existe. ¿Quizás un enlace antiguo, o quizás la he movido?",
+    "back": "← Volver al inicio"
   },
   "contact": {
     "email": "Email",

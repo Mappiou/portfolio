@@ -8,25 +8,31 @@ body,
   min-height: 100dvh;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: "Lora", Georgia, serif;
+  font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
 
 :focus-visible {
-  outline: 2px solid #d97757;
+  outline: 2px solid #0e534d;
   outline-offset: 2px;
 }
 
@@ -41,7 +47,8 @@ body {
   top: 1rem;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: #1a1a1a;
-  color: #f5ebd9;
+  background: #0e534d;
+  color: #ebe3d5;
   text-decoration: none;
+  border-radius: 0.5rem;
 }
