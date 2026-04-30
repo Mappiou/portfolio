@@ -1,31 +1,32 @@
 # Mathieu Diep — Portfolio
 
 Site vitrine personnel de **Mathieu Diep**, AI Engineer (LLM/RAG/Generative AI).
-Présente le parcours pro, les études, et 3 apps Android téléchargeables directement par QR code.
+Présente la bio, la timeline pro, les principes de travail, et 3 apps Android téléchargeables directement par QR code.
 
-> Style visuel : **Sketchbook** — papier beige + encre + croquis SVG hand-drawn.
+> Style visuel : **Editorial** chaud, inspiré de [seanhalpin.xyz](https://www.seanhalpin.xyz/about) — fond beige `#EBE3D5`, texte deep teal `#0E534D`, accents pastels (mint / rust / lilas / babyblue / yellow), titres serif Fraunces, italiques Instrument Serif, corps Inter.
 > Trilingue : 🇫🇷 FR / 🇬🇧 EN / 🇪🇸 ES (routes dédiées + détection auto + persistance localStorage).
 
 ---
 
 ## Stack
 
-| Couche               | Choix                                                              |
-| -------------------- | ------------------------------------------------------------------ |
-| Build / dev          | **Vite 8** + React 19 + TypeScript strict (`noUncheckedIndexedAccess`) |
-| Styling              | **Tailwind CSS v4** (config inline via `@theme`)                   |
-| Animations           | **Framer Motion** (respect de `prefers-reduced-motion`)            |
-| Routing              | **react-router-dom v7** — routes par langue (`/fr`, `/en`, `/es`)   |
-| i18n                 | **react-i18next** + browser language detector                       |
-| QR codes             | `qrcode.react` (SVG, généré à la volée depuis l'URL APK)           |
-| Tests unitaires      | **Vitest** + Testing Library + jsdom (≥ 50% coverage)              |
-| Tests E2E            | **Playwright** (Chromium desktop + Pixel 5 mobile)                  |
-| Lint                 | **ESLint** strict + `jsx-a11y` + Prettier                           |
-| Analytics            | `@vercel/analytics` (sans cookies, gratuit)                         |
-| Hébergement cible    | **Vercel** (sous-domaine gratuit)                                   |
-| Distribution APK     | **GitHub Releases** par app (lien permanent `releases/latest/download/`) |
+| Couche            | Choix                                                                    |
+| ----------------- | ------------------------------------------------------------------------ |
+| Build / dev       | **Vite 8** + React 19 + TypeScript strict (`noUncheckedIndexedAccess`)   |
+| Styling           | **Tailwind CSS v4** + custom palette (`src/styles/palette.ts`)           |
+| Polices           | **Fraunces** (titres) + **Inter** (corps) + **Instrument Serif** (accents italiques) — Google Fonts |
+| Icônes            | **lucide-react** + brand SVG inline (GitHub, LinkedIn, X)                |
+| Routing           | **react-router-dom v7** — routes par langue (`/fr`, `/en`, `/es`)        |
+| i18n              | **react-i18next** + browser language detector + `<Trans>` pour italiques |
+| QR codes          | `qrcode.react` (SVG, généré à la volée depuis l'URL APK)                 |
+| Tests unitaires   | **Vitest** + Testing Library + jsdom (≥ 50% coverage)                    |
+| Tests E2E         | **Playwright** (Chromium desktop + Pixel 5 mobile)                       |
+| Lint              | **ESLint** strict + `jsx-a11y` + Prettier                                |
+| Analytics         | `@vercel/analytics` (sans cookies, gratuit)                              |
+| Hébergement cible | **Vercel** (sous-domaine gratuit)                                        |
+| Distribution APK  | **GitHub Releases** par app (lien permanent `releases/latest/download/`) |
 
-Bundle prod : **466 KB JS / 149 KB gzipped · 22 KB CSS / 6 KB gzipped · 1.7 KB HTML**.
+Bundle prod : **360 KB JS / 117 KB gzipped · 16 KB CSS / 4 KB gzipped · 2 KB HTML**.
 
 ---
 
@@ -38,45 +39,47 @@ pnpm dev              # http://localhost:5173
 
 ## Scripts disponibles
 
-| Commande                    | Action                                                        |
-| --------------------------- | ------------------------------------------------------------- |
-| `pnpm dev`                  | Serveur de dev (HMR, sourcemaps)                              |
-| `pnpm build`                | Build de production dans `dist/`                              |
-| `pnpm preview`              | Sert le build prod localement (port 4173)                     |
-| `pnpm lint` / `lint:fix`    | ESLint strict + accessibilité                                 |
-| `pnpm format` / `format:check` | Prettier write / check                                     |
-| `pnpm typecheck`            | `tsc -b --noEmit`                                             |
-| `pnpm test`                 | Tests unitaires Vitest (mode run, single shot)                |
-| `pnpm test:watch`           | Tests unitaires en mode watch                                 |
-| `pnpm test:coverage`        | Tests unitaires + rapport de couverture (HTML + JSON)         |
-| `pnpm test:e2e`             | Tests E2E Playwright (lance auto le `preview` server)         |
-| `pnpm test:e2e:install`     | Télécharge les browsers Chromium                              |
-| `pnpm verify`               | Pipeline complète locale : lint + typecheck + tests + build   |
+| Commande                       | Action                                                      |
+| ------------------------------ | ----------------------------------------------------------- |
+| `pnpm dev`                     | Serveur de dev (HMR, sourcemaps)                            |
+| `pnpm build`                   | Build de production dans `dist/`                            |
+| `pnpm preview`                 | Sert le build prod localement (port 4173)                   |
+| `pnpm lint` / `lint:fix`       | ESLint strict + accessibilité                               |
+| `pnpm format` / `format:check` | Prettier write / check                                      |
+| `pnpm typecheck`               | `tsc -b --noEmit`                                           |
+| `pnpm test`                    | Tests unitaires Vitest (mode run, single shot)              |
+| `pnpm test:watch`              | Tests unitaires en mode watch                               |
+| `pnpm test:coverage`           | Tests unitaires + rapport de couverture (HTML + JSON)       |
+| `pnpm test:e2e`                | Tests E2E Playwright (lance auto le `preview` server)       |
+| `pnpm test:e2e:install`        | Télécharge les browsers Chromium                            |
+| `pnpm verify`                  | Pipeline complète locale : lint + typecheck + tests + build |
 
 ## Structure du projet
 
 ```
 portfolio/
-├── public/                  # Statiques (favicon, robots, sitemap)
+├── public/
+│   ├── cv/Mathieu_Diep_CV.pdf      # téléchargé depuis le bouton "Download CV"
+│   ├── favicon.svg, robots.txt, sitemap.xml
 ├── src/
 │   ├── components/
-│   │   ├── home/            # Hero, ExperienceSection, EducationSection, SkillsSection
-│   │   ├── illustrations/   # SVG hand-drawn (chatbot, blockchain, monde, portrait...)
-│   │   ├── layout/          # Header, Footer, Layout, Logo, LanguageSwitcher
-│   │   ├── projects/        # ProjectCard, ProjectsSection, QRCode, DownloadButton
-│   │   └── seo/             # SEO (mise à jour title + meta description par page)
-│   ├── data/                # types.ts, profile, experiences, education, skills, projects
+│   │   ├── layout/         # Layout, PillNav, LanguageSwitcher (top-right pill), Footer
+│   │   ├── sections/       # Hero, BioSection, TimelineSection, PrinciplesSection, ProjectsSection, ContactSection
+│   │   ├── ui/             # AuraCanvas (gradient blobs), MegaButton, PortraitTile, BrandIcons (Github/LinkedIn/X)
+│   │   ├── projects/       # QRCode, DownloadButton
+│   │   └── seo/            # SEO (title + meta description par page)
+│   ├── data/                # types.ts, profile, experiences, education, skills, projects, principles
 │   ├── hooks/               # useLanguageRoute, usePrefersReducedMotion
-│   ├── i18n/                # Config + locales/{fr,en,es}.json
-│   ├── pages/               # Home, ProjectDetail, NotFound
-│   ├── styles/              # sketchbook.ts (palette + paperBackground)
-│   ├── App.tsx              # Routing
+│   ├── i18n/                # Config + locales/{fr,en,es}.json (utilise <Trans> pour les italiques)
+│   ├── pages/               # Home (orchestre les 6 sections), ProjectDetail, NotFound
+│   ├── styles/              # palette.ts (couleurs + design tokens)
+│   ├── App.tsx              # Routing /:lang + ProjectDetail + NotFound
 │   ├── main.tsx             # Bootstrap React + i18n
-│   └── index.css            # Reset + Tailwind import + a11y (skip link, focus, reduced-motion)
+│   └── index.css            # Tailwind import + skip link + focus + reduced-motion
 ├── tests/
 │   ├── setup.ts             # Mocks IntersectionObserver, matchMedia
-│   ├── unit/                # 28 tests Vitest (data, locales, composants, intégration)
-│   └── e2e/                 # 11 tests Playwright × 2 projects (Chromium + mobile)
+│   ├── unit/                # 28 tests Vitest (data, locales, composants, intégration full app)
+│   └── e2e/                 # 13 tests Playwright × 2 projects (Chromium + Pixel 5)
 ├── .github/
 │   ├── workflows/ci.yml     # CI complète (lint + typecheck + tests + build + E2E)
 │   └── pull_request_template.md
@@ -90,14 +93,23 @@ portfolio/
 
 ## Routing
 
-| URL                                  | Page                                                |
-| ------------------------------------ | --------------------------------------------------- |
-| `/` → redirige vers la langue détectée |                                                     |
-| `/{fr,en,es}`                         | Page d'accueil (CV) + grille des 3 projets          |
-| `/{fr,en,es}/projects/volley-meteo`   | Volley Météo : description, QR, lien APK            |
-| `/{fr,en,es}/projects/scan2pdf`       | Scan2PDF                                            |
-| `/{fr,en,es}/projects/triolinguo`     | Triolinguo                                          |
-| `/{fr,en,es}/<inconnu>`               | 404 stylisé                                         |
+| URL                                    | Page                                                                  |
+| -------------------------------------- | --------------------------------------------------------------------- |
+| `/` → redirige vers la langue détectée |                                                                       |
+| `/{fr,en,es}`                          | Long-scroll : Hero + Bio + Timeline + Principles + Projects + Contact |
+| `/{fr,en,es}/projects/volley-meteo`    | Volley Météo : description, features, QR + bouton APK                 |
+| `/{fr,en,es}/projects/scan2pdf`        | Scan2PDF                                                              |
+| `/{fr,en,es}/projects/triolinguo`      | Triolinguo                                                            |
+| `/{fr,en,es}/<inconnu>`                | 404 stylisé                                                           |
+
+## Sections de la home page
+
+1. **Hero** — pill "✱ À propos" + titre serif géant centré "Hi, I'm *Mathieu.*"
+2. **BioSection** — photo placeholder mint (cols 5/12) + intro serif + 2 paragraphes + 2 CTA (Download CV / Contact)
+3. **TimelineSection** — 5 pills deep teal pour les expériences (Hexamind, Lincoln, Capgemini, Aubay, Orange Labs)
+4. **PrinciplesSection** — container blur arrondi 64px, 4 entrées en grille 2×2 (numérotées 01-04)
+5. **ProjectsSection** — 3 cards pastels (mint/rust/babyblue) avec mini-QR code intégré
+6. **ContactSection** — gros titre serif + 3 boutons (Email / GitHub / LinkedIn)
 
 ## Multilingue
 
@@ -163,6 +175,7 @@ Vercel détecte automatiquement Vite, le build se fait en `pnpm build`, le outpu
 
 Une fois déployé, l'URL sera `https://mathieu-diep.vercel.app` (ou le slug Vercel choisi).
 À tester :
+
 - 3 langues : `/fr`, `/en`, `/es`
 - Navigation par toggle de langue (l'URL change, le contenu aussi)
 - Pages projet : QR code visible, lien APK pointe vers GitHub releases
