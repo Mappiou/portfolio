@@ -8,3 +8,9 @@ dist-ssr
 .DS_Store
 .vercel
 .vite
+
+# Tests
+coverage
+playwright-report
+test-results
+.playwright
