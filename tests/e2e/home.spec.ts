@@ -86,6 +86,33 @@ test.describe("404 handling", () => {
   });
 });
 
+test.describe("Education section", () => {
+  test("renders both UTT degrees and Canada/China exchange cards", async ({ page }) => {
+    await page.goto("/fr");
+    await page.locator("#education").scrollIntoViewIfNeeded();
+    await expect(
+      page.getByRole("heading", { level: 3, name: /Diplôme d'ingénieur/i }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Master 2/i })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Canada/i })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Chine/i })).toBeVisible();
+  });
+
+  test("Education section appears between Timeline and Principles in DOM order", async ({
+    page,
+  }) => {
+    await page.goto("/fr");
+    const sections = page.locator("section[id]");
+    const ids = await sections.evaluateAll((els) => els.map((e) => e.id));
+    const tIdx = ids.indexOf("timeline");
+    const eIdx = ids.indexOf("education");
+    const pIdx = ids.indexOf("principles");
+    expect(tIdx).toBeGreaterThan(-1);
+    expect(eIdx).toBeGreaterThan(tIdx);
+    expect(pIdx).toBeGreaterThan(eIdx);
+  });
+});
+
 test.describe("Timeline expand", () => {
   test("clicking a timeline pill expands its detail panel", async ({ page }) => {
     await page.goto("/fr");

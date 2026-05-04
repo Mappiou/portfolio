@@ -16,11 +16,16 @@ export type Experience = {
 
 export type Education = {
   id: string;
-  degree: Translated;
+  kind: "degree" | "exchange";
+  title: Translated;
   school: string;
+  location: string;
   period: Translated;
-  detail: Translated;
-  illustration: "diploma" | "scroll" | "world";
+  description: Translated;
+  /** Country flag emoji, used for exchange entries */
+  flag?: string;
+  /** Optional path to a photo (e.g. /images/edu/canada.jpg) — when set replaces the placeholder block */
+  photoSrc?: string;
 };
 
 export type Skill = {

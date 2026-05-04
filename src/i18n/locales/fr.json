@@ -37,6 +37,12 @@
     "expand": "Voir le détail",
     "collapse": "Replier"
   },
+  "education": {
+    "kicker": "Formation",
+    "title": "Diplômes & <italic>aventures à l'étranger.</italic>",
+    "degreesLabel": "Diplômes",
+    "exchangesLabel": "Échanges universitaires"
+  },
   "principles": {
     "kicker": "Principes de travail",
     "title": "Quatre choses<br /> auxquelles <italic>je reviens.</italic>"

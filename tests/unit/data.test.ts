@@ -46,15 +46,26 @@ describe("data integrity", () => {
     }
   });
 
-  it("each education has translations for all languages", () => {
+  it("each education has translations for all languages and a valid kind", () => {
     expect(education.length).toBeGreaterThan(0);
     for (const edu of education) {
+      expect(["degree", "exchange"]).toContain(edu.kind);
+      expect(edu.school).toBeTruthy();
+      expect(edu.location).toBeTruthy();
       for (const lang of SUPPORTED_LANGUAGES) {
-        expect(edu.degree[lang]).toBeTruthy();
+        expect(edu.title[lang]).toBeTruthy();
         expect(edu.period[lang]).toBeTruthy();
-        expect(edu.detail[lang]).toBeTruthy();
+        expect(edu.description[lang]).toBeTruthy();
       }
     }
+  });
+
+  it("includes both UTT degrees + Canada + China exchanges", () => {
+    const ids = education.map((e) => e.id);
+    expect(ids).toContain("engineering-utt");
+    expect(ids).toContain("master-security");
+    expect(ids).toContain("exchange-canada");
+    expect(ids).toContain("exchange-china");
   });
 
   it("each skill category has translations and items", () => {

@@ -37,6 +37,12 @@
     "expand": "See details",
     "collapse": "Collapse"
   },
+  "education": {
+    "kicker": "Education",
+    "title": "Degrees & <italic>adventures abroad.</italic>",
+    "degreesLabel": "Degrees",
+    "exchangesLabel": "Academic exchanges"
+  },
   "principles": {
     "kicker": "Working principles",
     "title": "Four things I keep<br /> <italic>coming back to.</italic>"
