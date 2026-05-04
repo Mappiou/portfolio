@@ -31,7 +31,11 @@
   },
   "timeline": {
     "title": "A few stops <italic>along the way.</italic>",
-    "note": "5 roles · 6 years in applied AI"
+    "note": "5 roles · 6 years in applied AI",
+    "expandHint": "Click an experience to see the details",
+    "stackLabel": "Stack",
+    "expand": "See details",
+    "collapse": "Collapse"
   },
   "principles": {
     "kicker": "Working principles",

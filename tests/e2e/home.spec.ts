@@ -86,6 +86,33 @@ test.describe("404 handling", () => {
   });
 });
 
+test.describe("Timeline expand", () => {
+  test("clicking a timeline pill expands its detail panel", async ({ page }) => {
+    await page.goto("/fr");
+    const hexamindPill = page.getByRole("button", { name: /Hexamind/i });
+    await expect(hexamindPill).toBeVisible();
+    // Initially collapsed
+    await expect(hexamindPill).toHaveAttribute("aria-expanded", "false");
+    await hexamindPill.click();
+    await expect(hexamindPill).toHaveAttribute("aria-expanded", "true");
+    // Detail content appears (description + at least one bullet from CV)
+    await expect(page.getByText(/RAG/i).first()).toBeVisible();
+  });
+
+  test("opening a second pill closes the previous one (single-open accordion)", async ({
+    page,
+  }) => {
+    await page.goto("/fr");
+    const hexa = page.getByRole("button", { name: /Hexamind/i });
+    const lincoln = page.getByRole("button", { name: /Lincoln/i });
+    await hexa.click();
+    await expect(hexa).toHaveAttribute("aria-expanded", "true");
+    await lincoln.click();
+    await expect(lincoln).toHaveAttribute("aria-expanded", "true");
+    await expect(hexa).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
 test.describe("Accessibility", () => {
   test("home has main landmark + banner + footer", async ({ page }) => {
     await page.goto("/fr");

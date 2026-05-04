@@ -31,7 +31,11 @@
   },
   "timeline": {
     "title": "Algunas paradas <italic>en el camino.</italic>",
-    "note": "5 puestos · 6 años de IA aplicada"
+    "note": "5 puestos · 6 años de IA aplicada",
+    "expandHint": "Haz clic en una experiencia para ver los detalles",
+    "stackLabel": "Stack",
+    "expand": "Ver detalles",
+    "collapse": "Plegar"
   },
   "principles": {
     "kicker": "Principios de trabajo",
