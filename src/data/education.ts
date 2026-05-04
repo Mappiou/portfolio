@@ -131,7 +131,7 @@ export const education: Education[] = [
   },
   {
     id: "exchange-china",
-    year: 2019.5,
+    year: 2017.5,
     kind: "exchange",
     title: {
       fr: "Échange universitaire — Chine",
@@ -141,9 +141,9 @@ export const education: Education[] = [
     school: "Université chinoise · échange UTT",
     location: "Chine",
     period: {
-      fr: "1 semestre · 2019",
-      en: "1 semester · 2019",
-      es: "1 semestre · 2019",
+      fr: "1 semestre · 2017",
+      en: "1 semester · 2017",
+      es: "1 semestre · 2017",
     },
     summary: {
       fr: "Semestre business multiculturel en Asie.",
