@@ -43,9 +43,9 @@
     "degreesLabel": "Títulos",
     "exchangesLabel": "Intercambios universitarios"
   },
-  "principles": {
-    "kicker": "Principios de trabajo",
-    "title": "Cuatro cosas a las que<br /> <italic>siempre vuelvo.</italic>"
+  "passions": {
+    "kicker": "Pasiones",
+    "title": "Lo que me gusta <italic>fuera del código.</italic>"
   },
   "projects": {
     "kicker": "Proyectos personales",

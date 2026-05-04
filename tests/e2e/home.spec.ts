@@ -98,18 +98,32 @@ test.describe("Education section", () => {
     await expect(page.getByRole("heading", { level: 3, name: /Chine/i })).toBeVisible();
   });
 
-  test("Education section appears between Timeline and Principles in DOM order", async ({
-    page,
-  }) => {
+  test("Education section appears between Timeline and Passions in DOM order", async ({ page }) => {
     await page.goto("/fr");
     const sections = page.locator("section[id]");
     const ids = await sections.evaluateAll((els) => els.map((e) => e.id));
     const tIdx = ids.indexOf("timeline");
     const eIdx = ids.indexOf("education");
-    const pIdx = ids.indexOf("principles");
+    const pIdx = ids.indexOf("passions");
     expect(tIdx).toBeGreaterThan(-1);
     expect(eIdx).toBeGreaterThan(tIdx);
     expect(pIdx).toBeGreaterThan(eIdx);
+  });
+});
+
+test.describe("Passions section", () => {
+  test("renders 3 passion cards (sport, tech, travel) with sub-items", async ({ page }) => {
+    await page.goto("/fr");
+    await page.locator("#passions").scrollIntoViewIfNeeded();
+    await expect(page.getByRole("heading", { level: 3, name: /^Sport$/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 3, name: /Nouvelles technologies/i }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Voyages/i })).toBeVisible();
+    // Sub-items visible
+    await expect(page.getByText(/Badminton/i).first()).toBeVisible();
+    await expect(page.getByText(/Patin à glace/i).first()).toBeVisible();
+    await expect(page.getByText(/Amérique du Sud/i).first()).toBeVisible();
   });
 });
 

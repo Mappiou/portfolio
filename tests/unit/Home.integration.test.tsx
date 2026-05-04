@@ -29,13 +29,13 @@ describe("Home page integration", () => {
     expect(screen.getByRole("contentinfo")).toBeInTheDocument();
   });
 
-  it("renders FR home with the hero, bio, timeline, principles, projects, contact sections", () => {
+  it("renders FR home with the hero, bio, timeline, passions, projects, contact sections", () => {
     renderApp("/fr");
     expect(screen.getAllByText(/Mathieu/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/AI Engineer/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Hexamind/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: /étapes/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /quatre choses/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /en dehors du code/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /trois apps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /construisons/i })).toBeInTheDocument();
   });
@@ -43,7 +43,7 @@ describe("Home page integration", () => {
   it("renders EN home with English headings", () => {
     renderApp("/en");
     expect(screen.getByRole("heading", { name: /a few stops/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /four things/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /outside the code/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /three apps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /let's build/i })).toBeInTheDocument();
   });
@@ -51,7 +51,7 @@ describe("Home page integration", () => {
   it("renders ES home with Spanish headings", () => {
     renderApp("/es");
     expect(screen.getByRole("heading", { name: /algunas paradas/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /cuatro cosas/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /fuera del código/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /tres apps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /construyamos/i })).toBeInTheDocument();
   });
