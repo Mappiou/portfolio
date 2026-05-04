@@ -31,7 +31,11 @@
   },
   "timeline": {
     "title": "Quelques étapes <italic>en chemin.</italic>",
-    "note": "5 expériences · 6 années dans l'IA appliquée"
+    "note": "5 expériences · 6 années dans l'IA appliquée",
+    "expandHint": "Cliquez sur une expérience pour voir le détail",
+    "stackLabel": "Stack",
+    "expand": "Voir le détail",
+    "collapse": "Replier"
   },
   "principles": {
     "kicker": "Principes de travail",
