@@ -45,4 +45,6 @@ export type Project = {
   /** Public source repo URL. Optional — left undefined until the repo is actually pushed to GitHub. */
   githubUrl?: string;
   accent: "red" | "green" | "blue" | "yellow";
+  /** Optional paths to real app screenshots, e.g. ['/images/apps/volley/1.png', ...]. When empty, a synthesized placeholder mockup is shown. */
+  screenshots?: string[];
 };

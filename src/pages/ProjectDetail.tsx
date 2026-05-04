@@ -7,6 +7,7 @@ import { getProjectById } from "../data/projects";
 import { palette, tokens } from "../styles/palette";
 import { QRCode } from "../components/projects/QRCode";
 import { DownloadButton } from "../components/projects/DownloadButton";
+import { PhoneMockup } from "../components/projects/PhoneMockup";
 import { MegaButton } from "../components/ui/MegaButton";
 import { SEO } from "../components/seo/SEO";
 
@@ -97,6 +98,18 @@ export default function ProjectDetail() {
             {project.tagline[lang]}
           </p>
         </header>
+
+        {/* Phone mockup row */}
+        <div className="flex flex-wrap items-end justify-center gap-6 md:gap-10 mb-16">
+          {(project.screenshots && project.screenshots.length > 0
+            ? project.screenshots
+            : [undefined, undefined, undefined]
+          )
+            .slice(0, 3)
+            .map((src, i) => (
+              <PhoneMockup key={i} project={project} lang={lang} src={src ?? undefined} index={i} />
+            ))}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
           <div>
