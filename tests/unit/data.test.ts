@@ -69,7 +69,10 @@ describe("data integrity", () => {
   it("profile has the expected canonical fields", () => {
     expect(profile.name).toBe("Mathieu Diep");
     expect(profile.email).toMatch(/@/);
-    expect(profile.links.github).toMatch(/^https:\/\/github\.com\//);
     expect(profile.links.linkedin).toMatch(/linkedin/);
+    // github is optional — only validated when set
+    if (profile.links.github !== undefined) {
+      expect(profile.links.github).toMatch(/^https:\/\/github\.com\//);
+    }
   });
 });

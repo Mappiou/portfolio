@@ -36,14 +36,16 @@ export function Footer({ theme = "light" }: { theme?: Theme }) {
           {t("footer.signature")}
         </div>
         <div className="flex gap-5 text-sm" style={{ color: colors.secondary }}>
-          <a
-            href={profile.links.github}
-            className="hover:underline"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t("contact.github")}
-          </a>
+          {profile.links.github && (
+            <a
+              href={profile.links.github}
+              className="hover:underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("contact.github")}
+            </a>
+          )}
           <a
             href={profile.links.linkedin}
             className="hover:underline"

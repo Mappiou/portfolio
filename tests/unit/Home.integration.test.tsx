@@ -94,11 +94,10 @@ describe("Home page integration", () => {
     expect(screen.getByText("404")).toBeInTheDocument();
   });
 
-  it("Footer has email + GitHub + LinkedIn links", () => {
+  it("Footer has email + LinkedIn links (GitHub appears only when configured)", () => {
     renderApp("/fr");
     const footer = screen.getByRole("contentinfo");
     expect(footer.querySelector('a[href^="mailto:"]')).toBeTruthy();
-    expect(footer.querySelector('a[href*="github"]')).toBeTruthy();
     expect(footer.querySelector('a[href*="linkedin"]')).toBeTruthy();
   });
 });
