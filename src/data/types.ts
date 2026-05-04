@@ -16,15 +16,21 @@ export type Experience = {
 
 export type Education = {
   id: string;
-  kind: "degree" | "exchange";
+  /** Sort key for the chronological timeline */
+  year: number;
+  /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'degree' for diplomas */
+  kind: "milestone" | "exchange" | "degree";
   title: Translated;
   school: string;
   location: string;
   period: Translated;
+  /** Short one-line summary, always visible on the timeline */
+  summary: Translated;
+  /** Long description, revealed when the entry is expanded */
   description: Translated;
   /** Country flag emoji, used for exchange entries */
   flag?: string;
-  /** Optional path to a photo (e.g. /images/edu/canada.jpg) — when set replaces the placeholder block */
+  /** Optional path to a photo (e.g. /images/edu/canada.jpg) — shown in the expanded panel */
   photoSrc?: string;
 };
 

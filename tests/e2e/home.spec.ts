@@ -87,15 +87,30 @@ test.describe("404 handling", () => {
 });
 
 test.describe("Education section", () => {
-  test("renders both UTT degrees and Canada/China exchange cards", async ({ page }) => {
+  test("renders the 6-step vertical timeline with all milestones", async ({ page }) => {
     await page.goto("/fr");
     await page.locator("#education").scrollIntoViewIfNeeded();
+    await expect(page.getByRole("heading", { level: 3, name: /Baccalauréat/i })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Entrée à l'UTT/i })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Canada/i })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /Chine/i })).toBeVisible();
     await expect(
       page.getByRole("heading", { level: 3, name: /Diplôme d'ingénieur/i }),
     ).toBeVisible();
     await expect(page.getByRole("heading", { level: 3, name: /Master 2/i })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: /Canada/i })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: /Chine/i })).toBeVisible();
+  });
+
+  test("clicking a timeline step expands its details", async ({ page }) => {
+    await page.goto("/fr");
+    await page.locator("#education").scrollIntoViewIfNeeded();
+    const canadaButton = page.getByRole("button", { name: /Canada/i });
+    await expect(canadaButton).toHaveAttribute("aria-expanded", "false");
+    await canadaButton.click();
+    await expect(canadaButton).toHaveAttribute("aria-expanded", "true");
+    // Detail content appears (description mentions immersion)
+    await expect(
+      page.getByText(/immersion académique nord-américaine|culture nord-américaine/i).first(),
+    ).toBeVisible();
   });
 
   test("Education section appears between Timeline and Passions in DOM order", async ({ page }) => {
