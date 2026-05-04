@@ -40,7 +40,7 @@
   "education": {
     "kicker": "Formación",
     "title": "6 años, del bachillerato <italic>al doble título.</italic>",
-    "expandHint": "Haz clic en una etapa para ver los detalles"
+    "expandHint": "Desplaza la línea y haz clic en una etapa para ver los detalles"
   },
   "passions": {
     "kicker": "Pasiones",

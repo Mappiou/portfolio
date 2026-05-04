@@ -87,27 +87,24 @@ test.describe("404 handling", () => {
 });
 
 test.describe("Education section", () => {
-  test("renders the 6-step vertical timeline with all milestones", async ({ page }) => {
+  test("renders the horizontal timeline with all milestones as dot buttons", async ({ page }) => {
     await page.goto("/fr");
     await page.locator("#education").scrollIntoViewIfNeeded();
-    await expect(page.getByRole("heading", { level: 3, name: /Baccalauréat/i })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: /Entrée à l'UTT/i })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: /Canada/i })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: /Chine/i })).toBeVisible();
-    await expect(
-      page.getByRole("heading", { level: 3, name: /Diplôme d'ingénieur/i }),
-    ).toBeVisible();
-    await expect(page.getByRole("heading", { level: 3, name: /Master 2/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Baccalauréat/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Entrée à l'UTT/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Canada/i }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /Chine/i }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /Diplôme d'ingénieur/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Master 2/i }).first()).toBeVisible();
   });
 
-  test("clicking a timeline step expands its details", async ({ page }) => {
+  test("clicking a timeline dot opens the detail panel below", async ({ page }) => {
     await page.goto("/fr");
     await page.locator("#education").scrollIntoViewIfNeeded();
-    const canadaButton = page.getByRole("button", { name: /Canada/i });
-    await expect(canadaButton).toHaveAttribute("aria-expanded", "false");
-    await canadaButton.click();
-    await expect(canadaButton).toHaveAttribute("aria-expanded", "true");
-    // Detail content appears (description mentions immersion)
+    const canadaDot = page.getByRole("button", { name: /Échange universitaire — Canada/i });
+    await expect(canadaDot).toHaveAttribute("aria-expanded", "false");
+    await canadaDot.click();
+    await expect(canadaDot).toHaveAttribute("aria-expanded", "true");
     await expect(
       page.getByText(/immersion académique nord-américaine|culture nord-américaine/i).first(),
     ).toBeVisible();
