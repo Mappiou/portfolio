@@ -176,17 +176,19 @@ export default function ProjectDetail() {
             </p>
             <div className="flex flex-col gap-3 items-center">
               <DownloadButton href={project.apkUrl} filename={`${project.id}.apk`} />
-              <MegaButton
-                href={project.githubUrl}
-                external
-                variant="outline"
-                bg={palette.teal}
-                fg={palette.teal}
-                borderColor="rgba(14,83,77,0.3)"
-              >
-                <GithubIcon size={14} />
-                {t("projects.viewSource")}
-              </MegaButton>
+              {project.githubUrl && (
+                <MegaButton
+                  href={project.githubUrl}
+                  external
+                  variant="outline"
+                  bg={palette.teal}
+                  fg={palette.teal}
+                  borderColor="rgba(14,83,77,0.3)"
+                >
+                  <GithubIcon size={14} />
+                  {t("projects.viewSource")}
+                </MegaButton>
+              )}
             </div>
           </aside>
         </div>

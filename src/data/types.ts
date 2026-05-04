@@ -37,6 +37,7 @@ export type Project = {
   features: Translated[];
   stack: string[];
   apkUrl: string;
-  githubUrl: string;
+  /** Public source repo URL. Optional — left undefined until the repo is actually pushed to GitHub. */
+  githubUrl?: string;
   accent: "red" | "green" | "blue" | "yellow";
 };
