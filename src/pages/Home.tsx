@@ -3,7 +3,7 @@ import { Hero } from "../components/sections/Hero";
 import { BioSection } from "../components/sections/BioSection";
 import { TimelineSection } from "../components/sections/TimelineSection";
 import { EducationSection } from "../components/sections/EducationSection";
-import { PrinciplesSection } from "../components/sections/PrinciplesSection";
+import { PassionsSection } from "../components/sections/PassionsSection";
 import { ProjectsSection } from "../components/sections/ProjectsSection";
 import { ContactSection } from "../components/sections/ContactSection";
 import { SEO } from "../components/seo/SEO";
@@ -17,7 +17,7 @@ export default function Home() {
       <BioSection />
       <TimelineSection />
       <EducationSection />
-      <PrinciplesSection />
+      <PassionsSection />
       <ProjectsSection />
       <ContactSection />
     </>
