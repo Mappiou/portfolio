@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation, Trans } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -9,6 +9,7 @@ import {
   MapPin,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { palette, tokens } from "../../styles/palette";
@@ -73,8 +74,87 @@ export function EducationSection() {
   const { t } = useTranslation();
   const lang = useLanguageRoute();
   const entries = [...education].sort((a, b) => a.year - b.year);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const openEntry = openIndex !== null ? entries[openIndex] : null;
+  const initialIndex = Math.max(
+    0,
+    entries.findIndex((e) => e.id === "exchange-china"),
+  );
+  const [openIndex, setOpenIndex] = useState<number>(initialIndex);
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const isProgrammaticRef = useRef(false);
+  const programmaticTimerRef = useRef<number | null>(null);
+
+  const computeActiveIndex = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const padding = CARD_WIDTH / 2;
+    const usableWidth = Math.max(1, scroller.scrollWidth - 2 * padding);
+    const scrollCenter = scroller.scrollLeft + scroller.clientWidth / 2;
+    const ratio = Math.max(0, Math.min(1, (scrollCenter - padding) / usableWidth));
+    const yearAtCenter = YEAR_START + ratio * YEAR_SPAN;
+    let closest = 0;
+    let minDist = Infinity;
+    entries.forEach((entry, i) => {
+      const dist = Math.abs(entry.year - yearAtCenter);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = i;
+      }
+    });
+    setOpenIndex(closest);
+  };
+
+  const onScroll = () => {
+    if (isProgrammaticRef.current) return;
+    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      computeActiveIndex();
+    });
+  };
+
+  // Center China on first mount
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const entry = entries[initialIndex];
+    if (!entry) return;
+    const padding = CARD_WIDTH / 2;
+    const usableWidth = scroller.scrollWidth - 2 * padding;
+    const targetCenter = padding + ((entry.year - YEAR_START) / YEAR_SPAN) * usableWidth;
+    scroller.scrollLeft = Math.max(0, targetCenter - scroller.clientWidth / 2);
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      if (programmaticTimerRef.current !== null) {
+        window.clearTimeout(programmaticTimerRef.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const scrollToEntry = (index: number) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const entry = entries[index];
+    if (!entry) return;
+    const padding = CARD_WIDTH / 2;
+    const usableWidth = scroller.scrollWidth - 2 * padding;
+    const targetCenter = padding + ((entry.year - YEAR_START) / YEAR_SPAN) * usableWidth;
+    setOpenIndex(index);
+    isProgrammaticRef.current = true;
+    scroller.scrollTo({
+      left: Math.max(0, targetCenter - scroller.clientWidth / 2),
+      behavior: "smooth",
+    });
+    if (programmaticTimerRef.current !== null) {
+      window.clearTimeout(programmaticTimerRef.current);
+    }
+    programmaticTimerRef.current = window.setTimeout(() => {
+      isProgrammaticRef.current = false;
+    }, 700);
+  };
+
+  const openEntry = entries[openIndex];
 
   const years = Array.from({ length: YEAR_SPAN + 1 }, (_, i) => YEAR_START + i);
 
@@ -135,8 +215,11 @@ export function EducationSection() {
         <ChevronRight size={14} aria-hidden="true" />
       </p>
 
-      {/* Horizontal scrollable area */}
+      {/* Horizontal scrollable area + fixed cursor overlay */}
+      <div className="relative">
       <div
+        ref={scrollerRef}
+        onScroll={onScroll}
         className="relative overflow-x-auto overflow-y-hidden -mx-6 px-6"
         style={{
           scrollbarWidth: "thin",
@@ -242,7 +325,7 @@ export function EducationSection() {
                   isAbove={i % 2 === 0}
                   isOpen={openIndex === i}
                   labelKey={labelKeyFor[entry.kind]}
-                  onToggle={() => setOpenIndex((cur) => (cur === i ? null : i))}
+                  onToggle={() => scrollToEntry(i)}
                 />
               ))}
             </div>
@@ -250,16 +333,48 @@ export function EducationSection() {
         </div>
       </div>
 
-      {/* Detail panel under the timeline */}
+      {/* Cursor overlay — fixed at the visible center of the scroller */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute"
+        style={{
+          top: 0,
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: 2,
+          background: `linear-gradient(180deg, ${palette.teal}00 0%, ${palette.teal}30 15%, ${palette.teal}55 50%, ${palette.teal}30 85%, ${palette.teal}00 100%)`,
+          zIndex: 25,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute flex items-center justify-center rounded-full"
+        style={{
+          top: 6,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: 26,
+          height: 26,
+          background: palette.teal,
+          color: palette.beige,
+          boxShadow: `0 4px 10px -2px ${palette.teal}60`,
+          zIndex: 26,
+        }}
+      >
+        <ChevronDown size={16} strokeWidth={2.5} />
+      </div>
+      </div>
+
+      {/* Detail panel under the timeline — always rendered */}
       <AnimatePresence initial={false} mode="wait">
         {openEntry && (
           <motion.div
             key={openEntry.id}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{ overflow: "hidden" }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
             className="mt-6 mx-auto"
           >
             <DetailPanel entry={openEntry} lang={lang} />
