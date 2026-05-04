@@ -72,17 +72,19 @@ export function ContactSection() {
             <Mail size={16} />
             {profile.email}
           </MegaButton>
-          <MegaButton
-            href={profile.links.github}
-            external
-            variant="outline"
-            bg={palette.teal}
-            fg={palette.teal}
-            borderColor="rgba(14,83,77,0.3)"
-          >
-            <GithubIcon size={16} />
-            GitHub
-          </MegaButton>
+          {profile.links.github && (
+            <MegaButton
+              href={profile.links.github}
+              external
+              variant="outline"
+              bg={palette.teal}
+              fg={palette.teal}
+              borderColor="rgba(14,83,77,0.3)"
+            >
+              <GithubIcon size={16} />
+              GitHub
+            </MegaButton>
+          )}
           <MegaButton
             href={profile.links.linkedin}
             external
