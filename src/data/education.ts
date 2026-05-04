@@ -26,7 +26,7 @@ export const education: Education[] = [
   },
   {
     id: "utt-start",
-    year: 2015.7,
+    year: 2015,
     kind: "milestone",
     title: {
       fr: "Entrée à l'UTT",
@@ -53,7 +53,7 @@ export const education: Education[] = [
   },
   {
     id: "internship-orange-labs",
-    year: 2018.01,
+    year: 2018.4,
     kind: "internship",
     title: {
       fr: "Stage R&D — Orange Labs",
@@ -80,7 +80,7 @@ export const education: Education[] = [
   },
   {
     id: "exchange-canada",
-    year: 2018.5,
+    year: 2018.85,
     kind: "exchange",
     title: {
       fr: "Échange universitaire — Canada",
@@ -108,7 +108,7 @@ export const education: Education[] = [
   },
   {
     id: "internship-aubay",
-    year: 2019.02,
+    year: 2019.4,
     kind: "internship",
     title: {
       fr: "Stage Recherche IA — Aubay",
@@ -135,7 +135,7 @@ export const education: Education[] = [
   },
   {
     id: "utt-prepa-end",
-    year: 2017.7,
+    year: 2017.95,
     kind: "milestone",
     title: {
       fr: "Fin de prépa intégrée",
@@ -145,9 +145,9 @@ export const education: Education[] = [
     school: "UTT — Université de Technologie de Troyes",
     location: "Troyes, France",
     period: {
-      fr: "Septembre 2017 · entrée en branche ISI",
-      en: "September 2017 · joining the ISI branch",
-      es: "Septiembre 2017 · entrada en la rama ISI",
+      fr: "Janvier 2018 · entrée en branche ISI",
+      en: "January 2018 · joining the ISI branch",
+      es: "Enero 2018 · entrada en la rama ISI",
     },
     summary: {
       fr: "Validation TC1+TC2 → branche Informatique & SI, spécialisation IA.",
@@ -155,14 +155,14 @@ export const education: Education[] = [
       es: "TC1+TC2 validados → entrada en la rama Informática & SI, especialización IA.",
     },
     description: {
-      fr: "Validation des 2 ans de tronc commun. Choix de la branche : Informatique et Systèmes d'Information (ISI) avec spécialisation IA. Place à 3 ans de spécialité jusqu'au diplôme d'ingénieur.",
-      en: "Validation of the 2-year common core. Branch choice: Computer Science & Information Systems (ISI) with an AI specialization. Three years of focused study ahead before the engineering degree.",
-      es: "Validación de los 2 años de tronco común. Elección de rama: Informática & Sistemas de Información (ISI) con especialización en IA. Tres años de especialidad por delante hasta el título de ingeniero.",
+      fr: "Validation des 2 ans de tronc commun (le semestre en Chine ayant clôturé la prépa intégrée). Choix de la branche : Informatique et Systèmes d'Information (ISI) avec spécialisation IA. Place à plusieurs années de spécialité jusqu'au diplôme d'ingénieur.",
+      en: "Validation of the 2-year common core (the semester in China being the closing semester of the integrated prep). Branch choice: Computer Science & Information Systems (ISI) with an AI specialization. Several years of focused study ahead before the engineering degree.",
+      es: "Validación de los 2 años de tronco común (el semestre en China cerró el ciclo preparatorio). Elección de rama: Informática & Sistemas de Información (ISI) con especialización en IA. Varios años de especialidad por delante hasta el título de ingeniero.",
     },
   },
   {
     id: "exchange-china",
-    year: 2017.3,
+    year: 2017.55,
     kind: "exchange",
     title: {
       fr: "Échange universitaire — Chine",
@@ -177,14 +177,14 @@ export const education: Education[] = [
       es: "1 semestre · 2017",
     },
     summary: {
-      fr: "Semestre business multiculturel en Asie.",
-      en: "Multicultural business semester in Asia.",
-      es: "Semestre de negocios multiculturales en Asia.",
+      fr: "Semestre business multiculturel en Asie — clôture de la prépa intégrée.",
+      en: "Multicultural business semester in Asia — closing semester of the integrated prep.",
+      es: "Semestre de negocios multiculturales en Asia — cierre del ciclo preparatorio.",
     },
     description: {
-      fr: "Semestre orienté business multiculturel : stratégie internationale, négociation interculturelle, immersion dans l'écosystème tech asiatique. Une perspective complètement différente sur le travail en équipe et la culture d'entreprise. Voyages dans les pays voisins en parallèle.",
-      en: "Semester focused on multicultural business: international strategy, cross-cultural negotiation, immersion in the Asian tech ecosystem. A completely different perspective on teamwork and corporate culture. Trips to neighbouring countries on the side.",
-      es: "Semestre orientado a negocios multiculturales: estrategia internacional, negociación intercultural, inmersión en el ecosistema tech asiático. Una perspectiva completamente distinta sobre el trabajo en equipo y la cultura de empresa. Viajes a países vecinos en paralelo.",
+      fr: "Semestre de fin de prépa intégrée, orienté business multiculturel : stratégie internationale, négociation interculturelle, immersion dans l'écosystème tech asiatique. Une perspective complètement différente sur le travail en équipe et la culture d'entreprise. Voyages dans les pays voisins en parallèle.",
+      en: "Closing semester of the integrated prep, focused on multicultural business: international strategy, cross-cultural negotiation, immersion in the Asian tech ecosystem. A completely different perspective on teamwork and corporate culture. Trips to neighbouring countries on the side.",
+      es: "Semestre final del ciclo preparatorio, orientado a negocios multiculturales: estrategia internacional, negociación intercultural, inmersión en el ecosistema tech asiático. Una perspectiva completamente distinta sobre el trabajo en equipo y la cultura de empresa. Viajes a países vecinos en paralelo.",
     },
     flag: "🇨🇳",
   },
@@ -213,7 +213,7 @@ export const education: Education[] = [
   },
   {
     id: "internship-capgemini",
-    year: 2020.12,
+    year: 2020.85,
     kind: "internship",
     title: {
       fr: "Stage Data / Blockchain — Capgemini",
