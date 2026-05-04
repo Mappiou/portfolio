@@ -99,7 +99,7 @@ export default function ProjectDetail() {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 items-start">
           <div>
             <p
               style={{
@@ -140,46 +140,51 @@ export default function ProjectDetail() {
             </ul>
           </div>
 
-          <aside className="flex flex-col items-center gap-6" aria-label={t("projects.scanQr")}>
+          <aside
+            className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5"
+            aria-label={t("projects.scanQr")}
+          >
             {/* Phone mockup (real screenshot when project.screenshots[0] is set, placeholder otherwise) */}
             <PhoneMockup project={project} lang={lang} src={project.screenshots?.[0]} index={0} />
 
-            {/* QR + download card under the mockup */}
+            {/* QR + download card to the right of the mockup */}
             <div
-              className="rounded-[28px] p-6 text-center w-full"
+              className="rounded-[28px] p-5 text-center flex flex-col"
               style={{
                 background: bg,
                 boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
+                width: 220,
               }}
             >
               <p
                 style={{
                   fontFamily: tokens.fontTitle,
-                  fontSize: 20,
+                  fontSize: 17,
                   fontWeight: 600,
                   letterSpacing: "-0.01em",
                   color: palette.textPrimary,
-                  marginBottom: 14,
+                  marginBottom: 12,
+                  lineHeight: 1.2,
                 }}
               >
                 {t("projects.scanQr")}
               </p>
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center mb-3">
                 <QRCode
                   value={project.apkUrl}
-                  size={180}
+                  size={150}
                   bg="#FFFFFF"
                   fg={palette.teal}
                   ariaLabel={`QR ${project.name}`}
                 />
               </div>
               <p
-                className="text-xs mb-4"
-                style={{ color: palette.textPrimary, opacity: 0.8, lineHeight: 1.5 }}
+                className="text-xs mb-3"
+                style={{ color: palette.textPrimary, opacity: 0.8, lineHeight: 1.4 }}
               >
                 {t("projects.androidNote")}
               </p>
-              <div className="flex flex-col gap-2.5 items-center">
+              <div className="flex flex-col gap-2 items-center mt-auto">
                 <DownloadButton href={project.apkUrl} filename={`${project.id}.apk`} />
                 {project.githubUrl && (
                   <MegaButton
