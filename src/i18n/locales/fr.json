@@ -39,9 +39,8 @@
   },
   "education": {
     "kicker": "Formation",
-    "title": "Diplômes & <italic>aventures à l'étranger.</italic>",
-    "degreesLabel": "Diplômes",
-    "exchangesLabel": "Échanges universitaires"
+    "title": "6 ans, du baccalauréat <italic>au double diplôme.</italic>",
+    "expandHint": "Cliquez sur une étape pour voir les détails"
   },
   "passions": {
     "kicker": "Passions",

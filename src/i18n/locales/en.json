@@ -39,9 +39,8 @@
   },
   "education": {
     "kicker": "Education",
-    "title": "Degrees & <italic>adventures abroad.</italic>",
-    "degreesLabel": "Degrees",
-    "exchangesLabel": "Academic exchanges"
+    "title": "6 years, from high school <italic>to a double degree.</italic>",
+    "expandHint": "Click a step to see the details"
   },
   "passions": {
     "kicker": "Passions",

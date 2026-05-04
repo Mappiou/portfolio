@@ -46,26 +46,34 @@ describe("data integrity", () => {
     }
   });
 
-  it("each education has translations for all languages and a valid kind", () => {
+  it("each education entry has translations + valid kind + a year", () => {
     expect(education.length).toBeGreaterThan(0);
     for (const edu of education) {
-      expect(["degree", "exchange"]).toContain(edu.kind);
+      expect(["milestone", "exchange", "degree"]).toContain(edu.kind);
       expect(edu.school).toBeTruthy();
       expect(edu.location).toBeTruthy();
+      expect(typeof edu.year).toBe("number");
       for (const lang of SUPPORTED_LANGUAGES) {
         expect(edu.title[lang]).toBeTruthy();
         expect(edu.period[lang]).toBeTruthy();
+        expect(edu.summary[lang]).toBeTruthy();
         expect(edu.description[lang]).toBeTruthy();
       }
     }
   });
 
-  it("includes both UTT degrees + Canada + China exchanges", () => {
+  it("timeline covers the 6-year journey: bac → master", () => {
     const ids = education.map((e) => e.id);
-    expect(ids).toContain("engineering-utt");
-    expect(ids).toContain("master-security");
+    expect(ids).toContain("bac");
+    expect(ids).toContain("utt-start");
     expect(ids).toContain("exchange-canada");
     expect(ids).toContain("exchange-china");
+    expect(ids).toContain("engineering-utt");
+    expect(ids).toContain("master-security");
+    // Chronological order: 2015 (bac) → 2021 (master)
+    const years = education.map((e) => e.year);
+    expect(Math.min(...years)).toBe(2015);
+    expect(Math.max(...years)).toBe(2021);
   });
 
   it("each skill category has translations and items", () => {
