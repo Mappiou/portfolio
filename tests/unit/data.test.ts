@@ -62,10 +62,11 @@ describe("data integrity", () => {
     }
   });
 
-  it("timeline covers the 6-year journey including the 3 internships", () => {
+  it("timeline covers the 6-year journey including all milestones", () => {
     const ids = education.map((e) => e.id);
     expect(ids).toContain("bac");
-    expect(ids).toContain("utt-prepa");
+    expect(ids).toContain("utt-start");
+    expect(ids).toContain("utt-prepa-end");
     expect(ids).toContain("internship-orange-labs");
     expect(ids).toContain("exchange-canada");
     expect(ids).toContain("internship-aubay");
@@ -73,7 +74,7 @@ describe("data integrity", () => {
     expect(ids).toContain("engineering-utt");
     expect(ids).toContain("internship-capgemini");
     expect(ids).toContain("master-cybersecurity");
-    // Year span: bac (2015) → master (2021)
+    // Year range: bac (2015) → master (2021)
     const years = education.map((e) => e.year);
     expect(Math.min(...years)).toBe(2015);
     expect(Math.max(...years)).toBe(2021);
