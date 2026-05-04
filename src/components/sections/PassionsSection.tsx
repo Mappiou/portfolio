@@ -82,6 +82,8 @@ export function PassionsSection() {
 
 function PassionCard({ passion, lang }: { passion: Passion; lang: Language }) {
   const tint = tintFor[passion.icon];
+  const hasItems = passion.items.length > 0;
+
   return (
     <article
       className="rounded-3xl p-6 md:p-8"
@@ -92,49 +94,69 @@ function PassionCard({ passion, lang }: { passion: Passion; lang: Language }) {
         border: "1px solid rgba(14,83,77,0.10)",
       }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-8">
-        <div className="flex flex-col">
-          <span
-            className="inline-flex items-center justify-center rounded-2xl mb-4"
-            style={{
-              width: 48,
-              height: 48,
-              background: tint,
-              color: palette.textPrimary,
-            }}
-            aria-hidden="true"
-          >
-            {iconFor[passion.icon]}
-          </span>
-          <h3
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontWeight: 600,
-              fontSize: "clamp(24px, 2.4vw, 34px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
-              color: palette.textPrimary,
-              maxWidth: 220,
-            }}
-          >
-            {passion.title[lang]}
-          </h3>
-          <p
-            className="mt-3"
-            style={{
-              fontSize: 15,
-              lineHeight: 1.6,
-              color: palette.textSecondary,
-              maxWidth: 260,
-            }}
-          >
-            {passion.description[lang]}
-          </p>
+      {hasItems ? (
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-8">
+          <PassionHeader passion={passion} lang={lang} tint={tint} />
+          <ItemGrid items={passion.items} lang={lang} tint={tint} />
         </div>
-
-        <ItemGrid items={passion.items} lang={lang} tint={tint} />
-      </div>
+      ) : (
+        <PassionHeader passion={passion} lang={lang} tint={tint} wide />
+      )}
     </article>
+  );
+}
+
+function PassionHeader({
+  passion,
+  lang,
+  tint,
+  wide,
+}: {
+  passion: Passion;
+  lang: Language;
+  tint: string;
+  wide?: boolean;
+}) {
+  return (
+    <div className="flex gap-5 md:gap-6 items-start">
+      <span
+        className="inline-flex items-center justify-center rounded-2xl shrink-0"
+        style={{
+          width: 48,
+          height: 48,
+          background: tint,
+          color: palette.textPrimary,
+        }}
+        aria-hidden="true"
+      >
+        {iconFor[passion.icon]}
+      </span>
+      <div className="flex-1 min-w-0">
+        <h3
+          style={{
+            fontFamily: tokens.fontTitle,
+            fontWeight: 600,
+            fontSize: "clamp(24px, 2.4vw, 34px)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.1,
+            color: palette.textPrimary,
+          }}
+        >
+          {passion.title[lang]}
+        </h3>
+        <p
+          className="mt-3"
+          style={{
+            fontSize: 15,
+            lineHeight: 1.65,
+            color: palette.textSecondary,
+            maxWidth: wide ? 760 : 260,
+          }}
+        >
+          {passion.description[lang]}
+        </p>
+      </div>
+    </div>
   );
 }
 
