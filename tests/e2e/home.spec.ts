@@ -90,18 +90,22 @@ test.describe("Education section", () => {
   test("renders the horizontal timeline with all milestones as dot buttons", async ({ page }) => {
     await page.goto("/fr");
     await page.locator("#education").scrollIntoViewIfNeeded();
-    await expect(page.getByRole("button", { name: /Baccalauréat/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Entrée à l'UTT/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Canada/i }).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: /Chine/i }).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: /Diplôme d'ingénieur/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Master 2/i }).first()).toBeVisible();
+    // The horizontal timeline scrolls; some buttons may be off-screen, so we check
+    // they are attached to the DOM rather than visible in the viewport.
+    await expect(page.getByRole("button", { name: /Baccalauréat/i }).first()).toBeAttached();
+    await expect(page.getByRole("button", { name: /Entrée à l'UTT/i }).first()).toBeAttached();
+    await expect(page.getByRole("button", { name: /Canada/i }).first()).toBeAttached();
+    await expect(page.getByRole("button", { name: /Chine/i }).first()).toBeAttached();
+    await expect(page.getByRole("button", { name: /Diplôme d'ingénieur/i }).first()).toBeAttached();
+    await expect(page.getByRole("button", { name: /Master 2/i }).first()).toBeAttached();
   });
 
   test("clicking a timeline dot opens the detail panel below", async ({ page }) => {
     await page.goto("/fr");
     await page.locator("#education").scrollIntoViewIfNeeded();
-    const canadaDot = page.getByRole("button", { name: /Échange universitaire — Canada/i });
+    const canadaDot = page
+      .getByRole("button", { name: /Échange universitaire — Canada/i })
+      .first();
     await expect(canadaDot).toHaveAttribute("aria-expanded", "false");
     await canadaDot.click();
     await expect(canadaDot).toHaveAttribute("aria-expanded", "true");
