@@ -34,7 +34,7 @@ export const projects: Project[] = [
     ],
     stack: ["Flutter", "Dart", "REST API"],
     apkUrl: "/apks/volley_meteo.apk",
-    githubUrl: "https://github.com/mathieudiep/volley_meteo",
+    // githubUrl: TODO publier le repo public et décommenter
     accent: "blue",
   },
   {
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     ],
     stack: ["Flutter", "Dart", "Document Scanner", "PDF"],
     apkUrl: "/apks/scan2pdf.apk",
-    githubUrl: "https://github.com/mathieudiep/scan2pdf",
+    // githubUrl: TODO publier le repo public et décommenter
     accent: "red",
   },
   {
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     ],
     stack: ["Flutter", "Dart", "Audio"],
     apkUrl: "/apks/triolinguo.apk",
-    githubUrl: "https://github.com/mathieudiep/Triolinguo",
+    // githubUrl: TODO publier le repo public et décommenter
     accent: "green",
   },
 ];

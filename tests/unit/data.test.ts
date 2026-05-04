@@ -16,7 +16,10 @@ describe("data integrity", () => {
       }
       // APK is hosted in public/apks/ alongside the site, served from the deployed origin
       expect(project.apkUrl).toMatch(/^\/apks\/[\w-]+\.apk$/);
-      expect(project.githubUrl).toMatch(/^https:\/\/github\.com\//);
+      // githubUrl is optional — only validated when set (the source repo isn't public yet)
+      if (project.githubUrl !== undefined) {
+        expect(project.githubUrl).toMatch(/^https:\/\/github\.com\//);
+      }
       expect(project.stack.length).toBeGreaterThan(0);
       expect(project.features.length).toBeGreaterThan(0);
     }
