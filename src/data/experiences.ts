@@ -22,6 +22,16 @@ export const experiences: Experience[] = [
     },
     bullets: [
       {
+        fr: "Développement de systèmes IA multi-agents : architectures à plusieurs agents collaborant pour résoudre des tâches complexes",
+        en: "Multi-agent AI systems development: architectures where several agents collaborate to solve complex tasks",
+        es: "Desarrollo de sistemas IA multi-agente: arquitecturas con varios agentes colaborando para resolver tareas complejas",
+      },
+      {
+        fr: "Adoption de Claude Code (Anthropic) au quotidien pour accélérer la livraison (review, génération de tests, refactor, agents custom)",
+        en: "Daily use of Claude Code (Anthropic) to speed up delivery (review, test generation, refactor, custom agents)",
+        es: "Uso diario de Claude Code (Anthropic) para acelerar la entrega (review, generación de tests, refactor, agentes personalizados)",
+      },
+      {
         fr: "Architectures RAG (Retrieval-Augmented Generation) pour améliorer la précision des réponses du chatbot",
         en: "RAG (Retrieval-Augmented Generation) architectures to improve chatbot response accuracy",
         es: "Arquitecturas RAG (Retrieval-Augmented Generation) para mejorar la precisión del chatbot",
@@ -42,7 +52,17 @@ export const experiences: Experience[] = [
         es: "Suite de evaluación continua para medir el rendimiento del bot en producción",
       },
     ],
-    stack: ["LLM", "RAG", "Python", "LangChain", "OpenAI", "Vector DB", "MLOps"],
+    stack: [
+      "LLM",
+      "RAG",
+      "Multi-agent",
+      "Claude Code",
+      "Python",
+      "LangChain",
+      "OpenAI",
+      "Vector DB",
+      "MLOps",
+    ],
     illustration: "chatbot",
   },
   {
