@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, type Language } from "../../i18n";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { palette } from "../../styles/palette";
+import { FlagFor } from "../ui/FlagIcons";
 
 type Theme = "light" | "dark";
 
@@ -26,15 +27,15 @@ export function LanguageSwitcher({ theme = "light" }: Props) {
     theme === "light"
       ? {
           bg: palette.white50,
-          activeBg: "#FFFFFF",
           textActive: palette.textPrimary,
           textInactive: palette.textSecondary,
+          shadow: "0 1px 0 rgba(255,255,255,0.4) inset, 0 2px 12px rgba(0,0,0,0.04)",
         }
       : {
           bg: "rgba(168,225,197,0.08)",
-          activeBg: "rgba(168,225,197,0.18)",
           textActive: palette.textQuarterly,
           textInactive: "rgba(168,225,197,0.7)",
+          shadow: "0 1px 0 rgba(168,225,197,0.1) inset, 0 2px 12px rgba(0,0,0,0.2)",
         };
 
   return (
@@ -45,10 +46,8 @@ export function LanguageSwitcher({ theme = "light" }: Props) {
       style={{
         background: colors.bg,
         padding: 4,
-        boxShadow:
-          theme === "light"
-            ? "0 1px 0 rgba(255,255,255,0.4) inset, 0 2px 12px rgba(0,0,0,0.04)"
-            : "0 1px 0 rgba(168,225,197,0.1) inset, 0 2px 12px rgba(0,0,0,0.2)",
+        gap: 2,
+        boxShadow: colors.shadow,
       }}
     >
       {SUPPORTED_LANGUAGES.map((lang) => {
@@ -59,16 +58,46 @@ export function LanguageSwitcher({ theme = "light" }: Props) {
             to={pathFor(lang)}
             aria-current={isActive ? "page" : undefined}
             aria-label={t(`language.${lang}`)}
-            className="rounded-full transition"
+            className="relative inline-flex items-center justify-center rounded-full overflow-hidden transition"
             style={{
               padding: "5px 12px",
               color: isActive ? colors.textActive : colors.textInactive,
-              background: isActive ? colors.activeBg : "transparent",
               textDecoration: "none",
-              fontWeight: isActive ? 600 : 500,
+              fontWeight: isActive ? 700 : 500,
+              minWidth: 38,
+              isolation: "isolate",
             }}
           >
-            {t(`language.${lang}_short`)}
+            {/* Flag background */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 transition"
+              style={{
+                opacity: isActive ? 0.85 : 0.35,
+                zIndex: 0,
+              }}
+            >
+              <FlagFor lang={lang} className="block w-full h-full" />
+            </span>
+            {/* White scrim for text readability (on top of flag, behind text) */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 transition"
+              style={{
+                background: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.7)",
+                zIndex: 1,
+              }}
+            />
+            {/* Text label */}
+            <span
+              className="relative"
+              style={{
+                zIndex: 2,
+                textShadow: isActive ? "0 1px 0 rgba(255,255,255,0.5)" : undefined,
+              }}
+            >
+              {t(`language.${lang}_short`)}
+            </span>
           </Link>
         );
       })}
