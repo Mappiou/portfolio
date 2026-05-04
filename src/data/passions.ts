@@ -22,9 +22,9 @@ export const passions: Passion[] = [
     icon: "sport",
     title: { fr: "Sport", en: "Sport", es: "Deporte" },
     description: {
-      fr: "Quand je ne suis pas devant un écran, je suis en train de courir après une balle ou de glisser sur de la glace. Trois disciplines, trois rythmes différents.",
-      en: "When I'm not at a screen, I'm chasing a ball or gliding on ice. Three disciplines, three different rhythms.",
-      es: "Cuando no estoy frente a una pantalla, persigo una pelota o me deslizo sobre el hielo. Tres disciplinas, tres ritmos diferentes.",
+      fr: "Quand je ne suis pas devant un écran, je suis en train de courir après une balle, de glisser sur la glace ou de monter en montagne. Disciplines variées, rythmes différents.",
+      en: "When I'm not at a screen, I'm chasing a ball, gliding on ice, or climbing in the mountains. Different disciplines, different rhythms.",
+      es: "Cuando no estoy frente a una pantalla, persigo una pelota, me deslizo sobre el hielo o subo a la montaña. Disciplinas variadas, ritmos diferentes.",
     },
     items: [
       {
@@ -32,11 +32,11 @@ export const passions: Passion[] = [
         label: { fr: "Badminton", en: "Badminton", es: "Bádminton" },
       },
       {
-        id: "volley",
+        id: "beach-volley",
         label: {
-          fr: "Volley-ball / Beach volley",
-          en: "Volleyball / Beach volley",
-          es: "Voleibol / Vóley playa",
+          fr: "Beach volley",
+          en: "Beach volley",
+          es: "Vóley playa",
         },
       },
       {
@@ -45,6 +45,14 @@ export const passions: Passion[] = [
           fr: "Patin à glace",
           en: "Ice skating",
           es: "Patinaje sobre hielo",
+        },
+      },
+      {
+        id: "trekking",
+        label: {
+          fr: "Trekking en autonomie",
+          en: "Self-supported trekking",
+          es: "Trekking en autonomía",
         },
       },
     ],
@@ -58,20 +66,11 @@ export const passions: Passion[] = [
       es: "Nuevas tecnologías",
     },
     description: {
-      fr: "J'adore découvrir, comprendre et démonter les nouveautés tech : nouveaux modèles d'IA, frameworks, gadgets, démos de week-end. Comprendre comment ça marche sous le capot, c'est ce qui me fait avancer.",
-      en: "I love discovering, understanding and tinkering with new tech: new AI models, frameworks, gadgets, weekend demos. Understanding what's under the hood is what keeps me going.",
-      es: "Me encanta descubrir, comprender y desmontar las novedades tech: nuevos modelos de IA, frameworks, gadgets, demos de fin de semana. Entender cómo funciona por dentro es lo que me hace avanzar.",
+      fr: "Passion réelle pour la tech en général. Je fais de la veille continue sur tout ce qui sort — nouveaux modèles d'IA, frameworks, outils, gadgets, papers de recherche. Curieux par défaut, je passe du temps à comprendre comment ça marche sous le capot et à tester par moi-même avant de me faire un avis. Ce qui me motive : ne jamais cesser d'apprendre.",
+      en: "Genuine passion for tech in general. I run continuous tech-watch on everything new — AI models, frameworks, tools, gadgets, research papers. Curious by default, I spend time understanding how things work under the hood and testing them myself before forming an opinion. What drives me: never stop learning.",
+      es: "Auténtica pasión por la tech en general. Hago vigilancia continua de todas las novedades — modelos de IA, frameworks, herramientas, gadgets, papers de investigación. Curioso por defecto, dedico tiempo a entender cómo funciona por dentro y a probarlo antes de formarme una opinión. Lo que me motiva: no dejar nunca de aprender.",
     },
-    items: [
-      {
-        id: "tech-watch",
-        label: {
-          fr: "Veille technologique",
-          en: "Tech watch",
-          es: "Vigilancia tecnológica",
-        },
-      },
-    ],
+    items: [],
   },
   {
     id: "travel",
