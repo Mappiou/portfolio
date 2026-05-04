@@ -135,7 +135,7 @@ export const education: Education[] = [
   },
   {
     id: "utt-prepa-end",
-    year: 2017.95,
+    year: 2017,
     kind: "milestone",
     title: {
       fr: "Fin de prépa intégrée",
@@ -145,9 +145,9 @@ export const education: Education[] = [
     school: "UTT — Université de Technologie de Troyes",
     location: "Troyes, France",
     period: {
-      fr: "Janvier 2018 · entrée en branche ISI",
-      en: "January 2018 · joining the ISI branch",
-      es: "Enero 2018 · entrada en la rama ISI",
+      fr: "Janvier 2017 · entrée en branche ISI",
+      en: "January 2017 · joining the ISI branch",
+      es: "Enero 2017 · entrada en la rama ISI",
     },
     summary: {
       fr: "Validation TC1+TC2 → branche Informatique & SI, spécialisation IA.",
@@ -162,7 +162,7 @@ export const education: Education[] = [
   },
   {
     id: "exchange-china",
-    year: 2017.55,
+    year: 2016.5,
     kind: "exchange",
     title: {
       fr: "Échange universitaire — Chine",
@@ -172,9 +172,9 @@ export const education: Education[] = [
     school: "Université chinoise · échange UTT",
     location: "Chine",
     period: {
-      fr: "1 semestre · 2017",
-      en: "1 semester · 2017",
-      es: "1 semestre · 2017",
+      fr: "1 semestre · 2016-2017",
+      en: "1 semester · 2016-2017",
+      es: "1 semestre · 2016-2017",
     },
     summary: {
       fr: "Semestre business multiculturel en Asie — clôture de la prépa intégrée.",
