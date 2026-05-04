@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Hero } from "../components/sections/Hero";
 import { BioSection } from "../components/sections/BioSection";
 import { TimelineSection } from "../components/sections/TimelineSection";
+import { EducationSection } from "../components/sections/EducationSection";
 import { PrinciplesSection } from "../components/sections/PrinciplesSection";
 import { ProjectsSection } from "../components/sections/ProjectsSection";
 import { ContactSection } from "../components/sections/ContactSection";
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <BioSection />
       <TimelineSection />
+      <EducationSection />
       <PrinciplesSection />
       <ProjectsSection />
       <ContactSection />
