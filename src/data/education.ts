@@ -48,8 +48,35 @@ export const education: Education[] = [
     },
   },
   {
+    id: "internship-orange-labs",
+    year: 2018.01,
+    kind: "internship",
+    title: {
+      fr: "Stage R&D — Orange Labs",
+      en: "R&D internship — Orange Labs",
+      es: "Prácticas I+D — Orange Labs",
+    },
+    school: "Orange Labs",
+    location: "Caen, France",
+    period: {
+      fr: "Janvier — Juin 2018 · 6 mois",
+      en: "January — June 2018 · 6 months",
+      es: "Enero — Junio 2018 · 6 meses",
+    },
+    summary: {
+      fr: "Premier stage R&D dans un grand groupe télécom.",
+      en: "First R&D internship in a large telecom group.",
+      es: "Primeras prácticas de I+D en un gran grupo telecom.",
+    },
+    description: {
+      fr: "Premier stage en R&D au sein d'Orange Labs : développement d'une application logicielle de santé avec interface de visualisation. Back-end de traitement et front-end de visualisation. Première expérience concrète en grand groupe.",
+      en: "First R&D internship at Orange Labs: development of a health software application with a visualization interface. Both processing back-end and visualization front-end. First hands-on experience in a large company.",
+      es: "Primeras prácticas de I+D en Orange Labs: desarrollo de una aplicación de salud con interfaz de visualización. Back-end de procesamiento y front-end de visualización. Primera experiencia práctica en un gran grupo.",
+    },
+  },
+  {
     id: "exchange-canada",
-    year: 2018,
+    year: 2018.5,
     kind: "exchange",
     title: {
       fr: "Échange universitaire — Canada",
@@ -76,8 +103,35 @@ export const education: Education[] = [
     flag: "🇨🇦",
   },
   {
+    id: "internship-aubay",
+    year: 2019.02,
+    kind: "internship",
+    title: {
+      fr: "Stage Recherche IA — Aubay",
+      en: "AI Research internship — Aubay",
+      es: "Prácticas Investigación IA — Aubay",
+    },
+    school: "Aubay",
+    location: "Paris, France",
+    period: {
+      fr: "Février — Juillet 2019 · 6 mois",
+      en: "February — July 2019 · 6 months",
+      es: "Febrero — Julio 2019 · 6 meses",
+    },
+    summary: {
+      fr: "Stage de recherche IA appliquée à la composition musicale.",
+      en: "AI research internship on computer-assisted music composition.",
+      es: "Prácticas de investigación IA aplicada a la composición musical.",
+    },
+    description: {
+      fr: "Stage de recherche en IA explorant la composition musicale assistée par ordinateur. Recherche sur les architectures de réseaux de neurones appliquées à la génération de musique, implémentation et entraînement de modèles deep learning sur des séquences MIDI. Premier vrai contact avec la recherche appliquée.",
+      en: "Research internship in AI exploring computer-assisted music composition. Research on neural network architectures applied to music generation, implementation and training of deep learning models on MIDI sequences. First real contact with applied research.",
+      es: "Prácticas de investigación en IA explorando la composición musical asistida por ordenador. Investigación sobre arquitecturas de redes neuronales aplicadas a la generación de música, implementación y entrenamiento de modelos de deep learning sobre secuencias MIDI. Primer contacto real con la investigación aplicada.",
+    },
+  },
+  {
     id: "exchange-china",
-    year: 2019,
+    year: 2019.5,
     kind: "exchange",
     title: {
       fr: "Échange universitaire — Chine",
@@ -124,6 +178,33 @@ export const education: Education[] = [
       fr: "Cursus complet d'ingénieur sur 5 ans avec spécialisation en Intelligence Artificielle. Stages, projets longs, deux semestres à l'étranger (Canada + Chine). Diplôme reconnu par la CTI.",
       en: "Full 5-year engineering programme with a specialization in Artificial Intelligence. Internships, long-form projects, two semesters abroad (Canada + China). CTI-accredited diploma.",
       es: "Programa completo de 5 años de ingeniería con especialización en Inteligencia Artificial. Prácticas, proyectos largos, dos semestres en el extranjero (Canadá + China). Diploma acreditado por la CTI.",
+    },
+  },
+  {
+    id: "internship-capgemini",
+    year: 2020.12,
+    kind: "internship",
+    title: {
+      fr: "Stage Data / Blockchain — Capgemini",
+      en: "Data / Blockchain internship — Capgemini",
+      es: "Prácticas Data / Blockchain — Capgemini",
+    },
+    school: "Capgemini",
+    location: "Toulouse, France",
+    period: {
+      fr: "Décembre 2020 — Mai 2021 · 6 mois",
+      en: "December 2020 — May 2021 · 6 months",
+      es: "Diciembre 2020 — Mayo 2021 · 6 meses",
+    },
+    summary: {
+      fr: "Stage de fin d'études : performance et optimisation blockchain.",
+      en: "End-of-studies internship: blockchain performance and optimisation.",
+      es: "Prácticas de fin de estudios: rendimiento y optimización blockchain.",
+    },
+    description: {
+      fr: "Stage de fin d'études (Master 2) : évaluation et optimisation des performances d'un réseau blockchain. Mesures de latence, throughput et scalabilité, modélisation statistique et reporting des goulots d'étranglement. Une mission concrète qui clôt 6 ans de cursus.",
+      en: "End-of-studies internship (Master 2): evaluation and optimization of a blockchain network's performance. Latency, throughput and scalability measurements, statistical modeling and bottleneck reporting. A concrete mission to close 6 years of studies.",
+      es: "Prácticas de fin de estudios (Máster 2): evaluación y optimización del rendimiento de una red blockchain. Mediciones de latencia, throughput y escalabilidad, modelado estadístico y reporting de cuellos de botella. Una misión concreta para cerrar 6 años de estudios.",
     },
   },
   {

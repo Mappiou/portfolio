@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap, Plane, Sprout, ChevronDown, MapPin } from "lucide-react";
+import { GraduationCap, Plane, Sprout, Briefcase, ChevronDown, MapPin } from "lucide-react";
 import type { ReactNode } from "react";
 import { palette, tokens } from "../../styles/palette";
 import { education } from "../../data/education";
@@ -12,12 +12,14 @@ import type { Language } from "../../i18n";
 const iconFor: Record<Education["kind"], ReactNode> = {
   milestone: <Sprout size={14} />,
   exchange: <Plane size={14} />,
+  internship: <Briefcase size={14} />,
   degree: <GraduationCap size={14} />,
 };
 
 const tintFor: Record<Education["kind"], string> = {
   milestone: palette.mint,
   exchange: palette.lilac,
+  internship: palette.rust,
   degree: palette.yellow,
 };
 
