@@ -97,15 +97,13 @@ test.describe("Education section", () => {
     await expect(page.getByRole("button", { name: /Canada/i }).first()).toBeAttached();
     await expect(page.getByRole("button", { name: /Chine/i }).first()).toBeAttached();
     await expect(page.getByRole("button", { name: /Diplôme d'ingénieur/i }).first()).toBeAttached();
-    await expect(page.getByRole("button", { name: /Master 2/i }).first()).toBeAttached();
+    await expect(page.getByRole("button", { name: /Master de Cybersécurité/i }).first()).toBeAttached();
   });
 
   test("clicking a timeline dot opens the detail panel below", async ({ page }) => {
     await page.goto("/fr");
     await page.locator("#education").scrollIntoViewIfNeeded();
-    const canadaDot = page
-      .getByRole("button", { name: /Échange universitaire — Canada/i })
-      .first();
+    const canadaDot = page.getByRole("button", { name: /Échange universitaire — Canada/i }).first();
     await expect(canadaDot).toHaveAttribute("aria-expanded", "false");
     await canadaDot.click();
     await expect(canadaDot).toHaveAttribute("aria-expanded", "true");

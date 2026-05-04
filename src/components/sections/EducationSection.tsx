@@ -24,11 +24,30 @@ const iconFor: Record<Education["kind"], ReactNode> = {
   degree: <GraduationCap size={16} />,
 };
 
+// 3 color codes per the user's grouping:
+// - academic (milestone + degree): mint
+// - internship: rust
+// - exchange: lilac
 const tintFor: Record<Education["kind"], string> = {
   milestone: palette.mint,
-  exchange: palette.lilac,
+  degree: palette.mint,
   internship: palette.rust,
-  degree: palette.yellow,
+  exchange: palette.lilac,
+};
+
+// Light tinted background for the card body — matches the dot colour
+const cardBgFor: Record<Education["kind"], string> = {
+  milestone: "rgba(144, 216, 181, 0.28)", // mint
+  degree: "rgba(144, 216, 181, 0.28)", // mint
+  internship: "rgba(229, 181, 154, 0.28)", // rust
+  exchange: "rgba(199, 209, 240, 0.40)", // lilac (more opaque since lilac is paler)
+};
+
+const cardBgOpenFor: Record<Education["kind"], string> = {
+  milestone: "rgba(144, 216, 181, 0.55)",
+  degree: "rgba(144, 216, 181, 0.55)",
+  internship: "rgba(229, 181, 154, 0.55)",
+  exchange: "rgba(199, 209, 240, 0.65)",
 };
 
 const labelKeyFor: Record<Education["kind"], string> = {
@@ -38,11 +57,11 @@ const labelKeyFor: Record<Education["kind"], string> = {
   degree: "education.kind.degree",
 };
 
-const TIMELINE_WIDTH = 1700; // total scroll width
+const TIMELINE_WIDTH = 2400; // total scroll width — wider to prevent card overlaps
 const YEAR_START = 2015;
 const YEAR_END = 2021;
 const YEAR_SPAN = YEAR_END - YEAR_START; // 6
-const CARD_WIDTH = 240;
+const CARD_WIDTH = 200; // narrower cards to fit more without collision
 
 function leftPercent(year: number): number {
   // Map year value (e.g. 2018.5) to a 0-100% horizontal position
@@ -356,10 +375,10 @@ function EventCard({ entry, lang, tint, labelKey, t, isOpen, onToggle }: EventCa
       aria-expanded={isOpen}
       className="w-full text-center rounded-2xl p-4 transition-all cursor-pointer hover:-translate-y-0.5"
       style={{
-        background: isOpen ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
+        background: isOpen ? cardBgOpenFor[entry.kind] : cardBgFor[entry.kind],
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
-        border: `1px solid ${isOpen ? `${tint}` : "rgba(14,83,77,0.10)"}`,
+        border: `1px solid ${isOpen ? `${tint}` : `${tint}55`}`,
         boxShadow: isOpen
           ? `0 8px 24px -10px rgba(14,83,77,0.25)`
           : `0 4px 12px -4px rgba(14,83,77,0.06)`,
