@@ -18,8 +18,8 @@ export type Education = {
   id: string;
   /** Sort key for the chronological timeline */
   year: number;
-  /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'degree' for diplomas */
-  kind: "milestone" | "exchange" | "degree";
+  /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'internship' for student internships, 'degree' for diplomas */
+  kind: "milestone" | "exchange" | "internship" | "degree";
   title: Translated;
   school: string;
   location: string;
