@@ -14,7 +14,8 @@ describe("data integrity", () => {
         expect(project.tagline[lang]).toBeTruthy();
         expect(project.description[lang]).toBeTruthy();
       }
-      expect(project.apkUrl).toMatch(/^https:\/\/github\.com\/.*\.apk$/);
+      // APK is hosted in public/apks/ alongside the site, served from the deployed origin
+      expect(project.apkUrl).toMatch(/^\/apks\/[\w-]+\.apk$/);
       expect(project.githubUrl).toMatch(/^https:\/\/github\.com\//);
       expect(project.stack.length).toBeGreaterThan(0);
       expect(project.features.length).toBeGreaterThan(0);

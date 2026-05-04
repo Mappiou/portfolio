@@ -40,13 +40,20 @@ test.describe("Homepage routing", () => {
 
 test.describe("Project pages", () => {
   for (const id of ["volley-meteo", "scan2pdf", "triolinguo"]) {
-    test(`/fr/projects/${id} renders with QR + APK link`, async ({ page }) => {
+    test(`/fr/projects/${id} renders with QR + APK link that downloads successfully`, async ({
+      page,
+      request,
+    }) => {
       await page.goto(`/fr/projects/${id}`);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       const downloadLink = page.getByRole("link", { name: /Télécharger l'APK/i });
       await expect(downloadLink).toBeVisible();
       const href = await downloadLink.getAttribute("href");
-      expect(href).toMatch(/^https:\/\/github\.com\/.*\.apk$/);
+      // APKs are bundled in public/apks/, served from the deployed origin
+      expect(href).toMatch(/^\/apks\/[\w-]+\.apk$/);
+      // The APK should actually be reachable (the file exists)
+      const apkResponse = await request.head(href!);
+      expect(apkResponse.status()).toBe(200);
     });
   }
 

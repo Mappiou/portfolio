@@ -10,21 +10,21 @@ Présente la bio, la timeline pro, les principes de travail, et 3 apps Android t
 
 ## Stack
 
-| Couche            | Choix                                                                    |
-| ----------------- | ------------------------------------------------------------------------ |
-| Build / dev       | **Vite 8** + React 19 + TypeScript strict (`noUncheckedIndexedAccess`)   |
-| Styling           | **Tailwind CSS v4** + custom palette (`src/styles/palette.ts`)           |
+| Couche            | Choix                                                                                               |
+| ----------------- | --------------------------------------------------------------------------------------------------- |
+| Build / dev       | **Vite 8** + React 19 + TypeScript strict (`noUncheckedIndexedAccess`)                              |
+| Styling           | **Tailwind CSS v4** + custom palette (`src/styles/palette.ts`)                                      |
 | Polices           | **Fraunces** (titres) + **Inter** (corps) + **Instrument Serif** (accents italiques) — Google Fonts |
-| Icônes            | **lucide-react** + brand SVG inline (GitHub, LinkedIn, X)                |
-| Routing           | **react-router-dom v7** — routes par langue (`/fr`, `/en`, `/es`)        |
-| i18n              | **react-i18next** + browser language detector + `<Trans>` pour italiques |
-| QR codes          | `qrcode.react` (SVG, généré à la volée depuis l'URL APK)                 |
-| Tests unitaires   | **Vitest** + Testing Library + jsdom (≥ 50% coverage)                    |
-| Tests E2E         | **Playwright** (Chromium desktop + Pixel 5 mobile)                       |
-| Lint              | **ESLint** strict + `jsx-a11y` + Prettier                                |
-| Analytics         | `@vercel/analytics` (sans cookies, gratuit)                              |
-| Hébergement cible | **Vercel** (sous-domaine gratuit)                                        |
-| Distribution APK  | **GitHub Releases** par app (lien permanent `releases/latest/download/`) |
+| Icônes            | **lucide-react** + brand SVG inline (GitHub, LinkedIn, X)                                           |
+| Routing           | **react-router-dom v7** — routes par langue (`/fr`, `/en`, `/es`)                                   |
+| i18n              | **react-i18next** + browser language detector + `<Trans>` pour italiques                            |
+| QR codes          | `qrcode.react` (SVG, généré à la volée depuis l'URL APK)                                            |
+| Tests unitaires   | **Vitest** + Testing Library + jsdom (≥ 50% coverage)                                               |
+| Tests E2E         | **Playwright** (Chromium desktop + Pixel 5 mobile)                                                  |
+| Lint              | **ESLint** strict + `jsx-a11y` + Prettier                                                           |
+| Analytics         | `@vercel/analytics` (sans cookies, gratuit)                                                         |
+| Hébergement cible | **Vercel** (sous-domaine gratuit)                                                                   |
+| Distribution APK  | **GitHub Releases** par app (lien permanent `releases/latest/download/`)                            |
 
 Bundle prod : **360 KB JS / 117 KB gzipped · 16 KB CSS / 4 KB gzipped · 2 KB HTML**.
 
@@ -104,7 +104,7 @@ portfolio/
 
 ## Sections de la home page
 
-1. **Hero** — pill "✱ À propos" + titre serif géant centré "Hi, I'm *Mathieu.*"
+1. **Hero** — pill "✱ À propos" + titre serif géant centré "Hi, I'm _Mathieu._"
 2. **BioSection** — photo placeholder mint (cols 5/12) + intro serif + 2 paragraphes + 2 CTA (Download CV / Contact)
 3. **TimelineSection** — 5 pills deep teal pour les expériences (Hexamind, Lincoln, Capgemini, Aubay, Orange Labs)
 4. **PrinciplesSection** — container blur arrondi 64px, 4 entrées en grille 2×2 (numérotées 01-04)
@@ -120,22 +120,39 @@ portfolio/
 
 ## QR codes & APK
 
-Chaque projet expose dans `src/data/projects.ts` une `apkUrl` qui pointe vers une **GitHub Release** (`releases/latest/download/<app>.apk`). Le composant `<QRCode />` génère le SVG à la volée — pas de pré-génération.
+Les 3 APKs sont **bundlés dans le portfolio** sous `public/apks/<app>.apk` et servis par Vercel sur le même domaine que le site. Chaque projet expose dans `src/data/projects.ts` une `apkUrl` relative (`/apks/volley_meteo.apk`). Au rendu, `<QRCode />` la résout en URL absolue via `window.location.origin` (helper `src/lib/url.ts`) pour que le contenu du QR soit téléchargeable depuis n'importe quel téléphone.
 
-**Pour publier une nouvelle version d'une app** :
+**En prod (Vercel)**, le QR pointe vers `https://<domaine>/apks/volley_meteo.apk` → le téléphone télécharge directement l'APK.
+
+**En local (dev/preview)**, le QR pointe vers `http://localhost:5173/apks/...` → utilisable seulement depuis la même machine. Pour tester depuis un téléphone, voir "Test QR depuis téléphone" plus bas.
+
+### Mettre à jour une APK
 
 ```bash
 cd ../volley_meteo
 flutter build apk --release
-gh release create v1.0.0 \
-  build/app/outputs/flutter-apk/app-release.apk#volley_meteo.apk \
-  --title "v1.0.0" \
-  --notes "Première release publique"
+cp build/app/outputs/flutter-apk/app-release.apk \
+   ../portfolio/public/apks/volley_meteo.apk
+cd ../portfolio
+git add public/apks/volley_meteo.apk
+git commit -m "chore(apk): update volley_meteo to vX.Y.Z"
+git push  # Vercel redéploie automatiquement
 ```
 
-Le `#volley_meteo.apk` après le `#` renomme l'asset au moment du upload — c'est le nom que `releases/latest/download/` attend pour que l'URL pointée par le QR du portfolio fonctionne.
+Tailles APK actuelles : volley_meteo 42 MB, scan2pdf 50 MB, triolinguo 42 MB. Vercel free tier accepte jusqu'à 100 MB/fichier.
 
-Une fois publié, le QR code du site pointe automatiquement vers la dernière release — aucun redéploiement du portfolio n'est nécessaire.
+### Test QR depuis téléphone (en local)
+
+Le téléphone ne peut pas atteindre `localhost`. Deux options :
+
+1. **Tunnel public** — `pnpm dlx ngrok http 5173` → URL publique, modifier `apkUrl` temporairement
+2. **Réseau local** — `pnpm dev --host`, le téléphone va à `http://<ip-mac>:5173`
+
+Le plus simple reste de déployer sur Vercel et de scanner depuis le domaine de prod.
+
+### Migration vers GitHub Releases (futur, optionnel)
+
+Si la taille du repo devient un problème, il sera trivial de basculer vers GitHub Releases : remplacer dans `src/data/projects.ts` chaque `apkUrl: "/apks/<x>.apk"` par `apkUrl: "https://github.com/mathieudiep/<repo>/releases/latest/download/<x>.apk"` et publier les releases via `gh release create`.
 
 ## Workflow Git
 
