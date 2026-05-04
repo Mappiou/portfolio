@@ -99,18 +99,6 @@ export default function ProjectDetail() {
           </p>
         </header>
 
-        {/* Phone mockup row */}
-        <div className="flex flex-wrap items-end justify-center gap-6 md:gap-10 mb-16">
-          {(project.screenshots && project.screenshots.length > 0
-            ? project.screenshots
-            : [undefined, undefined, undefined]
-          )
-            .slice(0, 3)
-            .map((src, i) => (
-              <PhoneMockup key={i} project={project} lang={lang} src={src ?? undefined} index={i} />
-            ))}
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
           <div>
             <p
@@ -152,56 +140,61 @@ export default function ProjectDetail() {
             </ul>
           </div>
 
-          <aside
-            className="rounded-[28px] p-8 text-center"
-            style={{
-              background: bg,
-              boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
-            }}
-            aria-label={t("projects.scanQr")}
-          >
-            <p
+          <aside className="flex flex-col items-center gap-6" aria-label={t("projects.scanQr")}>
+            {/* Phone mockup (real screenshot when project.screenshots[0] is set, placeholder otherwise) */}
+            <PhoneMockup project={project} lang={lang} src={project.screenshots?.[0]} index={0} />
+
+            {/* QR + download card under the mockup */}
+            <div
+              className="rounded-[28px] p-6 text-center w-full"
               style={{
-                fontFamily: tokens.fontTitle,
-                fontSize: 22,
-                fontWeight: 600,
-                letterSpacing: "-0.01em",
-                color: palette.textPrimary,
-                marginBottom: 16,
+                background: bg,
+                boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
               }}
             >
-              {t("projects.scanQr")}
-            </p>
-            <div className="flex justify-center mb-5">
-              <QRCode
-                value={project.apkUrl}
-                size={200}
-                bg="#FFFFFF"
-                fg={palette.teal}
-                ariaLabel={`QR ${project.name}`}
-              />
-            </div>
-            <p
-              className="text-sm mb-5"
-              style={{ color: palette.textPrimary, opacity: 0.8, lineHeight: 1.5 }}
-            >
-              {t("projects.androidNote")}
-            </p>
-            <div className="flex flex-col gap-3 items-center">
-              <DownloadButton href={project.apkUrl} filename={`${project.id}.apk`} />
-              {project.githubUrl && (
-                <MegaButton
-                  href={project.githubUrl}
-                  external
-                  variant="outline"
-                  bg={palette.teal}
+              <p
+                style={{
+                  fontFamily: tokens.fontTitle,
+                  fontSize: 20,
+                  fontWeight: 600,
+                  letterSpacing: "-0.01em",
+                  color: palette.textPrimary,
+                  marginBottom: 14,
+                }}
+              >
+                {t("projects.scanQr")}
+              </p>
+              <div className="flex justify-center mb-4">
+                <QRCode
+                  value={project.apkUrl}
+                  size={180}
+                  bg="#FFFFFF"
                   fg={palette.teal}
-                  borderColor="rgba(14,83,77,0.3)"
-                >
-                  <GithubIcon size={14} />
-                  {t("projects.viewSource")}
-                </MegaButton>
-              )}
+                  ariaLabel={`QR ${project.name}`}
+                />
+              </div>
+              <p
+                className="text-xs mb-4"
+                style={{ color: palette.textPrimary, opacity: 0.8, lineHeight: 1.5 }}
+              >
+                {t("projects.androidNote")}
+              </p>
+              <div className="flex flex-col gap-2.5 items-center">
+                <DownloadButton href={project.apkUrl} filename={`${project.id}.apk`} />
+                {project.githubUrl && (
+                  <MegaButton
+                    href={project.githubUrl}
+                    external
+                    variant="outline"
+                    bg={palette.teal}
+                    fg={palette.teal}
+                    borderColor="rgba(14,83,77,0.3)"
+                  >
+                    <GithubIcon size={14} />
+                    {t("projects.viewSource")}
+                  </MegaButton>
+                )}
+              </div>
             </div>
           </aside>
         </div>
