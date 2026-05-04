@@ -21,12 +21,13 @@ const tintFor: Record<Education["kind"], string> = {
   degree: palette.yellow,
 };
 
+const lineGradient = `linear-gradient(180deg, ${palette.teal}30 0%, ${palette.teal}50 50%, ${palette.teal}30 100%)`;
+
 export function EducationSection() {
   const { t } = useTranslation();
   const lang = useLanguageRoute();
   const [openId, setOpenId] = useState<string | null>(null);
 
-  // Sort chronologically (already sorted in the data, but stable just in case)
   const entries = [...education].sort((a, b) => a.year - b.year);
 
   return (
@@ -81,26 +82,40 @@ export function EducationSection() {
         {t("education.expandHint")}
       </p>
 
-      {/* Vertical timeline */}
-      <ol className="relative mx-auto" style={{ maxWidth: 760, listStyle: "none", padding: 0 }}>
-        {/* Vertical line */}
+      <ol className="relative mx-auto" style={{ maxWidth: 900, listStyle: "none", padding: 0 }}>
+        {/* Mobile vertical line — left at 23px */}
         <span
           aria-hidden="true"
-          className="absolute"
+          className="absolute md:hidden"
           style={{
             left: 23,
             top: 12,
             bottom: 12,
             width: 2,
-            background: `linear-gradient(180deg, ${palette.teal}30 0%, ${palette.teal}50 50%, ${palette.teal}30 100%)`,
+            background: lineGradient,
             borderRadius: 2,
           }}
         />
-        {entries.map((entry) => (
+        {/* Desktop vertical line — centered */}
+        <span
+          aria-hidden="true"
+          className="hidden md:block absolute"
+          style={{
+            left: "50%",
+            top: 12,
+            bottom: 12,
+            width: 2,
+            marginLeft: -1,
+            background: lineGradient,
+            borderRadius: 2,
+          }}
+        />
+        {entries.map((entry, i) => (
           <TimelineEntry
             key={entry.id}
             entry={entry}
             lang={lang}
+            isLeft={i % 2 === 0}
             isOpen={openId === entry.id}
             onToggle={() => setOpenId((cur) => (cur === entry.id ? null : entry.id))}
           />
@@ -113,21 +128,21 @@ export function EducationSection() {
 type EntryProps = {
   entry: Education;
   lang: Language;
+  isLeft: boolean;
   isOpen: boolean;
   onToggle: () => void;
 };
 
-function TimelineEntry({ entry, lang, isOpen, onToggle }: EntryProps) {
+function TimelineEntry({ entry, lang, isLeft, isOpen, onToggle }: EntryProps) {
   const tint = tintFor[entry.kind];
   const panelId = `edu-panel-${entry.id}`;
 
   return (
-    <li className="relative" style={{ paddingLeft: 64, paddingBottom: 28 }}>
-      {/* Dot on the line */}
+    <li className="relative md:grid md:grid-cols-2 md:gap-x-12" style={{ paddingBottom: 28 }}>
+      {/* Dot — sits on top of the vertical line */}
       <span
-        className="absolute z-10 inline-flex items-center justify-center rounded-full"
+        className="absolute z-10 inline-flex items-center justify-center rounded-full left-3 md:left-1/2 md:-translate-x-1/2"
         style={{
-          left: 12,
           top: 4,
           width: 24,
           height: 24,
@@ -141,88 +156,94 @@ function TimelineEntry({ entry, lang, isOpen, onToggle }: EntryProps) {
         {iconFor[entry.kind]}
       </span>
 
-      {/* Clickable header */}
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-controls={panelId}
-        className="w-full text-left rounded-2xl px-4 py-3 transition-all hover:bg-white/40 cursor-pointer"
-        style={{
-          background: isOpen ? "rgba(255,255,255,0.55)" : "transparent",
-          border: 0,
-          fontFamily: tokens.fontBody,
-        }}
+      {/* Content cell — col-1 (left) on even index, col-2 (right) on odd */}
+      <div
+        className={`pl-16 md:pl-0 md:pr-0 ${
+          isLeft ? "md:col-start-1 md:text-right" : "md:col-start-2 md:text-left"
+        }`}
       >
-        <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <p
-            className="text-xs uppercase tracking-[0.18em] font-semibold"
-            style={{ color: palette.textSecondary }}
-          >
-            {entry.period[lang]}
-          </p>
-          <ChevronDown
-            size={16}
-            aria-hidden="true"
-            style={{
-              transition: "transform 0.25s ease",
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-              color: palette.textSecondary,
-              opacity: 0.6,
-            }}
-          />
-        </div>
-        <h3
-          className="mt-1.5"
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          className="w-full rounded-2xl px-4 py-3 transition-all hover:bg-white/40 cursor-pointer"
           style={{
-            fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(18px, 1.7vw, 23px)",
-            letterSpacing: "-0.015em",
-            lineHeight: 1.2,
-            color: palette.textPrimary,
+            background: isOpen ? "rgba(255,255,255,0.55)" : "transparent",
+            border: 0,
+            fontFamily: tokens.fontBody,
+            textAlign: isLeft ? "left" : "left", // mobile keeps left-align
           }}
         >
-          {entry.title[lang]}
-          {entry.flag && (
-            <span aria-hidden="true" style={{ marginLeft: 8, fontSize: "0.85em" }}>
-              {entry.flag}
-            </span>
-          )}
-        </h3>
-        <p
-          className="mt-1 italic"
-          style={{
-            fontSize: 14,
-            color: palette.textSecondary,
-            lineHeight: 1.5,
-          }}
-        >
-          {entry.summary[lang]}
-        </p>
-      </button>
-
-      {/* Expanded panel with description + photo */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            id={panelId}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{ overflow: "hidden" }}
+          <div
+            className={`flex items-baseline gap-3 flex-wrap ${isLeft ? "md:flex-row-reverse" : ""}`}
           >
-            <div
-              className="mt-2 px-4 md:px-5 py-5 rounded-2xl grid grid-cols-1 md:grid-cols-[1fr_180px] gap-5 items-start"
-              style={{
-                background: "rgba(255,255,255,0.55)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(14,83,77,0.10)",
-              }}
+            <p
+              className="text-xs uppercase tracking-[0.18em] font-semibold"
+              style={{ color: palette.textSecondary }}
             >
-              <div>
+              {entry.period[lang]}
+            </p>
+            <ChevronDown
+              size={16}
+              aria-hidden="true"
+              style={{
+                transition: "transform 0.25s ease",
+                transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                color: palette.textSecondary,
+                opacity: 0.6,
+              }}
+            />
+          </div>
+          <h3
+            className={`mt-1.5 ${isLeft ? "md:text-right" : "md:text-left"}`}
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontWeight: 600,
+              fontSize: "clamp(18px, 1.7vw, 23px)",
+              letterSpacing: "-0.015em",
+              lineHeight: 1.2,
+              color: palette.textPrimary,
+            }}
+          >
+            {entry.title[lang]}
+            {entry.flag && (
+              <span aria-hidden="true" style={{ marginLeft: 8, fontSize: "0.85em" }}>
+                {entry.flag}
+              </span>
+            )}
+          </h3>
+          <p
+            className={`mt-1 italic ${isLeft ? "md:text-right" : "md:text-left"}`}
+            style={{
+              fontSize: 14,
+              color: palette.textSecondary,
+              lineHeight: 1.5,
+            }}
+          >
+            {entry.summary[lang]}
+          </p>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              id={panelId}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              style={{ overflow: "hidden" }}
+            >
+              <div
+                className="mt-2 px-4 md:px-5 py-5 rounded-2xl text-left"
+                style={{
+                  background: "rgba(255,255,255,0.55)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: "1px solid rgba(14,83,77,0.10)",
+                }}
+              >
                 <p
                   className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full mb-3"
                   style={{
@@ -235,6 +256,7 @@ function TimelineEntry({ entry, lang, isOpen, onToggle }: EntryProps) {
                   {entry.school} · {entry.location}
                 </p>
                 <p
+                  className="mb-4"
                   style={{
                     fontSize: 15,
                     lineHeight: 1.65,
@@ -243,18 +265,17 @@ function TimelineEntry({ entry, lang, isOpen, onToggle }: EntryProps) {
                 >
                   {entry.description[lang]}
                 </p>
+                <PhotoSlot
+                  photoSrc={entry.photoSrc}
+                  flag={entry.flag}
+                  tint={tint}
+                  alt={entry.location}
+                />
               </div>
-
-              <PhotoSlot
-                photoSrc={entry.photoSrc}
-                flag={entry.flag}
-                tint={tint}
-                alt={entry.location}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </li>
   );
 }
@@ -277,19 +298,19 @@ function PhotoSlot({
         alt={alt}
         style={{
           width: "100%",
-          aspectRatio: "1 / 1",
+          aspectRatio: "16 / 9",
           objectFit: "cover",
-          borderRadius: 16,
+          borderRadius: 12,
         }}
       />
     );
   }
   return (
     <div
-      className="relative flex items-center justify-center overflow-hidden rounded-2xl"
+      className="relative flex items-center justify-center overflow-hidden rounded-xl"
       style={{
         width: "100%",
-        aspectRatio: "1 / 1",
+        aspectRatio: "16 / 9",
         background: `linear-gradient(135deg, ${tint} 0%, rgba(255,255,255,0.4) 100%)`,
       }}
       aria-hidden="true"
@@ -297,7 +318,7 @@ function PhotoSlot({
       {flag && (
         <span
           style={{
-            fontSize: 48,
+            fontSize: 40,
             filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.12))",
           }}
         >
