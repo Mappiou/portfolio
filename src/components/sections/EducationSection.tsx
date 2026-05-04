@@ -79,18 +79,21 @@ export function EducationSection() {
     entries.findIndex((e) => e.id === "exchange-china"),
   );
   const [openIndex, setOpenIndex] = useState<number>(initialIndex);
+  const [edgePad, setEdgePad] = useState(0);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const isProgrammaticRef = useRef(false);
   const programmaticTimerRef = useRef<number | null>(null);
+  const centeredRef = useRef(false);
 
   const computeActiveIndex = () => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
-    const padding = CARD_WIDTH / 2;
-    const usableWidth = Math.max(1, scroller.scrollWidth - 2 * padding);
+    const pad = Math.max(0, scroller.clientWidth / 2 - CARD_WIDTH / 2);
+    const innerStart = pad + CARD_WIDTH / 2;
+    const usableWidth = Math.max(1, TIMELINE_WIDTH - CARD_WIDTH);
     const scrollCenter = scroller.scrollLeft + scroller.clientWidth / 2;
-    const ratio = Math.max(0, Math.min(1, (scrollCenter - padding) / usableWidth));
+    const ratio = Math.max(0, Math.min(1, (scrollCenter - innerStart) / usableWidth));
     const yearAtCenter = YEAR_START + ratio * YEAR_SPAN;
     let closest = 0;
     let minDist = Infinity;
@@ -113,33 +116,50 @@ export function EducationSection() {
     });
   };
 
-  // Center China on first mount
+  // Track viewport width to size the left/right spacers so the cursor can
+  // reach the first and last events
   useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-    const entry = entries[initialIndex];
-    if (!entry) return;
-    const padding = CARD_WIDTH / 2;
-    const usableWidth = scroller.scrollWidth - 2 * padding;
-    const targetCenter = padding + ((entry.year - YEAR_START) / YEAR_SPAN) * usableWidth;
-    scroller.scrollLeft = Math.max(0, targetCenter - scroller.clientWidth / 2);
+    const update = () => {
+      const scroller = scrollerRef.current;
+      if (!scroller) return;
+      const pad = Math.max(0, scroller.clientWidth / 2 - CARD_WIDTH / 2);
+      setEdgePad(pad);
+    };
+    update();
+    window.addEventListener("resize", update);
     return () => {
+      window.removeEventListener("resize", update);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       if (programmaticTimerRef.current !== null) {
         window.clearTimeout(programmaticTimerRef.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Center China the first time edgePad becomes available
+  useEffect(() => {
+    if (edgePad === 0 || centeredRef.current) return;
+    centeredRef.current = true;
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const entry = entries[initialIndex];
+    if (!entry) return;
+    const innerStart = edgePad + CARD_WIDTH / 2;
+    const usableWidth = TIMELINE_WIDTH - CARD_WIDTH;
+    const targetCenter = innerStart + ((entry.year - YEAR_START) / YEAR_SPAN) * usableWidth;
+    scroller.scrollLeft = Math.max(0, targetCenter - scroller.clientWidth / 2);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [edgePad]);
 
   const scrollToEntry = (index: number) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
     const entry = entries[index];
     if (!entry) return;
-    const padding = CARD_WIDTH / 2;
-    const usableWidth = scroller.scrollWidth - 2 * padding;
-    const targetCenter = padding + ((entry.year - YEAR_START) / YEAR_SPAN) * usableWidth;
+    const pad = Math.max(0, scroller.clientWidth / 2 - CARD_WIDTH / 2);
+    const innerStart = pad + CARD_WIDTH / 2;
+    const usableWidth = TIMELINE_WIDTH - CARD_WIDTH;
+    const targetCenter = innerStart + ((entry.year - YEAR_START) / YEAR_SPAN) * usableWidth;
     setOpenIndex(index);
     isProgrammaticRef.current = true;
     scroller.scrollTo({
@@ -226,11 +246,12 @@ export function EducationSection() {
           WebkitOverflowScrolling: "touch",
         }}
       >
+        <div className="flex" style={{ width: "max-content" }}>
+        <div aria-hidden="true" className="shrink-0" style={{ width: edgePad }} />
         <div
-          className="relative mx-auto"
+          className="relative shrink-0"
           style={{
             width: TIMELINE_WIDTH,
-            minWidth: "100%",
             paddingTop: 0,
             paddingBottom: 0,
           }}
@@ -330,6 +351,8 @@ export function EducationSection() {
               ))}
             </div>
           </div>
+        </div>
+        <div aria-hidden="true" className="shrink-0" style={{ width: edgePad }} />
         </div>
       </div>
 
