@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, MapPin } from "lucide-react";
 import { palette, tokens } from "../../styles/palette";
 import { experiences } from "../../data/experiences";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
+import { ChapterCard } from "../ui/ChapterCard";
 import type { Experience } from "../../data/types";
 import type { Language } from "../../i18n";
+
+const photoSeedFor: Record<string, string> = {
+  hexamind: "hexamind-cinema",
+  lincoln: "lincoln-cinema",
+  capgemini: "capgemini-cinema",
+  aubay: "aubay-cinema",
+  "orange-labs": "orange-cinema",
+};
 
 export function TimelineSection() {
   const { t } = useTranslation();
@@ -14,239 +22,266 @@ export function TimelineSection() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section
-      id="timeline"
-      className="relative z-10 mx-auto px-6 pb-24"
-      style={{ maxWidth: tokens.pageMaxWidth }}
-      aria-labelledby="timeline-heading"
-    >
-      <h2
-        id="timeline-heading"
-        className="text-center mb-3"
-        style={{
-          fontFamily: tokens.fontTitle,
-          fontWeight: 600,
-          fontSize: "clamp(36px, 4.5vw, 64px)",
-          letterSpacing: "-0.03em",
-          lineHeight: 1.05,
-          color: palette.textPrimary,
-        }}
-      >
-        <Trans
-          i18nKey="timeline.title"
-          components={{
-            italic: (
-              <span
-                style={{
-                  fontStyle: "italic",
-                  fontWeight: 400,
-                  fontFamily: tokens.fontItalic,
-                }}
+    <section id="timeline" className="relative w-full" aria-labelledby="timeline-heading">
+      <ChapterCard
+        chapter="CHAPITRE 02"
+        bgSrc="https://picsum.photos/seed/office-dark/1800/600"
+        headingId="timeline-heading"
+        title={
+          <>
+            <Trans
+              i18nKey="timeline.title"
+              components={{
+                italic: <span style={{ fontStyle: "italic" }} />,
+              }}
+            />
+            <span style={{ color: palette.teal }}>.</span>
+          </>
+        }
+      />
+
+      <div className="relative w-full" style={{ padding: "100px 0 180px" }}>
+        <div className="mx-auto px-6" style={{ maxWidth: 1440 }}>
+          <p
+            className="text-center mb-12 italic"
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontSize: 18,
+              color: palette.textSecondary,
+            }}
+          >
+            {t("timeline.expandHint")}
+          </p>
+
+          <div className="flex flex-col">
+            {experiences.map((entry, i) => (
+              <TimelineEntry
+                key={entry.id}
+                entry={entry}
+                index={i}
+                isLast={i === experiences.length - 1}
+                lang={lang}
+                isOpen={openId === entry.id}
+                onToggle={() => setOpenId((cur) => (cur === entry.id ? null : entry.id))}
               />
-            ),
-          }}
-        />
-      </h2>
-      <p className="text-center text-sm mb-10 italic" style={{ color: palette.textSecondary }}>
-        {t("timeline.expandHint")}
-      </p>
+            ))}
+          </div>
 
-      <div className="flex flex-col gap-3.5">
-        {experiences.map((entry) => (
-          <TimelineEntry
-            key={entry.id}
-            entry={entry}
-            lang={lang}
-            isOpen={openId === entry.id}
-            onToggle={() => setOpenId((cur) => (cur === entry.id ? null : entry.id))}
-          />
-        ))}
+          <p
+            className="text-center mt-12"
+            style={{
+              fontFamily: tokens.fontMono,
+              fontSize: 11,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: palette.textSecondary,
+            }}
+          >
+            {t("timeline.note")}
+          </p>
+        </div>
       </div>
-
-      <p
-        className="text-center text-sm mt-6"
-        style={{ color: palette.textSecondary, fontStyle: "italic" }}
-      >
-        {t("timeline.note")}
-      </p>
     </section>
   );
 }
 
 type EntryProps = {
   entry: Experience;
+  index: number;
+  isLast: boolean;
   lang: Language;
   isOpen: boolean;
   onToggle: () => void;
 };
 
-function TimelineEntry({ entry, lang, isOpen, onToggle }: EntryProps) {
+function TimelineEntry({ entry, index, isLast, lang, isOpen, onToggle }: EntryProps) {
   const { t } = useTranslation();
   const panelId = `exp-panel-${entry.id}`;
+  const num = String(index + 1).padStart(2, "0");
+  const seed = photoSeedFor[entry.id] ?? `${entry.id}-cinema`;
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-controls={panelId}
-        className="w-full flex items-center gap-4 md:gap-8 px-5 md:px-7 py-3.5 md:py-4 rounded-full text-left cursor-pointer transition-all hover:scale-[1.005]"
-        style={{
-          background: palette.teal,
-          color: palette.textTertiary,
-          border: 0,
-          fontFamily: tokens.fontBody,
-        }}
-      >
-        <span
+    <article
+      className="grid grid-cols-12 gap-8 md:gap-12 items-center work-row"
+      style={{
+        padding: "80px 0",
+        borderTop: "1px solid rgba(239,233,221,0.12)",
+        borderBottom: isLast ? "1px solid rgba(239,233,221,0.12)" : undefined,
+      }}
+    >
+      <div className="col-span-12 md:col-span-5">
+        <div
+          className="cinema-frame"
           style={{
-            fontFamily: tokens.fontTitle,
-            fontSize: "clamp(15px, 1.4vw, 20px)",
-            fontWeight: 500,
-            flex: "0 0 max-content",
-            letterSpacing: "-0.01em",
-            minWidth: 130,
+            aspectRatio: "3 / 2",
+            width: "100%",
           }}
         >
-          {entry.period[lang]}
-        </span>
-        <span
+          <img
+            src={`https://picsum.photos/seed/${seed}/600/400`}
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+      <div className="col-span-12 md:col-span-7">
+        <div
           style={{
-            fontSize: "clamp(15px, 1.3vw, 19px)",
-            fontWeight: 600,
-            flex: "1 1 auto",
+            fontFamily: tokens.fontTitle,
+            fontStyle: "italic",
+            fontWeight: 300,
+            fontSize: 96,
+            lineHeight: 1,
+            color: palette.textSecondary,
+            letterSpacing: "-0.02em",
+            marginBottom: 20,
+            transition: "color 0.6s ease",
+          }}
+          className="hover:!text-[#D9A648]"
+        >
+          {num}
+        </div>
+        <h3
+          style={{
+            fontFamily: tokens.fontTitle,
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: 40,
+            lineHeight: 1.1,
+            color: palette.textPrimary,
+            letterSpacing: "-0.02em",
+            marginBottom: 8,
           }}
         >
           {entry.company}
-        </span>
-        <span
-          className="hidden md:inline"
+          <span style={{ color: palette.teal }}>.</span>
+        </h3>
+        <p
           style={{
-            fontSize: "clamp(13px, 1vw, 16px)",
-            color: palette.textQuarterly,
-            flex: "0 0 auto",
-            textAlign: "right",
+            fontFamily: tokens.fontBody,
+            fontWeight: 400,
+            fontSize: 16,
+            color: palette.textPrimary,
+            opacity: 0.85,
+            marginBottom: 6,
           }}
         >
           {entry.role[lang]}
-        </span>
-        <ChevronDown
-          size={18}
-          aria-hidden="true"
+        </p>
+        <p
           style={{
-            transition: "transform 0.25s ease",
-            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-            color: palette.textQuarterly,
-            flex: "0 0 auto",
+            fontFamily: tokens.fontMono,
+            fontSize: 12,
+            color: palette.textSecondary,
+            textTransform: "uppercase",
+            letterSpacing: "0.16em",
+            marginBottom: 24,
           }}
-        />
-      </button>
+        >
+          {entry.location[lang]} · {entry.period[lang]}
+        </p>
+        <p
+          style={{
+            fontSize: 17,
+            lineHeight: 1.7,
+            color: palette.textPrimary,
+            opacity: 0.85,
+            marginBottom: 24,
+            maxWidth: 540,
+            fontFamily: tokens.fontBody,
+            fontWeight: 300,
+          }}
+        >
+          {entry.description[lang]}
+        </p>
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            id={panelId}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{ overflow: "hidden" }}
-          >
-            <div
-              className="mt-2 px-6 md:px-8 py-6 rounded-3xl"
-              style={{
-                background: "rgba(255,255,255,0.55)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(14,83,77,0.10)",
-              }}
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          className="inline-flex items-center gap-2 transition-all"
+          style={{
+            background: "transparent",
+            border: "1px solid rgba(239,233,221,0.25)",
+            color: palette.textPrimary,
+            padding: "10px 22px",
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            marginBottom: 24,
+          }}
+        >
+          {isOpen ? t("timeline.collapse") : t("timeline.expand")}
+        </button>
+
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              id={panelId}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              style={{ overflow: "hidden" }}
             >
-              <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
-                <h3
-                  style={{
-                    fontFamily: tokens.fontTitle,
-                    fontWeight: 600,
-                    fontSize: "clamp(20px, 2vw, 26px)",
-                    letterSpacing: "-0.02em",
-                    color: palette.textPrimary,
-                  }}
-                >
-                  {entry.role[lang]}{" "}
-                  <span style={{ color: palette.textSecondary, fontWeight: 400 }}>
-                    · {entry.company}
-                  </span>
-                </h3>
-                <span
-                  className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full"
-                  style={{
-                    background: "rgba(14,83,77,0.08)",
-                    color: palette.textPrimary,
-                    fontWeight: 500,
-                  }}
-                >
-                  <MapPin size={12} aria-hidden="true" />
-                  {entry.location[lang]}
-                </span>
-              </div>
-
-              <p
-                className="italic mb-4"
-                style={{
-                  fontSize: 17,
-                  lineHeight: 1.55,
-                  color: palette.textSecondary,
-                }}
-              >
-                {entry.description[lang]}
-              </p>
-
               {entry.bullets.length > 0 && (
-                <ul className="space-y-2 mb-5" style={{ listStyle: "none", padding: 0 }}>
+                <ul
+                  className="mb-6"
+                  style={{ listStyle: "none", padding: 0, marginTop: 12 }}
+                >
                   {entry.bullets.map((b, i) => (
                     <li
                       key={i}
-                      className="flex gap-3 items-baseline"
                       style={{
-                        fontSize: 15,
-                        lineHeight: 1.55,
+                        position: "relative",
+                        paddingLeft: 28,
+                        marginBottom: 8,
+                        fontSize: 16,
+                        lineHeight: 1.6,
                         color: palette.textPrimary,
+                        opacity: 0.78,
+                        fontFamily: tokens.fontBody,
+                        fontWeight: 300,
                       }}
                     >
-                      <span style={{ color: palette.teal, fontWeight: 700 }}>✱</span>
-                      <span>{b[lang]}</span>
+                      <span
+                        aria-hidden="true"
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          color: palette.teal,
+                          opacity: 0.7,
+                        }}
+                      >
+                        →
+                      </span>
+                      {b[lang]}
                     </li>
                   ))}
                 </ul>
               )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-              <div>
-                <p
-                  className="text-xs uppercase tracking-[0.15em] mb-2"
-                  style={{ color: palette.textSecondary, fontWeight: 600 }}
-                >
-                  {t("timeline.stackLabel")}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.stack.map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full px-2.5 py-0.5 text-xs"
-                      style={{
-                        background: "rgba(14,83,77,0.08)",
-                        color: palette.textPrimary,
-                        fontWeight: 500,
-                      }}
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        <div
+          style={{
+            paddingTop: 20,
+            borderTop: "1px solid rgba(239,233,221,0.12)",
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            color: palette.textSecondary,
+            textTransform: "uppercase",
+            letterSpacing: "0.16em",
+          }}
+        >
+          {entry.stack.join(" · ")}
+        </div>
+      </div>
+    </article>
   );
 }

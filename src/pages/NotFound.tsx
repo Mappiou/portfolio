@@ -12,18 +12,19 @@ export default function NotFound() {
     <>
       <SEO title={`404 · ${t("notFound.title")}`} />
       <section
-        className="relative z-10 mx-auto px-6 pt-24 pb-32 text-center"
+        className="relative z-10 mx-auto px-6 pt-32 pb-32 text-center"
         style={{ maxWidth: tokens.pageMaxWidth }}
       >
         <p
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
+            fontStyle: "italic",
+            fontWeight: 300,
             fontSize: "clamp(96px, 16vw, 220px)",
             lineHeight: 0.9,
             letterSpacing: "-0.04em",
             color: palette.teal,
-            opacity: 0.5,
+            opacity: 0.6,
           }}
         >
           404
@@ -32,8 +33,9 @@ export default function NotFound() {
           className="mt-2"
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(28px, 3vw, 44px)",
+            fontStyle: "italic",
+            fontWeight: 300,
+            fontSize: "clamp(32px, 4vw, 56px)",
             letterSpacing: "-0.02em",
             color: palette.textPrimary,
           }}
@@ -43,7 +45,7 @@ export default function NotFound() {
         <p
           className="mt-3 mx-auto"
           style={{
-            fontFamily: tokens.fontItalic,
+            fontFamily: tokens.fontTitle,
             fontStyle: "italic",
             fontSize: 20,
             color: palette.textSecondary,
@@ -54,10 +56,16 @@ export default function NotFound() {
         </p>
         <Link
           to={`/${lang}`}
-          className="inline-block mt-10 rounded-full px-7 py-3 font-medium transition hover:-translate-y-0.5"
+          className="inline-block mt-10 transition hover:-translate-y-0.5"
           style={{
-            background: palette.teal,
-            color: palette.beige,
+            background: "transparent",
+            color: palette.teal,
+            border: `1px solid ${palette.teal}`,
+            padding: "12px 28px",
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
             textDecoration: "none",
           }}
         >

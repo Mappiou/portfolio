@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
-import { palette } from "../../styles/palette";
+import { palette, tokens } from "../../styles/palette";
 
 type Theme = "light" | "dark";
 
@@ -9,7 +9,7 @@ type Props = {
   theme?: Theme;
 };
 
-export function PillNav({ theme = "light" }: Props) {
+export function PillNav({ theme = "dark" }: Props) {
   const { t } = useTranslation();
   const lang = useLanguageRoute();
   const location = useLocation();
@@ -31,34 +31,32 @@ export function PillNav({ theme = "light" }: Props) {
     },
   ];
 
+  // Dark variant always per redesign brief; "light" mapping preserved for legacy usage
   const colors =
     theme === "light"
       ? {
           bg: palette.white50,
           textPrimary: palette.textPrimary,
           textSecondary: palette.textSecondary,
-          activeBg: "#FFFFFF",
+          activeBg: "rgba(239,233,221,0.12)",
         }
       : {
-          bg: "rgba(168,225,197,0.08)",
-          textPrimary: palette.textQuarterly,
-          textSecondary: "rgba(168, 225, 197, 0.7)",
-          activeBg: "rgba(168,225,197,0.18)",
+          bg: "rgba(14,13,11,0.55)",
+          textPrimary: palette.textPrimary,
+          textSecondary: "rgba(239,233,221,0.65)",
+          activeBg: "rgba(217,166,72,0.18)",
         };
 
   return (
     <nav className="relative z-30 flex justify-center pt-6" aria-label={t("nav.home")}>
       <ul
-        className="flex items-center rounded-full backdrop-blur-md"
+        className="flex items-center backdrop-blur-md"
         style={{
           background: colors.bg,
-          padding: 10,
+          padding: 8,
           gap: 4,
           listStyle: "none",
-          boxShadow:
-            theme === "light"
-              ? "0 1px 0 rgba(255,255,255,0.4) inset, 0 4px 24px rgba(0,0,0,0.04)"
-              : "0 1px 0 rgba(168,225,197,0.1) inset, 0 4px 24px rgba(0,0,0,0.2)",
+          border: "1px solid rgba(239,233,221,0.12)",
           margin: 0,
         }}
       >
@@ -67,14 +65,16 @@ export function PillNav({ theme = "light" }: Props) {
             <Link
               to={item.to}
               aria-current={item.active ? "page" : undefined}
-              className="rounded-full transition-all"
+              className="transition-all hover:!text-[#D9A648]"
               style={{
-                padding: "6px 18px",
-                fontFamily: "Inter, system-ui, sans-serif",
-                fontSize: 15,
-                color: item.active ? colors.textPrimary : colors.textSecondary,
+                padding: "6px 16px",
+                fontFamily: tokens.fontMono,
+                fontSize: 11,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: item.active ? palette.teal : colors.textSecondary,
                 background: item.active ? colors.activeBg : "transparent",
-                fontWeight: item.active ? 600 : 500,
+                fontWeight: 400,
                 textDecoration: "none",
                 display: "inline-block",
               }}

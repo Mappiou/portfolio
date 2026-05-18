@@ -19,19 +19,19 @@ export function AuraCanvas({ colors, opacity = 0.5 }: Props) {
           height: "32rem",
           borderRadius: "50%",
           background: colors[0],
-          filter: "blur(120px)",
+          filter: "blur(160px)",
         }}
       />
       <div
         className="absolute"
         style={{
-          top: "20%",
+          top: "30%",
           right: "8%",
           width: "28rem",
           height: "28rem",
           borderRadius: "50%",
           background: colors[1],
-          filter: "blur(120px)",
+          filter: "blur(160px)",
         }}
       />
       <div
@@ -43,7 +43,7 @@ export function AuraCanvas({ colors, opacity = 0.5 }: Props) {
           height: "30rem",
           borderRadius: "50%",
           background: colors[2] ?? colors[0],
-          filter: "blur(140px)",
+          filter: "blur(180px)",
         }}
       />
     </div>

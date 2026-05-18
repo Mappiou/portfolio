@@ -1,9 +1,6 @@
 import { useTranslation, Trans } from "react-i18next";
-import { Mail } from "lucide-react";
 import { palette, tokens } from "../../styles/palette";
 import { profile } from "../../data/profile";
-import { MegaButton } from "../ui/MegaButton";
-import { GithubIcon, LinkedinIcon } from "../ui/BrandIcons";
 
 export function ContactSection() {
   const { t } = useTranslation();
@@ -11,93 +8,122 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative z-10 mx-auto px-6 pb-32"
-      style={{ maxWidth: tokens.pageMaxWidth }}
+      className="relative w-full overflow-hidden"
+      style={{
+        minHeight: "100vh",
+        padding: "140px 0",
+      }}
       aria-labelledby="contact-heading"
     >
-      <div className="text-center">
-        <p
-          className="inline-block px-4 py-1.5 rounded-full mb-5"
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        <img
+          src="https://picsum.photos/seed/barcelona-skyline-dark/1800/900"
+          alt=""
+          aria-hidden="true"
           style={{
-            background: "rgba(255,255,255,0.55)",
-            color: palette.textSecondary,
-            fontSize: 13,
-            letterSpacing: "0.1em",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            filter: "contrast(108%) saturate(70%) brightness(45%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(14,13,11,0.35) 0%, rgba(14,13,11,0.92) 80%), linear-gradient(180deg, #0E0D0B 0%, transparent 20%, transparent 80%, #0E0D0B 100%)",
+          }}
+        />
+      </div>
+
+      <div
+        className="relative flex flex-col items-center justify-center text-center mx-auto"
+        style={{
+          zIndex: 2,
+          maxWidth: 720,
+          padding: "0 32px",
+          minHeight: "calc(100vh - 280px)",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
             textTransform: "uppercase",
-            fontWeight: 600,
+            color: palette.textSecondary,
+            marginBottom: 40,
           }}
         >
-          ✉ {t("contactSection.kicker")}
+          {t("contactSection.kicker")} · SCÈNE FINALE
         </p>
         <h2
           id="contact-heading"
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(40px, 5.5vw, 80px)",
-            letterSpacing: "-0.04em",
-            lineHeight: 1,
+            fontStyle: "italic",
+            fontWeight: 300,
+            fontSize: "clamp(64px, 9vw, 120px)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.025em",
             color: palette.textPrimary,
+            marginBottom: 64,
           }}
         >
           <Trans
             i18nKey="contactSection.title"
             components={{
-              italic: (
-                <span
-                  style={{
-                    fontStyle: "italic",
-                    fontWeight: 400,
-                    fontFamily: tokens.fontItalic,
-                  }}
-                />
-              ),
+              italic: <span style={{ fontStyle: "italic" }} />,
+              br: <br />,
             }}
           />
+          <span style={{ color: palette.teal }}>.</span>
         </h2>
-        <p
-          className="mt-6 mx-auto"
-          style={{
-            fontSize: "clamp(17px, 1.4vw, 22px)",
-            lineHeight: 1.55,
-            color: palette.textSecondary,
-            maxWidth: 580,
-          }}
-        >
-          {t("contactSection.body")}
-        </p>
 
-        <div className="flex flex-wrap gap-3 mt-10 justify-center">
-          <MegaButton href={`mailto:${profile.email}`} bg={palette.teal} fg={palette.beige}>
-            <Mail size={16} />
-            {profile.email}
-          </MegaButton>
+        <div className="flex flex-col gap-4 items-center">
+          <ContactLink href={`mailto:${profile.email}`}>{profile.email}</ContactLink>
           {profile.links.github && (
-            <MegaButton
-              href={profile.links.github}
-              external
-              variant="outline"
-              bg={palette.teal}
-              fg={palette.teal}
-              borderColor="rgba(14,83,77,0.3)"
-            >
-              <GithubIcon size={16} />
-              GitHub
-            </MegaButton>
+            <ContactLink href={profile.links.github} external>
+              github.com/Mappiou
+            </ContactLink>
           )}
-          <MegaButton
-            href={profile.links.linkedin}
-            external
-            variant="outline"
-            bg={palette.teal}
-            fg={palette.teal}
-            borderColor="rgba(14,83,77,0.3)"
-          >
-            <LinkedinIcon size={16} />
-            LinkedIn
-          </MegaButton>
+          <ContactLink href={profile.links.linkedin} external>
+            linkedin.com/in/mathieu-diep
+          </ContactLink>
         </div>
       </div>
     </section>
+  );
+}
+
+function ContactLink({
+  href,
+  external,
+  children,
+}: {
+  href: string;
+  external?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className="contact-link relative inline-block"
+      style={{
+        fontFamily: tokens.fontBody,
+        fontWeight: 300,
+        fontSize: 24,
+        color: palette.textPrimary,
+        textDecoration: "none",
+        padding: "4px 0",
+        letterSpacing: "0.005em",
+        transition: "color 0.4s ease",
+      }}
+    >
+      {children}
+    </a>
   );
 }

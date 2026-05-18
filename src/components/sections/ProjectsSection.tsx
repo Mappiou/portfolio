@@ -3,165 +3,115 @@ import { useTranslation, Trans } from "react-i18next";
 import { palette, tokens } from "../../styles/palette";
 import { projects } from "../../data/projects";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
-import { QRCode } from "../projects/QRCode";
-
-const cardBg: Record<string, string> = {
-  red: palette.rust,
-  green: palette.mint,
-  blue: palette.babyblue,
-  yellow: palette.yellow,
-};
+import { ChapterCard } from "../ui/ChapterCard";
 
 export function ProjectsSection() {
   const { t } = useTranslation();
   const lang = useLanguageRoute();
 
   return (
-    <section
-      id="projects"
-      className="relative z-10 mx-auto px-6 pb-24"
-      style={{ maxWidth: tokens.pageMaxWidth }}
-      aria-labelledby="projects-heading"
-    >
-      <div className="text-center mb-12">
+    <section id="projects" className="relative w-full" aria-labelledby="projects-heading">
+      <ChapterCard
+        chapter="CHAPITRE 05"
+        bgSrc="https://picsum.photos/seed/apps-cinema/1800/500"
+        headingId="projects-heading"
+        title={
+          <>
+            <Trans
+              i18nKey="projects.title"
+              components={{
+                italic: <span style={{ fontStyle: "italic" }} />,
+              }}
+            />
+            <span style={{ color: palette.teal }}>.</span>
+          </>
+        }
+      />
+
+      <div
+        className="relative mx-auto px-6"
+        style={{ padding: "100px 24px 180px", maxWidth: tokens.pageMaxWidth }}
+      >
         <p
-          className="inline-block px-4 py-1.5 rounded-full mb-4"
-          style={{
-            background: "rgba(255,255,255,0.55)",
-            color: palette.textSecondary,
-            fontSize: 13,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            fontWeight: 600,
-          }}
-        >
-          ✦ {t("projects.kicker")}
-        </p>
-        <h2
-          id="projects-heading"
+          className="text-center mb-12 mx-auto"
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(36px, 4.5vw, 64px)",
-            letterSpacing: "-0.03em",
-            lineHeight: 1.05,
-            color: palette.textPrimary,
-          }}
-        >
-          <Trans
-            i18nKey="projects.title"
-            components={{
-              italic: (
-                <span
-                  style={{
-                    fontStyle: "italic",
-                    fontWeight: 400,
-                    fontFamily: tokens.fontItalic,
-                  }}
-                />
-              ),
-            }}
-          />
-        </h2>
-        <p
-          className="mt-4 mx-auto"
-          style={{
-            fontSize: 17,
-            lineHeight: 1.65,
+            fontStyle: "italic",
+            fontSize: "clamp(20px, 2vw, 26px)",
+            lineHeight: 1.5,
             color: palette.textSecondary,
-            maxWidth: 540,
+            maxWidth: 620,
           }}
         >
           {t("projects.intro")}
         </p>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {projects.map((project) => {
-          const bg = cardBg[project.accent] ?? palette.mint;
-          return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-9">
+          {projects.map((project) => (
             <Link
               key={project.id}
               to={`/${lang}/projects/${project.id}`}
-              className="block rounded-[28px] p-7 transition hover:-translate-y-1"
+              className="group flex flex-col transition-all hover:-translate-y-1"
               style={{
-                background: bg,
-                color: palette.textPrimary,
                 textDecoration: "none",
-                boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
               }}
             >
-              <div className="flex items-start justify-between mb-5">
-                <span style={{ fontSize: 38 }} aria-hidden="true">
-                  {project.emoji}
-                </span>
-                <QRCode
-                  value={project.apkUrl}
-                  size={64}
-                  bg="rgba(255,255,255,0.7)"
-                  fg={palette.teal}
-                  ariaLabel={project.name}
+              <div
+                className="cinema-frame mb-7"
+                style={{
+                  aspectRatio: "3 / 4",
+                  width: "100%",
+                }}
+              >
+                <img
+                  src={`https://picsum.photos/seed/${project.id}-cinema/450/600`}
+                  alt=""
+                  aria-hidden="true"
                 />
               </div>
               <h3
+                className="group-hover:!text-[#D9A648] transition-colors"
                 style={{
                   fontFamily: tokens.fontTitle,
-                  fontWeight: 600,
-                  fontSize: 26,
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1.1,
+                  fontStyle: "italic",
+                  fontWeight: 400,
+                  fontSize: 28,
+                  letterSpacing: "-0.015em",
                   color: palette.textPrimary,
+                  marginBottom: 8,
                 }}
               >
                 {project.name}
               </h3>
               <p
-                className="mt-2"
                 style={{
-                  fontFamily: tokens.fontItalic,
-                  fontStyle: "italic",
-                  fontSize: 16,
-                  color: palette.textPrimary,
-                  opacity: 0.85,
+                  fontFamily: tokens.fontBody,
+                  fontWeight: 300,
+                  fontSize: 14,
+                  lineHeight: 1.55,
+                  color: palette.textSecondary,
+                  marginBottom: 18,
                 }}
               >
                 {project.tagline[lang]}
               </p>
-              <p
-                className="mt-4"
+              <div
+                className="mt-auto"
                 style={{
-                  fontSize: 14,
-                  lineHeight: 1.55,
-                  color: palette.textPrimary,
-                  opacity: 0.75,
+                  paddingTop: 18,
+                  borderTop: "1px solid rgba(239,233,221,0.12)",
+                  fontFamily: tokens.fontMono,
+                  fontSize: 11,
+                  color: palette.textSecondary,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.16em",
                 }}
               >
-                {project.description[lang]}
-              </p>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {project.stack.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full px-2.5 py-0.5 text-xs"
-                    style={{
-                      background: "rgba(255,255,255,0.5)",
-                      color: palette.textPrimary,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-              <div
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium"
-                style={{ color: palette.teal }}
-              >
-                {t("projects.viewMore")} →
+                {project.stack.join(" · ")}
               </div>
             </Link>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </section>
   );

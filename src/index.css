@@ -10,12 +10,22 @@ body,
 
 html {
   scroll-behavior: smooth;
+  background: #0e0d0b;
 }
 
 body {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-weight: 300;
+  background: #0e0d0b;
+  color: #efe9dd;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.005em;
+}
+
+::selection {
+  background: #d9a648;
+  color: #0e0d0b;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -32,7 +42,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #0e534d;
+  outline: 2px solid #d9a648;
   outline-offset: 2px;
 }
 
@@ -47,8 +57,57 @@ body {
   top: 1rem;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: #0e534d;
-  color: #ebe3d5;
+  background: #d9a648;
+  color: #0e0d0b;
   text-decoration: none;
   border-radius: 0.5rem;
+}
+
+.cinema-frame {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+.cinema-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(108%) saturate(90%) brightness(92%);
+  transition: filter 0.9s ease, transform 1.4s ease;
+}
+.cinema-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+}
+.cinema-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  z-index: 2;
+}
+.cinema-frame:hover img {
+  filter: contrast(110%) saturate(96%) brightness(100%);
+}
+
+.contact-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: #d9a648;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.contact-link:hover {
+  color: #d9a648;
+}
+.contact-link:hover::after {
+  width: 100%;
 }

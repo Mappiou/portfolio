@@ -14,6 +14,7 @@ export function Layout() {
         background: palette.beige,
         color: palette.textPrimary,
         fontFamily: tokens.fontBody,
+        fontWeight: 300,
         minHeight: "100dvh",
         position: "relative",
         overflowX: "hidden",
@@ -23,12 +24,15 @@ export function Layout() {
         {t("nav.home")} ↓
       </a>
 
-      <AuraCanvas colors={[palette.mint, palette.rust, palette.lilac]} opacity={0.5} />
+      <AuraCanvas
+        colors={["rgba(217,166,72,0.10)", "rgba(201,122,92,0.08)", "rgba(111,168,144,0.06)"]}
+        opacity={0.5}
+      />
 
       <header className="relative z-30">
-        <PillNav theme="light" />
+        <PillNav theme="dark" />
         <div className="absolute right-6 top-7" style={{ zIndex: 31 }}>
-          <LanguageSwitcher theme="light" />
+          <LanguageSwitcher theme="dark" />
         </div>
       </header>
 
@@ -36,7 +40,7 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <Footer theme="light" />
+      <Footer theme="dark" />
     </div>
   );
 }
