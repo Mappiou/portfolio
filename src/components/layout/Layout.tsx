@@ -14,6 +14,8 @@ export function Layout() {
         background: palette.beige,
         color: palette.textPrimary,
         fontFamily: tokens.fontBody,
+        fontSize: 17,
+        lineHeight: 1.6,
         minHeight: "100dvh",
         position: "relative",
         overflowX: "hidden",
@@ -23,7 +25,7 @@ export function Layout() {
         {t("nav.home")} ↓
       </a>
 
-      <AuraCanvas colors={[palette.mint, palette.rust, palette.lilac]} opacity={0.5} />
+      <AuraCanvas colors={[palette.mint, palette.lilac, palette.rust]} opacity={0.35} />
 
       <header className="relative z-30">
         <PillNav theme="light" />

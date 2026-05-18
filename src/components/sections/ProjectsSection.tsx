@@ -3,14 +3,6 @@ import { useTranslation, Trans } from "react-i18next";
 import { palette, tokens } from "../../styles/palette";
 import { projects } from "../../data/projects";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
-import { QRCode } from "../projects/QRCode";
-
-const cardBg: Record<string, string> = {
-  red: palette.rust,
-  green: palette.mint,
-  blue: palette.babyblue,
-  yellow: palette.yellow,
-};
 
 export function ProjectsSection() {
   const { t } = useTranslation();
@@ -19,146 +11,157 @@ export function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative z-10 mx-auto px-6 pb-24"
-      style={{ maxWidth: tokens.pageMaxWidth }}
+      className="relative z-10 mx-auto px-6 md:px-10"
+      style={{
+        maxWidth: tokens.pageMaxWidth,
+        paddingTop: "clamp(80px, 11vw, 140px)",
+        paddingBottom: "clamp(80px, 11vw, 140px)",
+      }}
       aria-labelledby="projects-heading"
     >
-      <div className="text-center mb-12">
-        <p
-          className="inline-block px-4 py-1.5 rounded-full mb-4"
-          style={{
-            background: "rgba(255,255,255,0.55)",
-            color: palette.textSecondary,
-            fontSize: 13,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            fontWeight: 600,
-          }}
-        >
-          ✦ {t("projects.kicker")}
-        </p>
+      <div
+        className="flex items-baseline justify-between mb-16 pb-6"
+        style={{ borderBottom: `1px solid ${palette.hairline}` }}
+      >
         <h2
           id="projects-heading"
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(36px, 4.5vw, 64px)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "clamp(40px, 5.5vw, 72px)",
             letterSpacing: "-0.03em",
-            lineHeight: 1.05,
+            lineHeight: 1,
             color: palette.textPrimary,
+            margin: 0,
+            fontFeatureSettings: '"ss01", "ss02"',
           }}
         >
           <Trans
             i18nKey="projects.title"
             components={{
-              italic: (
-                <span
-                  style={{
-                    fontStyle: "italic",
-                    fontWeight: 400,
-                    fontFamily: tokens.fontItalic,
-                  }}
-                />
-              ),
+              italic: <span style={{ fontStyle: "italic", color: palette.teal }} />,
             }}
           />
         </h2>
-        <p
-          className="mt-4 mx-auto"
+        <span
           style={{
-            fontSize: 17,
-            lineHeight: 1.65,
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
             color: palette.textSecondary,
-            maxWidth: 540,
+            whiteSpace: "nowrap",
           }}
         >
-          {t("projects.intro")}
-        </p>
+          02 / 03 — {t("projects.kicker")}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {projects.map((project) => {
-          const bg = cardBg[project.accent] ?? palette.mint;
+      <p
+        className="mb-12"
+        style={{
+          fontSize: 17,
+          lineHeight: 1.65,
+          color: palette.textSecondary,
+          maxWidth: 640,
+        }}
+      >
+        {t("projects.intro")}
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        {projects.map((project, i) => {
+          const num = String(i + 1).padStart(2, "0");
           return (
             <Link
               key={project.id}
               to={`/${lang}/projects/${project.id}`}
-              className="block rounded-[28px] p-7 transition hover:-translate-y-1"
+              className="block transition-transform hover:-translate-y-1.5"
               style={{
-                background: bg,
                 color: palette.textPrimary,
                 textDecoration: "none",
-                boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
               }}
             >
-              <div className="flex items-start justify-between mb-5">
-                <span style={{ fontSize: 38 }} aria-hidden="true">
-                  {project.emoji}
-                </span>
-                <QRCode
-                  value={project.apkUrl}
-                  size={64}
-                  bg="rgba(255,255,255,0.7)"
-                  fg={palette.teal}
-                  ariaLabel={project.name}
+              <div className="overflow-hidden mb-7" style={{ aspectRatio: "1 / 1" }}>
+                <img
+                  src={`https://picsum.photos/seed/${project.id}/500/500`}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    filter: "sepia(8%) saturate(110%)",
+                    transition: "transform 0.7s ease, filter 0.5s ease",
+                  }}
                 />
               </div>
+              <p
+                className="mb-3"
+                style={{
+                  fontFamily: tokens.fontMono,
+                  fontSize: 11,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: palette.teal,
+                  fontWeight: 500,
+                }}
+              >
+                {num} — {project.stack[0] ?? "Mobile"}
+              </p>
               <h3
                 style={{
                   fontFamily: tokens.fontTitle,
-                  fontWeight: 600,
-                  fontSize: 26,
+                  fontStyle: "italic",
+                  fontWeight: 400,
+                  fontSize: 28,
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
                   color: palette.textPrimary,
+                  margin: 0,
+                  marginBottom: 10,
+                  fontFeatureSettings: '"ss01", "ss02"',
                 }}
               >
-                {project.name}
+                {project.name}<span style={{ color: palette.teal }}>.</span>
               </h3>
               <p
-                className="mt-2"
+                className="mb-5"
                 style={{
-                  fontFamily: tokens.fontItalic,
-                  fontStyle: "italic",
                   fontSize: 16,
-                  color: palette.textPrimary,
-                  opacity: 0.85,
+                  lineHeight: 1.5,
+                  color: palette.textSecondary,
+                  maxWidth: 320,
                 }}
               >
                 {project.tagline[lang]}
               </p>
-              <p
-                className="mt-4"
+              <div
+                className="pt-4"
                 style={{
-                  fontSize: 14,
-                  lineHeight: 1.55,
-                  color: palette.textPrimary,
-                  opacity: 0.75,
+                  borderTop: `1px solid ${palette.hairline}`,
+                  fontFamily: tokens.fontMono,
+                  fontSize: 10,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: palette.textSecondary,
                 }}
               >
-                {project.description[lang]}
-              </p>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {project.stack.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full px-2.5 py-0.5 text-xs"
-                    style={{
-                      background: "rgba(255,255,255,0.5)",
-                      color: palette.textPrimary,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
+                {project.stack.join(" · ")}
               </div>
-              <div
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium"
-                style={{ color: palette.teal }}
+              <p
+                className="mt-5 inline-flex items-center gap-2"
+                style={{
+                  fontFamily: tokens.fontMono,
+                  fontSize: 11,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: palette.teal,
+                  fontWeight: 500,
+                }}
               >
-                {t("projects.viewMore")} →
-              </div>
+                → {t("projects.viewMore")}
+              </p>
             </Link>
           );
         })}

@@ -9,58 +9,99 @@ export function Footer({ theme = "light" }: { theme?: Theme }) {
   const colors =
     theme === "light"
       ? {
-          border: "rgba(14,83,77,0.15)",
+          border: palette.hairline,
           accent: palette.teal,
-          secondary: palette.textSecondary,
+          textInk: palette.textSecondary,
+          mark: palette.textSecondary,
         }
       : {
-          border: "rgba(168,225,197,0.10)",
-          accent: palette.mint,
-          secondary: "rgba(168, 225, 197, 0.7)",
+          border: "rgba(250,245,235,0.10)",
+          accent: palette.teal,
+          textInk: "rgba(250,245,235,0.7)",
+          mark: "rgba(250,245,235,0.6)",
         };
 
   return (
-    <footer className="relative z-10 mx-auto px-6 pb-16" style={{ maxWidth: tokens.pageMaxWidth }}>
+    <footer
+      className="relative z-10 mx-auto px-6 md:px-10"
+      style={{
+        maxWidth: tokens.pageMaxWidth,
+        paddingTop: 60,
+        paddingBottom: 48,
+      }}
+    >
       <div
-        className="pt-10 flex flex-wrap items-center justify-between gap-4"
-        style={{ borderTop: `1px solid ${colors.border}` }}
+        className="flex flex-wrap items-center justify-between gap-4"
+        style={{ borderTop: `1px solid ${colors.border}`, paddingTop: 40 }}
       >
         <div
           style={{
             fontFamily: tokens.fontItalic,
-            fontSize: 28,
             fontStyle: "italic",
-            color: colors.accent,
+            fontSize: 14,
+            color: colors.mark,
           }}
         >
-          {t("footer.signature")}
+          M<span style={{ color: colors.accent }}>.</span>D — {t("footer.signature")}
         </div>
-        <div className="flex gap-5 text-sm" style={{ color: colors.secondary }}>
+        <div
+          className="flex gap-6"
+          style={{
+            fontFamily: tokens.fontMono,
+            fontSize: 10,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: colors.textInk,
+          }}
+        >
           {profile.links.github && (
             <a
               href={profile.links.github}
-              className="hover:underline"
               target="_blank"
               rel="noreferrer"
+              className="transition-colors hover:text-[color:var(--accent)]"
+              style={
+                { color: colors.textInk, textDecoration: "none", "--accent": colors.accent } as React.CSSProperties
+              }
             >
               {t("contact.github")}
             </a>
           )}
           <a
             href={profile.links.linkedin}
-            className="hover:underline"
             target="_blank"
             rel="noreferrer"
+            className="transition-colors hover:text-[color:var(--accent)]"
+            style={
+              { color: colors.textInk, textDecoration: "none", "--accent": colors.accent } as React.CSSProperties
+            }
           >
             {t("contact.linkedin")}
           </a>
-          <a href={`mailto:${profile.email}`} className="hover:underline">
+          <a
+            href={`mailto:${profile.email}`}
+            className="transition-colors hover:text-[color:var(--accent)]"
+            style={
+              { color: colors.textInk, textDecoration: "none", "--accent": colors.accent } as React.CSSProperties
+            }
+          >
             {t("contact.email")}
           </a>
         </div>
       </div>
-      <p className="mt-6 text-xs text-center" style={{ color: colors.secondary, opacity: 0.7 }}>
-        {t("footer.rights")}
+      <p
+        className="mt-6"
+        style={{
+          fontFamily: tokens.fontMono,
+          fontSize: 10,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: colors.textInk,
+          opacity: 0.7,
+          textAlign: "center",
+        }}
+      >
+        © 2026 Mathieu Diep · Barcelone · Set in Newsreader &amp; Inter Tight &amp; JetBrains Mono · {t("footer.rights")}
       </p>
     </footer>
   );

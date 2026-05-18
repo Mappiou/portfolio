@@ -13,9 +13,17 @@ html {
 }
 
 body {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background-color: #f5ede0;
+  color: #1f1a14;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: #b85c3a;
+  color: #f5ede0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -32,7 +40,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #0e534d;
+  outline: 2px solid #b85c3a;
   outline-offset: 2px;
 }
 
@@ -47,8 +55,12 @@ body {
   top: 1rem;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: #0e534d;
-  color: #ebe3d5;
+  background: #b85c3a;
+  color: #f5ede0;
   text-decoration: none;
-  border-radius: 0.5rem;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }

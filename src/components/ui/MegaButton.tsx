@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { tokens } from "../../styles/palette";
 
 type Variant = "primary" | "outline";
 type Props = {
@@ -25,11 +26,11 @@ export function MegaButton({
   const Element = href ? "a" : "button";
   const baseStyle =
     variant === "primary"
-      ? { background: bg, color: fg, border: `1.5px solid ${bg}` }
+      ? { background: bg, color: fg, border: `1px solid ${bg}` }
       : {
           background: "transparent",
           color: bg,
-          border: `1.5px solid ${borderColor ?? bg}`,
+          border: `1px solid ${borderColor ?? bg}`,
         };
 
   return (
@@ -39,13 +40,16 @@ export function MegaButton({
       download={download}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer" : undefined}
-      className="inline-flex items-center gap-2 rounded-full font-medium transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      className="inline-flex items-center gap-2.5 transition-all hover:-translate-y-0.5"
       style={{
         ...baseStyle,
-        padding: "16px 32px",
-        fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: 17,
+        padding: "14px 26px",
+        fontFamily: tokens.fontMono,
+        fontSize: 11,
+        letterSpacing: "0.16em",
+        textTransform: "uppercase",
         textDecoration: "none",
+        fontWeight: 500,
       }}
     >
       {children}

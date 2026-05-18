@@ -19,16 +19,13 @@ import type { Education } from "../../data/types";
 import type { Language } from "../../i18n";
 
 const iconFor: Record<Education["kind"], ReactNode> = {
-  milestone: <Sprout size={16} />,
-  exchange: <Plane size={16} />,
-  internship: <Briefcase size={16} />,
-  degree: <GraduationCap size={16} />,
+  milestone: <Sprout size={14} />,
+  exchange: <Plane size={14} />,
+  internship: <Briefcase size={14} />,
+  degree: <GraduationCap size={14} />,
 };
 
-// 3 color codes per the user's grouping:
-// - academic (milestone + degree): mint
-// - internship: rust
-// - exchange: lilac
+// kind-based dot colours, mapped to the warm editorial palette
 const tintFor: Record<Education["kind"], string> = {
   milestone: palette.mint,
   degree: palette.mint,
@@ -36,19 +33,19 @@ const tintFor: Record<Education["kind"], string> = {
   exchange: palette.lilac,
 };
 
-// Light tinted background for the card body — matches the dot colour
+// Card background tints — soft alpha of the kind colour
 const cardBgFor: Record<Education["kind"], string> = {
-  milestone: "rgba(144, 216, 181, 0.28)", // mint
-  degree: "rgba(144, 216, 181, 0.28)", // mint
-  internship: "rgba(229, 181, 154, 0.28)", // rust
-  exchange: "rgba(199, 209, 240, 0.40)", // lilac (more opaque since lilac is paler)
+  milestone: "rgba(199, 192, 168, 0.32)", // mint warm
+  degree: "rgba(199, 192, 168, 0.32)",
+  internship: "rgba(160, 74, 45, 0.16)", // rust
+  exchange: "rgba(212, 181, 199, 0.36)", // lilac
 };
 
 const cardBgOpenFor: Record<Education["kind"], string> = {
-  milestone: "rgba(144, 216, 181, 0.55)",
-  degree: "rgba(144, 216, 181, 0.55)",
-  internship: "rgba(229, 181, 154, 0.55)",
-  exchange: "rgba(199, 209, 240, 0.65)",
+  milestone: "rgba(199, 192, 168, 0.55)",
+  degree: "rgba(199, 192, 168, 0.55)",
+  internship: "rgba(160, 74, 45, 0.28)",
+  exchange: "rgba(212, 181, 199, 0.58)",
 };
 
 const labelKeyFor: Record<Education["kind"], string> = {
@@ -58,14 +55,13 @@ const labelKeyFor: Record<Education["kind"], string> = {
   degree: "education.kind.degree",
 };
 
-const TIMELINE_WIDTH = 2400; // total scroll width — wider to prevent card overlaps
+const TIMELINE_WIDTH = 2400;
 const YEAR_START = 2015;
 const YEAR_END = 2021;
-const YEAR_SPAN = YEAR_END - YEAR_START; // 6
-const CARD_WIDTH = 200; // narrower cards to fit more without collision
+const YEAR_SPAN = YEAR_END - YEAR_START;
+const CARD_WIDTH = 200;
 
 function leftPercent(year: number): number {
-  // Map year value (e.g. 2018.5) to a 0-100% horizontal position
   const t = (year - YEAR_START) / YEAR_SPAN;
   return Math.max(0, Math.min(1, t)) * 100;
 }
@@ -116,8 +112,6 @@ export function EducationSection() {
     });
   };
 
-  // Track viewport width to size the left/right spacers so the cursor can
-  // reach the first and last events
   useEffect(() => {
     const update = () => {
       const scroller = scrollerRef.current;
@@ -136,7 +130,6 @@ export function EducationSection() {
     };
   }, []);
 
-  // Center China the first time edgePad becomes available
   useEffect(() => {
     if (edgePad === 0 || centeredRef.current) return;
     centeredRef.current = true;
@@ -181,33 +174,30 @@ export function EducationSection() {
   return (
     <section
       id="education"
-      className="relative z-10 mx-auto px-6 pb-24"
-      style={{ maxWidth: tokens.pageMaxWidth }}
+      className="relative z-10 mx-auto px-6 md:px-10"
+      style={{
+        maxWidth: tokens.pageMaxWidth,
+        paddingTop: "clamp(80px, 11vw, 140px)",
+        paddingBottom: "clamp(80px, 11vw, 140px)",
+      }}
       aria-labelledby="education-heading"
     >
-      <div className="text-center mb-3">
-        <p
-          className="inline-block px-4 py-1.5 rounded-full mb-4"
-          style={{
-            background: "rgba(255,255,255,0.55)",
-            color: palette.textSecondary,
-            fontSize: 13,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            fontWeight: 600,
-          }}
-        >
-          ✱ {t("education.kicker")}
-        </p>
+      <div
+        className="flex items-baseline justify-between mb-14 pb-6"
+        style={{ borderBottom: `1px solid ${palette.hairline}` }}
+      >
         <h2
           id="education-heading"
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(36px, 4.5vw, 64px)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "clamp(40px, 5.5vw, 72px)",
             letterSpacing: "-0.03em",
-            lineHeight: 1.05,
+            lineHeight: 1,
             color: palette.textPrimary,
+            margin: 0,
+            fontFeatureSettings: '"ss01", "ss02"',
           }}
         >
           <Trans
@@ -217,179 +207,192 @@ export function EducationSection() {
                 <span
                   style={{
                     fontStyle: "italic",
-                    fontWeight: 400,
-                    fontFamily: tokens.fontItalic,
+                    color: palette.teal,
                   }}
                 />
               ),
             }}
           />
         </h2>
+        <span
+          style={{
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: palette.textSecondary,
+            whiteSpace: "nowrap",
+          }}
+        >
+          § {t("education.kicker").toUpperCase()}
+        </span>
       </div>
+
       <p
-        className="text-center text-sm mb-10 italic flex items-center justify-center gap-2"
-        style={{ color: palette.textSecondary }}
+        className="text-sm mb-10 flex items-center gap-2"
+        style={{
+          color: palette.textSecondary,
+          fontFamily: tokens.fontItalic,
+          fontStyle: "italic",
+        }}
       >
         <ChevronLeft size={14} aria-hidden="true" />
         <span>{t("education.expandHint")}</span>
         <ChevronRight size={14} aria-hidden="true" />
       </p>
 
-      {/* Horizontal scrollable area + fixed cursor overlay */}
       <div className="relative">
-      <div
-        ref={scrollerRef}
-        onScroll={onScroll}
-        className="relative overflow-x-auto overflow-y-hidden -mx-6 px-6"
-        style={{
-          scrollbarWidth: "thin",
-          WebkitOverflowScrolling: "touch",
-        }}
-      >
-        <div className="flex" style={{ width: "max-content" }}>
-        <div aria-hidden="true" className="shrink-0" style={{ width: edgePad }} />
         <div
-          className="relative shrink-0"
+          ref={scrollerRef}
+          onScroll={onScroll}
+          className="relative overflow-x-auto overflow-y-hidden -mx-6 px-6"
           style={{
-            width: TIMELINE_WIDTH,
-            paddingTop: 0,
-            paddingBottom: 0,
+            scrollbarWidth: "thin",
+            WebkitOverflowScrolling: "touch",
           }}
         >
-          {/* TOP — Year ribbon (independent reference axis) */}
-          <div
-            className="relative mb-2"
-            style={{
-              height: 36,
-              paddingLeft: CARD_WIDTH / 2,
-              paddingRight: CARD_WIDTH / 2,
-            }}
-          >
-            <div className="relative w-full h-full">
-              {/* Year line */}
-              <span
-                aria-hidden="true"
-                className="absolute"
+          <div className="flex" style={{ width: "max-content" }}>
+            <div aria-hidden="true" className="shrink-0" style={{ width: edgePad }} />
+            <div
+              className="relative shrink-0"
+              style={{
+                width: TIMELINE_WIDTH,
+                paddingTop: 0,
+                paddingBottom: 0,
+              }}
+            >
+              {/* TOP — Year ribbon */}
+              <div
+                className="relative mb-2"
                 style={{
-                  top: "50%",
-                  left: 0,
-                  right: 0,
-                  height: 1,
-                  background: `${palette.teal}25`,
+                  height: 36,
+                  paddingLeft: CARD_WIDTH / 2,
+                  paddingRight: CARD_WIDTH / 2,
                 }}
-              />
-              {years.map((y) => (
-                <div
-                  key={y}
-                  className="absolute"
-                  style={{
-                    left: `${leftPercent(y)}%`,
-                    top: 0,
-                    transform: "translateX(-50%)",
-                    textAlign: "center",
-                  }}
-                >
+              >
+                <div className="relative w-full h-full">
                   <span
                     aria-hidden="true"
-                    className="block mx-auto"
+                    className="absolute"
                     style={{
-                      width: 1,
-                      height: 12,
-                      background: `${palette.teal}40`,
+                      top: "50%",
+                      left: 0,
+                      right: 0,
+                      height: 1,
+                      background: palette.hairline,
                     }}
                   />
-                  <span
-                    className="text-xs font-mono inline-block mt-1"
-                    style={{
-                      color: palette.textSecondary,
-                      fontWeight: 600,
-                      letterSpacing: "0.03em",
-                    }}
-                  >
-                    {y}
-                  </span>
+                  {years.map((y) => (
+                    <div
+                      key={y}
+                      className="absolute"
+                      style={{
+                        left: `${leftPercent(y)}%`,
+                        top: 0,
+                        transform: "translateX(-50%)",
+                        textAlign: "center",
+                      }}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="block mx-auto"
+                        style={{
+                          width: 1,
+                          height: 12,
+                          background: palette.hairlineStrong,
+                        }}
+                      />
+                      <span
+                        className="inline-block mt-1"
+                        style={{
+                          fontFamily: tokens.fontMono,
+                          fontSize: 10,
+                          color: palette.textSecondary,
+                          fontWeight: 400,
+                          letterSpacing: "0.1em",
+                        }}
+                      >
+                        {y}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          {/* MAIN — Event timeline with cards alternating above/below */}
-          <div
-            className="relative"
-            style={{
-              height: 420,
-              paddingLeft: CARD_WIDTH / 2,
-              paddingRight: CARD_WIDTH / 2,
-            }}
-          >
-            <div className="relative w-full h-full">
-              {/* Main timeline line */}
-              <span
-                aria-hidden="true"
-                className="absolute"
+              {/* MAIN — Event timeline */}
+              <div
+                className="relative"
                 style={{
-                  top: "50%",
-                  left: 0,
-                  right: 0,
-                  height: 2,
-                  transform: "translateY(-1px)",
-                  background: `linear-gradient(90deg, ${palette.teal}40 0%, ${palette.teal}60 50%, ${palette.teal}40 100%)`,
-                  borderRadius: 2,
+                  height: 420,
+                  paddingLeft: CARD_WIDTH / 2,
+                  paddingRight: CARD_WIDTH / 2,
                 }}
-              />
+              >
+                <div className="relative w-full h-full">
+                  <span
+                    aria-hidden="true"
+                    className="absolute"
+                    style={{
+                      top: "50%",
+                      left: 0,
+                      right: 0,
+                      height: 1,
+                      transform: "translateY(-0.5px)",
+                      background: palette.hairlineStrong,
+                    }}
+                  />
 
-              {entries.map((entry, i) => (
-                <TimelineEvent
-                  key={entry.id}
-                  entry={entry}
-                  lang={lang}
-                  isAbove={i % 2 === 0}
-                  isOpen={openIndex === i}
-                  labelKey={labelKeyFor[entry.kind]}
-                  onToggle={() => scrollToEntry(i)}
-                />
-              ))}
+                  {entries.map((entry, i) => (
+                    <TimelineEvent
+                      key={entry.id}
+                      entry={entry}
+                      lang={lang}
+                      isAbove={i % 2 === 0}
+                      isOpen={openIndex === i}
+                      labelKey={labelKeyFor[entry.kind]}
+                      onToggle={() => scrollToEntry(i)}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
+            <div aria-hidden="true" className="shrink-0" style={{ width: edgePad }} />
           </div>
         </div>
-        <div aria-hidden="true" className="shrink-0" style={{ width: edgePad }} />
+
+        {/* Cursor overlay */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute"
+          style={{
+            top: 0,
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 1,
+            background: `linear-gradient(180deg, rgba(184,92,58,0) 0%, rgba(184,92,58,0.35) 18%, rgba(184,92,58,0.65) 50%, rgba(184,92,58,0.35) 82%, rgba(184,92,58,0) 100%)`,
+            zIndex: 25,
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute flex items-center justify-center rounded-full"
+          style={{
+            top: 6,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 26,
+            height: 26,
+            background: palette.teal,
+            color: palette.cream,
+            boxShadow: `0 4px 12px -2px rgba(184,92,58,0.45)`,
+            zIndex: 26,
+          }}
+        >
+          <ChevronDown size={14} strokeWidth={2.5} />
         </div>
       </div>
 
-      {/* Cursor overlay — fixed at the visible center of the scroller */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute"
-        style={{
-          top: 0,
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 2,
-          background: `linear-gradient(180deg, ${palette.teal}00 0%, ${palette.teal}30 15%, ${palette.teal}55 50%, ${palette.teal}30 85%, ${palette.teal}00 100%)`,
-          zIndex: 25,
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute flex items-center justify-center rounded-full"
-        style={{
-          top: 6,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 26,
-          height: 26,
-          background: palette.teal,
-          color: palette.beige,
-          boxShadow: `0 4px 10px -2px ${palette.teal}60`,
-          zIndex: 26,
-        }}
-      >
-        <ChevronDown size={16} strokeWidth={2.5} />
-      </div>
-      </div>
-
-      {/* Detail panel under the timeline — always rendered */}
       <AnimatePresence initial={false} mode="wait">
         {openEntry && (
           <motion.div
@@ -434,7 +437,6 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, labelKey, onToggle }: Eve
       }}
     >
       <div className="relative w-full h-full flex items-center justify-center">
-        {/* Dot — sits on the line */}
         <button
           type="button"
           onClick={onToggle}
@@ -442,14 +444,14 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, labelKey, onToggle }: Eve
           aria-label={`${entry.title[lang]} — ${entry.period[lang]}`}
           className="absolute z-20 inline-flex items-center justify-center rounded-full transition-all hover:scale-110 cursor-pointer"
           style={{
-            width: isOpen ? 36 : 28,
-            height: isOpen ? 36 : 28,
+            width: isOpen ? 32 : 24,
+            height: isOpen ? 32 : 24,
             background: tint,
             color: palette.textPrimary,
-            border: `3px solid ${palette.beige}`,
+            border: `2px solid ${palette.beige}`,
             boxShadow: isOpen
-              ? `0 0 0 5px ${tint}80, 0 4px 16px -2px rgba(14,83,77,0.25)`
-              : `0 0 0 1.5px ${palette.teal}50`,
+              ? `0 0 0 4px ${palette.teal}33, 0 4px 16px -2px rgba(31,26,20,0.18)`
+              : `0 0 0 1px ${palette.hairlineStrong}`,
             padding: 0,
             fontFamily: tokens.fontBody,
           }}
@@ -457,21 +459,19 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, labelKey, onToggle }: Eve
           {iconFor[entry.kind]}
         </button>
 
-        {/* Connector tick */}
         <span
           aria-hidden="true"
           className="absolute z-10"
           style={{
-            top: isAbove ? "calc(50% - 60px)" : "calc(50% + 18px)",
+            top: isAbove ? "calc(50% - 58px)" : "calc(50% + 18px)",
             left: "50%",
             transform: "translateX(-50%)",
             width: 1,
             height: 42,
-            background: `${palette.teal}40`,
+            background: palette.hairlineStrong,
           }}
         />
 
-        {/* Card — above or below the line */}
         <div
           className="absolute"
           style={{
@@ -511,34 +511,36 @@ function EventCard({ entry, lang, tint, labelKey, t, isOpen, onToggle }: EventCa
       type="button"
       onClick={onToggle}
       aria-expanded={isOpen}
-      className="w-full text-center rounded-2xl p-4 transition-all cursor-pointer hover:-translate-y-0.5"
+      className="w-full text-center p-4 transition-all cursor-pointer hover:-translate-y-0.5"
       style={{
         background: isOpen ? cardBgOpenFor[entry.kind] : cardBgFor[entry.kind],
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        border: `1px solid ${isOpen ? `${tint}` : `${tint}55`}`,
-        boxShadow: isOpen
-          ? `0 8px 24px -10px rgba(14,83,77,0.25)`
-          : `0 4px 12px -4px rgba(14,83,77,0.06)`,
+        border: `1px solid ${isOpen ? palette.hairlineStrong : palette.hairline}`,
+        boxShadow: isOpen ? `0 6px 18px -10px rgba(31,26,20,0.25)` : "none",
         fontFamily: tokens.fontBody,
+        borderRadius: 6,
       }}
     >
       <p
-        className="text-[10px] uppercase tracking-[0.18em] font-bold mb-2"
-        style={{ color: tint, filter: "saturate(2) brightness(0.55)" }}
+        className="mb-2"
+        style={{
+          fontFamily: tokens.fontMono,
+          fontSize: 10,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: palette.teal,
+          fontWeight: 500,
+        }}
       >
         {t(labelKey)}
       </p>
-      <CardBody entry={entry} lang={lang} />
+      <CardBody entry={entry} lang={lang} tint={tint} />
     </button>
   );
 }
 
-function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
-  // Different layout per kind
+function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: string }) {
   switch (entry.kind) {
     case "exchange": {
-      // Country in HUGE serif + flag emoji
       const country = entry.location[lang];
       return (
         <>
@@ -546,8 +548,9 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             <span
               style={{
                 fontFamily: tokens.fontTitle,
-                fontWeight: 700,
-                fontSize: "clamp(28px, 2.8vw, 40px)",
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: "clamp(26px, 2.6vw, 36px)",
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
                 color: palette.textPrimary,
@@ -556,12 +559,19 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
               {country}
             </span>
             {entry.flag && (
-              <span aria-hidden="true" style={{ fontSize: 32 }}>
+              <span aria-hidden="true" style={{ fontSize: 28 }}>
                 {entry.flag}
               </span>
             )}
           </div>
-          <p className="italic text-xs" style={{ color: palette.textSecondary }}>
+          <p
+            style={{
+              fontFamily: tokens.fontItalic,
+              fontStyle: "italic",
+              fontSize: 12,
+              color: palette.textSecondary,
+            }}
+          >
             {entry.summary[lang]}
           </p>
         </>
@@ -569,8 +579,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
     }
 
     case "internship": {
-      // Company name big + location + duration
-      const company = entry.school[lang]; // "Orange Labs", "Aubay", "Capgemini"
+      const company = entry.school[lang];
       const duration = entry.period[lang].split("·")[1]?.trim() ?? entry.period[lang];
       return (
         <>
@@ -578,8 +587,9 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             className="mb-1"
             style={{
               fontFamily: tokens.fontTitle,
-              fontWeight: 700,
-              fontSize: "clamp(20px, 2vw, 26px)",
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(19px, 1.9vw, 24px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
               color: palette.textPrimary,
@@ -594,14 +604,15 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             <MapPin size={11} aria-hidden="true" />
             <span>{entry.location[lang].split(",")[0]}</span>
             <span aria-hidden="true">·</span>
-            <span>{duration}</span>
+            <span style={{ fontFamily: tokens.fontMono, fontSize: 10, letterSpacing: "0.08em" }}>
+              {duration}
+            </span>
           </p>
         </>
       );
     }
 
     case "degree": {
-      // Degree title — split on em-dash, keep the short part
       const fullTitle = entry.title[lang];
       const short = fullTitle.includes(" — ") ? fullTitle.split(" — ")[0] : fullTitle;
       return (
@@ -609,8 +620,9 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
           <p
             style={{
               fontFamily: tokens.fontTitle,
-              fontWeight: 700,
-              fontSize: "clamp(18px, 1.8vw, 22px)",
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(17px, 1.7vw, 21px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
               color: palette.textPrimary,
@@ -618,7 +630,15 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
           >
             {short}
           </p>
-          <p className="text-xs mt-1.5 italic" style={{ color: palette.textSecondary }}>
+          <p
+            className="mt-1.5"
+            style={{
+              fontFamily: tokens.fontItalic,
+              fontStyle: "italic",
+              fontSize: 12,
+              color: palette.textSecondary,
+            }}
+          >
             {entry.school[lang].replace(/^.*— /, "").split(" · ")[0]}
           </p>
         </>
@@ -632,8 +652,9 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
           <p
             style={{
               fontFamily: tokens.fontTitle,
-              fontWeight: 700,
-              fontSize: "clamp(18px, 1.8vw, 22px)",
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(17px, 1.7vw, 21px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
               color: palette.textPrimary,
@@ -641,7 +662,15 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
           >
             {entry.title[lang]}
           </p>
-          <p className="text-xs mt-1.5 italic" style={{ color: palette.textSecondary }}>
+          <p
+            className="mt-1.5"
+            style={{
+              fontFamily: tokens.fontItalic,
+              fontStyle: "italic",
+              fontSize: 12,
+              color: palette.textSecondary,
+            }}
+          >
             {entry.period[lang]}
           </p>
         </>
@@ -654,18 +683,24 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
 
   return (
     <div
-      className="rounded-3xl px-6 md:px-8 py-6 grid grid-cols-1 md:grid-cols-[1fr_240px] gap-6 items-start"
+      className="px-6 md:px-8 py-7 grid grid-cols-1 md:grid-cols-[1fr_240px] gap-6 items-start"
       style={{
-        background: "rgba(255,255,255,0.7)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-        border: "1px solid rgba(14,83,77,0.10)",
+        background: palette.cream,
+        border: `1px solid ${palette.hairline}`,
+        borderRadius: 6,
       }}
     >
       <div>
         <p
-          className="text-xs uppercase tracking-[0.18em] font-semibold mb-2"
-          style={{ color: palette.textSecondary }}
+          className="mb-2"
+          style={{
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: palette.teal,
+            fontWeight: 500,
+          }}
         >
           {entry.period[lang]}
         </p>
@@ -673,11 +708,14 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
           className="mb-3"
           style={{
             fontFamily: tokens.fontTitle,
-            fontWeight: 600,
-            fontSize: "clamp(22px, 2.2vw, 30px)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "clamp(24px, 2.4vw, 32px)",
             letterSpacing: "-0.02em",
-            lineHeight: 1.2,
+            lineHeight: 1.15,
             color: palette.textPrimary,
+            margin: 0,
+            marginBottom: 12,
           }}
         >
           {entry.title[lang]}
@@ -688,11 +726,13 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
           )}
         </h3>
         <p
-          className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full mb-4"
+          className="inline-flex items-center gap-1.5 mb-5"
           style={{
-            background: "rgba(14,83,77,0.08)",
-            color: palette.textPrimary,
-            fontWeight: 500,
+            fontFamily: tokens.fontMono,
+            fontSize: 11,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: palette.textSecondary,
           }}
         >
           <MapPin size={12} aria-hidden="true" />
@@ -701,14 +741,20 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
         <p
           style={{
             fontSize: 16,
-            lineHeight: 1.65,
+            lineHeight: 1.7,
             color: palette.textPrimary,
           }}
         >
           {entry.description[lang]}
         </p>
       </div>
-      <PhotoSlot photoSrc={entry.photoSrc} flag={entry.flag} tint={tint} alt={entry.location[lang]} />
+      <PhotoSlot
+        photoSrc={entry.photoSrc}
+        flag={entry.flag}
+        tint={tint}
+        alt={entry.location[lang]}
+        seed={entry.id}
+      />
     </div>
   );
 }
@@ -718,57 +764,39 @@ function PhotoSlot({
   flag,
   tint,
   alt,
+  seed,
 }: {
   photoSrc?: string;
   flag?: string;
   tint: string;
   alt: string;
+  seed: string;
 }) {
-  const { t } = useTranslation();
-  if (photoSrc) {
-    return (
+  const src = photoSrc ?? `https://picsum.photos/seed/edu-${seed}/600/600`;
+  return (
+    <div className="overflow-hidden" style={{ width: "100%", aspectRatio: "1 / 1" }}>
       <img
-        src={photoSrc}
+        src={src}
         alt={alt}
         style={{
           width: "100%",
-          aspectRatio: "1 / 1",
+          height: "100%",
           objectFit: "cover",
-          borderRadius: 16,
+          filter: "sepia(8%) saturate(110%)",
         }}
       />
-    );
-  }
-  return (
-    <div
-      className="relative flex items-center justify-center overflow-hidden rounded-2xl"
-      style={{
-        width: "100%",
-        aspectRatio: "1 / 1",
-        background: `linear-gradient(135deg, ${tint} 0%, rgba(255,255,255,0.4) 100%)`,
-      }}
-      aria-hidden="true"
-    >
       {flag && (
         <span
+          aria-hidden="true"
+          className="absolute"
           style={{
-            fontSize: 56,
-            filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.12))",
+            display: "none",
+            color: tint,
           }}
         >
           {flag}
         </span>
       )}
-      <span
-        className="absolute bottom-2 right-3 text-[10px]"
-        style={{
-          color: "rgba(14,83,77,0.55)",
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 500,
-        }}
-      >
-        {t("ui.photo")}
-      </span>
     </div>
   );
 }

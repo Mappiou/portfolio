@@ -2,8 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, type Language } from "../../i18n";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
-import { palette } from "../../styles/palette";
-import { FlagFor } from "../ui/FlagIcons";
+import { palette, tokens } from "../../styles/palette";
 
 type Theme = "light" | "dark";
 
@@ -26,28 +25,33 @@ export function LanguageSwitcher({ theme = "light" }: Props) {
   const colors =
     theme === "light"
       ? {
-          bg: palette.white50,
+          bg: "rgba(245,237,224,0.85)",
           textActive: palette.textPrimary,
           textInactive: palette.textSecondary,
-          shadow: "0 1px 0 rgba(255,255,255,0.4) inset, 0 2px 12px rgba(0,0,0,0.04)",
+          border: palette.hairline,
+          activeBg: palette.cream,
         }
       : {
-          bg: "rgba(168,225,197,0.08)",
-          textActive: palette.textQuarterly,
-          textInactive: "rgba(168,225,197,0.7)",
-          shadow: "0 1px 0 rgba(168,225,197,0.1) inset, 0 2px 12px rgba(0,0,0,0.2)",
+          bg: "rgba(31,26,20,0.55)",
+          textActive: palette.cream,
+          textInactive: "rgba(250,245,235,0.7)",
+          border: "rgba(250,245,235,0.15)",
+          activeBg: "rgba(184,92,58,0.18)",
         };
 
   return (
     <div
       role="group"
       aria-label={t("nav.language")}
-      className="inline-flex rounded-full backdrop-blur-md text-xs font-medium"
+      className="inline-flex"
       style={{
         background: colors.bg,
-        padding: 4,
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        border: `1px solid ${colors.border}`,
+        padding: 3,
         gap: 2,
-        boxShadow: colors.shadow,
+        borderRadius: 999,
       }}
     >
       {SUPPORTED_LANGUAGES.map((lang) => {
@@ -58,46 +62,23 @@ export function LanguageSwitcher({ theme = "light" }: Props) {
             to={pathFor(lang)}
             aria-current={isActive ? "page" : undefined}
             aria-label={t(`language.${lang}`)}
-            className="relative inline-flex items-center justify-center rounded-full overflow-hidden transition"
+            className="inline-flex items-center justify-center transition"
             style={{
               padding: "5px 12px",
-              color: isActive ? colors.textActive : colors.textInactive,
-              textDecoration: "none",
-              fontWeight: isActive ? 700 : 500,
               minWidth: 38,
-              isolation: "isolate",
+              color: isActive ? colors.textActive : colors.textInactive,
+              background: isActive ? colors.activeBg : "transparent",
+              textDecoration: "none",
+              fontFamily: tokens.fontMono,
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              fontWeight: isActive ? 500 : 400,
+              borderRadius: 999,
+              borderBottom: isActive ? `1px solid ${palette.teal}` : "1px solid transparent",
             }}
           >
-            {/* Flag background */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 transition"
-              style={{
-                opacity: isActive ? 0.85 : 0.35,
-                zIndex: 0,
-              }}
-            >
-              <FlagFor lang={lang} className="block w-full h-full" />
-            </span>
-            {/* White scrim for text readability (on top of flag, behind text) */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 transition"
-              style={{
-                background: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.7)",
-                zIndex: 1,
-              }}
-            />
-            {/* Text label */}
-            <span
-              className="relative"
-              style={{
-                zIndex: 2,
-                textShadow: isActive ? "0 1px 0 rgba(255,255,255,0.5)" : undefined,
-              }}
-            >
-              {t(`language.${lang}_short`)}
-            </span>
+            {t(`language.${lang}_short`)}
           </Link>
         );
       })}
