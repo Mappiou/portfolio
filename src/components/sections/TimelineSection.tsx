@@ -186,7 +186,7 @@ function TimelineEntry({ entry, lang, isOpen, onToggle }: EntryProps) {
                   }}
                 >
                   <MapPin size={12} aria-hidden="true" />
-                  {entry.location}
+                  {entry.location[lang]}
                 </span>
               </div>
 

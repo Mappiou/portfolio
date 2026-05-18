@@ -539,7 +539,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
   switch (entry.kind) {
     case "exchange": {
       // Country in HUGE serif + flag emoji
-      const country = entry.location;
+      const country = entry.location[lang];
       return (
         <>
           <div className="flex items-center justify-center gap-2 mb-1">
@@ -570,7 +570,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
 
     case "internship": {
       // Company name big + location + duration
-      const company = entry.school; // "Orange Labs", "Aubay", "Capgemini"
+      const company = entry.school[lang]; // "Orange Labs", "Aubay", "Capgemini"
       const duration = entry.period[lang].split("·")[1]?.trim() ?? entry.period[lang];
       return (
         <>
@@ -592,7 +592,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             style={{ color: palette.textSecondary }}
           >
             <MapPin size={11} aria-hidden="true" />
-            <span>{entry.location.split(",")[0]}</span>
+            <span>{entry.location[lang].split(",")[0]}</span>
             <span aria-hidden="true">·</span>
             <span>{duration}</span>
           </p>
@@ -619,7 +619,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             {short}
           </p>
           <p className="text-xs mt-1.5 italic" style={{ color: palette.textSecondary }}>
-            {entry.school.replace(/^.*— /, "").split(" · ")[0]}
+            {entry.school[lang].replace(/^.*— /, "").split(" · ")[0]}
           </p>
         </>
       );
@@ -696,7 +696,7 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
           }}
         >
           <MapPin size={12} aria-hidden="true" />
-          {entry.school} · {entry.location}
+          {entry.school[lang]} · {entry.location[lang]}
         </p>
         <p
           style={{
@@ -708,7 +708,7 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
           {entry.description[lang]}
         </p>
       </div>
-      <PhotoSlot photoSrc={entry.photoSrc} flag={entry.flag} tint={tint} alt={entry.location} />
+      <PhotoSlot photoSrc={entry.photoSrc} flag={entry.flag} tint={tint} alt={entry.location[lang]} />
     </div>
   );
 }
@@ -724,6 +724,7 @@ function PhotoSlot({
   tint: string;
   alt: string;
 }) {
+  const { t } = useTranslation();
   if (photoSrc) {
     return (
       <img
@@ -766,7 +767,7 @@ function PhotoSlot({
           fontWeight: 500,
         }}
       >
-        photo
+        {t("ui.photo")}
       </span>
     </div>
   );

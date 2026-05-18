@@ -184,6 +184,7 @@ function ItemGrid({ items, lang, tint }: { items: PassionItem[]; lang: Language;
 }
 
 function ItemTile({ item, lang, tint }: { item: PassionItem; lang: Language; tint: string }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col">
       <div
@@ -223,7 +224,7 @@ function ItemTile({ item, lang, tint }: { item: PassionItem; lang: Language; tin
                 fontWeight: 500,
               }}
             >
-              photo
+              {t("ui.photo")}
             </span>
           </>
         )}
