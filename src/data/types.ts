@@ -6,7 +6,7 @@ export type Experience = {
   id: string;
   role: Translated;
   company: string;
-  location: string;
+  location: Translated;
   period: Translated;
   description: Translated;
   bullets: Translated[];
@@ -21,8 +21,8 @@ export type Education = {
   /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'internship' for student internships, 'degree' for diplomas */
   kind: "milestone" | "exchange" | "internship" | "degree";
   title: Translated;
-  school: string;
-  location: string;
+  school: Translated;
+  location: Translated;
   period: Translated;
   /** Short one-line summary, always visible on the timeline */
   summary: Translated;

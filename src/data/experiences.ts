@@ -9,7 +9,7 @@ export const experiences: Experience[] = [
       es: "AI Engineer — Generative AI",
     },
     company: "Hexamind",
-    location: "Paris",
+    location: { fr: "Paris", en: "Paris", es: "París" },
     period: {
       fr: "Janvier 2024 — présent",
       en: "January 2024 — present",
@@ -73,7 +73,7 @@ export const experiences: Experience[] = [
       es: "Data Scientist / AI Engineer",
     },
     company: "Lincoln",
-    location: "Paris",
+    location: { fr: "Paris", en: "Paris", es: "París" },
     period: {
       fr: "Octobre 2021 — Mars 2023 · 18 mois",
       en: "October 2021 — March 2023 · 18 months",
@@ -122,7 +122,7 @@ export const experiences: Experience[] = [
       es: "Prácticas — Data / Blockchain",
     },
     company: "Capgemini",
-    location: "Toulouse",
+    location: { fr: "Toulouse", en: "Toulouse", es: "Toulouse" },
     period: {
       fr: "Décembre 2020 — Mai 2021 · 6 mois",
       en: "December 2020 — May 2021 · 6 months",
@@ -156,7 +156,7 @@ export const experiences: Experience[] = [
       es: "Prácticas — Investigación IA",
     },
     company: "Aubay",
-    location: "Paris",
+    location: { fr: "Paris", en: "Paris", es: "París" },
     period: {
       fr: "Février 2019 — Juillet 2019 · 6 mois",
       en: "February 2019 — July 2019 · 6 months",
@@ -190,7 +190,7 @@ export const experiences: Experience[] = [
       es: "Prácticas — Desarrollo",
     },
     company: "Orange Labs",
-    location: "Caen",
+    location: { fr: "Caen", en: "Caen", es: "Caen" },
     period: {
       fr: "Janvier 2018 — Juin 2018 · 6 mois",
       en: "January 2018 — June 2018 · 6 months",

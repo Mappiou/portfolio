@@ -85,5 +85,9 @@
     "github": "GitHub",
     "linkedin": "LinkedIn",
     "location": "Ubicación"
+  },
+  "ui": {
+    "photo": "foto",
+    "photoPlaceholder": "foto próximamente"
   }
 }

@@ -10,8 +10,8 @@ export const education: Education[] = [
       en: "French baccalaureate (S) — with honours",
       es: "Bachillerato S — con mención",
     },
-    school: "Lycée",
-    location: "France",
+    school: { fr: "Lycée", en: "High school", es: "Instituto" },
+    location: { fr: "France", en: "France", es: "Francia" },
     period: { fr: "2015 · mention Bien", en: "2015 · with honours", es: "2015 · con mención" },
     summary: {
       fr: "Bac S, spécialité Mathématiques + SI, mention Bien.",
@@ -33,8 +33,12 @@ export const education: Education[] = [
       en: "Joining UTT",
       es: "Ingreso en la UTT",
     },
-    school: "UTT — Université de Technologie de Troyes",
-    location: "Troyes, France",
+    school: {
+      fr: "UTT — Université de Technologie de Troyes",
+      en: "UTT — Troyes University of Technology",
+      es: "UTT — Universidad Tecnológica de Troyes",
+    },
+    location: { fr: "Troyes, France", en: "Troyes, France", es: "Troyes, Francia" },
     period: {
       fr: "Septembre 2015 · début prépa intégrée",
       en: "September 2015 · start of integrated prep",
@@ -60,8 +64,8 @@ export const education: Education[] = [
       en: "R&D internship — Orange Labs",
       es: "Prácticas I+D — Orange Labs",
     },
-    school: "Orange Labs",
-    location: "Caen, France",
+    school: { fr: "Orange Labs", en: "Orange Labs", es: "Orange Labs" },
+    location: { fr: "Caen, France", en: "Caen, France", es: "Caen, Francia" },
     period: {
       fr: "Janvier — Juin 2018 · 6 mois",
       en: "January — June 2018 · 6 months",
@@ -87,8 +91,12 @@ export const education: Education[] = [
       en: "Academic exchange — Canada",
       es: "Intercambio universitario — Canadá",
     },
-    school: "Université canadienne · échange UTT",
-    location: "Canada",
+    school: {
+      fr: "Université canadienne · échange UTT",
+      en: "Canadian university · UTT exchange",
+      es: "Universidad canadiense · intercambio UTT",
+    },
+    location: { fr: "Canada", en: "Canada", es: "Canadá" },
     period: {
       fr: "1 semestre · 2018",
       en: "1 semester · 2018",
@@ -115,8 +123,8 @@ export const education: Education[] = [
       en: "AI Research internship — Aubay",
       es: "Prácticas Investigación IA — Aubay",
     },
-    school: "Aubay",
-    location: "Paris, France",
+    school: { fr: "Aubay", en: "Aubay", es: "Aubay" },
+    location: { fr: "Paris, France", en: "Paris, France", es: "París, Francia" },
     period: {
       fr: "Février — Juillet 2019 · 6 mois",
       en: "February — July 2019 · 6 months",
@@ -142,8 +150,12 @@ export const education: Education[] = [
       en: "End of integrated prep cycle",
       es: "Fin del ciclo preparatorio",
     },
-    school: "UTT — Université de Technologie de Troyes",
-    location: "Troyes, France",
+    school: {
+      fr: "UTT — Université de Technologie de Troyes",
+      en: "UTT — Troyes University of Technology",
+      es: "UTT — Universidad Tecnológica de Troyes",
+    },
+    location: { fr: "Troyes, France", en: "Troyes, France", es: "Troyes, Francia" },
     period: {
       fr: "Janvier 2017 · entrée en branche ISI",
       en: "January 2017 · joining the ISI branch",
@@ -169,8 +181,12 @@ export const education: Education[] = [
       en: "Academic exchange — China",
       es: "Intercambio universitario — China",
     },
-    school: "Université chinoise · échange UTT",
-    location: "Chine",
+    school: {
+      fr: "Université chinoise · échange UTT",
+      en: "Chinese university · UTT exchange",
+      es: "Universidad china · intercambio UTT",
+    },
+    location: { fr: "Chine", en: "China", es: "China" },
     period: {
       fr: "1 semestre · 2016-2017",
       en: "1 semester · 2016-2017",
@@ -197,8 +213,12 @@ export const education: Education[] = [
       en: "Engineering Degree — Computer Science & IS",
       es: "Título de Ingeniero — Informática & SI",
     },
-    school: "UTT — Université de Technologie de Troyes",
-    location: "Troyes, France",
+    school: {
+      fr: "UTT — Université de Technologie de Troyes",
+      en: "UTT — Troyes University of Technology",
+      es: "UTT — Universidad Tecnológica de Troyes",
+    },
+    location: { fr: "Troyes, France", en: "Troyes, France", es: "Troyes, Francia" },
     period: { fr: "Juin 2020 · 5 ans", en: "June 2020 · 5 years", es: "Junio 2020 · 5 años" },
     summary: {
       fr: "Diplôme d'ingénieur en poche, spécialisation IA.",
@@ -220,8 +240,8 @@ export const education: Education[] = [
       en: "Data / Blockchain internship — Capgemini",
       es: "Prácticas Data / Blockchain — Capgemini",
     },
-    school: "Capgemini",
-    location: "Toulouse, France",
+    school: { fr: "Capgemini", en: "Capgemini", es: "Capgemini" },
+    location: { fr: "Toulouse, France", en: "Toulouse, France", es: "Toulouse, Francia" },
     period: {
       fr: "Décembre 2020 — Mai 2021 · 6 mois",
       en: "December 2020 — May 2021 · 6 months",
@@ -247,8 +267,12 @@ export const education: Education[] = [
       en: "Master's degree in Cybersecurity",
       es: "Máster en Ciberseguridad",
     },
-    school: "UTT — Université de Technologie de Troyes",
-    location: "Troyes, France",
+    school: {
+      fr: "UTT — Université de Technologie de Troyes",
+      en: "UTT — Troyes University of Technology",
+      es: "UTT — Universidad Tecnológica de Troyes",
+    },
+    location: { fr: "Troyes, France", en: "Troyes, France", es: "Troyes, Francia" },
     period: {
       fr: "2020 — 2021 · double diplôme",
       en: "2020 — 2021 · double degree",

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 type Props = {
   bg: string;
   size?: number;
@@ -6,6 +8,7 @@ type Props = {
 };
 
 export function PortraitTile({ bg, size = 420, src, alt }: Props) {
+  const { t } = useTranslation();
   return (
     <div
       className="relative overflow-hidden"
@@ -46,7 +49,7 @@ export function PortraitTile({ bg, size = 420, src, alt }: Props) {
             className="absolute bottom-3 right-4 text-xs font-mono"
             style={{ color: "rgba(255,255,255,0.7)" }}
           >
-            photo placeholder
+            {t("ui.photoPlaceholder")}
           </span>
         </>
       )}
