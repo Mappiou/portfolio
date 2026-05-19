@@ -1,31 +1,16 @@
 import { useTranslation, Trans } from "react-i18next";
-import { Trophy, Sparkles, Plane } from "lucide-react";
-import type { ReactNode } from "react";
 import { palette, tokens } from "../../styles/palette";
 import { passions, type Passion, type PassionItem } from "../../data/passions";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import type { Language } from "../../i18n";
 
-const iconFor: Record<Passion["icon"], ReactNode> = {
-  sport: <Trophy size={18} />,
-  tech: <Sparkles size={18} />,
-  travel: <Plane size={18} />,
-};
-
-const photoSeedFor: Record<string, string> = {
-  badminton: "badminton",
-  "beach-volley": "beach-volley",
-  skating: "skating",
-  trekking: "trekking",
-  usa: "usa",
-  "south-america": "south-america",
-  asia: "asia",
-  europe: "europe",
-};
+const romans = ["i", "ii", "iii", "iv"];
 
 export function PassionsSection() {
   const { t } = useTranslation();
   const lang = useLanguageRoute();
+  const sport = passions.find((p) => p.id === "sport");
+  const tech = passions.find((p) => p.id === "tech");
 
   return (
     <section
@@ -39,7 +24,7 @@ export function PassionsSection() {
       aria-labelledby="passions-heading"
     >
       <div
-        className="flex items-baseline justify-between mb-16 pb-6"
+        className="flex items-baseline justify-between mb-12 pb-6"
         style={{ borderBottom: `1px solid ${palette.hairline}` }}
       >
         <h2
@@ -79,71 +64,251 @@ export function PassionsSection() {
         </span>
       </div>
 
-      <div className="flex flex-col" style={{ gap: "clamp(48px, 6vw, 80px)" }}>
-        {passions.map((p, i) => (
-          <PassionCard key={p.id} passion={p} lang={lang} index={i} />
-        ))}
-      </div>
+      {sport && <SportAct passion={sport} lang={lang} />}
+
+      {tech && (
+        <div className="mt-20 md:mt-28">
+          <TechBlock passion={tech} lang={lang} />
+        </div>
+      )}
     </section>
   );
 }
 
-function PassionCard({ passion, lang, index }: { passion: Passion; lang: Language; index: number }) {
-  const hasItems = passion.items.length > 0;
-
+function SportAct({ passion, lang }: { passion: Passion; lang: Language }) {
   return (
-    <article
-      className="p-7 md:p-10"
-      style={{
-        background: palette.cream,
-        border: `1px solid ${palette.hairline}`,
-        borderRadius: 6,
-      }}
-    >
-      {hasItems ? (
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-10">
-          <PassionHeader passion={passion} lang={lang} index={index} />
-          <ItemGrid items={passion.items} lang={lang} />
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 mb-12">
+        <div>
+          <p
+            className="mb-2"
+            style={{
+              fontFamily: tokens.fontMono,
+              fontSize: 11,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: palette.teal,
+              fontWeight: 500,
+            }}
+          >
+            I — {passion.title[lang]}
+          </p>
+          <p
+            style={{
+              fontFamily: tokens.fontMono,
+              fontSize: 10,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: palette.textSecondary,
+            }}
+          >
+            4 disciplines
+          </p>
         </div>
-      ) : (
-        <PassionHeader passion={passion} lang={lang} index={index} wide />
-      )}
-    </article>
+        <div>
+          <h3
+            className="mb-4"
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(34px, 4vw, 52px)",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.05,
+              color: palette.textPrimary,
+              fontFeatureSettings: '"ss01", "ss02"',
+              maxWidth: 720,
+            }}
+          >
+            Le corps, <span style={{ color: palette.teal }}>en mouvement.</span>
+          </h3>
+          <p
+            style={{
+              fontSize: 17,
+              lineHeight: 1.7,
+              color: palette.textSecondary,
+              maxWidth: 640,
+            }}
+          >
+            {passion.description[lang]}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col">
+        {passion.items.map((item, idx) => (
+          <Scene
+            key={item.id}
+            item={item}
+            lang={lang}
+            index={idx}
+            total={passion.items.length}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
-function PassionHeader({
-  passion,
+function Scene({
+  item,
   lang,
   index,
-  wide,
+  total,
 }: {
-  passion: Passion;
+  item: PassionItem;
   lang: Language;
   index: number;
-  wide?: boolean;
+  total: number;
 }) {
-  const num = String(index + 1).padStart(2, "0");
-  const labels = ["Sport", "Tech", "Voyage"];
+  const reverse = index % 2 === 1;
+  const isLast = index === total - 1;
+  const aspect = item.aspect ?? "16/10";
+  const frameLabel = `No. ${String(index + 1).padStart(2, "0")} / IV`;
+  const rustAccent = index === 2;
+  const photoSeed = item.photoSeed ?? item.id;
 
   return (
-    <div className="flex gap-5 md:gap-6 items-start" style={{ maxWidth: wide ? 760 : 320 }}>
-      <span
-        className="inline-flex items-center justify-center shrink-0"
+    <div className="relative">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 items-center"
         style={{
-          width: 44,
-          height: 44,
-          color: palette.teal,
-          border: `1px solid ${palette.hairlineStrong}`,
-          borderRadius: 4,
+          gap: "clamp(32px, 5vw, 72px)",
+          padding: "clamp(36px, 4vw, 56px) 0",
         }}
-        aria-hidden="true"
       >
-        {iconFor[passion.icon]}
-      </span>
-      <div className="flex-1 min-w-0">
+        <div
+          className="overflow-hidden relative"
+          style={{
+            order: reverse ? 2 : 1,
+            width: "100%",
+            aspectRatio: aspect,
+            background: palette.beigeDeep,
+          }}
+        >
+          <img
+            src={
+              item.photoSrc ??
+              `https://picsum.photos/seed/${photoSeed}/${aspect === "4/5" ? "640/800" : "900/562"}`
+            }
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              filter: "sepia(8%) saturate(110%) contrast(0.97)",
+            }}
+          />
+          {/* Folio label, top-left */}
+          <span
+            aria-hidden="true"
+            className="absolute"
+            style={{
+              top: 10,
+              left: 10,
+              padding: "4px 8px",
+              fontFamily: tokens.fontMono,
+              fontSize: 10,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: rustAccent ? palette.cream : palette.textPrimary,
+              background: rustAccent ? palette.teal : palette.cream,
+              border: `1px solid ${rustAccent ? palette.teal : palette.hairlineStrong}`,
+              zIndex: 3,
+            }}
+          >
+            {frameLabel}
+          </span>
+          {/* Italic roman numeral, bottom-right */}
+          <span
+            aria-hidden="true"
+            className="absolute"
+            style={{
+              bottom: 4,
+              right: 14,
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: 64,
+              lineHeight: 1,
+              color: palette.cream,
+              opacity: 0.75,
+              textShadow: "0 2px 8px rgba(31,26,20,0.35)",
+              zIndex: 3,
+            }}
+          >
+            {romans[index]}
+          </span>
+        </div>
+
+        <div style={{ order: reverse ? 1 : 2 }}>
+          {item.kicker && (
+            <p
+              className="mb-3"
+              style={{
+                fontFamily: tokens.fontMono,
+                fontSize: 11,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: palette.textSecondary,
+              }}
+            >
+              {String(index + 1).padStart(2, "0")} — {item.kicker[lang]}
+            </p>
+          )}
+          <h4
+            className="mb-4"
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(28px, 3.4vw, 44px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.05,
+              color: palette.textPrimary,
+              fontFeatureSettings: '"ss01", "ss02"',
+            }}
+          >
+            {item.label[lang]}
+            <span style={{ color: palette.teal }}>.</span>
+          </h4>
+          {item.prose && (
+            <p
+              style={{
+                fontFamily: tokens.fontBody,
+                fontSize: 16,
+                lineHeight: 1.7,
+                color: palette.textPrimary,
+                maxWidth: 460,
+              }}
+            >
+              {item.prose[lang]}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {!isLast && (
+        <span
+          aria-hidden="true"
+          className="block"
+          style={{
+            height: 1,
+            background: `linear-gradient(90deg, transparent 0%, ${palette.hairlineStrong} 50%, transparent 100%)`,
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function TechBlock({ passion, lang }: { passion: Passion; lang: Language }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-start">
+      <div>
         <p
-          className="mb-3"
+          className="mb-2"
           style={{
             fontFamily: tokens.fontMono,
             fontSize: 11,
@@ -153,84 +318,37 @@ function PassionHeader({
             fontWeight: 500,
           }}
         >
-          {num} — {labels[index] ?? passion.title[lang]}
+          II — Tech
         </p>
+      </div>
+      <div>
         <h3
+          className="mb-4"
           style={{
             fontFamily: tokens.fontTitle,
             fontStyle: "italic",
             fontWeight: 400,
-            fontSize: "clamp(28px, 3vw, 40px)",
+            fontSize: "clamp(28px, 3.4vw, 44px)",
             letterSpacing: "-0.025em",
-            lineHeight: 1.02,
+            lineHeight: 1.05,
             color: palette.textPrimary,
-            margin: 0,
-            marginBottom: 16,
             fontFeatureSettings: '"ss01", "ss02"',
           }}
         >
           {passion.title[lang]}
+          <span style={{ color: palette.teal }}>.</span>
         </h3>
         <p
           style={{
             fontSize: 16,
-            lineHeight: 1.65,
-            color: palette.textSecondary,
-            maxWidth: wide ? 620 : 360,
+            lineHeight: 1.7,
+            color: palette.textPrimary,
+            maxWidth: 720,
           }}
         >
           {passion.description[lang]}
         </p>
       </div>
-    </div>
-  );
-}
-
-function ItemGrid({ items, lang }: { items: PassionItem[]; lang: Language }) {
-  const gridStyle =
-    items.length === 1
-      ? { gridTemplateColumns: "minmax(0, 1fr)" }
-      : items.length === 3
-        ? { gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }
-        : { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" };
-
-  return (
-    <div className="grid gap-4 md:gap-5" style={gridStyle}>
-      {items.map((item) => (
-        <ItemTile key={item.id} item={item} lang={lang} />
-      ))}
-    </div>
-  );
-}
-
-function ItemTile({ item, lang }: { item: PassionItem; lang: Language }) {
-  const seed = photoSeedFor[item.id] ?? item.id;
-  const src = item.photoSrc ?? `https://picsum.photos/seed/${seed}/600/450`;
-  return (
-    <div className="flex flex-col">
-      <div className="overflow-hidden" style={{ aspectRatio: "14 / 10" }}>
-        <img
-          src={src}
-          alt=""
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            filter: "sepia(10%) saturate(112%)",
-          }}
-        />
-      </div>
-      <p
-        className="mt-2"
-        style={{
-          fontFamily: tokens.fontItalic,
-          fontStyle: "italic",
-          fontSize: 13,
-          color: palette.textSecondary,
-        }}
-      >
-        — {item.label[lang]}
-      </p>
     </div>
   );
 }
