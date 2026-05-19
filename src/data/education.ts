@@ -289,4 +289,108 @@ export const education: Education[] = [
       es: "Máster en Ciberseguridad (doble titulación): criptografía, primitivas y protocolos criptográficos, seguridad de redes, auditoría, gobernanza, gestión de riesgos. Seis años después del bachillerato, fin del recorrido estudiantil — rumbo al mundo profesional.",
     },
   },
+  {
+    id: "job-lincoln",
+    year: 2022,
+    kind: "job",
+    title: {
+      fr: "Data Scientist — Lincoln (chatbot Orange)",
+      en: "Data Scientist — Lincoln (Orange chatbot)",
+      es: "Data Scientist — Lincoln (chatbot Orange)",
+    },
+    school: { fr: "Lincoln", en: "Lincoln", es: "Lincoln" },
+    location: { fr: "Paris, France", en: "Paris, France", es: "París, Francia" },
+    period: {
+      fr: "Octobre 2021 — Mars 2023 · 18 mois",
+      en: "October 2021 — March 2023 · 18 months",
+      es: "Octubre 2021 — Marzo 2023 · 18 meses",
+    },
+    summary: {
+      fr: "18 mois sur le chatbot Orange (1M+ requêtes/mois), 4 sous-missions.",
+      en: "18 months on the Orange chatbot (1M+ queries/month), 4 sub-missions.",
+      es: "18 meses sobre el chatbot Orange (más de 1M de consultas/mes), 4 submisiones.",
+    },
+    description: {
+      fr: "Mission de 18 mois sur le chatbot Orange (1M+ requêtes/mois) en équipe Agile/Scrum, déclinée en 4 sous-missions. Première vraie expérience en data science appliquée à grande échelle, mêlant NLP, deep learning custom, voicebot et computer vision.",
+      en: "An 18-month mission on the Orange chatbot (1M+ queries/month) in an Agile/Scrum team, split into 4 sub-missions. First real experience in data science at scale, blending NLP, custom deep learning, voicebot and computer vision.",
+      es: "Misión de 18 meses sobre el chatbot Orange en equipo Agile/Scrum, dividida en 4 submisiones. Primera experiencia real en data science a escala, combinando NLP, deep learning, voicebot y computer vision.",
+    },
+    bullets: [
+      { fr: "6 mois — Chatbot ORANGE RASA : développement, optimisation, maintenance", en: "6 months — ORANGE RASA chatbot: development, optimization, maintenance", es: "6 meses — Chatbot ORANGE RASA: desarrollo, optimización, mantenimiento" },
+      { fr: "5 mois — Réseau de neurones from scratch : +20% performance vs solution linguiste", en: "5 months — Custom neural network from scratch: +20% performance vs linguist solution", es: "5 meses — Red neuronal desde cero: +20% de rendimiento" },
+      { fr: "2 mois — Transformation du chatbot en voicebot (Microsoft STT/TTS)", en: "2 months — Chatbot to voicebot transformation (Microsoft STT/TTS)", es: "2 meses — Transformación en voicebot (Microsoft STT/TTS)" },
+      { fr: "1 mois — Export d'un modèle Computer Vision dans un site Angular", en: "1 month — Export of a Computer Vision model into an Angular site", es: "1 mes — Exportación de un modelo Computer Vision a un sitio Angular" },
+    ],
+    stack: ["RASA", "Python", "NLP", "Computer Vision", "Angular", "React", "Voicebot", "Agile"],
+  },
+  {
+    id: "world-trip",
+    year: 2023.5,
+    kind: "travel",
+    title: {
+      fr: "Voyage d'un an — Amériques & Asie",
+      en: "Year-long trip — Americas & Asia",
+      es: "Viaje de un año — Américas y Asia",
+    },
+    school: { fr: "Sabbatique", en: "Sabbatical", es: "Sabático" },
+    location: { fr: "Tour du monde", en: "Round the world", es: "Vuelta al mundo" },
+    period: {
+      fr: "Mars 2023 — Janvier 2024 · ~10 mois",
+      en: "March 2023 — January 2024 · ~10 months",
+      es: "Marzo 2023 — Enero 2024 · ~10 meses",
+    },
+    summary: {
+      fr: "10 mois entre Amérique latine et Asie.",
+      en: "10 months across Latin America and Asia.",
+      es: "10 meses entre América Latina y Asia.",
+    },
+    description: {
+      fr: "Parenthèse sabbatique entre Lincoln et Hexamind. Traversée de l'Amérique latine puis tour de l'Asie. Une pause volontaire pour décompresser, ouvrir les yeux sur d'autres modes de vie, et rentrer recharger les batteries avant de plonger dans l'IA générative.",
+      en: "Sabbatical between Lincoln and Hexamind. Traveling across Latin America and Asia. A deliberate pause to decompress, see other ways of life, and come back recharged before diving into generative AI.",
+      es: "Pausa sabática entre Lincoln y Hexamind. Travesía de América Latina y vuelta por Asia. Un paréntesis para descomprimir, ver otros modos de vida, y volver con las pilas cargadas.",
+    },
+    bullets: [
+      { fr: "Amérique latine — traversée terrestre, plusieurs pays", en: "Latin America — overland crossing, several countries", es: "América Latina — travesía por varios países" },
+      { fr: "Asie — retour aux racines, tour de plusieurs capitales", en: "Asia — back to the roots, tour of several capitals", es: "Asia — vuelta a las raíces, varias capitales" },
+    ],
+    flag: "🌍",
+  },
+  {
+    id: "job-hexamind",
+    year: 2025,
+    kind: "job",
+    title: {
+      fr: "AI Engineer — Hexamind (Generative AI)",
+      en: "AI Engineer — Hexamind (Generative AI)",
+      es: "AI Engineer — Hexamind (Generative AI)",
+    },
+    school: { fr: "Hexamind", en: "Hexamind", es: "Hexamind" },
+    location: {
+      fr: "Paris puis Barcelone",
+      en: "Paris then Barcelona",
+      es: "París luego Barcelona",
+    },
+    period: {
+      fr: "Janvier 2024 — présent",
+      en: "January 2024 — present",
+      es: "Enero 2024 — presente",
+    },
+    summary: {
+      fr: "Generative AI : chatbot LLM/RAG en production servant 90 000+ utilisateurs.",
+      en: "Generative AI: LLM/RAG chatbot in production, 90,000+ users.",
+      es: "Generative AI: chatbot LLM/RAG en producción, más de 90 000 usuarios.",
+    },
+    description: {
+      fr: "Conception et déploiement d'un chatbot LLM/RAG en production servant 90 000+ utilisateurs. Architectures multi-agents, RAG avec LangChain et OpenAI, suite d'évaluation continue, et adoption quotidienne de Claude Code.",
+      en: "Design and deployment of an LLM/RAG chatbot in production serving 90,000+ users. Multi-agent architectures, RAG with LangChain and OpenAI, continuous evaluation suite, and daily adoption of Claude Code.",
+      es: "Diseño y despliegue de un chatbot LLM/RAG en producción para más de 90 000 usuarios. Arquitecturas multi-agente, RAG con LangChain y OpenAI, suite de evaluación continua, y uso diario de Claude Code.",
+    },
+    bullets: [
+      { fr: "Systèmes IA multi-agents pour tâches complexes", en: "Multi-agent AI systems for complex tasks", es: "Sistemas IA multi-agente para tareas complejas" },
+      { fr: "Adoption de Claude Code (Anthropic) au quotidien", en: "Daily adoption of Claude Code (Anthropic)", es: "Uso diario de Claude Code (Anthropic)" },
+      { fr: "Architectures RAG avec LangChain et bases vectorielles", en: "RAG architectures with LangChain and vector databases", es: "Arquitecturas RAG con LangChain y bases vectoriales" },
+      { fr: "Suite d'évaluation continue en production", en: "Continuous evaluation suite in production", es: "Suite de evaluación continua en producción" },
+    ],
+    stack: ["LLM", "RAG", "Multi-agent", "Claude Code", "Python", "LangChain", "OpenAI", "Vector DB"],
+  },
 ];

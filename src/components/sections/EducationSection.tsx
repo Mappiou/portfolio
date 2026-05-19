@@ -24,17 +24,23 @@ const iconFor: Record<Education["kind"], ReactNode> = {
   exchange: <Plane size={14} />,
   internship: <Briefcase size={14} />,
   degree: <GraduationCap size={14} />,
+  job: <Briefcase size={14} />,
+  travel: <Plane size={14} />,
 };
 
-// 3 color codes per the user's grouping:
+// Colour codes per the user's grouping:
 // - academic (milestone + degree): mint warm
 // - internship: rust deep
 // - exchange: lilac dusty
+// - job: teal (amber accent)
+// - travel: textPrimary (warm cream)
 const tintFor: Record<Education["kind"], string> = {
   milestone: palette.mint,
   degree: palette.mint,
   internship: palette.rust,
   exchange: palette.lilac,
+  job: palette.teal,
+  travel: palette.textPrimary,
 };
 
 const cardBgFor: Record<Education["kind"], string> = {
@@ -42,6 +48,8 @@ const cardBgFor: Record<Education["kind"], string> = {
   degree: "rgba(111, 168, 144, 0.10)",
   internship: "rgba(201, 122, 92, 0.10)",
   exchange: "rgba(168, 155, 176, 0.12)",
+  job: "rgba(217, 166, 72, 0.10)",
+  travel: "rgba(239, 233, 221, 0.08)",
 };
 
 const cardBgOpenFor: Record<Education["kind"], string> = {
@@ -49,6 +57,8 @@ const cardBgOpenFor: Record<Education["kind"], string> = {
   degree: "rgba(111, 168, 144, 0.22)",
   internship: "rgba(201, 122, 92, 0.22)",
   exchange: "rgba(168, 155, 176, 0.26)",
+  job: "rgba(217, 166, 72, 0.22)",
+  travel: "rgba(239, 233, 221, 0.18)",
 };
 
 const labelKeyFor: Record<Education["kind"], string> = {
@@ -56,11 +66,13 @@ const labelKeyFor: Record<Education["kind"], string> = {
   exchange: "education.kind.exchange",
   internship: "education.kind.internship",
   degree: "education.kind.degree",
+  job: "education.kind.job",
+  travel: "education.kind.travel",
 };
 
-const TIMELINE_WIDTH = 2400;
+const TIMELINE_WIDTH = 2800;
 const YEAR_START = 2015;
-const YEAR_END = 2021;
+const YEAR_END = 2026;
 const YEAR_SPAN = YEAR_END - YEAR_START;
 const CARD_WIDTH = 200;
 
@@ -196,7 +208,7 @@ export function EducationSection() {
 
       <div
         className="relative mx-auto px-6"
-        style={{ padding: "100px 24px 180px", maxWidth: tokens.pageMaxWidth }}
+        style={{ padding: "70px 24px 126px", maxWidth: tokens.pageMaxWidth }}
       >
         <p
           className="text-center mb-10 flex items-center justify-center gap-2"
@@ -236,7 +248,7 @@ export function EducationSection() {
                 <div
                   className="relative mb-2"
                   style={{
-                    height: 36,
+                    height: 24,
                     paddingLeft: CARD_WIDTH / 2,
                     paddingRight: CARD_WIDTH / 2,
                   }}
@@ -293,7 +305,7 @@ export function EducationSection() {
                 <div
                   className="relative"
                   style={{
-                    height: 420,
+                    height: 240,
                     paddingLeft: CARD_WIDTH / 2,
                     paddingRight: CARD_WIDTH / 2,
                   }}
@@ -421,8 +433,8 @@ export function EducationSection() {
             aria-label={`${entry.title[lang]} — ${entry.period[lang]}`}
             className="absolute z-20 inline-flex items-center justify-center rounded-full transition-all hover:scale-110 cursor-pointer"
             style={{
-              width: isOpen ? 32 : 24,
-              height: isOpen ? 32 : 24,
+              width: isOpen ? 26 : 22,
+              height: isOpen ? 26 : 22,
               background: tint,
               color: palette.beige,
               border: `2px solid ${palette.beige}`,
@@ -440,11 +452,11 @@ export function EducationSection() {
             aria-hidden="true"
             className="absolute z-10"
             style={{
-              top: isAbove ? "calc(50% - 60px)" : "calc(50% + 18px)",
+              top: isAbove ? "calc(50% - 42px)" : "calc(50% + 14px)",
               left: "50%",
               transform: "translateX(-50%)",
               width: 1,
-              height: 42,
+              height: 28,
               background: "rgba(239,233,221,0.18)",
             }}
           />
@@ -452,7 +464,7 @@ export function EducationSection() {
           <div
             className="absolute"
             style={{
-              [isAbove ? "bottom" : "top"]: "calc(50% + 60px)",
+              [isAbove ? "bottom" : "top"]: "calc(50% + 42px)",
               left: 0,
               right: 0,
             }}
@@ -491,7 +503,7 @@ export function EducationSection() {
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="w-full text-center p-4 transition-all cursor-pointer hover:-translate-y-0.5"
+        className="w-full text-center p-3 transition-all cursor-pointer hover:-translate-y-0.5"
         style={{
           background: isOpen ? cardBgOpenFor[entry.kind] : cardBgFor[entry.kind],
           backdropFilter: "blur(4px)",
@@ -507,7 +519,7 @@ export function EducationSection() {
             textTransform: "uppercase",
             letterSpacing: "0.18em",
             color: palette.textSecondary,
-            marginBottom: 8,
+            marginBottom: 6,
           }}
         >
           {t(labelKey)}
@@ -530,7 +542,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
                 fontFamily: tokens.fontTitle,
                 fontStyle: "italic",
                 fontWeight: 400,
-                fontSize: "clamp(26px, 2.6vw, 36px)",
+                fontSize: "clamp(22px, 2.2vw, 30px)",
                 letterSpacing: "-0.02em",
                 lineHeight: 1,
                 color: palette.textPrimary,
@@ -539,7 +551,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
               {country}
             </span>
             {entry.flag && (
-              <span aria-hidden="true" style={{ fontSize: 28 }}>
+              <span aria-hidden="true" style={{ fontSize: 22 }}>
                 {entry.flag}
               </span>
             )}
@@ -548,7 +560,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             style={{
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
-              fontSize: 12,
+              fontSize: 11,
               color: palette.textSecondary,
             }}
           >
@@ -568,7 +580,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
               fontWeight: 400,
-              fontSize: "clamp(18px, 1.8vw, 24px)",
+              fontSize: "clamp(16px, 1.6vw, 22px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
               color: palette.textPrimary,
@@ -580,7 +592,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             className="flex items-center justify-center gap-1.5 mb-1"
             style={{
               fontFamily: tokens.fontMono,
-              fontSize: 10,
+              fontSize: 9,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               color: palette.textSecondary,
@@ -604,7 +616,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
               fontWeight: 400,
-              fontSize: "clamp(17px, 1.7vw, 20px)",
+              fontSize: "clamp(15px, 1.5vw, 18px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
               color: palette.textPrimary,
@@ -616,13 +628,83 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             className="mt-1.5"
             style={{
               fontFamily: tokens.fontMono,
-              fontSize: 10,
+              fontSize: 9,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               color: palette.textSecondary,
             }}
           >
             {entry.school[lang].replace(/^.*— /, "").split(" · ")[0]}
+          </p>
+        </>
+      );
+    }
+    case "job": {
+      const fullTitle = entry.title[lang];
+      const short = fullTitle.includes(" — ") ? fullTitle.split(" — ")[0] : fullTitle;
+      const company = entry.school[lang];
+      return (
+        <>
+          <p
+            className="mb-1"
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(16px, 1.6vw, 22px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.05,
+              color: palette.textPrimary,
+            }}
+          >
+            {company}
+          </p>
+          <p
+            style={{
+              fontFamily: tokens.fontMono,
+              fontSize: 9,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: palette.textSecondary,
+            }}
+          >
+            {short}
+          </p>
+        </>
+      );
+    }
+    case "travel": {
+      return (
+        <>
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <span
+              style={{
+                fontFamily: tokens.fontTitle,
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: "clamp(20px, 2vw, 28px)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1,
+                color: palette.textPrimary,
+              }}
+            >
+              {entry.location[lang]}
+            </span>
+            {entry.flag && (
+              <span aria-hidden="true" style={{ fontSize: 22 }}>
+                {entry.flag}
+              </span>
+            )}
+          </div>
+          <p
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontSize: 11,
+              color: palette.textSecondary,
+            }}
+          >
+            {entry.summary[lang]}
           </p>
         </>
       );
@@ -636,7 +718,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
               fontWeight: 400,
-              fontSize: "clamp(17px, 1.7vw, 20px)",
+              fontSize: "clamp(15px, 1.5vw, 18px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
               color: palette.textPrimary,
@@ -648,7 +730,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
             className="mt-1.5"
             style={{
               fontFamily: tokens.fontMono,
-              fontSize: 10,
+              fontSize: 9,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               color: palette.textSecondary,
@@ -729,6 +811,59 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
         >
           {entry.description[lang]}
         </p>
+        {entry.bullets && entry.bullets.length > 0 && (
+          <ul
+            className="mt-4 space-y-1.5"
+            style={{
+              fontFamily: tokens.fontBody,
+              fontWeight: 300,
+              fontSize: 14,
+              lineHeight: 1.6,
+              color: palette.textPrimary,
+              opacity: 0.85,
+              listStyle: "none",
+              paddingLeft: 0,
+            }}
+          >
+            {entry.bullets.map((b, i) => (
+              <li key={i} style={{ position: "relative", paddingLeft: 16 }}>
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: "0.7em",
+                    width: 6,
+                    height: 1,
+                    background: tint,
+                  }}
+                />
+                {b[lang]}
+              </li>
+            ))}
+          </ul>
+        )}
+        {entry.stack && entry.stack.length > 0 && (
+          <ul className="mt-4 flex flex-wrap gap-1.5" style={{ listStyle: "none", paddingLeft: 0 }}>
+            {entry.stack.map((tag) => (
+              <li
+                key={tag}
+                style={{
+                  fontFamily: tokens.fontMono,
+                  fontSize: 10,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: palette.textSecondary,
+                  padding: "3px 8px",
+                  border: `1px solid ${tint}55`,
+                  background: "rgba(239,233,221,0.04)",
+                }}
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <PhotoSlot photoSrc={entry.photoSrc} flag={entry.flag} tint={tint} alt={entry.location[lang]} />
     </div>
