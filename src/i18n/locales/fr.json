@@ -45,7 +45,9 @@
       "milestone": "Étape",
       "exchange": "Échange universitaire",
       "internship": "Stage",
-      "degree": "Diplôme"
+      "degree": "Diplôme",
+      "job": "Poste",
+      "travel": "Voyage"
     }
   },
   "passions": {

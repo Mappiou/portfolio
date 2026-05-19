@@ -49,7 +49,9 @@ describe("data integrity", () => {
   it("each education entry has translations + valid kind + a year", () => {
     expect(education.length).toBeGreaterThan(0);
     for (const edu of education) {
-      expect(["milestone", "exchange", "internship", "degree"]).toContain(edu.kind);
+      expect(["milestone", "exchange", "internship", "degree", "job", "travel"]).toContain(
+        edu.kind,
+      );
       expect(edu.school).toBeTruthy();
       expect(edu.location).toBeTruthy();
       expect(typeof edu.year).toBe("number");
@@ -62,7 +64,7 @@ describe("data integrity", () => {
     }
   });
 
-  it("timeline covers the 6-year journey including all milestones", () => {
+  it("timeline covers the full journey including all milestones", () => {
     const ids = education.map((e) => e.id);
     expect(ids).toContain("bac");
     expect(ids).toContain("utt-start");
@@ -74,10 +76,13 @@ describe("data integrity", () => {
     expect(ids).toContain("engineering-utt");
     expect(ids).toContain("internship-capgemini");
     expect(ids).toContain("master-cybersecurity");
-    // Year range: bac (2015) → master (2021)
+    expect(ids).toContain("job-lincoln");
+    expect(ids).toContain("world-trip");
+    expect(ids).toContain("job-hexamind");
+    // Year range: bac (2015) → Hexamind (2025)
     const years = education.map((e) => e.year);
     expect(Math.min(...years)).toBe(2015);
-    expect(Math.max(...years)).toBe(2021);
+    expect(Math.max(...years)).toBe(2025);
   });
 
   it("each skill category has translations and items", () => {

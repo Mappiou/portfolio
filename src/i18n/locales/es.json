@@ -45,7 +45,9 @@
       "milestone": "Hito",
       "exchange": "Intercambio universitario",
       "internship": "Prácticas",
-      "degree": "Título"
+      "degree": "Título",
+      "job": "Puesto",
+      "travel": "Viaje"
     }
   },
   "passions": {

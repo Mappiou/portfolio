@@ -18,8 +18,8 @@ export type Education = {
   id: string;
   /** Sort key for the chronological timeline */
   year: number;
-  /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'internship' for student internships, 'degree' for diplomas */
-  kind: "milestone" | "exchange" | "internship" | "degree";
+  /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'internship' for student internships, 'degree' for diplomas, 'job' for professional positions, 'travel' for extended trips */
+  kind: "milestone" | "exchange" | "internship" | "degree" | "job" | "travel";
   title: Translated;
   school: Translated;
   location: Translated;
@@ -32,6 +32,10 @@ export type Education = {
   flag?: string;
   /** Optional path to a photo (e.g. /images/edu/canada.jpg) — shown in the expanded panel */
   photoSrc?: string;
+  /** Optional list of bullet points shown in the expanded detail panel */
+  bullets?: Translated[];
+  /** Optional tech / context stack tags */
+  stack?: string[];
 };
 
 export type Skill = {

@@ -23,6 +23,8 @@ const iconFor: Record<Education["kind"], ReactNode> = {
   exchange: <Plane size={14} />,
   internship: <Briefcase size={14} />,
   degree: <GraduationCap size={14} />,
+  job: <Briefcase size={14} />,
+  travel: <Plane size={14} />,
 };
 
 // kind-based dot colours, mapped to the warm editorial palette
@@ -31,6 +33,8 @@ const tintFor: Record<Education["kind"], string> = {
   degree: palette.mint,
   internship: palette.rust,
   exchange: palette.lilac,
+  job: palette.teal,
+  travel: palette.yellow,
 };
 
 // Card background tints — soft alpha of the kind colour
@@ -39,6 +43,8 @@ const cardBgFor: Record<Education["kind"], string> = {
   degree: "rgba(199, 192, 168, 0.32)",
   internship: "rgba(160, 74, 45, 0.16)", // rust
   exchange: "rgba(212, 181, 199, 0.36)", // lilac
+  job: "rgba(184, 92, 58, 0.16)", // teal/terracotta
+  travel: "rgba(232, 215, 79, 0.24)", // yellow
 };
 
 const cardBgOpenFor: Record<Education["kind"], string> = {
@@ -46,6 +52,8 @@ const cardBgOpenFor: Record<Education["kind"], string> = {
   degree: "rgba(199, 192, 168, 0.55)",
   internship: "rgba(160, 74, 45, 0.28)",
   exchange: "rgba(212, 181, 199, 0.58)",
+  job: "rgba(184, 92, 58, 0.28)",
+  travel: "rgba(232, 215, 79, 0.42)",
 };
 
 const labelKeyFor: Record<Education["kind"], string> = {
@@ -53,11 +61,13 @@ const labelKeyFor: Record<Education["kind"], string> = {
   exchange: "education.kind.exchange",
   internship: "education.kind.internship",
   degree: "education.kind.degree",
+  job: "education.kind.job",
+  travel: "education.kind.travel",
 };
 
-const TIMELINE_WIDTH = 2400;
+const TIMELINE_WIDTH = 2800;
 const YEAR_START = 2015;
-const YEAR_END = 2021;
+const YEAR_END = 2026;
 const YEAR_SPAN = YEAR_END - YEAR_START;
 const CARD_WIDTH = 200;
 
@@ -177,13 +187,13 @@ export function EducationSection() {
       className="relative z-10 mx-auto px-6 md:px-10"
       style={{
         maxWidth: tokens.pageMaxWidth,
-        paddingTop: "clamp(80px, 11vw, 140px)",
-        paddingBottom: "clamp(80px, 11vw, 140px)",
+        paddingTop: "clamp(48px, 7vw, 88px)",
+        paddingBottom: "clamp(48px, 7vw, 88px)",
       }}
       aria-labelledby="education-heading"
     >
       <div
-        className="flex items-baseline justify-between mb-14 pb-6"
+        className="flex items-baseline justify-between mb-8 pb-5"
         style={{ borderBottom: `1px solid ${palette.hairline}` }}
       >
         <h2
@@ -229,7 +239,7 @@ export function EducationSection() {
       </div>
 
       <p
-        className="text-sm mb-10 flex items-center gap-2"
+        className="text-sm mb-6 flex items-center gap-2"
         style={{
           color: palette.textSecondary,
           fontFamily: tokens.fontItalic,
@@ -263,9 +273,9 @@ export function EducationSection() {
             >
               {/* TOP — Year ribbon */}
               <div
-                className="relative mb-2"
+                className="relative mb-1"
                 style={{
-                  height: 36,
+                  height: 24,
                   paddingLeft: CARD_WIDTH / 2,
                   paddingRight: CARD_WIDTH / 2,
                 }}
@@ -298,18 +308,18 @@ export function EducationSection() {
                         className="block mx-auto"
                         style={{
                           width: 1,
-                          height: 12,
+                          height: 8,
                           background: palette.hairlineStrong,
                         }}
                       />
                       <span
-                        className="inline-block mt-1"
+                        className="inline-block mt-0.5"
                         style={{
                           fontFamily: tokens.fontMono,
-                          fontSize: 10,
+                          fontSize: 9,
                           color: palette.textSecondary,
                           fontWeight: 400,
-                          letterSpacing: "0.1em",
+                          letterSpacing: "0.08em",
                         }}
                       >
                         {y}
@@ -323,7 +333,7 @@ export function EducationSection() {
               <div
                 className="relative"
                 style={{
-                  height: 420,
+                  height: 240,
                   paddingLeft: CARD_WIDTH / 2,
                   paddingRight: CARD_WIDTH / 2,
                 }}
@@ -444,13 +454,13 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, labelKey, onToggle }: Eve
           aria-label={`${entry.title[lang]} — ${entry.period[lang]}`}
           className="absolute z-20 inline-flex items-center justify-center rounded-full transition-all hover:scale-110 cursor-pointer"
           style={{
-            width: isOpen ? 32 : 24,
-            height: isOpen ? 32 : 24,
+            width: isOpen ? 26 : 22,
+            height: isOpen ? 26 : 22,
             background: tint,
             color: palette.textPrimary,
             border: `2px solid ${palette.beige}`,
             boxShadow: isOpen
-              ? `0 0 0 4px ${palette.teal}33, 0 4px 16px -2px rgba(31,26,20,0.18)`
+              ? `0 0 0 3px ${palette.teal}33, 0 3px 12px -2px rgba(31,26,20,0.18)`
               : `0 0 0 1px ${palette.hairlineStrong}`,
             padding: 0,
             fontFamily: tokens.fontBody,
@@ -463,11 +473,11 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, labelKey, onToggle }: Eve
           aria-hidden="true"
           className="absolute z-10"
           style={{
-            top: isAbove ? "calc(50% - 58px)" : "calc(50% + 18px)",
+            top: isAbove ? "calc(50% - 38px)" : "calc(50% + 14px)",
             left: "50%",
             transform: "translateX(-50%)",
             width: 1,
-            height: 42,
+            height: 26,
             background: palette.hairlineStrong,
           }}
         />
@@ -475,7 +485,7 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, labelKey, onToggle }: Eve
         <div
           className="absolute"
           style={{
-            [isAbove ? "bottom" : "top"]: "calc(50% + 60px)",
+            [isAbove ? "bottom" : "top"]: "calc(50% + 42px)",
             left: 0,
             right: 0,
           }}
@@ -511,7 +521,7 @@ function EventCard({ entry, lang, tint, labelKey, t, isOpen, onToggle }: EventCa
       type="button"
       onClick={onToggle}
       aria-expanded={isOpen}
-      className="w-full text-center p-4 transition-all cursor-pointer hover:-translate-y-0.5"
+      className="w-full text-center p-3 transition-all cursor-pointer hover:-translate-y-0.5"
       style={{
         background: isOpen ? cardBgOpenFor[entry.kind] : cardBgFor[entry.kind],
         border: `1px solid ${isOpen ? palette.hairlineStrong : palette.hairline}`,
@@ -521,10 +531,10 @@ function EventCard({ entry, lang, tint, labelKey, t, isOpen, onToggle }: EventCa
       }}
     >
       <p
-        className="mb-2"
+        className="mb-1.5"
         style={{
           fontFamily: tokens.fontMono,
-          fontSize: 10,
+          fontSize: 9,
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           color: palette.teal,
@@ -544,13 +554,13 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
       const country = entry.location[lang];
       return (
         <>
-          <div className="flex items-center justify-center gap-2 mb-1">
+          <div className="flex items-center justify-center gap-1.5 mb-0.5">
             <span
               style={{
                 fontFamily: tokens.fontTitle,
                 fontStyle: "italic",
                 fontWeight: 400,
-                fontSize: "clamp(26px, 2.6vw, 36px)",
+                fontSize: "clamp(22px, 2.3vw, 32px)",
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
                 color: palette.textPrimary,
@@ -559,7 +569,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
               {country}
             </span>
             {entry.flag && (
-              <span aria-hidden="true" style={{ fontSize: 28 }}>
+              <span aria-hidden="true" style={{ fontSize: 22 }}>
                 {entry.flag}
               </span>
             )}
@@ -568,7 +578,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
             style={{
               fontFamily: tokens.fontItalic,
               fontStyle: "italic",
-              fontSize: 12,
+              fontSize: 11,
               color: palette.textSecondary,
             }}
           >
@@ -584,12 +594,12 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
       return (
         <>
           <p
-            className="mb-1"
+            className="mb-0.5"
             style={{
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
               fontWeight: 400,
-              fontSize: "clamp(19px, 1.9vw, 24px)",
+              fontSize: "clamp(16px, 1.7vw, 21px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
               color: palette.textPrimary,
@@ -598,13 +608,13 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
             {company}
           </p>
           <p
-            className="text-xs flex items-center justify-center gap-1.5 mb-1"
-            style={{ color: palette.textSecondary }}
+            className="text-xs flex items-center justify-center gap-1.5"
+            style={{ color: palette.textSecondary, fontSize: 11 }}
           >
-            <MapPin size={11} aria-hidden="true" />
+            <MapPin size={10} aria-hidden="true" />
             <span>{entry.location[lang].split(",")[0]}</span>
             <span aria-hidden="true">·</span>
-            <span style={{ fontFamily: tokens.fontMono, fontSize: 10, letterSpacing: "0.08em" }}>
+            <span style={{ fontFamily: tokens.fontMono, fontSize: 9, letterSpacing: "0.08em" }}>
               {duration}
             </span>
           </p>
@@ -622,7 +632,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
               fontWeight: 400,
-              fontSize: "clamp(17px, 1.7vw, 21px)",
+              fontSize: "clamp(15px, 1.5vw, 19px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
               color: palette.textPrimary,
@@ -631,15 +641,87 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
             {short}
           </p>
           <p
-            className="mt-1.5"
+            className="mt-1"
             style={{
               fontFamily: tokens.fontItalic,
               fontStyle: "italic",
-              fontSize: 12,
+              fontSize: 11,
               color: palette.textSecondary,
             }}
           >
             {entry.school[lang].replace(/^.*— /, "").split(" · ")[0]}
+          </p>
+        </>
+      );
+    }
+
+    case "job": {
+      const company = entry.school[lang];
+      const duration = entry.period[lang].split("·")[1]?.trim() ?? entry.period[lang];
+      return (
+        <>
+          <p
+            className="mb-0.5"
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(17px, 1.8vw, 23px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.05,
+              color: palette.textPrimary,
+            }}
+          >
+            {company}
+          </p>
+          <p
+            className="flex items-center justify-center gap-1.5"
+            style={{ color: palette.textSecondary, fontSize: 11 }}
+          >
+            <MapPin size={10} aria-hidden="true" />
+            <span>{entry.location[lang].split(",")[0]}</span>
+            <span aria-hidden="true">·</span>
+            <span style={{ fontFamily: tokens.fontMono, fontSize: 9, letterSpacing: "0.08em" }}>
+              {duration}
+            </span>
+          </p>
+        </>
+      );
+    }
+
+    case "travel": {
+      const place = entry.location[lang];
+      return (
+        <>
+          <div className="flex items-center justify-center gap-1.5 mb-0.5">
+            <span
+              style={{
+                fontFamily: tokens.fontTitle,
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: "clamp(20px, 2.1vw, 28px)",
+                letterSpacing: "-0.03em",
+                lineHeight: 1,
+                color: palette.textPrimary,
+              }}
+            >
+              {place}
+            </span>
+            {entry.flag && (
+              <span aria-hidden="true" style={{ fontSize: 20 }}>
+                {entry.flag}
+              </span>
+            )}
+          </div>
+          <p
+            style={{
+              fontFamily: tokens.fontItalic,
+              fontStyle: "italic",
+              fontSize: 11,
+              color: palette.textSecondary,
+            }}
+          >
+            {entry.summary[lang]}
           </p>
         </>
       );
@@ -654,7 +736,7 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
               fontFamily: tokens.fontTitle,
               fontStyle: "italic",
               fontWeight: 400,
-              fontSize: "clamp(17px, 1.7vw, 21px)",
+              fontSize: "clamp(15px, 1.5vw, 19px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
               color: palette.textPrimary,
@@ -663,11 +745,11 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language; tint: str
             {entry.title[lang]}
           </p>
           <p
-            className="mt-1.5"
+            className="mt-1"
             style={{
               fontFamily: tokens.fontItalic,
               fontStyle: "italic",
-              fontSize: 12,
+              fontSize: 11,
               color: palette.textSecondary,
             }}
           >
@@ -710,7 +792,7 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
             fontFamily: tokens.fontTitle,
             fontStyle: "italic",
             fontWeight: 400,
-            fontSize: "clamp(24px, 2.4vw, 32px)",
+            fontSize: "clamp(26px, 2.5vw, 34px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.15,
             color: palette.textPrimary,
@@ -747,6 +829,50 @@ function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
         >
           {entry.description[lang]}
         </p>
+        {entry.bullets && entry.bullets.length > 0 && (
+          <ul className="mt-4 space-y-1.5" style={{ color: palette.textPrimary }}>
+            {entry.bullets.map((b, idx) => (
+              <li
+                key={idx}
+                className="flex gap-2"
+                style={{ fontSize: 14, lineHeight: 1.55 }}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{
+                    color: palette.teal,
+                    fontFamily: tokens.fontMono,
+                    flexShrink: 0,
+                  }}
+                >
+                  ›
+                </span>
+                <span>{b[lang]}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {entry.stack && entry.stack.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {entry.stack.map((s) => (
+              <span
+                key={s}
+                style={{
+                  fontFamily: tokens.fontMono,
+                  fontSize: 10,
+                  letterSpacing: "0.08em",
+                  padding: "3px 8px",
+                  border: `1px solid ${palette.hairline}`,
+                  borderRadius: 4,
+                  color: palette.textSecondary,
+                  background: palette.beige,
+                }}
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       <PhotoSlot
         photoSrc={entry.photoSrc}
