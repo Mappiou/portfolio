@@ -6,6 +6,14 @@ export type PassionItem = {
   flag?: string;
   /** Optional path to a photo (e.g. /images/passions/badminton.jpg). When unset, a tinted placeholder is shown */
   photoSrc?: string;
+  /** Picsum seed for the placeholder photo */
+  photoSeed?: string;
+  /** Longer prose for a "scene" rendering (sport scenes) */
+  prose?: Translated;
+  /** Aspect ratio for the scene image (default 16/10, "4/5" for the tall portrait) */
+  aspect?: "16/10" | "4/5" | "5/4";
+  /** Mono kicker shown above the scene title */
+  kicker?: Translated;
 };
 
 export type Passion = {
@@ -30,6 +38,18 @@ export const passions: Passion[] = [
       {
         id: "badminton",
         label: { fr: "Badminton", en: "Badminton", es: "Bádminton" },
+        photoSeed: "badminton-court-shuttle",
+        aspect: "16/10",
+        kicker: {
+          fr: "Salle · Réflexes",
+          en: "Indoor · Reflexes",
+          es: "Sala · Reflejos",
+        },
+        prose: {
+          fr: "Sport indoor, intensité en bursts courts. Quinze ans que j'y joue régulièrement — pour les réflexes et la fatigue propre des matchs serrés.",
+          en: "Indoor sport, intensity in short bursts. Fifteen years of regular play — for the reflexes and the clean exhaustion of tight matches.",
+          es: "Deporte de interior, intensidad en ráfagas cortas. Quince años jugando con regularidad — por los reflejos y el cansancio limpio de los partidos ajustados.",
+        },
       },
       {
         id: "beach-volley",
@@ -37,6 +57,18 @@ export const passions: Passion[] = [
           fr: "Beach volley",
           en: "Beach volley",
           es: "Vóley playa",
+        },
+        photoSeed: "beachvolley-bcn-sunset",
+        aspect: "16/10",
+        kicker: {
+          fr: "Plage · Été",
+          en: "Beach · Summer",
+          es: "Playa · Verano",
+        },
+        prose: {
+          fr: "Été sur Barceloneta, fin de journée, le sable encore chaud. Le rythme à trois touches qui devient lisible avec le temps.",
+          en: "Summer evenings on Barceloneta, sand still warm. The three-touch rhythm that becomes legible over time.",
+          es: "Tardes de verano en la Barceloneta, la arena aún caliente. El ritmo de tres toques que se vuelve legible con el tiempo.",
         },
       },
       {
@@ -46,13 +78,37 @@ export const passions: Passion[] = [
           en: "Ice skating",
           es: "Patinaje sobre hielo",
         },
+        photoSeed: "iceskating-rink-night",
+        aspect: "4/5",
+        kicker: {
+          fr: "Glace · Précision",
+          en: "Ice · Precision",
+          es: "Hielo · Precisión",
+        },
+        prose: {
+          fr: "Depuis l'adolescence — la précision, le silence sur la glace, l'équilibre dans la vitesse. Une discipline qui exige du calme.",
+          en: "Since adolescence — precision, the silence on the ice, balance at speed. A discipline that demands calm.",
+          es: "Desde la adolescencia — precisión, el silencio sobre el hielo, equilibrio en la velocidad. Una disciplina que exige calma.",
+        },
       },
       {
         id: "trekking",
         label: {
-          fr: "Trekking en autonomie",
-          en: "Self-supported trekking",
-          es: "Trekking en autonomía",
+          fr: "Nature, trekking & bivouac",
+          en: "Nature, trekking & bivouac",
+          es: "Naturaleza, trekking & vivac",
+        },
+        photoSeed: "trekking-mountain-bivouac",
+        aspect: "16/10",
+        kicker: {
+          fr: "Montagne · Lenteur",
+          en: "Mountain · Slowness",
+          es: "Montaña · Lentitud",
+        },
+        prose: {
+          fr: "Plusieurs jours en autonomie, sac sur le dos, bivouac à la frontale. La lenteur des sommets, la nuit pure loin des lumières.",
+          en: "Multi-day self-supported treks, pack on, bivouac by headlamp. The slowness of summits, pure dark away from city light.",
+          es: "Travesías de varios días en autonomía, mochila a cuestas, vivac con frontal. La lentitud de las cumbres, la oscuridad pura lejos de las luces.",
         },
       },
     ],
@@ -71,41 +127,5 @@ export const passions: Passion[] = [
       es: "Auténtica pasión por la tech en general. Hago vigilancia continua de todas las novedades — modelos de IA, frameworks, herramientas, gadgets, papers de investigación. Curioso por defecto, dedico tiempo a entender cómo funciona por dentro y a probarlo antes de formarme una opinión. Lo que me motiva: no dejar nunca de aprender.",
     },
     items: [],
-  },
-  {
-    id: "travel",
-    icon: "travel",
-    title: { fr: "Voyages", en: "Travel", es: "Viajes" },
-    description: {
-      fr: "Un an de road-trip aux États-Unis et en Amérique du Sud. L'Asie via mes 2 semestres d'études (Chine + pays voisins). Et beaucoup d'Europe entre deux missions. Voyager me garde curieux et ouvert.",
-      en: "A year-long road trip across the US and South America. Asia via my 2 study-abroad semesters (China + neighbouring trips). And a lot of Europe between missions. Travel keeps me curious and open.",
-      es: "Un año de road trip por EE.UU. y Sudamérica. Asia gracias a mis 2 semestres en el extranjero (China + países vecinos). Y mucha Europa entre dos misiones. Viajar me mantiene curioso y abierto.",
-    },
-    items: [
-      {
-        id: "usa",
-        label: { fr: "États-Unis", en: "USA", es: "EE.UU." },
-        flag: "🇺🇸",
-      },
-      {
-        id: "south-america",
-        label: {
-          fr: "Amérique du Sud",
-          en: "South America",
-          es: "Sudamérica",
-        },
-        flag: "🌎",
-      },
-      {
-        id: "asia",
-        label: { fr: "Asie", en: "Asia", es: "Asia" },
-        flag: "🌏",
-      },
-      {
-        id: "europe",
-        label: { fr: "Europe", en: "Europe", es: "Europa" },
-        flag: "🇪🇺",
-      },
-    ],
   },
 ];

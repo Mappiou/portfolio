@@ -12,7 +12,7 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="relative w-full" aria-labelledby="projects-heading">
       <ChapterCard
-        chapter="CHAPITRE 05"
+        chapter="CHAPITRE 06"
         bgSrc="https://picsum.photos/seed/apps-cinema/1800/500"
         headingId="projects-heading"
         title={

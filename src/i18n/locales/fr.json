@@ -54,6 +54,16 @@
     "kicker": "Passions",
     "title": "Ce que j'aime <italic>en dehors du code.</italic>"
   },
+  "travels": {
+    "kicker": "Carnet de voyage",
+    "title": "Un an sur la route, <italic>de Hanoï à Tulum.</italic>",
+    "prologueLabel": "Prologue",
+    "prologue": "Le voyage a commencé comme un pèlerinage — j'ai des origines vietnamiennes et laotiennes, et je voulais voir de mes yeux la terre dont parlaient mes parents. Deux mois en Asie, puis une chose en a entraîné une autre. Je suis tombé amoureux du backpacking, et je suis reparti pour un an en Amérique du Sud, de la Colombie au Brésil. Mexico a clôturé la boucle.",
+    "expandHint": "Faites défiler la frise — chaque pays s'ouvre en bas",
+    "highlightsLabel": "Étapes marquantes",
+    "originLabel": "Origines",
+    "stops": "{{count}} pays · 12 mois · 1 sac à dos"
+  },
   "projects": {
     "kicker": "Projets perso",
     "title": "Trois apps, <italic>scannables.</italic>",

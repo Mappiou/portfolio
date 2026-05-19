@@ -54,6 +54,16 @@
     "kicker": "Passions",
     "title": "What I love <italic>outside the code.</italic>"
   },
+  "travels": {
+    "kicker": "Travel diary",
+    "title": "A year on the road, <italic>Hanoi to Tulum.</italic>",
+    "prologueLabel": "Prologue",
+    "prologue": "The trip began as a pilgrimage — I have Vietnamese and Laotian roots, and I wanted to see with my own eyes the land my parents spoke of. Two months in Asia, then one thing led to another. I fell in love with backpacking, and went off for a year in South America, from Colombia to Brazil. Mexico closed the loop.",
+    "expandHint": "Scroll the timeline — each country opens below",
+    "highlightsLabel": "Highlights",
+    "originLabel": "Origins",
+    "stops": "{{count}} countries · 12 months · 1 backpack"
+  },
   "projects": {
     "kicker": "Side projects",
     "title": "Three apps, <italic>scannable.</italic>",

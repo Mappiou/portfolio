@@ -54,6 +54,16 @@
     "kicker": "Pasiones",
     "title": "Lo que me gusta <italic>fuera del código.</italic>"
   },
+  "travels": {
+    "kicker": "Cuaderno de viaje",
+    "title": "Un año en la ruta, <italic>de Hanói a Tulum.</italic>",
+    "prologueLabel": "Prólogo",
+    "prologue": "El viaje empezó como una peregrinación — tengo raíces vietnamitas y laosianas, y quería ver con mis propios ojos la tierra de la que hablaban mis padres. Dos meses en Asia, luego una cosa llevó a la otra. Me enamoré del mochileo, y me fui un año por Sudamérica, de Colombia a Brasil. México cerró el círculo.",
+    "expandHint": "Desplaza la línea — cada país se abre abajo",
+    "highlightsLabel": "Lugares destacados",
+    "originLabel": "Raíces",
+    "stops": "{{count}} países · 12 meses · 1 mochila"
+  },
   "projects": {
     "kicker": "Proyectos personales",
     "title": "Tres apps, <italic>escaneables.</italic>",

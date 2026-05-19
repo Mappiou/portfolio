@@ -42,6 +42,28 @@ export type Education = {
   stack?: string[];
 };
 
+export type Travel = {
+  id: string;
+  /** Sort key — months since January 2023 (e.g. March 2023 = 2, February 2024 = 13). */
+  monthOffset: number;
+  country: Translated;
+  flag: string;
+  period: Translated;
+  region: "asia" | "amazon" | "andes" | "altiplano" | "atacama" | "cone-sud" | "brazil" | "mexico";
+  /** One-line tagline */
+  summary: Translated;
+  /** Long-form prose for the detail panel */
+  description: Translated;
+  /** Standout places / experiences */
+  highlights: Translated[];
+  /** Picsum seed for the placeholder photo */
+  photoSeed: string;
+  /** Optional override (real photo) */
+  photoSrc?: string;
+  /** Short note about ancestral origins (Vietnam / Laos) */
+  origin?: Translated;
+};
+
 export type Skill = {
   category: Translated;
   items: string[];
