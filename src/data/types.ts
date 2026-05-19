@@ -21,6 +21,8 @@ export type Education = {
   /** Visual marker on the dot — 'milestone' for life events, 'exchange' for abroad, 'internship' for student internships, 'degree' for diplomas, 'job' for professional positions, 'travel' for extended trips */
   kind: "milestone" | "exchange" | "internship" | "degree" | "job" | "travel";
   title: Translated;
+  /** Compact label shown on the timeline card (e.g. "Bac S", "Erasmus Chine") */
+  shortTitle?: Translated;
   school: Translated;
   location: Translated;
   period: Translated;
