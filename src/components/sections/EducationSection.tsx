@@ -61,15 +61,6 @@ const cardBgOpenFor: Record<Education["kind"], string> = {
   travel: "rgba(239, 233, 221, 0.18)",
 };
 
-const labelKeyFor: Record<Education["kind"], string> = {
-  milestone: "education.kind.milestone",
-  exchange: "education.kind.exchange",
-  internship: "education.kind.internship",
-  degree: "education.kind.degree",
-  job: "education.kind.job",
-  travel: "education.kind.travel",
-};
-
 const TIMELINE_WIDTH = 2800;
 const YEAR_START = 2015;
 const YEAR_END = 2026;
@@ -305,7 +296,7 @@ export function EducationSection() {
                 <div
                   className="relative"
                   style={{
-                    height: 240,
+                    height: 160,
                     paddingLeft: CARD_WIDTH / 2,
                     paddingRight: CARD_WIDTH / 2,
                   }}
@@ -330,7 +321,6 @@ export function EducationSection() {
                         lang={lang}
                         isAbove={i % 2 === 0}
                         isOpen={openIndex === i}
-                        labelKey={labelKeyFor[entry.kind]}
                         onToggle={() => scrollToEntry(i)}
                       />
                     ))}
@@ -401,14 +391,12 @@ export function EducationSection() {
     lang,
     isAbove,
     isOpen,
-    labelKey,
     onToggle,
   }: {
     entry: Education;
     lang: Language;
     isAbove: boolean;
     isOpen: boolean;
-    labelKey: string;
     onToggle: () => void;
   }) {
     const tint = tintFor[entry.kind];
@@ -452,11 +440,11 @@ export function EducationSection() {
             aria-hidden="true"
             className="absolute z-10"
             style={{
-              top: isAbove ? "calc(50% - 42px)" : "calc(50% + 14px)",
+              top: isAbove ? "calc(50% - 28px)" : "calc(50% + 10px)",
               left: "50%",
               transform: "translateX(-50%)",
               width: 1,
-              height: 28,
+              height: 18,
               background: "rgba(239,233,221,0.18)",
             }}
           />
@@ -464,7 +452,7 @@ export function EducationSection() {
           <div
             className="absolute"
             style={{
-              [isAbove ? "bottom" : "top"]: "calc(50% + 42px)",
+              [isAbove ? "bottom" : "top"]: "calc(50% + 28px)",
               left: 0,
               right: 0,
             }}
@@ -473,7 +461,6 @@ export function EducationSection() {
               entry={entry}
               lang={lang}
               tint={tint}
-              labelKey={labelKey}
               isOpen={isOpen}
               onToggle={onToggle}
             />
@@ -487,14 +474,12 @@ export function EducationSection() {
     entry,
     lang,
     tint,
-    labelKey,
     isOpen,
     onToggle,
   }: {
     entry: Education;
     lang: Language;
     tint: string;
-    labelKey: string;
     isOpen: boolean;
     onToggle: () => void;
   }) {
@@ -503,8 +488,9 @@ export function EducationSection() {
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="w-full text-center p-3 transition-all cursor-pointer hover:-translate-y-0.5"
+        className="w-full text-center transition-all cursor-pointer hover:-translate-y-0.5"
         style={{
+          padding: "8px 10px",
           background: isOpen ? cardBgOpenFor[entry.kind] : cardBgFor[entry.kind],
           backdropFilter: "blur(4px)",
           WebkitBackdropFilter: "blur(4px)",
@@ -512,18 +498,6 @@ export function EducationSection() {
           fontFamily: tokens.fontBody,
         }}
       >
-        <p
-          style={{
-            fontFamily: tokens.fontMono,
-            fontSize: 9,
-            textTransform: "uppercase",
-            letterSpacing: "0.18em",
-            color: palette.textSecondary,
-            marginBottom: 6,
-          }}
-        >
-          {t(labelKey)}
-        </p>
         <CardBody entry={entry} lang={lang} />
       </button>
     );
@@ -531,216 +505,42 @@ export function EducationSection() {
 }
 
 function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
-  switch (entry.kind) {
-    case "exchange": {
-      const country = entry.location[lang];
-      return (
-        <>
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <span
-              style={{
-                fontFamily: tokens.fontTitle,
-                fontStyle: "italic",
-                fontWeight: 400,
-                fontSize: "clamp(22px, 2.2vw, 30px)",
-                letterSpacing: "-0.02em",
-                lineHeight: 1,
-                color: palette.textPrimary,
-              }}
-            >
-              {country}
-            </span>
-            {entry.flag && (
-              <span aria-hidden="true" style={{ fontSize: 22 }}>
-                {entry.flag}
-              </span>
-            )}
-          </div>
-          <p
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontStyle: "italic",
-              fontSize: 11,
-              color: palette.textSecondary,
-            }}
-          >
-            {entry.summary[lang]}
-          </p>
-        </>
-      );
-    }
-    case "internship": {
-      const company = entry.school[lang];
-      const duration = entry.period[lang].split("·")[1]?.trim() ?? entry.period[lang];
-      return (
-        <>
-          <p
-            className="mb-1"
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(16px, 1.6vw, 22px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-              color: palette.textPrimary,
-            }}
-          >
-            {company}
-          </p>
-          <p
-            className="flex items-center justify-center gap-1.5 mb-1"
-            style={{
-              fontFamily: tokens.fontMono,
-              fontSize: 9,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: palette.textSecondary,
-            }}
-          >
-            <MapPin size={10} aria-hidden="true" />
-            <span>{entry.location[lang].split(",")[0]}</span>
-            <span aria-hidden="true">·</span>
-            <span>{duration}</span>
-          </p>
-        </>
-      );
-    }
-    case "degree": {
-      const fullTitle = entry.title[lang];
-      const short = fullTitle.includes(" — ") ? fullTitle.split(" — ")[0] : fullTitle;
-      return (
-        <>
-          <p
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(15px, 1.5vw, 18px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
-              color: palette.textPrimary,
-            }}
-          >
-            {short}
-          </p>
-          <p
-            className="mt-1.5"
-            style={{
-              fontFamily: tokens.fontMono,
-              fontSize: 9,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: palette.textSecondary,
-            }}
-          >
-            {entry.school[lang].replace(/^.*— /, "").split(" · ")[0]}
-          </p>
-        </>
-      );
-    }
-    case "job": {
-      const fullTitle = entry.title[lang];
-      const short = fullTitle.includes(" — ") ? fullTitle.split(" — ")[0] : fullTitle;
-      const company = entry.school[lang];
-      return (
-        <>
-          <p
-            className="mb-1"
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(16px, 1.6vw, 22px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-              color: palette.textPrimary,
-            }}
-          >
-            {company}
-          </p>
-          <p
-            style={{
-              fontFamily: tokens.fontMono,
-              fontSize: 9,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: palette.textSecondary,
-            }}
-          >
-            {short}
-          </p>
-        </>
-      );
-    }
-    case "travel": {
-      return (
-        <>
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <span
-              style={{
-                fontFamily: tokens.fontTitle,
-                fontStyle: "italic",
-                fontWeight: 400,
-                fontSize: "clamp(20px, 2vw, 28px)",
-                letterSpacing: "-0.02em",
-                lineHeight: 1,
-                color: palette.textPrimary,
-              }}
-            >
-              {entry.location[lang]}
-            </span>
-            {entry.flag && (
-              <span aria-hidden="true" style={{ fontSize: 22 }}>
-                {entry.flag}
-              </span>
-            )}
-          </div>
-          <p
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontStyle: "italic",
-              fontSize: 11,
-              color: palette.textSecondary,
-            }}
-          >
-            {entry.summary[lang]}
-          </p>
-        </>
-      );
-    }
-    case "milestone":
-    default:
-      return (
-        <>
-          <p
-            style={{
-              fontFamily: tokens.fontTitle,
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(15px, 1.5vw, 18px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
-              color: palette.textPrimary,
-            }}
-          >
-            {entry.title[lang]}
-          </p>
-          <p
-            className="mt-1.5"
-            style={{
-              fontFamily: tokens.fontMono,
-              fontSize: 9,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: palette.textSecondary,
-            }}
-          >
-            {entry.period[lang]}
-          </p>
-        </>
-      );
-  }
+  const label = entry.shortTitle?.[lang] ?? entry.title[lang];
+  const year = Math.floor(entry.year);
+  return (
+    <>
+      <p
+        style={{
+          fontFamily: tokens.fontBody,
+          fontWeight: 500,
+          fontSize: 13,
+          lineHeight: 1.2,
+          letterSpacing: "-0.01em",
+          color: palette.textPrimary,
+          margin: 0,
+          whiteSpace: "normal",
+        }}
+      >
+        {label}
+        {entry.flag && (
+          <span aria-hidden="true" style={{ marginLeft: 4 }}>
+            {entry.flag}
+          </span>
+        )}
+      </p>
+      <p
+        style={{
+          fontFamily: tokens.fontMono,
+          fontSize: 10,
+          letterSpacing: "0.1em",
+          color: palette.textSecondary,
+          marginTop: 2,
+        }}
+      >
+        {year}
+      </p>
+    </>
+  );
 }
 
 function DetailPanel({ entry, lang }: { entry: Education; lang: Language }) {
