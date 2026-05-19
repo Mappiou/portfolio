@@ -242,7 +242,18 @@ export function EducationSection() {
         <ChevronRight size={14} aria-hidden="true" />
       </p>
 
-      <div className="relative">
+      <div
+        className="relative"
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 30,
+          background: palette.beige,
+          paddingTop: 8,
+          paddingBottom: 8,
+          borderBottom: `1px solid ${palette.hairline}`,
+        }}
+      >
         <div
           ref={scrollerRef}
           onScroll={onScroll}
