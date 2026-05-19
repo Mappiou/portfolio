@@ -506,19 +506,18 @@ export function EducationSection() {
 
 function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
   const label = entry.shortTitle?.[lang] ?? entry.title[lang];
-  const year = Math.floor(entry.year);
+  const subtitle = entry.shortSubtitle?.[lang];
   return (
     <>
       <p
         style={{
           fontFamily: tokens.fontBody,
           fontWeight: 500,
-          fontSize: 13,
+          fontSize: 12,
           lineHeight: 1.2,
-          letterSpacing: "-0.01em",
+          letterSpacing: "-0.005em",
           color: palette.textPrimary,
           margin: 0,
-          whiteSpace: "normal",
         }}
       >
         {label}
@@ -528,17 +527,20 @@ function CardBody({ entry, lang }: { entry: Education; lang: Language }) {
           </span>
         )}
       </p>
-      <p
-        style={{
-          fontFamily: tokens.fontMono,
-          fontSize: 10,
-          letterSpacing: "0.1em",
-          color: palette.textSecondary,
-          marginTop: 2,
-        }}
-      >
-        {year}
-      </p>
+      {subtitle && (
+        <p
+          style={{
+            fontFamily: tokens.fontTitle,
+            fontStyle: "italic",
+            fontSize: 11,
+            lineHeight: 1.25,
+            color: palette.textSecondary,
+            marginTop: 2,
+          }}
+        >
+          {subtitle}
+        </p>
+      )}
     </>
   );
 }

@@ -23,6 +23,8 @@ export type Education = {
   title: Translated;
   /** Short label used on the compact timeline card (e.g. "Bac S", "Erasmus Chine") */
   shortTitle?: Translated;
+  /** Optional second line on the compact timeline card (location/employer/branch) */
+  shortSubtitle?: Translated;
   school: Translated;
   location: Translated;
   period: Translated;

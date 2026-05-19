@@ -10,7 +10,8 @@ export const education: Education[] = [
       en: "French baccalaureate (S) — with honours",
       es: "Bachillerato S — con mención",
     },
-    shortTitle: { fr: "Bac S", en: "Bac S", es: "Bac S" },
+    shortTitle: { fr: "Baccalauréat S", en: "Baccalaureate S", es: "Bachillerato S" },
+    shortSubtitle: { fr: "Mention Bien", en: "With honours", es: "Con mención" },
     school: { fr: "Lycée", en: "High school", es: "Instituto" },
     location: { fr: "France", en: "France", es: "Francia" },
     period: { fr: "2015 · mention Bien", en: "2015 · with honours", es: "2015 · con mención" },
@@ -35,6 +36,7 @@ export const education: Education[] = [
       es: "Ingreso en la UTT",
     },
     shortTitle: { fr: "Entrée UTT", en: "UTT entry", es: "Ingreso UTT" },
+    shortSubtitle: { fr: "Troyes, France", en: "Troyes, France", es: "Troyes, Francia" },
     school: {
       fr: "UTT — Université de Technologie de Troyes",
       en: "UTT — Troyes University of Technology",
@@ -66,7 +68,8 @@ export const education: Education[] = [
       en: "R&D internship — Orange Labs",
       es: "Prácticas I+D — Orange Labs",
     },
-    shortTitle: { fr: "Stage Orange", en: "Orange internship", es: "Prácticas Orange" },
+    shortTitle: { fr: "Stage R&D", en: "R&D internship", es: "Prácticas I+D" },
+    shortSubtitle: { fr: "Orange Labs · Caen", en: "Orange Labs · Caen", es: "Orange Labs · Caen" },
     school: { fr: "Orange Labs", en: "Orange Labs", es: "Orange Labs" },
     location: { fr: "Caen, France", en: "Caen, France", es: "Caen, Francia" },
     period: {
@@ -94,7 +97,12 @@ export const education: Education[] = [
       en: "Academic exchange — Canada",
       es: "Intercambio universitario — Canadá",
     },
-    shortTitle: { fr: "Erasmus Canada", en: "Erasmus Canada", es: "Erasmus Canadá" },
+    shortTitle: {
+      fr: "Échange universitaire",
+      en: "Academic exchange",
+      es: "Intercambio universitario",
+    },
+    shortSubtitle: { fr: "Canada", en: "Canada", es: "Canadá" },
     school: {
       fr: "Université canadienne · échange UTT",
       en: "Canadian university · UTT exchange",
@@ -127,7 +135,12 @@ export const education: Education[] = [
       en: "AI Research internship — Aubay",
       es: "Prácticas Investigación IA — Aubay",
     },
-    shortTitle: { fr: "Stage Aubay", en: "Aubay internship", es: "Prácticas Aubay" },
+    shortTitle: {
+      fr: "Stage Recherche IA",
+      en: "AI Research internship",
+      es: "Prácticas Investigación IA",
+    },
+    shortSubtitle: { fr: "Aubay · Paris", en: "Aubay · Paris", es: "Aubay · París" },
     school: { fr: "Aubay", en: "Aubay", es: "Aubay" },
     location: { fr: "Paris, France", en: "Paris, France", es: "París, Francia" },
     period: {
@@ -155,7 +168,12 @@ export const education: Education[] = [
       en: "End of integrated prep cycle",
       es: "Fin del ciclo preparatorio",
     },
-    shortTitle: { fr: "Fin prépa", en: "End of prep", es: "Fin preparación" },
+    shortTitle: {
+      fr: "Fin prépa intégrée",
+      en: "End of prep cycle",
+      es: "Fin del ciclo preparatorio",
+    },
+    shortSubtitle: { fr: "Branche IA", en: "AI branch", es: "Rama IA" },
     school: {
       fr: "UTT — Université de Technologie de Troyes",
       en: "UTT — Troyes University of Technology",
@@ -187,7 +205,12 @@ export const education: Education[] = [
       en: "Academic exchange — China",
       es: "Intercambio universitario — China",
     },
-    shortTitle: { fr: "Erasmus Chine", en: "Erasmus China", es: "Erasmus China" },
+    shortTitle: {
+      fr: "Échange universitaire",
+      en: "Academic exchange",
+      es: "Intercambio universitario",
+    },
+    shortSubtitle: { fr: "Chine", en: "China", es: "China" },
     school: {
       fr: "Université chinoise · échange UTT",
       en: "Chinese university · UTT exchange",
@@ -220,7 +243,12 @@ export const education: Education[] = [
       en: "Engineering Degree — Computer Science & IS",
       es: "Título de Ingeniero — Informática & SI",
     },
-    shortTitle: { fr: "Diplôme ingénieur", en: "Engineering degree", es: "Título ingeniero" },
+    shortTitle: { fr: "Diplôme ingénieur", en: "Engineering degree", es: "Título de ingeniero" },
+    shortSubtitle: {
+      fr: "UTT · Informatique & IA",
+      en: "UTT · Computer Science & AI",
+      es: "UTT · Informática e IA",
+    },
     school: {
       fr: "UTT — Université de Technologie de Troyes",
       en: "UTT — Troyes University of Technology",
@@ -248,7 +276,16 @@ export const education: Education[] = [
       en: "Data / Blockchain internship — Capgemini",
       es: "Prácticas Data / Blockchain — Capgemini",
     },
-    shortTitle: { fr: "Stage Capgemini", en: "Capgemini internship", es: "Prácticas Capgemini" },
+    shortTitle: {
+      fr: "Stage Data/Blockchain",
+      en: "Data/Blockchain internship",
+      es: "Prácticas Data/Blockchain",
+    },
+    shortSubtitle: {
+      fr: "Capgemini · Toulouse",
+      en: "Capgemini · Toulouse",
+      es: "Capgemini · Toulouse",
+    },
     school: { fr: "Capgemini", en: "Capgemini", es: "Capgemini" },
     location: { fr: "Toulouse, France", en: "Toulouse, France", es: "Toulouse, Francia" },
     period: {
@@ -276,7 +313,12 @@ export const education: Education[] = [
       en: "Master's degree in Cybersecurity",
       es: "Máster en Ciberseguridad",
     },
-    shortTitle: { fr: "Master cyber", en: "Master cyber", es: "Máster ciber" },
+    shortTitle: {
+      fr: "Master Cybersécurité",
+      en: "Master in Cybersecurity",
+      es: "Máster en Ciberseguridad",
+    },
+    shortSubtitle: { fr: "UTT · Troyes", en: "UTT · Troyes", es: "UTT · Troyes" },
     school: {
       fr: "UTT — Université de Technologie de Troyes",
       en: "UTT — Troyes University of Technology",
@@ -308,7 +350,8 @@ export const education: Education[] = [
       en: "Data Scientist — Lincoln (Orange chatbot)",
       es: "Data Scientist — Lincoln (chatbot Orange)",
     },
-    shortTitle: { fr: "Lincoln", en: "Lincoln", es: "Lincoln" },
+    shortTitle: { fr: "Data Scientist", en: "Data Scientist", es: "Data Scientist" },
+    shortSubtitle: { fr: "Lincoln · Paris", en: "Lincoln · Paris", es: "Lincoln · París" },
     school: { fr: "Lincoln", en: "Lincoln", es: "Lincoln" },
     location: { fr: "Paris, France", en: "Paris, France", es: "París, Francia" },
     period: {
@@ -343,7 +386,12 @@ export const education: Education[] = [
       en: "Year-long trip — Americas & Asia",
       es: "Viaje de un año — Américas y Asia",
     },
-    shortTitle: { fr: "Voyage", en: "Trip", es: "Viaje" },
+    shortTitle: { fr: "Voyage sabbatique", en: "Sabbatical trip", es: "Viaje sabático" },
+    shortSubtitle: {
+      fr: "Amérique latine + Asie",
+      en: "Latin America + Asia",
+      es: "América Latina + Asia",
+    },
     school: { fr: "Sabbatique", en: "Sabbatical", es: "Sabático" },
     location: { fr: "Tour du monde", en: "Round the world", es: "Vuelta al mundo" },
     period: {
@@ -376,7 +424,12 @@ export const education: Education[] = [
       en: "AI Engineer — Hexamind (Generative AI)",
       es: "AI Engineer — Hexamind (Generative AI)",
     },
-    shortTitle: { fr: "Hexamind", en: "Hexamind", es: "Hexamind" },
+    shortTitle: { fr: "AI Engineer", en: "AI Engineer", es: "AI Engineer" },
+    shortSubtitle: {
+      fr: "Hexamind · Barcelone",
+      en: "Hexamind · Barcelona",
+      es: "Hexamind · Barcelona",
+    },
     school: { fr: "Hexamind", en: "Hexamind", es: "Hexamind" },
     location: {
       fr: "Paris puis Barcelone",
