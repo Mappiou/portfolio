@@ -73,7 +73,7 @@ export function EducationSection() {
   const entries = [...education].sort((a, b) => a.year - b.year);
   const initialIndex = Math.max(
     0,
-    entries.findIndex((e) => e.id === "exchange-china"),
+    entries.findIndex((e) => e.id === "job-lincoln"),
   );
   const [openIndex, setOpenIndex] = useState<number>(initialIndex);
   const [edgePad, setEdgePad] = useState(0);
