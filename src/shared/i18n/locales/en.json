@@ -101,5 +101,21 @@
   "ui": {
     "photo": "photo",
     "photoPlaceholder": "photo coming soon"
+  },
+  "chooser": {
+    "heading": "Pick your universe",
+    "subtitle": "Two styles for one portfolio — your call.",
+    "cinema": {
+      "title": "CINEMA",
+      "tagline": "Dark, artistic and cinematic",
+      "aria": "Portfolio Cinema — dark and cinematic"
+    },
+    "editorial": {
+      "title": "EDITORIAL",
+      "tagline": "Bright, joyful and magazine-like",
+      "aria": "Portfolio Editorial — bright and magazine-like"
+    },
+    "cta": "Enter",
+    "lastVisit": "Your last visit"
   }
 }

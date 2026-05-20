@@ -101,5 +101,21 @@
   "ui": {
     "photo": "photo",
     "photoPlaceholder": "photo à venir"
+  },
+  "chooser": {
+    "heading": "Choisis ton univers",
+    "subtitle": "Deux styles pour un même portfolio — à toi de voir.",
+    "cinema": {
+      "title": "CINEMA",
+      "tagline": "Sombre, artistique et cinématique",
+      "aria": "Portfolio Cinema — sombre et cinématique"
+    },
+    "editorial": {
+      "title": "EDITORIAL",
+      "tagline": "Clair, joyeux et magazine",
+      "aria": "Portfolio Editorial — clair et magazine"
+    },
+    "cta": "Entrer",
+    "lastVisit": "Ta dernière visite"
   }
 }

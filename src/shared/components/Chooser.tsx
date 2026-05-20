@@ -3,41 +3,38 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useVariantPreference, type Variant } from "@shared/hooks/useVariantPreference";
 import { useDetectInitialLanguage, type SupportedLang } from "@shared/hooks/useDetectInitialLanguage";
+import frLocale from "@shared/i18n/locales/fr.json";
+import enLocale from "@shared/i18n/locales/en.json";
+import esLocale from "@shared/i18n/locales/es.json";
 import { LanguageDropdown } from "./LanguageDropdown";
 import "./Chooser.css";
 
-const CONFIG: Record<Variant, {
+const LOCALES = {
+  fr: frLocale,
+  en: enLocale,
+  es: esLocale,
+} as const;
+
+const VISUAL: Record<Variant, {
   image: string;
-  title: string;
-  tagline: string;
-  cta: string;
   fontTitle: string;
   ctaColor: string;
   gradient: string;
   textColor: string;
-  ariaLabel: string;
 }> = {
   cinema: {
     image: "/shared/chooser/cinema.webp",
-    title: "CINEMA",
-    tagline: "Sombre, artistique et cinématique",
-    cta: "Entrer",
     fontTitle: "'Cormorant Garamond', Georgia, serif",
     ctaColor: "#D9A648",
     gradient: "linear-gradient(180deg, rgba(14,13,11,0) 0%, rgba(14,13,11,0.7) 100%)",
     textColor: "#EFE9DD",
-    ariaLabel: "Portfolio Cinema — sombre et cinématique",
   },
   editorial: {
     image: "/shared/chooser/editorial.webp",
-    title: "EDITORIAL",
-    tagline: "Clair, joyeux et magazine",
-    cta: "Entrer",
     fontTitle: "'Newsreader', Georgia, serif",
     ctaColor: "#A04A2D",
     gradient: "linear-gradient(180deg, rgba(245,237,224,0) 0%, rgba(245,237,224,0.85) 100%)",
     textColor: "#1F1A14",
-    ariaLabel: "Portfolio Editorial — clair et magazine",
   },
 };
 
@@ -53,6 +50,8 @@ export function Chooser() {
   );
   const [hovered, setHovered] = useState<Variant | null>(null);
 
+  const t = LOCALES[lang].chooser;
+
   const enter = (variant: Variant) => {
     set({ variant, lang });
     navigate(`/${variant}/${lang}`);
@@ -60,51 +59,77 @@ export function Chooser() {
 
   return (
     <main style={{ height: "100vh", width: "100vw", overflow: "hidden", position: "relative" }}>
-      <h1
-        style={{
-          position: "absolute",
-          width: 1,
-          height: 1,
-          padding: 0,
-          margin: -1,
-          overflow: "hidden",
-          clip: "rect(0,0,0,0)",
-          whiteSpace: "nowrap",
-          border: 0,
-        }}
-      >
-        Choisis ton portfolio
-      </h1>
-
       <div
         style={{
           position: "absolute",
           top: "1.25rem",
+          left: "1.5rem",
           right: "1.5rem",
           zIndex: 10,
-          color: "#fff",
-          background: "rgba(0,0,0,0.45)",
-          backdropFilter: "blur(6px)",
-          padding: "0.45rem 1rem",
-          borderRadius: "999px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          gap: "1rem",
+          pointerEvents: "none",
         }}
       >
-        <LanguageDropdown
-          value={lang}
-          onChange={(next) => setLang(next as SupportedLang)}
-        />
+        <div
+          style={{
+            color: "#fff",
+            maxWidth: "min(60ch, 60%)",
+            textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+          }}
+        >
+          <h1
+            style={{
+              fontFamily: "'Inter Tight', system-ui, sans-serif",
+              fontSize: "clamp(1.15rem, 2vw, 1.65rem)",
+              fontWeight: 600,
+              letterSpacing: "0.02em",
+              margin: 0,
+            }}
+          >
+            {t.heading}
+          </h1>
+          <p
+            style={{
+              fontFamily: "'Inter Tight', system-ui, sans-serif",
+              fontSize: "clamp(0.85rem, 1.15vw, 1rem)",
+              opacity: 0.9,
+              margin: "0.2rem 0 0",
+            }}
+          >
+            {t.subtitle}
+          </p>
+        </div>
+        <div
+          style={{
+            color: "#fff",
+            background: "rgba(0,0,0,0.45)",
+            backdropFilter: "blur(6px)",
+            padding: "0.45rem 1rem",
+            borderRadius: "999px",
+            pointerEvents: "auto",
+          }}
+        >
+          <LanguageDropdown
+            value={lang}
+            onChange={(next) => setLang(next as SupportedLang)}
+          />
+        </div>
       </div>
 
       <div className="chooser-split">
         {ORDER.map((key, idx) => {
-          const config = CONFIG[key];
+          const visual = VISUAL[key];
+          const copy = t[key];
           const isHovered = hovered === key;
           const isDimmed = hovered !== null && hovered !== key;
           return (
             <motion.button
               key={key}
               type="button"
-              aria-label={config.ariaLabel}
+              aria-label={copy.aria}
               onClick={() => enter(key)}
               onMouseEnter={() => setHovered(key)}
               onMouseLeave={() => setHovered(null)}
@@ -125,16 +150,16 @@ export function Chooser() {
                 border: "none",
                 cursor: "pointer",
                 padding: 0,
-                backgroundImage: `url(${config.image})`,
+                backgroundImage: `url(${visual.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                color: config.textColor,
-                fontFamily: config.fontTitle,
+                color: visual.textColor,
+                fontFamily: visual.fontTitle,
                 overflow: "hidden",
                 flex: 1,
               }}
             >
-              <div style={{ position: "absolute", inset: 0, background: config.gradient }} />
+              <div style={{ position: "absolute", inset: 0, background: visual.gradient }} />
               <div
                 style={{
                   position: "relative",
@@ -157,11 +182,11 @@ export function Chooser() {
                       letterSpacing: "0.05em",
                     }}
                   >
-                    ↪ Ta dernière visite
+                    ↪ {t.lastVisit}
                   </span>
                 )}
                 <span style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 600, letterSpacing: "0.05em" }}>
-                  {config.title}
+                  {copy.title}
                 </span>
                 <span
                   style={{
@@ -172,19 +197,19 @@ export function Chooser() {
                     maxWidth: "32ch",
                   }}
                 >
-                  {config.tagline}
+                  {copy.tagline}
                 </span>
                 <span
                   style={{
                     fontFamily: "'Inter Tight', system-ui, sans-serif",
                     fontSize: "1rem",
                     fontWeight: 500,
-                    color: config.ctaColor,
+                    color: visual.ctaColor,
                     marginTop: "0.5rem",
                     letterSpacing: "0.05em",
                   }}
                 >
-                  {config.cta} →
+                  {t.cta} →
                 </span>
               </div>
             </motion.button>
