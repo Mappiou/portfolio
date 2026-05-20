@@ -5,7 +5,7 @@ function isSupported(lang: string): lang is SupportedLang {
   return (SUPPORTED as readonly string[]).includes(lang);
 }
 
-export function useDetectInitialLanguage(): SupportedLang {
+export function detectInitialLanguage(): SupportedLang {
   if (typeof window === "undefined") return "fr";
   const nav = window.navigator.language.slice(0, 2).toLowerCase();
   return isSupported(nav) ? nav : "fr";

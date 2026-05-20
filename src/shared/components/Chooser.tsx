@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useVariantPreference, type Variant } from "@shared/hooks/useVariantPreference";
-import { useDetectInitialLanguage, type SupportedLang } from "@shared/hooks/useDetectInitialLanguage";
+import { detectInitialLanguage, type SupportedLang } from "@shared/lib/detectInitialLanguage";
 import frLocale from "@shared/i18n/locales/fr.json";
 import enLocale from "@shared/i18n/locales/en.json";
 import esLocale from "@shared/i18n/locales/es.json";
@@ -44,7 +44,7 @@ const ORDER: Variant[] = ["editorial", "cinema"];
 export function Chooser() {
   const navigate = useNavigate();
   const { get, set } = useVariantPreference();
-  const detectedLang = useDetectInitialLanguage();
+  const detectedLang = detectInitialLanguage();
   const previous = get();
   const [lang, setLang] = useState<SupportedLang>(
     (previous?.lang as SupportedLang) ?? detectedLang

@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 const STORAGE_KEY = "portfolio:preference";
 
 export type Variant = "cinema" | "editorial";
@@ -13,7 +15,7 @@ function isValidPreference(value: unknown): value is Preference {
 }
 
 export function useVariantPreference() {
-  const get = (): Preference | null => {
+  const get = useCallback((): Preference | null => {
     if (typeof window === "undefined") return null;
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -23,25 +25,25 @@ export function useVariantPreference() {
     } catch {
       return null;
     }
-  };
+  }, []);
 
-  const set = (p: Preference) => {
+  const set = useCallback((p: Preference) => {
     if (typeof window === "undefined") return;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
     } catch {
       // localStorage unavailable (Safari private mode, etc.)
     }
-  };
+  }, []);
 
-  const clear = () => {
+  const clear = useCallback(() => {
     if (typeof window === "undefined") return;
     try {
       window.localStorage.removeItem(STORAGE_KEY);
     } catch {
       // noop
     }
-  };
+  }, []);
 
   return { get, set, clear };
 }

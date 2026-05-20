@@ -1,11 +1,29 @@
+/**
+ * Capture chooser background previews.
+ *
+ * Snaps the travel-section (#travels) of each variant via Playwright,
+ * saves a viewport-sized PNG to public/shared/chooser/.
+ *
+ * The chooser actually ships .webp files. Manual conversion step after
+ * running this script (sharp was removed to keep ignore-scripts=true):
+ *
+ *   brew install webp                      # one-off
+ *   cd public/shared/chooser
+ *   cwebp -q 80 cinema.png    -o cinema.webp
+ *   cwebp -q 80 editorial.png -o editorial.webp
+ *   rm cinema.png editorial.png
+ *
+ * Usage:
+ *   pnpm dev    # in another terminal
+ *   npx tsx scripts/capture-chooser-screenshots.ts
+ */
 import { chromium } from "@playwright/test";
-import sharp from "sharp";
-import { mkdir, stat } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { dirname } from "node:path";
 
 const TARGETS = [
-  { url: "http://localhost:5173/cinema/fr", out: "public/shared/chooser/cinema.webp" },
-  { url: "http://localhost:5173/editorial/fr", out: "public/shared/chooser/editorial.webp" },
+  { url: "http://localhost:5173/cinema/fr", out: "public/shared/chooser/cinema.png" },
+  { url: "http://localhost:5173/editorial/fr", out: "public/shared/chooser/editorial.png" },
 ];
 
 async function main() {
@@ -16,9 +34,6 @@ async function main() {
     const page = await context.newPage();
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
     await page.waitForTimeout(1500);
-    // Snap the travel timeline section (#travels). This shows the
-    // signature "voyages" frieze of each variant so the chooser
-    // previews actually compare the two visual languages.
     await page.evaluate(() => {
       const el = document.getElementById("travels");
       if (el) {
@@ -27,10 +42,8 @@ async function main() {
       }
     });
     await page.waitForTimeout(1500);
-    const pngBuffer = await page.screenshot({ fullPage: false, type: "png" });
-    await sharp(pngBuffer).webp({ quality: 78 }).toFile(out);
-    const sizeKb = Math.round((await stat(out)).size / 1024);
-    console.log(`Captured ${url} -> ${out} (${sizeKb} kB)`);
+    await page.screenshot({ path: out, fullPage: false, type: "png" });
+    console.log(`Captured ${url} -> ${out}`);
     await page.close();
   }
   await browser.close();

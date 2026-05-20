@@ -3,10 +3,10 @@ import { Layout } from "./components/layout/Layout";
 import Home from "./pages/Home";
 import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
-import { useDetectInitialLanguage } from "@shared/hooks/useDetectInitialLanguage";
+import { detectInitialLanguage } from "@shared/lib/detectInitialLanguage";
 
 export function CinemaApp() {
-  const lang = useDetectInitialLanguage();
+  const lang = detectInitialLanguage();
   return (
     <Routes>
       <Route path="/" element={<Navigate to={`/cinema/${lang}`} replace />} />
