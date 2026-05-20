@@ -3,6 +3,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { palette, tokens } from "../../styles/palette";
 import { projects } from "@shared/data/projects";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
+import { VARIANT } from "../../lib/variant";
 
 export function ProjectsSection() {
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ export function ProjectsSection() {
           return (
             <Link
               key={project.id}
-              to={`/${lang}/projects/${project.id}`}
+              to={`/${VARIANT}/${lang}/projects/${project.id}`}
               className="block transition-transform hover:-translate-y-1.5"
               style={{
                 color: palette.textPrimary,

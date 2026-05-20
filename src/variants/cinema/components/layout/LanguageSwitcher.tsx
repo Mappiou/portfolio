@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, type Language } from "@shared/i18n";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { palette, tokens } from "../../styles/palette";
+import { VARIANT } from "../../lib/variant";
 
 type Theme = "light" | "dark";
 
@@ -17,8 +18,9 @@ export function LanguageSwitcher({ theme = "dark" }: Props) {
 
   function pathFor(lang: Language): string {
     const segments = location.pathname.split("/").filter(Boolean);
-    if (segments.length === 0) return `/${lang}`;
-    segments[0] = lang;
+    if (segments.length === 0) return `/${VARIANT}/${lang}`;
+    segments[0] = VARIANT;
+    segments[1] = lang;
     return `/${segments.join("/")}${location.hash}`;
   }
 

@@ -10,6 +10,7 @@ import { DownloadButton } from "../components/projects/DownloadButton";
 import { PhoneMockup } from "../components/projects/PhoneMockup";
 import { MegaButton } from "../components/ui/MegaButton";
 import { SEO } from "../components/seo/SEO";
+import { VARIANT } from "../lib/variant";
 
 export default function ProjectDetail() {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ export default function ProjectDetail() {
   const { projectId } = useParams<{ projectId: string }>();
   const project = projectId ? getProjectById(projectId) : undefined;
 
-  if (!project) return <Navigate to={`/${lang}`} replace />;
+  if (!project) return <Navigate to={`/${VARIANT}/${lang}`} replace />;
 
   return (
     <>
@@ -30,7 +31,7 @@ export default function ProjectDetail() {
         style={{ maxWidth: tokens.pageMaxWidth }}
       >
         <Link
-          to={`/${lang}`}
+          to={`/${VARIANT}/${lang}`}
           className="inline-flex items-center gap-1.5 mb-12 hover:!text-[#D9A648] transition-colors"
           style={{
             fontFamily: tokens.fontMono,

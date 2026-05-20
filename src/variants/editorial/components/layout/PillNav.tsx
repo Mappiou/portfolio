@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { palette, tokens } from "../../styles/palette";
 import { VariantSwitchButton } from "./VariantSwitchButton";
+import { VARIANT } from "../../lib/variant";
 
 type Theme = "light" | "dark";
 
@@ -15,7 +16,7 @@ export function PillNav({ theme = "light" }: Props) {
   const lang = useLanguageRoute();
   const location = useLocation();
 
-  const home = `/${lang}`;
+  const home = `/${VARIANT}/${lang}`;
   const isHome = location.pathname === home || location.pathname === `${home}/`;
 
   const items = [

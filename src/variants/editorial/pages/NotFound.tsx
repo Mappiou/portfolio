@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLanguageRoute } from "../hooks/useLanguageRoute";
 import { palette, tokens } from "../styles/palette";
 import { SEO } from "../components/seo/SEO";
+import { VARIANT } from "../lib/variant";
 
 export default function NotFound() {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ export default function NotFound() {
           {t("notFound.subtitle")}
         </p>
         <Link
-          to={`/${lang}`}
+          to={`/${VARIANT}/${lang}`}
           className="inline-block mt-10 rounded-full px-7 py-3 font-medium transition hover:-translate-y-0.5"
           style={{
             background: palette.teal,

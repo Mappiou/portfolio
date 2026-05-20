@@ -10,6 +10,7 @@ import { DownloadButton } from "../components/projects/DownloadButton";
 import { PhoneMockup } from "../components/projects/PhoneMockup";
 import { MegaButton } from "../components/ui/MegaButton";
 import { SEO } from "../components/seo/SEO";
+import { VARIANT } from "../lib/variant";
 
 const cardBg: Record<string, string> = {
   red: palette.rust,
@@ -24,7 +25,7 @@ export default function ProjectDetail() {
   const { projectId } = useParams<{ projectId: string }>();
   const project = projectId ? getProjectById(projectId) : undefined;
 
-  if (!project) return <Navigate to={`/${lang}`} replace />;
+  if (!project) return <Navigate to={`/${VARIANT}/${lang}`} replace />;
   const bg = cardBg[project.accent] ?? palette.mint;
 
   return (
@@ -38,7 +39,7 @@ export default function ProjectDetail() {
         style={{ maxWidth: tokens.pageMaxWidth }}
       >
         <Link
-          to={`/${lang}`}
+          to={`/${VARIANT}/${lang}`}
           className="inline-flex items-center gap-1.5 text-sm hover:underline mb-8"
           style={{ color: palette.textSecondary }}
         >

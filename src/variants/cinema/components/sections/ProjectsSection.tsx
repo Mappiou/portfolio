@@ -4,6 +4,7 @@ import { palette, tokens } from "../../styles/palette";
 import { projects } from "@shared/data/projects";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { ChapterCard } from "../ui/ChapterCard";
+import { VARIANT } from "../../lib/variant";
 
 export function ProjectsSection() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ export function ProjectsSection() {
           {projects.map((project) => (
             <Link
               key={project.id}
-              to={`/${lang}/projects/${project.id}`}
+              to={`/${VARIANT}/${lang}/projects/${project.id}`}
               className="group flex flex-col transition-all hover:-translate-y-1"
               style={{
                 textDecoration: "none",
