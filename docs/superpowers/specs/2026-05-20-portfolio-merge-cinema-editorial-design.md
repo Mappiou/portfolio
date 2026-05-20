@@ -226,7 +226,7 @@ Idem Phase 2, symétrique. Vérifier qu'aucune dépendance croisée n'existe ent
 
 1. `pnpm dev`, navigation sur `/cinema/fr` et `/editorial/fr`.
 2. Capture *above-the-fold* du Hero (viewport 1920×1200, sans scroll) via Playwright. Script à ajouter sous `scripts/capture-chooser-screenshots.ts`.
-3. Optimisation WebP (~150-200 kB) → `public/shared/chooser/{cinema,editorial}.webp`. Fournir aussi un fallback JPEG pour les anciens navigateurs.
+3. Optimisation WebP uniquement (~150-200 kB) → `public/shared/chooser/{cinema,editorial}.webp`. Pas de fallback JPEG.
 
 ### Phase 5 — Page Chooser
 
