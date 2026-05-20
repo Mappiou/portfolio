@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "siteTitle": "Mathieu Diep — AI Engineer",
+    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer LLM/RAG basé à Barcelone. Parcours, principes, et 3 apps Android téléchargeables par QR code."
+  },
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "contact": "Contact",
+    "language": "Langue",
+    "downloadCv": "Télécharger le CV"
+  },
+  "language": {
+    "fr": "Français",
+    "en": "Anglais",
+    "es": "Espagnol",
+    "fr_short": "FR",
+    "en_short": "EN",
+    "es_short": "ES"
+  },
+  "hero": {
+    "kicker": "À propos",
+    "title": "Salut, je suis <italic>Mathieu.</italic>"
+  },
+  "bio": {
+    "intro": "AI Engineer basé à Barcelone, je conçois et déploie des systèmes LLM/RAG que de vraies personnes utilisent, tous les jours.",
+    "paragraphs": [
+      "Je travaille actuellement chez Hexamind sur la generative AI — entre autres, un chatbot servant 90 000+ utilisateurs en production, articulé autour d'une architecture RAG et d'OpenAI.",
+      "Mon obsession : la couture entre la recherche AI et les apps qu'on peut tendre à quelqu'un. J'écris beaucoup de Python, je sors des apps mobiles en Flutter en parallèle, et je cherche à rendre les choses techniques calmes et un peu joueuses."
+    ]
+  },
+  "timeline": {
+    "title": "Quelques étapes <italic>en chemin.</italic>",
+    "note": "5 expériences · 6 années dans l'IA appliquée",
+    "expandHint": "Cliquez sur une expérience pour voir le détail",
+    "stackLabel": "Stack",
+    "expand": "Voir le détail",
+    "collapse": "Replier"
+  },
+  "education": {
+    "kicker": "Formation",
+    "title": "6 ans, du baccalauréat <italic>au double diplôme.</italic>",
+    "expandHint": "Faites défiler la frise et cliquez sur une étape pour voir les détails",
+    "kind": {
+      "milestone": "Étape",
+      "exchange": "Échange universitaire",
+      "internship": "Stage",
+      "degree": "Diplôme",
+      "job": "Poste",
+      "travel": "Voyage"
+    }
+  },
+  "passions": {
+    "kicker": "Passions",
+    "title": "Ce que j'aime <italic>en dehors du code.</italic>"
+  },
+  "travels": {
+    "kicker": "Carnet de voyage",
+    "title": "Un an sur la route, <italic>de Hanoï à Tulum.</italic>",
+    "prologueLabel": "Prologue",
+    "prologue": "Le voyage a commencé comme un pèlerinage — j'ai des origines vietnamiennes et laotiennes, et je voulais voir de mes yeux la terre dont parlaient mes parents. Deux mois en Asie, puis une chose en a entraîné une autre. Je suis tombé amoureux du backpacking, et je suis reparti pour un an en Amérique du Sud, de la Colombie au Brésil. Mexico a clôturé la boucle.",
+    "expandHint": "Faites défiler la frise — chaque pays s'ouvre en bas",
+    "highlightsLabel": "Étapes marquantes",
+    "originLabel": "Origines",
+    "stops": "{{count}} pays · 12 mois · 1 sac à dos"
+  },
+  "projects": {
+    "kicker": "Projets perso",
+    "title": "Trois apps, <italic>scannables.</italic>",
+    "intro": "Trois apps Android que je construis sur mon temps libre. Scannez le QR code pour installer directement, ou cliquez pour les détails.",
+    "viewMore": "Voir le projet",
+    "downloadHint": "Scanner pour installer",
+    "downloadApk": "Télécharger l'APK",
+    "viewSource": "Code source",
+    "scanQr": "Scanner pour télécharger",
+    "androidNote": "Android uniquement. Activez « sources inconnues » lors de l'installation.",
+    "stack": "Stack",
+    "features": "Fonctionnalités",
+    "back": "Retour à l'accueil"
+  },
+  "contactSection": {
+    "kicker": "Contact",
+    "title": "Construisons<br /> <italic>quelque chose ensemble.</italic>",
+    "body": "Je suis ouvert à discuter d'un nouveau poste, d'une mission, ou simplement d'un café (vrai ou virtuel) si vous travaillez sur des choses intéressantes."
+  },
+  "footer": {
+    "signature": "— Mathieu, à Barcelone.",
+    "rights": "© 2026 Mathieu Diep. Tous droits réservés."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "subtitle": "Cette page n'existe pas. Peut-être un mauvais lien, ou peut-être que je l'ai déplacée ?",
+    "back": "← Retour à l'accueil"
+  },
+  "contact": {
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "location": "Localisation"
+  },
+  "ui": {
+    "photo": "photo",
+    "photoPlaceholder": "photo à venir"
+  }
+}
