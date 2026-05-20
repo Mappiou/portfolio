@@ -38,7 +38,8 @@ const VISUAL: Record<Variant, {
   },
 };
 
-const ORDER: Variant[] = ["cinema", "editorial"];
+// Editorial on top, cinema on bottom — vertical split.
+const ORDER: Variant[] = ["editorial", "cinema"];
 
 export function Chooser() {
   const navigate = useNavigate();
@@ -81,10 +82,10 @@ export function Chooser() {
               onMouseEnter={() => setHovered(key)}
               onMouseLeave={() => setHovered(null)}
               className={`chooser-half chooser-half--${key}`}
-              initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
+              initial={{ opacity: 0, y: idx === 0 ? -30 : 30 }}
               animate={{
                 opacity: 1,
-                x: 0,
+                y: 0,
                 flex: isHovered ? 1.08 : 1,
                 filter: isDimmed ? "brightness(0.55) saturate(0.7)" : "brightness(1) saturate(1)",
               }}
@@ -102,7 +103,7 @@ export function Chooser() {
               <div className="chooser-half__tint" aria-hidden />
               <div className="chooser-half__grain" aria-hidden />
 
-              <div className="chooser-half__bottom">
+              <div className="chooser-half__caption">
                 {previous?.variant === key && (
                   <span
                     className="chooser-half__chip"
@@ -147,8 +148,6 @@ export function Chooser() {
         })}
       </div>
 
-      <div className="chooser-divider" aria-hidden />
-
       <div className="chooser-curator-wrap">
         <motion.div
           className="chooser-curator"
@@ -156,21 +155,16 @@ export function Chooser() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
         >
-          <span className="chooser-curator__corner chooser-curator__corner--tl" aria-hidden />
-          <span className="chooser-curator__corner chooser-curator__corner--tr" aria-hidden />
-          <span className="chooser-curator__corner chooser-curator__corner--bl" aria-hidden />
-          <span className="chooser-curator__corner chooser-curator__corner--br" aria-hidden />
-
           <span className="chooser-curator__kicker">{t.kicker}</span>
           <h1 className="chooser-curator__heading">{t.heading}</h1>
           <p className="chooser-curator__subtitle">{t.subtitle}</p>
           <div className="chooser-curator__prompt" aria-hidden>
-            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--left">
-              ←
+            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--up">
+              ↑
             </span>
             <span className="chooser-curator__prompt-label">{t.prompt}</span>
-            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--right">
-              →
+            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--down">
+              ↓
             </span>
           </div>
         </motion.div>

@@ -20,34 +20,44 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* VERTICAL SPLIT — editorial on top, cinema on bottom. */
 .chooser-split {
   display: flex;
   height: 100%;
   width: 100%;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .chooser-half {
   position: relative;
   flex: 1;
+  width: 100%;
   border: none;
   cursor: pointer;
   padding: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
   background-size: cover;
   background-position: center;
 }
 
+.chooser-half--editorial {
+  /* caption sits at TOP of the half (magazine masthead) */
+  justify-content: flex-start;
+}
+
+.chooser-half--cinema {
+  /* caption sits at BOTTOM of the half (film credit) */
+  justify-content: flex-end;
+}
+
 .chooser-half:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline: 2px solid rgba(255, 255, 255, 0.6);
   outline-offset: -10px;
 }
 
-/* Overlay tint per variant: cinema deepens to black, editorial warms with cream. */
+/* Per-variant overlay tint — keep the screenshot legible but not noisy. */
 .chooser-half__tint {
   position: absolute;
   inset: 0;
@@ -56,15 +66,21 @@
 }
 
 .chooser-half--cinema .chooser-half__tint {
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 50%, rgba(0, 0, 0, 0.7) 100%),
-    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.25) 60%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
 }
 
 .chooser-half--editorial .chooser-half__tint {
-  background:
-    linear-gradient(180deg, rgba(245, 237, 224, 0.35) 0%, rgba(245, 237, 224, 0.2) 50%, rgba(220, 201, 162, 0.55) 100%),
-    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 250, 240, 0.45) 0%, transparent 70%);
+  background: linear-gradient(
+    180deg,
+    rgba(245, 237, 224, 0.45) 0%,
+    rgba(245, 237, 224, 0.15) 50%,
+    rgba(220, 201, 162, 0.5) 100%
+  );
 }
 
 .chooser-half__grain {
@@ -82,31 +98,43 @@
   mix-blend-mode: multiply;
 }
 
-.chooser-half__bottom {
+/* Caption block — variant identity card at the outer edge of each half. */
+.chooser-half__caption {
   position: relative;
   z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0 2rem 3rem;
+  gap: 0.45rem;
+  padding: 3rem 2rem;
   max-width: 38ch;
+  margin: 0 auto;
   text-align: center;
+}
+
+.chooser-half--editorial .chooser-half__caption {
+  padding-top: 3.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.chooser-half--cinema .chooser-half__caption {
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
 }
 
 .chooser-half__chip {
   font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
   opacity: 0.85;
 }
 
 .chooser-half__title {
-  font-size: clamp(1.6rem, 3.6vw, 2.8rem);
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
   font-weight: 500;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.28em;
   line-height: 1;
   margin: 0;
 }
@@ -116,17 +144,17 @@
   font-style: italic;
   font-size: clamp(0.82rem, 1vw, 0.95rem);
   line-height: 1.5;
-  margin-top: 0.3rem;
+  margin-top: 0.25rem;
 }
 
 .chooser-half__cta {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  padding: 0.6rem 1.5rem 0.55rem;
+  padding: 0.55rem 1.4rem 0.5rem;
   border-radius: 999px;
   border: 1px solid;
   display: inline-flex;
@@ -150,36 +178,15 @@
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.chooser-divider {
-  position: absolute;
-  top: 60%;
-  bottom: 18%;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.28) 25%,
-    rgba(255, 255, 255, 0.28) 75%,
-    transparent 100%
-  );
-  z-index: 12;
-  pointer-events: none;
-  transform: translateX(-0.5px);
-}
-
-/* CURATOR — frosted glass panel, hard-centered to viewport.
-   Outer wrapper handles positioning; inner panel handles framing.
-   This keeps framer-motion's transform on the wrapper from clashing
-   with the centering transform. */
+/* CURATOR — discreet horizontal sliver sitting on the seam. */
 .chooser-curator-wrap {
   position: fixed;
-  top: 36%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
   pointer-events: none;
-  width: min(92vw, 620px);
+  width: min(92vw, 460px);
   display: flex;
   justify-content: center;
 }
@@ -190,82 +197,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.55rem;
   text-align: center;
   color: #ffffff;
-  padding: 3rem 3.25rem 2.75rem;
-  background: rgba(10, 9, 8, 0.62);
-  backdrop-filter: blur(20px) saturate(130%);
-  -webkit-backdrop-filter: blur(20px) saturate(130%);
-  border: 1px solid rgba(217, 166, 72, 0.32);
+  padding: 1.6rem 2.25rem;
+  background: rgba(8, 7, 6, 0.42);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-top: 1px solid rgba(217, 166, 72, 0.45);
+  border-bottom: 1px solid rgba(217, 166, 72, 0.45);
   box-shadow:
-    0 30px 80px -24px rgba(0, 0, 0, 0.75),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    inset 0 0 60px rgba(0, 0, 0, 0.35);
+    0 18px 50px -20px rgba(0, 0, 0, 0.5),
+    inset 0 0 40px rgba(0, 0, 0, 0.25);
 }
-
-/* Hairline gold accents — slim editorial flourishes top + bottom. */
-.chooser-curator::before,
-.chooser-curator::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 72px;
-  height: 1px;
-  background: rgba(217, 166, 72, 0.7);
-}
-
-.chooser-curator::before {
-  top: 1.1rem;
-}
-
-.chooser-curator::after {
-  bottom: 1.1rem;
-}
-
-/* Decorative corner crosshairs — magazine-style frame markers. */
-.chooser-curator__corner {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-  color: rgba(217, 166, 72, 0.55);
-}
-
-.chooser-curator__corner::before,
-.chooser-curator__corner::after {
-  content: "";
-  position: absolute;
-  background: currentColor;
-}
-
-.chooser-curator__corner::before {
-  /* horizontal stroke */
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  transform: translateY(-0.5px);
-}
-
-.chooser-curator__corner::after {
-  /* vertical stroke */
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  transform: translateX(-0.5px);
-}
-
-.chooser-curator__corner--tl { top: -9px; left: -9px; }
-.chooser-curator__corner--tr { top: -9px; right: -9px; }
-.chooser-curator__corner--bl { bottom: -9px; left: -9px; }
-.chooser-curator__corner--br { bottom: -9px; right: -9px; }
 
 .chooser-curator__kicker {
   font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.42em;
   text-transform: uppercase;
@@ -277,113 +225,100 @@
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(2.5rem, 6.5vw, 4.75rem);
-  line-height: 1;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.1;
   letter-spacing: -0.005em;
-  margin: 0.2rem 0 0;
+  margin: 0;
   color: #ffffff;
-  text-align: center;
-  width: 100%;
 }
 
 .chooser-curator__subtitle {
   font-family: "Newsreader", Georgia, serif;
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
-  line-height: 1.55;
+  font-size: clamp(0.82rem, 1vw, 0.95rem);
+  line-height: 1.45;
   color: rgba(255, 255, 255, 0.78);
-  margin: 0.3rem 0 0;
-  max-width: 38ch;
-  text-align: center;
+  margin: 0;
+  max-width: 36ch;
 }
 
 .chooser-curator__prompt {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
-  margin-top: 0.85rem;
+  gap: 0.85rem;
+  margin-top: 0.3rem;
   font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.36em;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .chooser-curator__prompt-arrow {
   display: inline-block;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   color: rgba(217, 166, 72, 0.85);
 }
 
-.chooser-curator__prompt-arrow--left {
-  animation: chooser-pulse-left 2.4s ease-in-out infinite;
+.chooser-curator__prompt-arrow--up {
+  animation: chooser-pulse-up 2.4s ease-in-out infinite;
 }
 
-.chooser-curator__prompt-arrow--right {
-  animation: chooser-pulse-right 2.4s ease-in-out infinite;
+.chooser-curator__prompt-arrow--down {
+  animation: chooser-pulse-down 2.4s ease-in-out infinite;
 }
 
-@keyframes chooser-pulse-left {
+@keyframes chooser-pulse-up {
   0%,
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 0.7;
   }
   50% {
-    transform: translateX(-5px);
+    transform: translateY(-4px);
     opacity: 1;
   }
 }
 
-@keyframes chooser-pulse-right {
+@keyframes chooser-pulse-down {
   0%,
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 0.7;
   }
   50% {
-    transform: translateX(5px);
+    transform: translateY(4px);
     opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chooser-curator__prompt-arrow--left,
-  .chooser-curator__prompt-arrow--right {
+  .chooser-curator__prompt-arrow--up,
+  .chooser-curator__prompt-arrow--down {
     animation: none;
   }
 }
 
 @media (max-width: 767px) {
-  .chooser-split {
-    flex-direction: column;
-  }
-  .chooser-half {
-    flex: 1 !important;
-    filter: none !important;
-  }
-  .chooser-divider {
-    display: none;
-  }
-  .chooser-half__bottom {
-    padding-bottom: 2rem;
-  }
   .chooser-curator-wrap {
     width: 88vw;
   }
   .chooser-curator {
-    padding: 2rem 1.5rem 1.75rem;
+    padding: 1.25rem 1.25rem;
   }
-  .chooser-curator::before,
-  .chooser-curator::after {
-    width: 48px;
+  .chooser-half__caption {
+    padding: 2rem 1.25rem;
   }
-  .chooser-curator__corner {
-    width: 14px;
-    height: 14px;
+  .chooser-half--editorial .chooser-half__caption {
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
+  }
+  .chooser-half--cinema .chooser-half__caption {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
 }
