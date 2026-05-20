@@ -168,51 +168,100 @@
   transform: translateX(-0.5px);
 }
 
-/* CURATOR — frosted glass panel, perfectly centered. */
-.chooser-curator {
-  position: absolute;
-  top: 42%;
+/* CURATOR — frosted glass panel, hard-centered to viewport.
+   Outer wrapper handles positioning; inner panel handles framing.
+   This keeps framer-motion's transform on the wrapper from clashing
+   with the centering transform. */
+.chooser-curator-wrap {
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
   pointer-events: none;
+  width: min(92vw, 620px);
+  display: flex;
+  justify-content: center;
+}
+
+.chooser-curator {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.85rem;
-  width: min(92vw, 620px);
   text-align: center;
   color: #ffffff;
-  padding: 2.75rem 3rem 2.5rem;
-  background: rgba(12, 11, 10, 0.55);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  padding: 3rem 3.25rem 2.75rem;
+  background: rgba(10, 9, 8, 0.62);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid rgba(217, 166, 72, 0.32);
   box-shadow:
-    0 24px 60px -20px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(0, 0, 0, 0.3) inset;
+    0 30px 80px -24px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    inset 0 0 60px rgba(0, 0, 0, 0.35);
 }
 
-/* Hairline accents — top and bottom thin gold lines for editorial weight. */
+/* Hairline gold accents — slim editorial flourishes top + bottom. */
 .chooser-curator::before,
 .chooser-curator::after {
   content: "";
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 64px;
+  width: 72px;
   height: 1px;
-  background: rgba(217, 166, 72, 0.5);
+  background: rgba(217, 166, 72, 0.7);
 }
 
 .chooser-curator::before {
-  top: 1.2rem;
+  top: 1.1rem;
 }
 
 .chooser-curator::after {
-  bottom: 1.2rem;
+  bottom: 1.1rem;
 }
+
+/* Decorative corner crosshairs — magazine-style frame markers. */
+.chooser-curator__corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  color: rgba(217, 166, 72, 0.55);
+}
+
+.chooser-curator__corner::before,
+.chooser-curator__corner::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.chooser-curator__corner::before {
+  /* horizontal stroke */
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-0.5px);
+}
+
+.chooser-curator__corner::after {
+  /* vertical stroke */
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+
+.chooser-curator__corner--tl { top: -9px; left: -9px; }
+.chooser-curator__corner--tr { top: -9px; right: -9px; }
+.chooser-curator__corner--bl { bottom: -9px; left: -9px; }
+.chooser-curator__corner--br { bottom: -9px; right: -9px; }
 
 .chooser-curator__kicker {
   font-family: "Inter Tight", system-ui, sans-serif;
@@ -323,13 +372,18 @@
   .chooser-half__bottom {
     padding-bottom: 2rem;
   }
-  .chooser-curator {
-    top: 50%;
+  .chooser-curator-wrap {
     width: 88vw;
-    padding: 1.75rem 1.5rem;
+  }
+  .chooser-curator {
+    padding: 2rem 1.5rem 1.75rem;
   }
   .chooser-curator::before,
   .chooser-curator::after {
     width: 48px;
+  }
+  .chooser-curator__corner {
+    width: 14px;
+    height: 14px;
   }
 }

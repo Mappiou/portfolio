@@ -16,10 +16,17 @@ async function main() {
     const page = await context.newPage();
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
     await page.waitForTimeout(1500);
-    // Scroll past the Hero ("Salut, je suis Mathieu") so the chooser
-    // background previews show actual content sections (bio, projects).
-    await page.evaluate(() => window.scrollTo(0, 1100));
-    await page.waitForTimeout(800);
+    // Snap the travel timeline section (#travels). This shows the
+    // signature "voyages" frieze of each variant so the chooser
+    // previews actually compare the two visual languages.
+    await page.evaluate(() => {
+      const el = document.getElementById("travels");
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        window.scrollTo({ top: rect.top + window.scrollY - 40, behavior: "auto" });
+      }
+    });
+    await page.waitForTimeout(1500);
     const pngBuffer = await page.screenshot({ fullPage: false, type: "png" });
     await sharp(pngBuffer).webp({ quality: 78 }).toFile(out);
     const sizeKb = Math.round((await stat(out)).size / 1024);

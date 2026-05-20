@@ -149,25 +149,32 @@ export function Chooser() {
 
       <div className="chooser-divider" aria-hidden />
 
-      <motion.div
-        className="chooser-curator"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-      >
-        <span className="chooser-curator__kicker">{t.kicker}</span>
-        <h1 className="chooser-curator__heading">{t.heading}</h1>
-        <p className="chooser-curator__subtitle">{t.subtitle}</p>
-        <div className="chooser-curator__prompt" aria-hidden>
-          <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--left">
-            ←
-          </span>
-          <span className="chooser-curator__prompt-label">{t.prompt}</span>
-          <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--right">
-            →
-          </span>
-        </div>
-      </motion.div>
+      <div className="chooser-curator-wrap">
+        <motion.div
+          className="chooser-curator"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+        >
+          <span className="chooser-curator__corner chooser-curator__corner--tl" aria-hidden />
+          <span className="chooser-curator__corner chooser-curator__corner--tr" aria-hidden />
+          <span className="chooser-curator__corner chooser-curator__corner--bl" aria-hidden />
+          <span className="chooser-curator__corner chooser-curator__corner--br" aria-hidden />
+
+          <span className="chooser-curator__kicker">{t.kicker}</span>
+          <h1 className="chooser-curator__heading">{t.heading}</h1>
+          <p className="chooser-curator__subtitle">{t.subtitle}</p>
+          <div className="chooser-curator__prompt" aria-hidden>
+            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--left">
+              ←
+            </span>
+            <span className="chooser-curator__prompt-label">{t.prompt}</span>
+            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--right">
+              →
+            </span>
+          </div>
+        </motion.div>
+      </div>
     </main>
   );
 }
