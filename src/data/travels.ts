@@ -31,6 +31,7 @@ export const travels: Travel[] = [
       { fr: "Hô Chi Minh-Ville", en: "Ho Chi Minh City", es: "Ho Chi Minh" },
     ],
     photoSeed: "vietnam-halong-junks",
+    photoSrc: "https://loremflickr.com/640/640/vietnam,rice,terraces,sapa",
   },
   {
     id: "laos",
@@ -81,10 +82,12 @@ export const travels: Travel[] = [
     },
     highlights: [
       { fr: "Bogotá", en: "Bogotá", es: "Bogotá" },
+      { fr: "Palomino (côte caraïbe)", en: "Palomino (Caribbean coast)", es: "Palomino (costa caribe)" },
       { fr: "Amazonie", en: "Amazon", es: "Amazonía" },
       { fr: "Leticia", en: "Leticia", es: "Leticia" },
     ],
-    photoSeed: "colombia-amazon-jungle",
+    photoSeed: "colombia-palomino-beach",
+    photoSrc: "https://loremflickr.com/640/640/palomino,beach,caribbean,colombia",
   },
   {
     id: "peru",
@@ -115,6 +118,7 @@ export const travels: Travel[] = [
       { fr: "Cusco", en: "Cusco", es: "Cusco" },
     ],
     photoSeed: "peru-machupicchu-sunrise",
+    photoSrc: "https://loremflickr.com/640/640/machu,picchu,peru",
   },
   {
     id: "bolivia",
@@ -140,6 +144,7 @@ export const travels: Travel[] = [
       { fr: "Sucre", en: "Sucre", es: "Sucre" },
     ],
     photoSeed: "bolivia-uyuni-mirror",
+    photoSrc: "https://loremflickr.com/640/640/salar,uyuni,bolivia",
   },
   {
     id: "chile",
@@ -165,6 +170,7 @@ export const travels: Travel[] = [
       { fr: "Geysers du Tatio", en: "Tatio geysers", es: "Géiseres del Tatio" },
     ],
     photoSeed: "chile-atacama-stars",
+    photoSrc: "https://loremflickr.com/640/640/atacama,desert,chile",
   },
   {
     id: "argentina",
@@ -196,6 +202,7 @@ export const travels: Travel[] = [
       { fr: "Salta", en: "Salta", es: "Salta" },
     ],
     photoSeed: "argentina-patagonia-fitzroy",
+    photoSrc: "https://loremflickr.com/640/640/patagonia,argentina,fitzroy",
   },
   {
     id: "brazil",
@@ -226,6 +233,7 @@ export const travels: Travel[] = [
       { fr: "Salvador de Bahia", en: "Salvador de Bahia", es: "Salvador de Bahía" },
     ],
     photoSeed: "brazil-rio-carnaval",
+    photoSrc: "https://loremflickr.com/640/640/rio,carnival,samba,brazil",
   },
   {
     id: "mexico",
@@ -251,5 +259,6 @@ export const travels: Travel[] = [
       { fr: "Ruines mayas", en: "Mayan ruins", es: "Ruinas mayas" },
     ],
     photoSeed: "mexico-yucatan-cenote",
+    photoSrc: "https://loremflickr.com/640/640/chichen,itza,pyramid,mexico",
   },
 ];
