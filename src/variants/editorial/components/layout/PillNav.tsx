@@ -50,7 +50,24 @@ export function PillNav({ theme = "light" }: Props) {
         };
 
   return (
-    <nav className="relative z-30 flex justify-center pt-7" aria-label={t("nav.home")}>
+    <nav className="relative z-30 flex justify-center items-center gap-6 pt-7" aria-label={t("nav.home")}>
+      <Link
+        to="/"
+        aria-label="Retour au choix de portfolio"
+        style={{
+          fontFamily: tokens.fontItalic,
+          fontStyle: "italic",
+          fontSize: 15,
+          letterSpacing: "0.02em",
+          color: colors.textActive,
+          textDecoration: "none",
+          whiteSpace: "nowrap",
+          opacity: 0.7,
+        }}
+        className="transition-opacity hover:opacity-100"
+      >
+        Mathieu Diep
+      </Link>
       <ul
         className="flex items-center"
         style={{
