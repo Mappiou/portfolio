@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>mathieu — un carnet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Patrick+Hand&family=Kalam:wght@300;400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF6EE;
+    --line: #A8C5E0;
+    --ink: #1A237E;
+    --ink-teal: #1B4332;
+    --ink-red: #B71C1C;
+    --sticky-yellow: #FFF59D;
+    --sticky-pink: #F8BBD0;
+    --sticky-lime: #DCEDC8;
+    --sticky-sky: #BBDEFB;
+    --sticky-coral: #FFCCBC;
+    --sticky-lavender: #E1BEE7;
+    --highlight: rgba(255, 235, 59, 0.55);
+    --highlight-green: rgba(174, 213, 129, 0.55);
+    --highlight-pink: rgba(244, 143, 177, 0.45);
+    --shadow-soft: 0 6px 18px rgba(40, 40, 70, 0.12);
+    --shadow-sticky: 0 4px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #2b1f15;
+    color: var(--ink);
+    font-family: 'Caveat', cursive;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at 30% 10%, #4a3525 0%, #2b1f15 60%),
+      #2b1f15;
+    padding: 40px 20px 80px;
+  }
+
+  .notebook {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--paper);
+    position: relative;
+    box-shadow:
+      0 30px 60px rgba(0, 0, 0, 0.55),
+      0 10px 30px rgba(0, 0, 0, 0.35),
+      inset 0 0 80px rgba(180, 150, 100, 0.08);
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 31px,
+        rgba(168, 197, 224, 0.35) 31px,
+        rgba(168, 197, 224, 0.35) 32px
+      );
+    padding: 60px 60px 80px 110px;
+    border-radius: 2px;
+  }
+
+  .notebook::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 0 0;
+    background:
+      radial-gradient(circle at 10% 50%, rgba(0,0,0,0.04), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(140, 100, 60, 0.05), transparent 40%);
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  /* Spiral binding */
+  .binding {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 70px;
+    background:
+      linear-gradient(to right,
+        rgba(0,0,0,0.06) 0%,
+        rgba(0,0,0,0.02) 60%,
+        transparent 100%);
+    border-right: 1px dashed rgba(180, 60, 60, 0.35);
+    pointer-events: none;
+  }
+
+  .binding::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(180, 60, 60, 0.25);
+  }
+
+  .spiral-holes {
+    position: absolute;
+    left: 18px;
+    top: 30px;
+    bottom: 30px;
+    width: 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .spiral-hole {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 35%,
+        #6b6b6b 0%,
+        #3a3a3a 40%,
+        #1a1a1a 100%);
+    box-shadow:
+      inset 0 2px 4px rgba(0,0,0,0.7),
+      inset 0 -1px 2px rgba(255,255,255,0.15),
+      1px 1px 2px rgba(0,0,0,0.25);
+    position: relative;
+  }
+
+  .spiral-hole::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: 50%;
+    height: 4px;
+    background: linear-gradient(to bottom, #888 0%, #444 50%, #222 100%);
+    border-radius: 2px;
+    transform: translateY(-50%) rotate(-8deg);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    z-index: -1;
+  }
+
+  /* Page sections */
+  .page {
+    position: relative;
+    padding: 30px 20px 60px;
+    min-height: 420px;
+  }
+
+  .page + .page {
+    margin-top: 40px;
+    border-top: 1px dashed rgba(168, 197, 224, 0.5);
+    padding-top: 60px;
+  }
+
+  /* Typography */
+  h1, h2, h3, p, span, a, li {
+    font-family: 'Caveat', cursive;
+    color: var(--ink);
+  }
+
+  .handwritten { font-family: 'Caveat', cursive; color: var(--ink); }
+  .hand-alt { font-family: 'Kalam', cursive; color: var(--ink); }
+  .hand-patrick { font-family: 'Patrick Hand', cursive; color: var(--ink); }
+  .typed { font-family: 'DM Sans', sans-serif; color: var(--ink); }
+
+  /* PAGE 1 - TITRE */
+  .date-stamp {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    color: var(--ink);
+    transform: rotate(-2deg);
+    opacity: 0.85;
+  }
+
+  .date-stamp::before {
+    content: '✦ ';
+    color: var(--ink-red);
+  }
+
+  .title-main {
+    font-family: 'Caveat', cursive;
+    font-size: 92px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 0.95;
+    margin-top: 80px;
+    transform: rotate(-1.5deg);
+    text-shadow: 1px 1px 0 rgba(26, 35, 126, 0.05);
+    letter-spacing: -1px;
+  }
+
+  .title-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 38px;
+    color: var(--ink-teal);
+    margin-top: 18px;
+    margin-left: 40px;
+    transform: rotate(-1deg);
+  }
+
+  .title-sub .accent { color: var(--ink-red); }
+
+  /* Polaroid */
+  .polaroid {
+    background: #fdfdfd;
+    padding: 12px 12px 38px;
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.18),
+      0 10px 24px rgba(0,0,0,0.12);
+    display: inline-block;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  }
+
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.04) !important;
+    filter: brightness(1.05);
+    box-shadow:
+      0 8px 16px rgba(0,0,0,0.22),
+      0 20px 40px rgba(0,0,0,0.18);
+  }
+
+  .polaroid .photo {
+    width: 200px;
+    height: 200px;
+    background:
+      linear-gradient(135deg, #ffc8a8 0%, #ff8c69 35%, #d97757 70%, #8b4513 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .polaroid .photo.barcelona {
+    background:
+      linear-gradient(180deg,
+        #f9d976 0%,
+        #f9a76f 30%,
+        #e07b5f 55%,
+        #8b6f8a 80%,
+        #2a3e6a 100%);
+  }
+
+  .polaroid .photo.barcelona::before {
+    content: '';
+    position: absolute;
+    bottom: 35%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(20, 30, 60, 0.6);
+    box-shadow:
+      0 -40px 0 rgba(40, 60, 100, 0.45),
+      0 -60px 0 rgba(60, 80, 120, 0.3);
+  }
+
+  .polaroid .photo.barcelona::after {
+    content: '🏝';
+    position: absolute;
+    bottom: 18%;
+    right: 20%;
+    font-size: 36px;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  }
+
+  .polaroid .caption {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--ink);
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .title-polaroid {
+    position: absolute;
+    top: 80px;
+    right: 40px;
+    transform: rotate(4deg);
+    z-index: 5;
+  }
+
+  /* Washi tape */
+  .washi-tape {
+    position: relative;
+    height: 32px;
+    width: 240px;
+    opacity: 0.85;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: rotate(-2deg);
+  }
+
+  .washi-tape::before,
+  .washi-tape::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 12px;
+    background:
+      linear-gradient(45deg, transparent 33%, currentColor 33% 66%, transparent 66%);
+    background-size: 8px 8px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .washi-stripe {
+    background:
+      repeating-linear-gradient(
+        45deg,
+        #f48fb1 0px,
+        #f48fb1 10px,
+        #fce4ec 10px,
+        #fce4ec 20px
+      );
+  }
+
+  .washi-dot {
+    background:
+      radial-gradient(circle, #ffffff 2px, transparent 2.5px),
+      #80cbc4;
+    background-size: 12px 12px;
+    background-position: 0 0, 0 0;
+  }
+
+  .washi-gold {
+    background:
+      linear-gradient(135deg,
+        #ffd54f 0%,
+        #ffecb3 25%,
+        #ffd54f 50%,
+        #c8a951 75%,
+        #ffd54f 100%);
+  }
+
+  .washi-mint {
+    background:
+      repeating-linear-gradient(
+        90deg,
+        #a5d6a7 0px,
+        #a5d6a7 14px,
+        #e8f5e9 14px,
+        #e8f5e9 22px
+      );
+  }
+
+  .title-washi {
+    margin-top: 50px;
+    margin-left: 60px;
+    width: 320px;
+    transform: rotate(-3deg);
+  }
+
+  /* Doodles */
+  .doodle {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    color: var(--ink);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .doodle-star {
+    color: var(--ink-red);
+    font-size: 28px;
+  }
+
+  /* Sticky notes */
+  .sticky {
+    position: relative;
+    display: inline-block;
+    padding: 22px 20px 24px;
+    background: var(--sticky-yellow);
+    font-family: 'Caveat', cursive;
+    color: var(--ink);
+    font-size: 22px;
+    line-height: 1.2;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.15),
+      0 8px 14px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .sticky::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 12px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.06), transparent);
+  }
+
+  .sticky::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 10%;
+    right: 10%;
+    height: 12px;
+    background: rgba(0,0,0,0.05);
+    filter: blur(4px);
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .sticky:hover {
+    transform: translateY(-3px) rotate(0deg) !important;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.18),
+      0 18px 28px rgba(0,0,0,0.18);
+  }
+
+  .sticky.yellow { background: var(--sticky-yellow); }
+  .sticky.pink { background: var(--sticky-pink); }
+  .sticky.lime { background: var(--sticky-lime); }
+  .sticky.sky { background: var(--sticky-sky); }
+  .sticky.coral { background: var(--sticky-coral); }
+  .sticky.lavender { background: var(--sticky-lavender); }
+
+  /* Section headers */
+  .section-header {
+    font-family: 'Caveat', cursive;
+    font-size: 56px;
+    color: var(--ink);
+    margin-bottom: 30px;
+    display: inline-block;
+    position: relative;
+    transform: rotate(-1deg);
+  }
+
+  .section-header .arrow { color: var(--ink-red); }
+
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 8%;
+    height: 14px;
+    background: var(--highlight);
+    z-index: -1;
+    transform: skewX(-6deg) translateY(2px);
+    border-radius: 2px;
+  }
+
+  /* PAGE 2 - À PROPOS */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+  }
+
+  .bio {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .bio .lead {
+    display: inline;
+    background:
+      linear-gradient(180deg, transparent 50%, var(--highlight) 50% 92%, transparent 92%);
+    padding: 2px 4px;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .bio p {
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 22px;
+    color: var(--ink);
+  }
+
+  .bio p .h-green {
+    background:
+      linear-gradient(180deg, transparent 50%, var(--highlight-green) 50% 92%, transparent 92%);
+    padding: 2px 3px;
+  }
+
+  .bio p .h-pink {
+    background:
+      linear-gradient(180deg, transparent 50%, var(--highlight-pink) 50% 92%, transparent 92%);
+    padding: 2px 3px;
+  }
+
+  .stickies-cluster {
+    position: relative;
+    min-height: 360px;
+  }
+
+  .stickies-cluster .sticky {
+    position: absolute;
+  }
+
+  .stamp {
+    position: absolute;
+    right: -10px;
+    top: 240px;
+    border: 3px solid var(--ink-red);
+    color: var(--ink-red);
+    padding: 8px 18px 10px;
+    font-family: 'Caveat', cursive;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transform: rotate(-8deg);
+    background: rgba(255,255,255,0.4);
+    opacity: 0.85;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .stamp::before, .stamp::after {
+    content: '';
+    position: absolute;
+    left: 4px; right: 4px;
+    height: 2px;
+    background: var(--ink-red);
+    opacity: 0.6;
+  }
+
+  .stamp::before { top: 2px; }
+  .stamp::after { bottom: 2px; }
+
+  /* PAGE 3 - EXPÉRIENCES (timeline) */
+  .timeline {
+    position: relative;
+    margin-top: 30px;
+    padding-left: 60px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--ink) 0 8px,
+        transparent 8px 14px
+      );
+    opacity: 0.7;
+  }
+
+  .xp-entry {
+    position: relative;
+    margin-bottom: 50px;
+  }
+
+  .xp-entry::before {
+    content: '●';
+    position: absolute;
+    left: -52px;
+    top: -2px;
+    color: var(--ink-red);
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .xp-date {
+    position: absolute;
+    left: -200px;
+    top: 8px;
+    width: 140px;
+    text-align: right;
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--ink-teal);
+    transform: rotate(-2deg);
+  }
+
+  .xp-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .xp-company {
+    font-family: 'Caveat', cursive;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--ink);
+    position: relative;
+    display: inline-block;
+  }
+
+  .xp-company::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    bottom: 4px;
+    height: 16px;
+    z-index: -1;
+    transform: skewX(-6deg);
+    border-radius: 3px;
+  }
+
+  .xp-company.hex::after { background: rgba(255, 138, 101, 0.55); }
+  .xp-company.lincoln::after { background: rgba(129, 212, 250, 0.55); }
+  .xp-company.cap::after { background: rgba(174, 213, 129, 0.55); }
+
+  .xp-role {
+    font-family: 'Caveat', cursive;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ink-teal);
+  }
+
+  .xp-meta {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 18px;
+    color: var(--ink);
+    opacity: 0.75;
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .xp-bullets {
+    list-style: none;
+    margin: 8px 0 14px;
+  }
+
+  .xp-bullets li {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.35;
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .xp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 4px;
+    color: var(--ink-red);
+    font-weight: 700;
+  }
+
+  .xp-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 15px;
+    padding: 4px 12px 6px;
+    background: var(--sticky-yellow);
+    color: var(--ink);
+    transform: rotate(-1.5deg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .tag:hover {
+    transform: rotate(0) translateY(-2px);
+  }
+
+  .tag:nth-child(2n) { transform: rotate(1.5deg); background: var(--sticky-pink); }
+  .tag:nth-child(3n) { transform: rotate(-0.5deg); background: var(--sticky-lime); }
+  .tag:nth-child(4n) { transform: rotate(2deg); background: var(--sticky-sky); }
+  .tag:nth-child(5n) { transform: rotate(-2deg); background: var(--sticky-coral); }
+  .tag:nth-child(6n) { transform: rotate(1deg); background: var(--sticky-lavender); }
+
+  .xp-doodle {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 40px;
+    opacity: 0.7;
+    transform: rotate(8deg);
+  }
+
+  /* PAGE 4 - PROJETS */
+  .polaroids-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 30px 0;
+  }
+
+  .project-polaroid {
+    position: relative;
+    text-align: center;
+  }
+
+  .project-polaroid .polaroid {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .project-polaroid .tape-top {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 100px;
+    height: 24px;
+    z-index: 2;
+    opacity: 0.85;
+  }
+
+  .project-polaroid .photo {
+    width: 220px;
+    height: 220px;
+    font-size: 96px;
+  }
+
+  .project-polaroid .photo.volley {
+    background: linear-gradient(135deg, #fff59d 0%, #ffb74d 60%, #ff7043 100%);
+  }
+
+  .project-polaroid .photo.scan {
+    background: linear-gradient(135deg, #b3e5fc 0%, #64b5f6 60%, #1976d2 100%);
+  }
+
+  .project-polaroid .photo.trio {
+    background: linear-gradient(135deg, #c8e6c9 0%, #66bb6a 60%, #2e7d32 100%);
+  }
+
+  .project-desc {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--ink);
+    margin-top: 16px;
+    max-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.2;
+  }
+
+  /* PAGE 5 - PASSIONS */
+  .passions-collage {
+    position: relative;
+    min-height: 380px;
+    margin-top: 30px;
+  }
+
+  .passion-sticky {
+    position: absolute;
+    font-size: 26px;
+    min-width: 160px;
+    padding: 26px 18px;
+  }
+
+  .map-sketch {
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    width: 320px;
+    height: 220px;
+    opacity: 0.85;
+  }
+
+  /* PAGE 6 - CONTACT */
+  .contact-list {
+    list-style: none;
+    margin-top: 24px;
+    margin-left: 30px;
+  }
+
+  .contact-list li {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 50px;
+  }
+
+  .contact-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--ink-red);
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  .contact-list a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: rgba(26, 35, 126, 0.4);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .contact-list a:hover {
+    text-decoration-color: var(--ink-red);
+  }
+
+  .signature {
+    font-family: 'Caveat', cursive;
+    font-size: 78px;
+    color: var(--ink);
+    margin-top: 50px;
+    margin-left: 60px;
+    transform: rotate(-3deg);
+    line-height: 1;
+  }
+
+  .signature .heart {
+    color: var(--ink-red);
+    font-size: 64px;
+  }
+
+  /* Coffee stain */
+  .coffee-stain {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 130px;
+    height: 130px;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px) rotate(var(--rot, 0deg)); }
+    to { opacity: 1; transform: translateY(0) rotate(var(--rot, 0deg)); }
+  }
+
+  @keyframes fadeInTape {
+    from { opacity: 0; transform: scaleX(0) rotate(var(--rot, -2deg)); transform-origin: left; }
+    to { opacity: 0.85; transform: scaleX(1) rotate(var(--rot, -2deg)); }
+  }
+
+  .animate-in {
+    animation: fadeInUp 0.7s ease-out backwards;
+  }
+
+  .animate-tape {
+    animation: fadeInTape 0.6s ease-out backwards;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .notebook { padding: 40px 30px 60px 80px; }
+    .title-main { font-size: 56px; }
+    .section-header { font-size: 38px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .title-polaroid { position: relative; top: 0; right: 0; margin-bottom: 20px; }
+    .timeline { padding-left: 40px; }
+    .xp-date { position: relative; left: 0; top: 0; text-align: left; margin-bottom: 6px; }
+    .map-sketch { display: none; }
+    .spiral-holes { left: 8px; width: 22px; }
+    .spiral-hole { width: 16px; height: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="notebook">
+
+  <div class="binding"></div>
+  <div class="spiral-holes" id="spiralHoles"></div>
+
+  <!-- ============ PAGE 1 — TITRE ============ -->
+  <section class="page" id="page-1">
+    <div class="date-stamp">lundi 18 mai 2026</div>
+
+    <div class="title-polaroid polaroid animate-in" style="--rot:4deg; transform: rotate(4deg); animation-delay:0.4s;">
+      <div class="photo barcelona"></div>
+      <div class="caption">→ moi, à barcelone</div>
+    </div>
+
+    <h1 class="title-main animate-in" style="animation-delay:0.1s;">mathieu —<br/>un carnet</h1>
+    <div class="title-sub animate-in" style="animation-delay:0.3s;">
+      <span class="accent">✦</span> ai engineer · barcelone · ouvert sur le monde
+    </div>
+
+    <div class="washi-tape washi-stripe title-washi animate-tape" style="--rot:-3deg; animation-delay:0.6s;"></div>
+
+    <span class="doodle doodle-star" style="top: 200px; left: 540px; transform: rotate(-12deg); font-size: 32px;">✦</span>
+    <span class="doodle" style="top: 260px; right: 320px; font-size: 30px; color: var(--ink-teal); transform: rotate(15deg);">✨</span>
+    <span class="doodle" style="bottom: 30px; left: 30px; font-size: 32px; color: var(--ink-red); transform: rotate(-8deg);">♥</span>
+    <span class="doodle" style="bottom: 70px; left: 100px; font-size: 26px; transform: rotate(20deg);">→</span>
+    <span class="doodle handwritten" style="bottom: 40px; left: 140px; font-size: 22px; color: var(--ink-teal); transform: rotate(-4deg);">(pages tournent →)</span>
+  </section>
+
+  <!-- ============ PAGE 2 — À PROPOS ============ -->
+  <section class="page" id="page-2">
+    <h2 class="section-header">à propos <span class="arrow">→</span></h2>
+
+    <div class="about-grid">
+      <div class="bio">
+        <span class="lead">ai engineer basé à barcelone, je conçois et déploie des systèmes llm/rag que de vraies personnes utilisent, tous les jours.</span>
+
+        <p>je travaille actuellement chez <span class="h-green">hexamind</span> sur la generative ai — entre autres, un chatbot servant <span class="h-pink">90 000+ utilisateurs en production</span>, articulé autour d'une architecture rag et d'openai.</p>
+
+        <p>mon obsession : la couture entre la recherche ai et les apps qu'on peut tendre à quelqu'un. j'écris beaucoup de <span class="h-green">python</span>, je sors des apps mobiles en flutter en parallèle, et je cherche à rendre les choses techniques calmes et un peu joueuses.</p>
+
+        <p style="margin-top: 30px; font-family: 'Caveat', cursive; font-size: 24px; color: var(--ink-teal); transform: rotate(-1deg);">
+          ↑ en résumé : je code, je bouge, je teste, je recommence.
+        </p>
+      </div>
+
+      <div class="stickies-cluster">
+        <div class="sticky yellow animate-in" style="--rot:-4deg; transform:rotate(-4deg); top: 0; left: 0; animation-delay:0.2s;">
+          ai engineer ✦
+        </div>
+        <div class="sticky pink animate-in" style="--rot:3deg; transform:rotate(3deg); top: 30px; left: 170px; animation-delay:0.35s;">
+          barcelone<br/>depuis 2024
+        </div>
+        <div class="sticky lime animate-in" style="--rot:-2deg; transform:rotate(-2deg); top: 140px; left: 30px; animation-delay:0.5s;">
+          j'écris du python<br/>tous les jours
+        </div>
+        <div class="sticky sky animate-in" style="--rot:5deg; transform:rotate(5deg); top: 160px; left: 190px; animation-delay:0.65s;">
+          passionné<br/>de volley 🏐
+        </div>
+        <div class="sticky coral animate-in" style="--rot:-3deg; transform:rotate(-3deg); top: 280px; left: 80px; animation-delay:0.8s;">
+          voyageur<br/>compulsif ✈
+        </div>
+
+        <div class="stamp">passionné</div>
+      </div>
+    </div>
+
+    <span class="doodle" style="top: 60px; right: 30px; font-size: 36px; color: var(--ink-red); transform: rotate(-15deg);">⚡</span>
+    <span class="doodle handwritten" style="top: 90px; right: 60px; font-size: 18px; color: var(--ink-teal); transform: rotate(-8deg);">(voilà, c'est moi)</span>
+  </section>
+
+  <!-- ============ PAGE 3 — EXPÉRIENCES ============ -->
+  <section class="page" id="page-3">
+    <h2 class="section-header">carrière <span class="arrow">→</span> ce que j'ai fait</h2>
+
+    <div class="washi-tape washi-gold" style="width: 200px; margin: 0 0 30px auto; transform: rotate(2deg);"></div>
+
+    <div class="timeline">
+
+      <article class="xp-entry">
+        <div class="xp-date">jan 2024<br/>→ présent</div>
+        <div class="xp-header">
+          <span class="xp-company hex">hexamind</span>
+          <span class="xp-role">ai engineer · generative ai</span>
+        </div>
+        <div class="xp-meta">paris · à distance depuis barcelone</div>
+        <ul class="xp-bullets">
+          <li>chatbot llm/rag, 90 000+ utilisateurs en prod</li>
+          <li>systèmes ia multi-agents</li>
+          <li>claude code au quotidien</li>
+          <li>architectures rag avec langchain</li>
+        </ul>
+        <div class="xp-stack">
+          <span class="tag">llm</span>
+          <span class="tag">rag</span>
+          <span class="tag">multi-agent</span>
+          <span class="tag">python</span>
+          <span class="tag">langchain</span>
+          <span class="tag">openai</span>
+        </div>
+        <span class="xp-doodle">💬</span>
+      </article>
+
+      <article class="xp-entry">
+        <div class="xp-date">oct 2021<br/>→ mars 2023<br/><em style="font-size:18px;">(18 mois)</em></div>
+        <div class="xp-header">
+          <span class="xp-company lincoln">lincoln</span>
+          <span class="xp-role">data scientist / ai engineer</span>
+        </div>
+        <div class="xp-meta">paris</div>
+        <ul class="xp-bullets">
+          <li>chatbot orange (1m+ requêtes / mois)</li>
+          <li>réseau de neurones from scratch : +20% perf</li>
+          <li>voicebot microsoft stt/tts</li>
+          <li>computer vision intégrée à un site angular</li>
+        </ul>
+        <div class="xp-stack">
+          <span class="tag">rasa</span>
+          <span class="tag">python</span>
+          <span class="tag">nlp</span>
+          <span class="tag">computer vision</span>
+          <span class="tag">angular</span>
+          <span class="tag">react</span>
+        </div>
+        <span class="xp-doodle">🤖</span>
+      </article>
+
+      <article class="xp-entry">
+        <div class="xp-date">déc 2020<br/>→ mai 2021<br/><em style="font-size:18px;">(6 mois)</em></div>
+        <div class="xp-header">
+          <span class="xp-company cap">capgemini</span>
+          <span class="xp-role">stage data / blockchain</span>
+        </div>
+        <div class="xp-meta">toulouse</div>
+        <ul class="xp-bullets">
+          <li>évaluation & optimisation d'un réseau blockchain</li>
+          <li>premier vrai contact avec la data en entreprise</li>
+        </ul>
+        <div class="xp-stack">
+          <span class="tag">python</span>
+          <span class="tag">data</span>
+          <span class="tag">stats</span>
+          <span class="tag">blockchain</span>
+        </div>
+        <span class="xp-doodle">⛓</span>
+      </article>
+
+    </div>
+
+    <span class="doodle handwritten" style="bottom: 20px; right: 40px; font-size: 22px; color: var(--ink-teal); transform: rotate(-4deg);">↑ et la suite s'écrit...</span>
+  </section>
+
+  <!-- ============ PAGE 4 — PROJETS ============ -->
+  <section class="page" id="page-4">
+    <h2 class="section-header">side projects <span class="arrow">→</span> les apps que j'ai sorties</h2>
+
+    <p class="handwritten" style="font-size: 24px; color: var(--ink-teal); margin-top: 10px; transform: rotate(-1deg);">
+      des petits trucs que j'ai construits le soir, pour le fun ↓
+    </p>
+
+    <div class="polaroids-row">
+
+      <div class="project-polaroid animate-in" style="animation-delay:0.1s;">
+        <div class="washi-tape washi-stripe tape-top"></div>
+        <div class="polaroid" style="transform: rotate(-5deg);">
+          <div class="photo volley">🏐</div>
+          <div class="caption">volley météo · barcelone</div>
+        </div>
+        <p class="project-desc">la météo idéale pour le beach volley sur la barceloneta. flutter.</p>
+      </div>
+
+      <div class="project-polaroid animate-in" style="animation-delay:0.25s;">
+        <div class="washi-tape washi-dot tape-top" style="transform: translateX(-50%) rotate(3deg);"></div>
+        <div class="polaroid" style="transform: rotate(3deg);">
+          <div class="photo scan">📄</div>
+          <div class="caption">scan2pdf</div>
+        </div>
+        <p class="project-desc">scanner ses documents en pdf, simplement. flutter.</p>
+      </div>
+
+      <div class="project-polaroid animate-in" style="animation-delay:0.4s;">
+        <div class="washi-tape washi-mint tape-top" style="transform: translateX(-50%) rotate(-2deg);"></div>
+        <div class="polaroid" style="transform: rotate(-2deg);">
+          <div class="photo trio">🌍</div>
+          <div class="caption">triolinguo</div>
+        </div>
+        <p class="project-desc">quiz de conjugaison espagnole (pour ne plus me planter en cours).</p>
+      </div>
+
+    </div>
+
+    <span class="doodle" style="top: 40px; right: 60px; font-size: 28px; color: var(--ink-red); transform: rotate(20deg);">✦</span>
+    <span class="doodle" style="bottom: 30px; left: 20px; font-size: 26px; color: var(--ink-teal); transform: rotate(-10deg);">⚡</span>
+  </section>
+
+  <!-- ============ PAGE 5 — PASSIONS ============ -->
+  <section class="page" id="page-5">
+    <h2 class="section-header">passions <span class="arrow">→</span> en dehors du clavier</h2>
+
+    <div class="passions-collage">
+
+      <div class="sticky pink passion-sticky animate-in" style="--rot:-5deg; transform:rotate(-5deg); top: 10px; left: 0; animation-delay:0.1s;">
+        badminton 🏸
+      </div>
+
+      <div class="sticky yellow passion-sticky animate-in" style="--rot:3deg; transform:rotate(3deg); top: 30px; left: 200px; animation-delay:0.2s;">
+        beach volley 🏐
+      </div>
+
+      <div class="sticky sky passion-sticky animate-in" style="--rot:-3deg; transform:rotate(-3deg); top: 150px; left: 80px; animation-delay:0.3s;">
+        patin à glace ⛸
+      </div>
+
+      <div class="sticky lime passion-sticky animate-in" style="--rot:6deg; transform:rotate(6deg); top: 170px; left: 280px; animation-delay:0.4s;">
+        trekking 🥾<br/>(autonomie)
+      </div>
+
+      <div class="sticky coral passion-sticky animate-in" style="--rot:-4deg; transform:rotate(-4deg); top: 290px; left: 20px; animation-delay:0.5s;">
+        voyages ✈
+      </div>
+
+      <div class="sticky lavender passion-sticky animate-in" style="--rot:4deg; transform:rotate(4deg); top: 310px; left: 220px; animation-delay:0.6s;">
+        veille tech 📚
+      </div>
+
+      <svg class="map-sketch" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- rough world map sketch -->
+        <g fill="none" stroke="#1A237E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+          <!-- north america -->
+          <path d="M 20 60 Q 30 40 60 45 Q 90 50 95 75 Q 90 95 70 100 Q 40 95 25 80 Z" />
+          <!-- south america -->
+          <path d="M 75 110 Q 88 115 92 140 Q 85 175 75 185 Q 65 175 70 145 Q 72 120 75 110 Z" />
+          <!-- europe -->
+          <path d="M 145 55 Q 165 50 175 60 Q 180 75 170 85 Q 150 85 142 70 Z" />
+          <!-- africa -->
+          <path d="M 155 95 Q 175 100 180 130 Q 175 165 160 170 Q 145 160 145 130 Q 145 105 155 95 Z" />
+          <!-- asia -->
+          <path d="M 185 50 Q 230 45 260 60 Q 280 75 270 95 Q 240 100 200 90 Q 185 75 185 50 Z" />
+          <!-- australia -->
+          <path d="M 245 145 Q 275 140 285 155 Q 280 170 260 170 Q 245 160 245 145 Z" />
+        </g>
+        <!-- travel arrows -->
+        <g stroke="#B71C1C" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.75">
+          <path d="M 55 70 Q 100 30 160 70" stroke-dasharray="3 4"/>
+          <path d="M 160 70 Q 200 100 90 150" stroke-dasharray="3 4"/>
+          <path d="M 90 150 Q 180 200 260 90" stroke-dasharray="3 4"/>
+        </g>
+        <!-- dots at landed places -->
+        <g fill="#B71C1C">
+          <circle cx="55" cy="70" r="3"/>
+          <circle cx="160" cy="70" r="3"/>
+          <circle cx="90" cy="150" r="3"/>
+          <circle cx="260" cy="90" r="3"/>
+        </g>
+        <!-- handwritten labels -->
+        <text x="20" y="55" font-family="Caveat, cursive" font-size="14" fill="#1A237E" transform="rotate(-4 20 55)">usa</text>
+        <text x="70" y="195" font-family="Caveat, cursive" font-size="14" fill="#1A237E">amérique du sud</text>
+        <text x="145" y="48" font-family="Caveat, cursive" font-size="14" fill="#1A237E">europe ♥</text>
+        <text x="220" y="115" font-family="Caveat, cursive" font-size="14" fill="#1A237E">asie</text>
+        <text x="80" y="20" font-family="Caveat, cursive" font-size="13" fill="#1B4332" transform="rotate(-3 80 20)">→ là où je suis passé</text>
+      </svg>
+
+    </div>
+
+    <p class="handwritten" style="font-size: 24px; color: var(--ink-teal); margin-top: 40px; transform: rotate(-1deg);">
+      le sport ↑ pour décrocher du code, et un sac à dos pour le reste.
+    </p>
+
+    <span class="doodle" style="top: 70px; right: 250px; font-size: 28px; color: var(--ink-red); transform: rotate(15deg);">✨</span>
+  </section>
+
+  <!-- ============ PAGE 6 — CONTACT ============ -->
+  <section class="page" id="page-6">
+    <h2 class="section-header">écris-moi !</h2>
+
+    <p class="handwritten" style="font-size: 26px; color: var(--ink-teal); margin-top: 10px; transform: rotate(-1deg);">
+      je réponds vite, surtout si tu parles de llm, voyages ou volley ↓
+    </p>
+
+    <div class="washi-tape washi-dot" style="width: 280px; margin: 30px 0 10px 20px; transform: rotate(-2deg);"></div>
+
+    <ul class="contact-list">
+      <li>email: <a href="mailto:mathieu.diep.95@gmail.com">mathieu.diep.95@gmail.com</a></li>
+      <li>github: <a href="https://github.com/Mappiou" target="_blank" rel="noopener">@Mappiou</a></li>
+      <li>linkedin: <a href="https://linkedin.com/in/mathieu-diep" target="_blank" rel="noopener">mathieu-diep</a></li>
+    </ul>
+
+    <div class="signature">— mathieu <span class="heart">♥</span></div>
+
+    <!-- coffee stain SVG -->
+    <svg class="coffee-stain" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="coffee" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(101, 67, 33, 0)"/>
+          <stop offset="70%" stop-color="rgba(101, 67, 33, 0)"/>
+          <stop offset="85%" stop-color="rgba(101, 67, 33, 0.55)"/>
+          <stop offset="100%" stop-color="rgba(101, 67, 33, 0.15)"/>
+        </radialGradient>
+        <radialGradient id="coffee2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(101, 67, 33, 0)"/>
+          <stop offset="60%" stop-color="rgba(101, 67, 33, 0)"/>
+          <stop offset="80%" stop-color="rgba(101, 67, 33, 0.3)"/>
+          <stop offset="100%" stop-color="rgba(101, 67, 33, 0)"/>
+        </radialGradient>
+      </defs>
+      <circle cx="65" cy="65" r="55" fill="url(#coffee)"/>
+      <circle cx="60" cy="62" r="45" fill="url(#coffee2)"/>
+      <ellipse cx="48" cy="50" rx="8" ry="4" fill="rgba(101, 67, 33, 0.2)" transform="rotate(-30 48 50)"/>
+    </svg>
+
+    <span class="doodle" style="top: 30px; right: 30px; font-size: 32px; color: var(--ink-red); transform: rotate(-12deg);">♥</span>
+    <span class="doodle handwritten" style="top: 70px; right: 70px; font-size: 22px; color: var(--ink-teal); transform: rotate(-6deg);">(à bientôt !)</span>
+    <span class="doodle" style="bottom: 200px; left: 30px; font-size: 28px; color: var(--ink); transform: rotate(20deg);">✦</span>
+  </section>
+
+</div>
+
+<script>
+  (function() {
+    const holesContainer = document.getElementById('spiralHoles');
+    if (holesContainer) {
+      const totalHeight = document.querySelector('.notebook').offsetHeight;
+      const holeCount = Math.max(18, Math.floor(totalHeight / 60));
+      for (let i = 0; i < holeCount; i++) {
+        const hole = document.createElement('div');
+        hole.className = 'spiral-hole';
+        holesContainer.appendChild(hole);
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-in, .animate-tape').forEach(el => {
+      observer.observe(el);
+    });
+  })();
+</script>
+
+</body>
+</html>

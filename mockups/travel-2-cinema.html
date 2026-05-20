@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mathieu Diep — Itinéraire · Asie & Amériques du Sud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0e0d0b;
+    --bg-2: #131210;
+    --surface: rgba(239, 233, 221, 0.04);
+    --text: #efe9dd;
+    --muted: rgba(239, 233, 221, 0.6);
+    --muted-2: rgba(239, 233, 221, 0.38);
+    --amber: #d9a648;
+    --jade: #6fa890;
+    --hair: rgba(239, 233, 221, 0.12);
+    --hair-strong: rgba(239, 233, 221, 0.22);
+    --shadow-deep: 0 30px 80px rgba(0, 0, 0, 0.55);
+    --filter-cinema: contrast(108%) saturate(90%) brightness(92%);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter Tight", system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  ::selection {
+    background: var(--amber);
+    color: var(--bg);
+  }
+
+  /* ---------- grain overlay ---------- */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.91  0 0 0 0 0.86  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* letterbox bars on the very top & bottom of viewport */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    box-shadow:
+      inset 0 0 180px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ---------- type helpers ---------- */
+  .display {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    font-feature-settings: "ss01", "salt";
+    color: var(--text);
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .amber {
+    color: var(--amber);
+  }
+
+  /* ---------- layout ---------- */
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 64px;
+    position: relative;
+  }
+
+  /* film sprocket strips down the page sides */
+  .sprockets {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 22px;
+    padding-top: 80px;
+    pointer-events: none;
+    opacity: 0.35;
+  }
+  .sprockets.left { left: 18px; }
+  .sprockets.right { right: 18px; }
+  .sprockets span {
+    display: block;
+    width: 14px;
+    height: 18px;
+    border: 1px solid var(--hair-strong);
+    border-radius: 2px;
+    background: rgba(0,0,0,0.4);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 720px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://picsum.photos/seed/mathieu-itinerary-hero/2400/1350");
+    background-size: cover;
+    background-position: center;
+    filter: var(--filter-cinema) brightness(70%);
+  }
+  .hero-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+  }
+  .hero-grad {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(14,13,11,0.55) 0%, rgba(14,13,11,0) 22%, rgba(14,13,11,0) 55%, rgba(14,13,11,0.95) 100%);
+    pointer-events: none;
+  }
+  .hero-letterbox-top,
+  .hero-letterbox-bot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: var(--bg);
+    z-index: 3;
+  }
+  .hero-letterbox-top { top: 0; }
+  .hero-letterbox-bot { bottom: 0; }
+
+  .hero-meta {
+    position: absolute;
+    top: 96px;
+    left: 64px;
+    right: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 4;
+  }
+  .hero-meta .corner {
+    color: var(--amber);
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 11px;
+  }
+  .hero-meta .ts {
+    color: var(--muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 4;
+    padding: 0 64px 120px;
+    max-width: 1120px;
+  }
+  .hero-kicker {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 11px;
+    color: var(--amber);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .hero-kicker .bar {
+    display: inline-block;
+    width: 64px;
+    height: 1px;
+    background: var(--amber);
+  }
+  .hero-title {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(56px, 9vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+  .hero-title .dot {
+    color: var(--amber);
+  }
+  .hero-sub {
+    margin-top: 38px;
+    max-width: 540px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.75;
+    letter-spacing: 0.04em;
+    font-family: "Inter Tight", sans-serif;
+  }
+  .hero-foot {
+    position: absolute;
+    bottom: 96px;
+    right: 64px;
+    z-index: 4;
+    text-align: right;
+  }
+  .hero-foot .runtime {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .hero-foot .runtime b {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* ---------- PROLOGUE ---------- */
+  .prologue {
+    padding: 180px 0 200px;
+    position: relative;
+  }
+  .prologue-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .ornament {
+    text-align: center;
+    color: var(--hair-strong);
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.4em;
+    margin: 28px 0 40px;
+  }
+  .ornament.bottom { margin: 40px 0 28px; }
+
+  .prologue-label {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.34em;
+    font-size: 11px;
+    color: var(--amber);
+    margin-bottom: 36px;
+  }
+  .prologue-text {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.55;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .prologue-text p + p {
+    margin-top: 26px;
+  }
+  .prologue-signature {
+    margin-top: 56px;
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 10px;
+    color: var(--muted-2);
+  }
+
+  /* ---------- CHAPTER DIVIDER ---------- */
+  .chapter-divider {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 80px 0 64px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .chapter-divider .line {
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+  }
+  .chapter-divider .marker {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .chapter-divider .marker .num {
+    color: var(--amber);
+  }
+
+  /* ---------- CHAPTER ---------- */
+  .chapter {
+    padding: 24px 0 60px;
+  }
+  .chapter-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 64px;
+  }
+  .chapter.reverse .chapter-grid {
+    grid-template-columns: 1fr 1.15fr;
+  }
+  .chapter.reverse .chapter-image-wrap {
+    order: 2;
+  }
+  .chapter.reverse .chapter-text {
+    order: 1;
+    padding-right: 24px;
+  }
+  .chapter:not(.reverse) .chapter-text {
+    padding-left: 24px;
+  }
+
+  /* cinema frame for images */
+  .chapter-image-wrap {
+    position: relative;
+  }
+  .frame-timestamp {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--muted-2);
+    text-transform: uppercase;
+  }
+  .frame-timestamp .amb {
+    color: var(--amber);
+  }
+  .frame-id {
+    position: absolute;
+    bottom: -28px;
+    right: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--muted-2);
+    text-transform: uppercase;
+  }
+  .cinema-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    box-shadow: var(--shadow-deep), inset 0 0 120px rgba(0,0,0,0.45);
+    background: #000;
+  }
+  .cinema-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: var(--filter-cinema);
+  }
+  .cinema-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.55) 100%);
+  }
+  .cinema-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(239,233,221,0.05);
+    z-index: 2;
+  }
+  /* a single amber corner detail on each frame */
+  .corner-tick {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 18px;
+    height: 18px;
+    border-top: 1px solid var(--amber);
+    border-right: 1px solid var(--amber);
+    z-index: 3;
+    opacity: 0.85;
+  }
+
+  /* text side */
+  .chapter-kicker {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .chapter-kicker .num {
+    color: var(--amber);
+  }
+  .chapter-kicker .tick {
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--hair-strong);
+  }
+  .chapter-title {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(56px, 6vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .chapter-title .dot {
+    color: var(--amber);
+  }
+  .chapter-dates {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .chapter-prose {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text);
+    opacity: 0.85;
+    max-width: 460px;
+  }
+  .chapter-tag {
+    margin-top: 32px;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- FINALE ---------- */
+  .finale {
+    padding: 180px 0 200px;
+    text-align: center;
+  }
+  .finale-card {
+    display: inline-block;
+    padding: 28px 0 0;
+    position: relative;
+  }
+  .finale-kicker {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 26px;
+  }
+  .finale-title {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(64px, 8vw, 108px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    display: inline-block;
+    padding-bottom: 28px;
+    position: relative;
+  }
+  .finale-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--amber);
+  }
+  .finale-sub {
+    margin-top: 40px;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .finale-foot {
+    margin-top: 80px;
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.34em;
+    font-size: 10px;
+    color: var(--muted-2);
+  }
+
+  /* ---------- fade-in (scroll) ---------- */
+  .fade {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  .fade.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    .container { padding: 0 28px; }
+    .hero-meta { left: 28px; right: 28px; top: 80px; }
+    .hero-content { padding: 0 28px 96px; }
+    .hero-foot { right: 28px; bottom: 64px; }
+    .sprockets { display: none; }
+
+    .chapter-grid {
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
+      padding: 0 28px;
+    }
+    .chapter.reverse .chapter-image-wrap { order: 1; }
+    .chapter.reverse .chapter-text { order: 2; padding-right: 0; }
+    .chapter:not(.reverse) .chapter-text { padding-left: 0; }
+    .chapter-divider { padding: 56px 28px 40px; }
+
+    .prologue { padding: 120px 28px 140px; }
+    .prologue-text { font-size: 22px; }
+
+    .finale { padding: 120px 28px 140px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- decorative sprocket strips -->
+<aside class="sprockets left" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</aside>
+<aside class="sprockets right" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</aside>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-letterbox-top"></div>
+  <div class="hero-letterbox-bot"></div>
+
+  <div class="hero-meta">
+    <span class="corner">Reel 01 · M. Diep</span>
+    <span class="ts">2023 — 2024 · 11 mois · 8 pays</span>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-kicker">
+      <span class="bar"></span>
+      <span>Chapitre 00 · Ouverture</span>
+    </div>
+    <h1 class="hero-title">
+      Itinéraire —<br/>
+      Asie &amp; Amériques<br/>
+      du Sud<span class="dot">.</span>
+    </h1>
+    <p class="hero-sub">
+      Un film en huit chapitres. Tourné à hauteur d'épaule, sans plan de production —
+      du Vietnam paternel aux plages de Bahia, en passant par les Andes, l'Atacama
+      et la Patagonie. Onze mois, lentement.
+    </p>
+  </div>
+
+  <div class="hero-foot">
+    <div class="runtime">Durée totale · <b>11 mois 12 jours</b></div>
+  </div>
+</section>
+
+<!-- ============ PROLOGUE ============ -->
+<section class="prologue">
+  <div class="container">
+    <div class="prologue-inner fade">
+      <div class="prologue-label">Prologue · Origines</div>
+      <div class="ornament">— · — · —</div>
+      <div class="prologue-text">
+        <p>
+          Mon père est né au Vietnam. Ma mère est née au Laos. Deux pays que je ne
+          connaissais qu'à travers des photos jaunies, des plats du dimanche, et des
+          silences qu'il fallait apprendre à lire.
+        </p>
+        <p>
+          En mars deux mille vingt-trois, je suis parti faire ce pèlerinage. Marcher
+          sur leurs sols, retrouver la langue des grands-mères, manger un pho au
+          petit matin dans la rue où mon père a grandi.
+        </p>
+        <p>
+          Le pèlerinage a duré six semaines. Le voyage, lui, a duré onze mois.
+          Une chose en a appelé une autre — un billet d'avion bon marché vers Bogotá,
+          puis les Andes, puis la Patagonie, puis le Carnaval. Quand je me suis arrêté,
+          c'était janvier deux mille vingt-quatre, et j'avais traversé huit pays.
+        </p>
+      </div>
+      <div class="ornament bottom">— · — · —</div>
+      <div class="prologue-signature">Mathieu Diep · Barcelone · Récit en huit chapitres</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER I — VIETNAM ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">I</span> · Asie du Sud-Est —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 00:04:12 · Hanoï</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-vietnam-halong/1600/1000" alt="Vietnam — baie d'Halong" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 014 / VN · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">I</span> · Origines paternelles</span>
+      </div>
+      <h2 class="chapter-title">Vietnam<span class="dot">.</span></h2>
+      <div class="chapter-dates">Mars 2023 · Hanoï → Halong → Sapa</div>
+      <p class="chapter-prose">
+        Premier pho avant le lever du soleil, debout sur un tabouret en plastique,
+        dans la rue où mon père a grandi. Les jonques noires de la baie d'Halong
+        glissent dans une brume qui semble peinte. Plus haut, Sapa : les rizières
+        en terrasse, vert sur vert sur vert, comme un escalier vers le ciel.
+      </p>
+      <p class="chapter-tag">— le pays du père, enfin sous mes pieds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER II — LAOS ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">II</span> —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter reverse fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 00:18:44 · Luang Prabang</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-laos-mekong-temple/1600/1000" alt="Laos — Luang Prabang" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 027 / LA · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">II</span> · Origines maternelles</span>
+      </div>
+      <h2 class="chapter-title">Laos<span class="dot">.</span></h2>
+      <div class="chapter-dates">Avril 2023 · Luang Prabang · Mékong</div>
+      <p class="chapter-prose">
+        Luang Prabang, ville de moines en safran et de ruelles ocre. Deux jours sur
+        une pirogue lente, à descendre le Mékong avec le bruit du moteur pour seule
+        musique. Les temples bouddhistes percent la brume au matin, dorés, immobiles
+        — exactement comme ma mère les décrivait, sans jamais les avoir vus.
+      </p>
+      <p class="chapter-tag">— le pays de la mère, enfin sous mes yeux.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER III — COLOMBIE ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">III</span> · Traversée de l'Atlantique —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 00:34:09 · Amazonas</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-colombia-amazon-jungle/1600/1000" alt="Colombie — Amazonie" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 041 / CO · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">III</span> · Premier choc</span>
+      </div>
+      <h2 class="chapter-title">Colombie<span class="dot">.</span></h2>
+      <div class="chapter-dates">Mai 2023 · Bogotá → Amazonie</div>
+      <p class="chapter-prose">
+        Bogotá d'abord, à deux mille six cents mètres, l'air rare et les graffitis géants.
+        Puis l'Amazonie. Le silence n'y est pas un silence — c'est une rumeur dense,
+        habitée, terrifiante de vie. Les nuits y sont noires comme nulle part, et les
+        étoiles tombent presque sur les hamacs.
+      </p>
+      <p class="chapter-tag">— j'ai compris que je ne rentrerais pas tout de suite.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER IV — PÉROU ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">IV</span> —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter reverse fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 00:52:31 · Machu Picchu</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-peru-machu-picchu-andes/1600/1000" alt="Pérou — Machu Picchu" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 063 / PE · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">IV</span> · Les Andes</span>
+      </div>
+      <h2 class="chapter-title">Pérou<span class="dot">.</span></h2>
+      <div class="chapter-dates">Juin — Juillet 2023 · Andes · Huacachina · Nazca · Vinicunca</div>
+      <p class="chapter-prose">
+        Sandboard à Huacachina, oasis dans la mer de dunes. Survol des lignes de Nazca
+        dans un avion qui sent l'essence. La montagne arc-en-ciel à cinq mille mètres,
+        souffle court. Et au bout, le Machu Picchu, dans la lumière qui se lève — un de
+        ces matins qu'on regarde sans rien dire.
+      </p>
+      <p class="chapter-tag">— le mois où j'ai cessé de compter les jours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER V — BOLIVIE ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">V</span> —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 01:07:18 · Salar d'Uyuni</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-bolivia-uyuni-salt-flats/1600/1000" alt="Bolivie — Salar d'Uyuni" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 088 / BO · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">V</span> · Le toit</span>
+      </div>
+      <h2 class="chapter-title">Bolivie<span class="dot">.</span></h2>
+      <div class="chapter-dates">Août 2023 · Huayna Potosí · Uyuni</div>
+      <p class="chapter-prose">
+        Six mille soixante mètres au sommet du Huayna Potosí, à quatre heures du matin,
+        crampons et frontale. Puis la descente vers le Salar d'Uyuni — désert de sel
+        infini, où le ciel et la terre s'inversent quand il a plu. On marche dans son
+        propre reflet, on ne sait plus où est le haut.
+      </p>
+      <p class="chapter-tag">— le plus haut que j'aie jamais été, debout.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER VI — CHILI ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">VI</span> —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter reverse fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 01:24:08 · Atacama</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-chile-atacama-stars/1600/1000" alt="Chili — désert d'Atacama" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 102 / CL · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">VI</span> · Le ciel</span>
+      </div>
+      <h2 class="chapter-title">Chili<span class="dot">.</span></h2>
+      <div class="chapter-dates">Septembre 2023 · San Pedro de Atacama</div>
+      <p class="chapter-prose">
+        Le désert d'Atacama : le plus aride du monde, et les ciels les plus purs. La nuit,
+        on s'allonge sur un sol encore chaud et on regarde la Voie lactée comme on
+        regarderait un fleuve. On parle moins. On respire moins fort. C'est ici que j'ai
+        compris ce que voulait dire « observer ».
+      </p>
+      <p class="chapter-tag">— une cathédrale à ciel ouvert.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER VII — ARGENTINE ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">VII</span> —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 01:48:55 · Patagonia</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-argentina-patagonia-fitzroy/1600/1000" alt="Argentine — Patagonie" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 134 / AR · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">VII</span> · Du nord au sud</span>
+      </div>
+      <h2 class="chapter-title">Argentine<span class="dot">.</span></h2>
+      <div class="chapter-dates">Octobre — Novembre 2023 · Salta → Patagonie → Buenos Aires</div>
+      <p class="chapter-prose">
+        Descendre un pays entier, du nord rouge de Salta jusqu'au bout du monde. La
+        Patagonie : le vent y a son propre vocabulaire, les glaciers parlent en
+        craquements graves. Puis Buenos Aires, en milongas et en cafés à minuit, comme
+        une longue scène de fin d'acte.
+      </p>
+      <p class="chapter-tag">— le chapitre le plus long, et le plus venteux.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER VIII — BRÉSIL ============ -->
+<div class="chapter-divider fade">
+  <span class="line"></span>
+  <span class="marker">— <span class="num">VIII</span> · Acte final —</span>
+  <span class="line"></span>
+</div>
+<section class="chapter reverse fade">
+  <div class="chapter-grid">
+    <div class="chapter-image-wrap">
+      <div class="frame-timestamp"><span class="amb">●</span> Rec · 02:14:02 · Rio · Carnaval</div>
+      <div class="cinema-frame">
+        <img src="https://picsum.photos/seed/mathieu-brazil-rio-carnaval-iguazu/1600/1000" alt="Brésil — Rio · Iguazu" />
+        <span class="corner-tick"></span>
+      </div>
+      <div class="frame-id">Frame 168 / BR · 35 mm</div>
+    </div>
+    <div class="chapter-text">
+      <div class="chapter-kicker">
+        <span class="tick"></span>
+        <span>Chapitre <span class="num">VIII</span> · La sortie</span>
+      </div>
+      <h2 class="chapter-title">Brésil<span class="dot">.</span></h2>
+      <div class="chapter-dates">Décembre 2023 — Janvier 2024 · Iguazu · Rio · São Paulo · Salvador</div>
+      <p class="chapter-prose">
+        Iguazu, mur d'eau et arc-en-ciel permanent. Rio, le Carnaval — le Sambadrome,
+        des heures debout, à hurler avec des inconnus. São Paulo, ville-monde et
+        pluies tièdes. Salvador enfin, Bahia, percussions et plages : la dernière scène,
+        celle où le générique commence à monter.
+      </p>
+      <p class="chapter-tag">— la sortie, en couleurs et en tambours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINALE ============ -->
+<section class="finale fade">
+  <div class="container">
+    <div class="finale-card">
+      <div class="finale-kicker">Acte final · Générique</div>
+      <h2 class="finale-title">Fin — Janvier 2024</h2>
+      <div class="finale-sub">
+        Huit pays. Onze mois. Une seule histoire, à hauteur d'homme.
+      </div>
+      <div class="finale-foot">M. Diep · Reel 01 of 01 · © 2024</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const fades = document.querySelectorAll(".fade");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  fades.forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sports & Outdoor — Mathieu Diep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f5ede0;
+    --paper-shade: #efe5d3;
+    --ink: #1f1a14;
+    --ink-soft: #6b6056;
+    --rust: #b85c3a;
+    --teal: #4a6b6b;
+    --yellow: #e8d74f;
+    --hair: rgba(31, 26, 20, 0.18);
+    --tape: rgba(232, 215, 79, 0.55);
+    --tape-teal: rgba(74, 107, 107, 0.35);
+    --tape-rust: rgba(184, 92, 58, 0.32);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter Tight", system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(rgba(31, 26, 20, 0.035) 1px, transparent 1px),
+      radial-gradient(rgba(31, 26, 20, 0.025) 1px, transparent 1px);
+    background-size: 28px 28px, 56px 56px;
+    background-position: 0 0, 14px 14px;
+  }
+
+  /* paper grain noise via SVG */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.07  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 56px 72px 96px;
+    min-height: 100vh;
+  }
+
+  /* ────────── TOP BAR ────────── */
+  .topbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .topbar .left span { color: var(--rust); margin-right: 6px; }
+  .topbar .right { display: flex; gap: 22px; }
+
+  /* ────────── LAYOUT ────────── */
+  .layout {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 48px;
+    margin-top: 56px;
+    position: relative;
+  }
+
+  /* ────────── HEADING ────────── */
+  .heading {
+    position: relative;
+    padding-top: 24px;
+  }
+  .kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .kicker::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: var(--rust);
+  }
+  .heading h1 {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(56px, 7.2vw, 104px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+  .heading h1 .amp {
+    font-style: italic;
+    color: var(--rust);
+    font-weight: 500;
+  }
+  .heading h1 .outdoor {
+    display: inline-block;
+    position: relative;
+  }
+  .heading h1 .outdoor::after {
+    content: "";
+    position: absolute;
+    left: -2%; right: -2%;
+    bottom: 6%;
+    height: 14px;
+    background: var(--yellow);
+    z-index: -1;
+    transform: skew(-6deg) rotate(-1deg);
+    opacity: 0.85;
+  }
+  .heading .lede {
+    font-family: "Fraunces", serif;
+    font-size: 18px;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 360px;
+    margin: 0 0 32px;
+    font-weight: 400;
+  }
+  .heading .lede em {
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .heading .meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    border-top: 1px solid var(--hair);
+    padding-top: 16px;
+    max-width: 320px;
+  }
+  .heading .meta .row { display: flex; justify-content: space-between; gap: 16px; }
+  .heading .meta .row span:last-child { color: var(--ink); }
+
+  .scribble {
+    position: absolute;
+    font-family: "Caveat", cursive;
+    font-size: 22px;
+    color: var(--teal);
+    transform: rotate(-6deg);
+    top: 6px;
+    left: 280px;
+  }
+  .scribble::after {
+    content: "";
+    display: block;
+    width: 60px; height: 8px;
+    margin-top: -6px;
+    border-bottom: 2px solid var(--teal);
+    border-radius: 60% 40% 50% 50% / 100% 100% 0 0;
+    transform: rotate(-3deg);
+  }
+
+  /* ────────── COLLAGE ────────── */
+  .collage {
+    position: relative;
+    min-height: 760px;
+  }
+
+  .card {
+    position: absolute;
+    background: #fff;
+    padding: 12px 12px 44px;
+    box-shadow:
+      0 1px 1px rgba(31, 26, 20, 0.06),
+      0 12px 28px -8px rgba(31, 26, 20, 0.22),
+      0 30px 60px -28px rgba(31, 26, 20, 0.28);
+    transition: transform 0.35s cubic-bezier(.2,.7,.2,1), box-shadow 0.35s ease;
+    will-change: transform;
+  }
+  .card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(0.96) saturate(0.9) sepia(0.08);
+  }
+  .card .frame {
+    overflow: hidden;
+    position: relative;
+  }
+  .card .caption {
+    position: absolute;
+    bottom: 12px;
+    left: 16px;
+    right: 16px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+  }
+  .card .caption b { color: var(--ink); font-weight: 500; }
+
+  /* tape */
+  .tape {
+    position: absolute;
+    width: 92px; height: 22px;
+    background: var(--tape);
+    box-shadow: inset 0 0 0 1px rgba(31,26,20,0.06);
+    background-image:
+      repeating-linear-gradient(90deg,
+        rgba(255,255,255,0.15) 0 4px,
+        rgba(255,255,255,0) 4px 8px);
+  }
+  .tape.teal { background-color: var(--tape-teal); }
+  .tape.rust { background-color: var(--tape-rust); }
+
+  /* paperclip */
+  .clip {
+    position: absolute;
+    width: 28px;
+    height: 56px;
+    border: 2px solid #8a8276;
+    border-radius: 12px;
+    top: -22px;
+    right: 24px;
+    transform: rotate(8deg);
+    z-index: 5;
+  }
+  .clip::before {
+    content: "";
+    position: absolute;
+    inset: 6px 4px 14px 4px;
+    border: 2px solid #8a8276;
+    border-radius: 10px;
+  }
+
+  /* ── individual cards ── */
+  .card-volley {
+    width: 320px; height: 380px;
+    top: 20px; left: 40px;
+    transform: rotate(-3.5deg);
+    z-index: 4;
+  }
+  .card-volley .tape {
+    top: -12px; left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+  }
+
+  .card-skate {
+    width: 260px; height: 320px;
+    top: 80px; left: 340px;
+    transform: rotate(2.5deg);
+    z-index: 3;
+  }
+  .card-skate .tape {
+    top: -10px; right: 18px;
+    transform: rotate(14deg);
+  }
+
+  .card-bad {
+    width: 280px; height: 220px;
+    top: 380px; left: 200px;
+    transform: rotate(-2deg);
+    z-index: 5;
+  }
+  .card-bad .tape {
+    top: -12px; left: 40px;
+    transform: rotate(-8deg);
+  }
+
+  .card-trek {
+    width: 360px; height: 280px;
+    top: 430px; left: 470px;
+    transform: rotate(3deg);
+    z-index: 4;
+  }
+  .card-trek .tape {
+    top: -10px; left: 30px;
+    transform: rotate(-12deg);
+  }
+
+  .card:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.02);
+    box-shadow:
+      0 1px 1px rgba(31, 26, 20, 0.06),
+      0 18px 36px -8px rgba(31, 26, 20, 0.28),
+      0 40px 70px -28px rgba(31, 26, 20, 0.32);
+    z-index: 10;
+  }
+
+  /* ────────── ANNOTATIONS ────────── */
+  .note {
+    position: absolute;
+    font-family: "Caveat", cursive;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.05;
+    z-index: 6;
+    max-width: 220px;
+  }
+  .note .big {
+    display: block;
+    font-size: 30px;
+    font-weight: 600;
+  }
+  .note .small {
+    display: block;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .hl {
+    background: linear-gradient(transparent 58%, var(--yellow) 58%, var(--yellow) 92%, transparent 92%);
+    padding: 0 4px;
+  }
+  .ink-rust { color: var(--rust); }
+  .ink-teal { color: var(--teal); }
+
+  .note-volley {
+    top: 0px; left: 380px;
+    transform: rotate(-4deg);
+  }
+  .note-skate {
+    top: 30px; left: 620px;
+    transform: rotate(3deg);
+    text-align: right;
+  }
+  .note-bad {
+    top: 360px; left: 30px;
+    transform: rotate(-2deg);
+    max-width: 180px;
+  }
+  .note-trek {
+    top: 720px; left: 360px;
+    transform: rotate(-1deg);
+    max-width: 260px;
+  }
+
+  /* ────────── ARROWS / SVG DECOR ────────── */
+  .arrow {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .arrow-1 {
+    top: 60px;
+    left: 340px;
+    width: 200px; height: 140px;
+  }
+  .arrow-2 {
+    top: 380px;
+    left: 380px;
+    width: 220px; height: 180px;
+  }
+
+  /* sticker / stamp */
+  .stamp {
+    position: absolute;
+    width: 96px; height: 96px;
+    border: 2px solid var(--rust);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--rust);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3;
+    transform: rotate(-12deg);
+    top: 660px;
+    left: 60px;
+    background: rgba(245, 237, 224, 0.4);
+    z-index: 6;
+  }
+  .stamp .num {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 26px;
+    letter-spacing: 0;
+    color: var(--rust);
+    margin: 2px 0;
+  }
+
+  /* corner dingbat */
+  .ding {
+    position: absolute;
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    color: var(--teal);
+    font-size: 38px;
+    line-height: 1;
+    transform: rotate(-8deg);
+  }
+  .ding-1 { top: 6px; right: 14px; }
+  .ding-2 { bottom: -10px; left: 200px; color: var(--rust); font-size: 32px; transform: rotate(12deg); }
+
+  /* legend strip near header */
+  .legend {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+    max-width: 320px;
+  }
+  .legend-item {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .legend-item .dot {
+    width: 8px; height: 8px;
+    background: var(--rust);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transform: translateY(1px);
+  }
+  .legend-item:nth-child(2) .dot { background: var(--teal); }
+  .legend-item:nth-child(3) .dot { background: var(--ink); }
+  .legend-item:nth-child(4) .dot { background: var(--yellow); border: 1px solid var(--hair); }
+  .legend-item b { color: var(--ink); font-weight: 500; }
+
+  /* ────────── FOOTER ────────── */
+  .footer {
+    margin-top: 96px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hair);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .footer .center {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+  }
+  .footer .center .hl { background: linear-gradient(transparent 60%, var(--yellow) 60%); }
+
+  /* ────────── RESPONSIVE ────────── */
+  @media (max-width: 1100px) {
+    .page { padding: 40px 40px 72px; }
+    .layout { grid-template-columns: 1fr; gap: 32px; }
+    .heading h1 { font-size: clamp(48px, 9vw, 80px); }
+    .collage { min-height: auto; display: flex; flex-direction: column; gap: 28px; padding: 20px 0 40px; }
+    .card, .note, .arrow, .stamp {
+      position: relative;
+      top: auto; left: auto; right: auto; bottom: auto;
+    }
+    .card { margin: 0 auto; max-width: 88%; }
+    .card-volley { transform: rotate(-1.5deg); }
+    .card-skate { transform: rotate(1deg); }
+    .card-bad { transform: rotate(-1deg); width: 280px; height: 220px; }
+    .card-trek { transform: rotate(1.2deg); width: 88%; max-width: 360px; height: 240px; }
+    .note { max-width: 80%; margin: -8px auto 0; text-align: center !important; }
+    .note .big { font-size: 26px; }
+    .arrow { display: none; }
+    .stamp { margin: 8px auto; }
+    .scribble { display: none; }
+  }
+
+  @media (max-width: 520px) {
+    .page { padding: 28px 22px 56px; }
+    .topbar { flex-wrap: wrap; gap: 8px; }
+    .heading h1 { font-size: 52px; }
+    .legend { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; gap: 10px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="left"><span>●</span> Mathieu Diep — Portfolio § Sport</div>
+      <div class="right">
+        <span>04 / 12</span>
+        <span>Barcelona — 41.38°N</span>
+        <span>Edition 26</span>
+      </div>
+    </div>
+
+    <div class="layout">
+
+      <!-- ─── HEADING ─── -->
+      <section class="heading">
+        <div class="kicker">Off the keyboard · Notebook 04</div>
+        <h1>
+          Sports <span class="amp">&amp;</span><br />
+          <span class="outdoor">Outdoor</span>
+        </h1>
+
+        <p class="lede">
+          A page from my own notebook — four things I keep coming back to when the laptop is closed.
+          <em>Sweat, salt, ice, pine.</em>
+        </p>
+
+        <div class="scribble">
+          mostly outside ↘
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><span class="dot"></span><span><b>Rust</b> — warm</span></div>
+          <div class="legend-item"><span class="dot"></span><span><b>Teal</b> — cold</span></div>
+          <div class="legend-item"><span class="dot"></span><span><b>Ink</b> — fast</span></div>
+          <div class="legend-item"><span class="dot"></span><span><b>Yellow</b> — sun</span></div>
+        </div>
+
+        <div class="meta">
+          <div class="row"><span>Location</span><span>Barceloneta · Pyrenees</span></div>
+          <div class="row"><span>Years</span><span>2014 — ongoing</span></div>
+          <div class="row"><span>Gear</span><span>Light, mostly worn</span></div>
+        </div>
+      </section>
+
+      <!-- ─── COLLAGE ─── -->
+      <section class="collage" aria-label="Sports collage">
+
+        <!-- Hand-drawn arrow #1 : skate -> volley loop back -->
+        <svg class="arrow arrow-1" viewBox="0 0 200 140" fill="none" aria-hidden="true">
+          <path d="M10,20 C 60,5 120,30 160,80 S 180,130 130,125"
+            stroke="#b85c3a" stroke-width="1.6" stroke-linecap="round"
+            stroke-dasharray="2 5" fill="none" />
+          <path d="M138,118 L130,125 L138,132" stroke="#b85c3a" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+
+        <!-- Hand-drawn arrow #2 : badminton -> trekking -->
+        <svg class="arrow arrow-2" viewBox="0 0 220 180" fill="none" aria-hidden="true">
+          <path d="M10,30 C 60,120 140,150 200,90"
+            stroke="#4a6b6b" stroke-width="1.6" stroke-linecap="round"
+            stroke-dasharray="1 4" fill="none" />
+          <path d="M192,82 L200,90 L191,98" stroke="#4a6b6b" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+
+        <!-- 01 — BEACH VOLLEY -->
+        <figure class="card card-volley">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="frame" style="height: 300px;">
+            <img src="https://picsum.photos/seed/beachvolley-summer/640/520" alt="Beach volley on Barceloneta" loading="lazy" />
+          </div>
+          <figcaption class="caption">
+            <span><b>01</b> · Beach Volley</span>
+            <span>Barceloneta</span>
+          </figcaption>
+          <span class="ding ding-1">❋</span>
+        </figure>
+
+        <div class="note note-volley">
+          <span class="big">best <span class="hl">summer</span> ever</span>
+          <span class="small">— sand, salt, repeat ✱</span>
+        </div>
+
+        <!-- 02 — PATINAGE -->
+        <figure class="card card-skate">
+          <span class="tape teal" aria-hidden="true"></span>
+          <span class="clip" aria-hidden="true"></span>
+          <div class="frame" style="height: 240px;">
+            <img src="https://picsum.photos/seed/iceskating-glide/520/440" alt="Ice skating" loading="lazy" />
+          </div>
+          <figcaption class="caption">
+            <span><b>02</b> · Patinage</span>
+            <span>since '14</span>
+          </figcaption>
+        </figure>
+
+        <div class="note note-skate">
+          <span class="big ink-teal">always <span class="hl">cold</span>,</span>
+          <span class="big">always quiet</span>
+          <span class="small">— blades on glass §</span>
+        </div>
+
+        <!-- 03 — BADMINTON -->
+        <figure class="card card-bad">
+          <span class="tape rust" aria-hidden="true"></span>
+          <div class="frame" style="height: 140px;">
+            <img src="https://picsum.photos/seed/badminton-smash/560/320" alt="Badminton smash" loading="lazy" />
+          </div>
+          <figcaption class="caption">
+            <span><b>03</b> · Badminton</span>
+            <span>indoor</span>
+          </figcaption>
+          <span class="ding ding-2">✱</span>
+        </figure>
+
+        <div class="note note-bad">
+          <span class="big ink-rust">fast &amp; <span class="hl">loud</span></span>
+          <span class="small">— 15-minute storms</span>
+        </div>
+
+        <!-- 04 — TREKKING / BIVOUAC -->
+        <figure class="card card-trek">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="clip" aria-hidden="true" style="right: auto; left: 26px; transform: rotate(-6deg);"></span>
+          <div class="frame" style="height: 200px;">
+            <img src="https://picsum.photos/seed/trekking-bivouac/720/420" alt="Bivouac in the mountains" loading="lazy" />
+          </div>
+          <figcaption class="caption">
+            <span><b>04</b> · Nature / Bivouac</span>
+            <span>Pyrenees · 2–4 days</span>
+          </figcaption>
+        </figure>
+
+        <div class="note note-trek">
+          <span class="big">alone on the <span class="hl">ridge</span></span>
+          <span class="small">— canvas, stars, slow ❋</span>
+        </div>
+
+        <!-- STAMP -->
+        <div class="stamp" aria-hidden="true">
+          Logged
+          <span class="num">04</span>
+          disciplines
+        </div>
+
+      </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="left">MD — Notebook 04 / Sport</div>
+      <div class="center">— Barceloneta to the <span class="hl">Pyrenees</span>, 2014 — ongoing —</div>
+      <div class="right">pg. 04 § ✱</div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Subtle un-rotate on hover is handled in CSS via :hover.
+    // Tiny extra: parallax-ish nudge for the notes when hovering a card.
+    const pairs = [
+      ['.card-volley', '.note-volley'],
+      ['.card-skate',  '.note-skate'],
+      ['.card-bad',    '.note-bad'],
+      ['.card-trek',   '.note-trek'],
+    ];
+    pairs.forEach(([cs, ns]) => {
+      const c = document.querySelector(cs);
+      const n = document.querySelector(ns);
+      if (!c || !n) return;
+      c.addEventListener('mouseenter', () => {
+        n.style.transition = 'transform .35s cubic-bezier(.2,.7,.2,1)';
+        n.style.transform = (n.style.transform || '') + ' translate(-2px,-2px)';
+      });
+      c.addEventListener('mouseleave', () => {
+        n.style.transform = n.style.transform.replace(' translate(-2px,-2px)', '');
+      });
+    });
+  </script>
+</body>
+</html>

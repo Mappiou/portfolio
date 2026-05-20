@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mathieu Diep — Acte IV · Le Corps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter+Tight:wght@300;400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0e0d0b;
+    --bg-lift: #131210;
+    --surface: rgba(239, 233, 221, 0.04);
+    --text: #efe9dd;
+    --text-soft: rgba(239, 233, 221, 0.6);
+    --text-faint: rgba(239, 233, 221, 0.32);
+    --amber: #d9a648;
+    --jade: #6fa890;
+    --hair: rgba(239, 233, 221, 0.12);
+    --hair-strong: rgba(239, 233, 221, 0.22);
+    --filter-cinema: contrast(108%) saturate(90%) brightness(92%);
+    --shadow-deep: 0 40px 100px rgba(0, 0, 0, 0.55);
+    --inset-vignette: inset 0 0 120px rgba(0, 0, 0, 0.45);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html { background: var(--bg); }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter Tight", system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Film grain overlay — fixed, covers entire viewport */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.91 0 0 0 0 0.86 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Vignette burned into the page edges */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    background:
+      radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 12%, transparent 88%, rgba(0,0,0,0.5) 100%);
+  }
+
+  ::selection { background: var(--amber); color: var(--bg); }
+
+  .display {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    color: var(--text-soft);
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 56px;
+    position: relative;
+  }
+
+  /* ── Top chrome: letterbox bar ─────────────────────────── */
+  .top-bar {
+    border-bottom: 1px solid var(--hair);
+    padding: 22px 0;
+    background: var(--bg);
+    position: relative;
+    z-index: 5;
+  }
+  .top-bar .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+  }
+  .top-bar .mono { color: var(--text-faint); font-size: 10px; }
+  .top-bar .reel-id {
+    color: var(--text-soft);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .top-bar .reel-id span {
+    color: var(--amber);
+  }
+
+  /* ── Section header ────────────────────────────────────── */
+  .section-head {
+    padding: 140px 0 100px;
+    position: relative;
+  }
+  .section-head .chapter {
+    color: var(--text-soft);
+    margin-bottom: 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .section-head .chapter::before {
+    content: "";
+    width: 56px;
+    height: 1px;
+    background: var(--hair-strong);
+  }
+  .section-head h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(60px, 9vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    max-width: 1100px;
+  }
+  .section-head h1 .amber-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .section-head h1 .amber-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.08em;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.85;
+  }
+  .section-head .lede {
+    margin-top: 56px;
+    max-width: 560px;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.85;
+    padding-left: 80px;
+    border-left: 1px solid var(--hair);
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .section-head .lede em {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    color: var(--text);
+    font-size: 17px;
+  }
+
+  /* Decorative corner mark */
+  .corner-mark {
+    position: absolute;
+    top: 32px;
+    right: 56px;
+    width: 64px;
+    height: 64px;
+    border-top: 1px solid var(--amber);
+    border-right: 1px solid var(--amber);
+    opacity: 0.7;
+  }
+  .corner-mark::after {
+    content: "§";
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    color: var(--amber);
+    font-size: 14px;
+  }
+
+  /* ── Scene blocks ──────────────────────────────────────── */
+  .reel {
+    padding: 40px 0 120px;
+  }
+
+  .scene {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 80px;
+    padding: 80px 0 100px;
+    position: relative;
+    align-items: center;
+  }
+
+  /* Reversed layout for even scenes */
+  .scene.reverse {
+    grid-template-columns: 1fr 1.15fr;
+  }
+  .scene.reverse .scene-figure {
+    order: 2;
+  }
+  .scene.reverse .scene-copy {
+    order: 1;
+  }
+
+  /* Hairline divider between scenes */
+  .scene + .scene::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--hair) 18%,
+      var(--hair-strong) 50%,
+      var(--hair) 82%,
+      transparent 100%
+    );
+  }
+
+  /* The figure (image with vignette) */
+  .scene-figure {
+    position: relative;
+  }
+  .scene-figure .still {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #1a1815;
+    box-shadow: var(--shadow-deep);
+    isolation: isolate;
+  }
+  .scene-figure .still img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: var(--filter-cinema);
+    transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), filter 1.6s ease;
+  }
+  /* Inset vignette layer */
+  .scene-figure .still::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: var(--inset-vignette);
+  }
+  /* Radial vignette ::after */
+  .scene-figure .still::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 38%,
+      rgba(0, 0, 0, 0.35) 78%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  }
+  .scene-figure:hover .still img {
+    transform: scale(1.025);
+    filter: contrast(112%) saturate(94%) brightness(94%);
+  }
+
+  /* Aspect variants */
+  .scene-figure.tall .still { aspect-ratio: 4 / 5; }
+
+  /* Frame number tag (top-left of image) */
+  .frame-tag {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 4;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--text);
+    text-transform: uppercase;
+    background: rgba(14, 13, 11, 0.65);
+    padding: 7px 11px 6px;
+    border: 1px solid var(--hair-strong);
+    backdrop-filter: blur(2px);
+  }
+  .frame-tag.amber {
+    color: var(--amber);
+    border-color: rgba(217, 166, 72, 0.5);
+  }
+
+  /* Bottom-right scene index */
+  .scene-index {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    z-index: 4;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--text);
+    opacity: 0.92;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+    letter-spacing: -0.04em;
+  }
+
+  /* ── Scene copy column ─────────────────────────────────── */
+  .scene-copy {
+    padding: 0 8px;
+  }
+  .scene-copy .scene-kicker {
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .scene-copy .scene-kicker::before {
+    content: "·";
+    font-size: 18px;
+    color: var(--amber);
+    line-height: 0;
+    position: relative;
+    top: -2px;
+  }
+  .scene-copy h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(44px, 5.4vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 22px;
+  }
+  .scene-copy .subtitle {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 40px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--hair);
+    max-width: 380px;
+  }
+  .scene-copy .prose {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-soft);
+    max-width: 460px;
+  }
+  .scene-copy .prose p + p {
+    margin-top: 18px;
+  }
+  .scene-copy .prose .drop {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    color: var(--text);
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  /* Meta row beneath prose */
+  .scene-meta {
+    margin-top: 48px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 460px;
+  }
+  .scene-meta .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .scene-meta .meta-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .scene-meta .meta-value {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .scene-meta .meta-value.jade {
+    color: var(--jade);
+  }
+
+  /* ── Closing block ─────────────────────────────────────── */
+  .colophon {
+    padding: 120px 0 80px;
+    border-top: 1px solid var(--hair);
+    text-align: center;
+    position: relative;
+  }
+  .colophon::before {
+    content: "⸺";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    color: var(--text-soft);
+    padding: 0 18px;
+    font-size: 18px;
+    letter-spacing: 0.4em;
+  }
+  .colophon .end-mark {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 40px;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+  .colophon .credits {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .colophon .credits .amber {
+    color: var(--amber);
+  }
+
+  /* ── Bottom letterbox bar ──────────────────────────────── */
+  .bottom-bar {
+    border-top: 1px solid var(--hair);
+    padding: 20px 0;
+    background: var(--bg);
+  }
+  .bottom-bar .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bottom-bar .mono {
+    font-size: 10px;
+    color: var(--text-faint);
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 980px) {
+    .wrap { padding: 0 32px; }
+    .section-head { padding: 100px 0 70px; }
+    .section-head .lede { padding-left: 32px; }
+    .scene,
+    .scene.reverse {
+      grid-template-columns: 1fr;
+      gap: 44px;
+      padding: 60px 0 70px;
+    }
+    .scene.reverse .scene-figure { order: 1; }
+    .scene.reverse .scene-copy { order: 2; }
+    .scene-copy { padding: 0; }
+    .scene-copy h2 { font-size: clamp(38px, 8vw, 56px); }
+    .scene-figure .still { aspect-ratio: 16/10 !important; }
+    .scene-figure.tall .still { aspect-ratio: 16/11 !important; }
+    .scene-index { font-size: 40px; }
+    .corner-mark { right: 32px; }
+  }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 0 22px; }
+    .top-bar .wrap, .bottom-bar .wrap { gap: 16px; }
+    .top-bar .reel-id { font-size: 9px; }
+    .section-head h1 { font-size: 52px; }
+    .scene-meta { gap: 26px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ── TOP LETTERBOX ────────────────────────────────────────── -->
+  <header class="top-bar">
+    <div class="wrap">
+      <div class="reel-id">M·D <span>·</span> REEL 04 <span>/</span> 06</div>
+      <div class="mono">35MM · 24FPS · BARCELONA</div>
+      <div class="reel-id"><span>●</span> REC</div>
+    </div>
+  </header>
+
+  <!-- ── SECTION HEADER ───────────────────────────────────────── -->
+  <section class="section-head">
+    <div class="wrap">
+      <div class="corner-mark"></div>
+      <div class="chapter mono">Chapitre 04 &nbsp; ⸺ &nbsp; Terrains de jeu</div>
+      <h1>
+        Acte IV<br/>
+        <em>Le corps,</em> <span class="amber-underline">en mouvement</span><br/>
+        comme un long plan-séquence.
+      </h1>
+      <div class="lede">
+        <em>Quatre tableaux.</em> Quatre manières d'habiter l'espace, le rythme et le silence —
+        depuis le sable chaud de la Barceloneta jusqu'aux crêtes ventées d'un bivouac
+        à 2 400 mètres. Le sport, ici, n'est pas une performance : c'est un cadrage.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCENES ───────────────────────────────────────────────── -->
+  <section class="reel">
+    <div class="wrap">
+
+      <!-- SCENE 01 — BEACH VOLLEY -->
+      <article class="scene">
+        <div class="scene-figure">
+          <div class="still">
+            <span class="frame-tag amber">FRAME 01 · 18:42</span>
+            <img src="https://picsum.photos/seed/beachvolley-cinematic/1280/800" alt="Beach volley scene" loading="lazy" />
+            <div class="scene-index">i.</div>
+          </div>
+        </div>
+        <div class="scene-copy">
+          <div class="scene-kicker mono">Scène première &nbsp;⸺&nbsp; Été, lumière rasante</div>
+          <h2>Beach Volley</h2>
+          <div class="subtitle">La Barceloneta · 18h42 · sable encore tiède</div>
+          <div class="prose">
+            <p><span class="drop">¶</span> &nbsp;Des années passées à creuser le même rituel : maillot,
+            sable entre les orteils, un filet tendu contre la mer. Les après-midis se déplient comme
+            une pellicule lente, et chaque échange est une respiration partagée.</p>
+            <p>J'y reviens pour le rythme — ce tempo à trois temps, frappe, passe, attaque, où le
+            corps pense plus vite que la tête.</p>
+          </div>
+          <div class="scene-meta">
+            <div class="meta-item">
+              <span class="meta-label">Tempo</span>
+              <span class="meta-value">Allegro · 3/4</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Décor</span>
+              <span class="meta-value jade">Méditerranée</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- SCENE 02 — PATINAGE (reverse) -->
+      <article class="scene reverse">
+        <div class="scene-figure tall">
+          <div class="still">
+            <span class="frame-tag">FRAME 02 · 06:11</span>
+            <img src="https://picsum.photos/seed/iceskating-noir/1200/1500" alt="Ice skating scene" loading="lazy" />
+            <div class="scene-index">ii.</div>
+          </div>
+        </div>
+        <div class="scene-copy">
+          <div class="scene-kicker mono">Scène seconde &nbsp;⸺&nbsp; Aube, patinoire vide</div>
+          <h2>Patinage</h2>
+          <div class="subtitle">Glace · 06h11 · adolescent, et depuis</div>
+          <div class="prose">
+            <p><span class="drop">§</span> &nbsp;Une discipline acquise au seuil de l'adolescence,
+            jamais quittée. La glace exige une précision presque liturgique — on ne triche pas
+            avec une surface qui rend chaque hésitation au centuple.</p>
+            <p>Ce que j'y cherche, c'est le silence. Le glissé pur, les bras qui tombent, la lame
+            qui découpe un cercle parfait dans le bruit du monde.</p>
+          </div>
+          <div class="scene-meta">
+            <div class="meta-item">
+              <span class="meta-label">Texture</span>
+              <span class="meta-value">Silence · froid</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Geste</span>
+              <span class="meta-value">Précision</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- SCENE 03 — BADMINTON -->
+      <article class="scene">
+        <div class="scene-figure">
+          <div class="still">
+            <span class="frame-tag">FRAME 03 · 21:07</span>
+            <img src="https://picsum.photos/seed/badminton-action/1280/800" alt="Badminton scene" loading="lazy" />
+            <div class="scene-index">iii.</div>
+          </div>
+        </div>
+        <div class="scene-copy">
+          <div class="scene-kicker mono">Scène troisième &nbsp;⸺&nbsp; Halle, néons hauts</div>
+          <h2>Badminton</h2>
+          <div class="subtitle">Indoor · 21h07 · réflexes &amp; éclats</div>
+          <div class="prose">
+            <p><span class="drop">¶</span> &nbsp;L'inverse exact du bivouac. Tout se joue dans
+            l'intervalle d'une seconde : le volant qui décroche, le poignet qui anticipe, le pied
+            qui mord le sol synthétique avant même que la pensée n'ait formulé sa stratégie.</p>
+            <p>Intensité brève, sueur immédiate. C'est l'art du sprint mental — court, féroce,
+            puis le retour au calme.</p>
+          </div>
+          <div class="scene-meta">
+            <div class="meta-item">
+              <span class="meta-label">Durée plan</span>
+              <span class="meta-value">00 : 00 : 47</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Énergie</span>
+              <span class="meta-value jade">Staccato</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- SCENE 04 — NATURE / BIVOUAC (reverse) -->
+      <article class="scene reverse">
+        <div class="scene-figure">
+          <div class="still">
+            <span class="frame-tag amber">FRAME 04 · 05:34</span>
+            <img src="https://picsum.photos/seed/bivouac-mountain/1280/800" alt="Mountain bivouac scene" loading="lazy" />
+            <div class="scene-index">iv.</div>
+          </div>
+        </div>
+        <div class="scene-copy">
+          <div class="scene-kicker mono">Scène finale &nbsp;⸺&nbsp; Aube, 2 400 m</div>
+          <h2>Nature, <em style="font-style:italic;">trekking, bivouac</em></h2>
+          <div class="subtitle">Pyrénées · 05h34 · sous toile, sans réseau</div>
+          <div class="prose">
+            <p><span class="drop">§</span> &nbsp;Plusieurs jours de marche, un sac, une tente. La
+            montagne impose son montage : on n'avance pas plus vite que ses pieds, on ne dort pas
+            plus loin que le crépuscule. Le temps redevient liquide.</p>
+            <p>Dormir sous toile, c'est accepter de n'être qu'un détail dans un cadre immense —
+            et y trouver, paradoxalement, sa place exacte.</p>
+          </div>
+          <div class="scene-meta">
+            <div class="meta-item">
+              <span class="meta-label">Altitude</span>
+              <span class="meta-value">≈ 2 400 m</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Cadence</span>
+              <span class="meta-value">Lento · adagio</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── COLOPHON ─────────────────────────────────────────────── -->
+  <section class="colophon">
+    <div class="wrap">
+      <div class="end-mark">— Fin de l'acte IV —</div>
+      <div class="credits">
+        Filmé entre Barcelona &amp; les Pyrénées &nbsp;·&nbsp;
+        <span class="amber">Direction · M. Diep</span> &nbsp;·&nbsp;
+        Suite au chapitre V
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOTTOM LETTERBOX ─────────────────────────────────────── -->
+  <footer class="bottom-bar">
+    <div class="wrap">
+      <div class="mono">© MMXXVI · Mathieu Diep</div>
+      <div class="mono">Acte IV · Le corps</div>
+      <div class="mono">Time code 04 : 18 : 42 : 12</div>
+    </div>
+  </footer>
+
+</body>
+</html>

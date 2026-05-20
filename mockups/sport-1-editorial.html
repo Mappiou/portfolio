@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>§ 04 — Sports &amp; Outdoor · Mathieu Diep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #f5ede0;
+    --cream:        #faf5eb;
+    --ink:          #1f1a14;
+    --ink-soft:     #6b6056;
+    --rust:         #b85c3a;
+    --teal:         #4a6b6b;
+    --mint:         #c7c0a8;
+    --hair:         rgba(31, 26, 20, 0.12);
+    --hair-strong:  rgba(31, 26, 20, 0.22);
+
+    --sepia: sepia(8%) saturate(110%) contrast(0.96);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: var(--paper); color: var(--ink); }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-image:
+      radial-gradient(1200px 600px at 12% -10%, rgba(184, 92, 58, 0.05), transparent 60%),
+      radial-gradient(900px 600px at 92% 110%, rgba(74, 107, 107, 0.05), transparent 60%);
+  }
+
+  ::selection { background: var(--rust); color: var(--cream); }
+
+  .display {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    line-height: 1;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* =================================================== layout */
+
+  .spread {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 56px 72px 96px;
+    position: relative;
+  }
+
+  /* faint vertical column rule down the gutter, like a magazine baseline */
+  .spread::before {
+    content: "";
+    position: absolute;
+    top: 56px;
+    bottom: 96px;
+    left: 50%;
+    width: 1px;
+    background: var(--hair);
+    transform: translateX(-0.5px);
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  /* =================================================== masthead */
+
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--hair-strong);
+  }
+  .masthead .left  { text-align: left; }
+  .masthead .mid   { text-align: center; }
+  .masthead .right { text-align: right; }
+  .masthead .mid .dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--rust);
+    border-radius: 50%;
+    margin: 0 10px 2px;
+    vertical-align: middle;
+  }
+
+  /* =================================================== section head */
+
+  .section-head {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+    padding-bottom: 28px;
+  }
+
+  .kicker-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .kicker-row .rule {
+    flex: 0 0 56px;
+    height: 1px;
+    background: var(--ink);
+    opacity: 0.55;
+  }
+
+  .section-head h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(56px, 8.4vw, 132px);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+  }
+  .section-head h1 .amp {
+    color: var(--rust);
+    font-style: italic;
+    padding: 0 0.06em;
+  }
+  .section-head h1 .small {
+    font-size: 0.42em;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+  }
+
+  .section-head .standfirst {
+    max-width: 360px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    border-left: 1px solid var(--hair-strong);
+    padding-left: 20px;
+    margin-bottom: 8px;
+  }
+  .section-head .standfirst em {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .head-rule {
+    height: 1px;
+    background: var(--hair-strong);
+    margin-bottom: 56px;
+    position: relative;
+  }
+  .head-rule::after {
+    content: "§";
+    position: absolute;
+    right: 0;
+    top: -10px;
+    background: var(--paper);
+    padding-left: 12px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--rust);
+  }
+  .head-rule::before {
+    content: "p. 04";
+    position: absolute;
+    left: 0;
+    top: -8px;
+    background: var(--paper);
+    padding-right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* =================================================== mosaic */
+
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    gap: 32px 28px;
+    align-items: start;
+  }
+
+  .tile { position: relative; }
+
+  .tile .frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    border: 1px solid var(--hair);
+  }
+
+  .tile .frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: var(--sepia);
+    transition: transform 1200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+                filter 600ms ease;
+  }
+  .tile:hover .frame img {
+    transform: scale(1.035);
+    filter: sepia(4%) saturate(115%) contrast(0.98);
+  }
+
+  .tile .frame .folio {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: rgba(31, 26, 20, 0.55);
+    backdrop-filter: blur(2px);
+    padding: 6px 10px;
+    border: 1px solid rgba(250, 245, 235, 0.18);
+  }
+
+  .tile .caption {
+    margin-top: 14px;
+  }
+
+  .tile .caption .row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .tile .title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1;
+  }
+  .tile .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .tile .desc {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 44ch;
+  }
+  .tile .desc .lead {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 15.5px;
+    color: var(--ink);
+  }
+
+  /* ------ specific tiles ------ */
+
+  /* HERO — Beach Volley */
+  .tile.hero { grid-column: 1 / span 7; grid-row: 1; }
+  .tile.hero .frame { aspect-ratio: 4 / 5; }
+  .tile.hero .title { font-size: 64px; }
+  .tile.hero .desc  { font-size: 16px; max-width: 52ch; }
+
+  /* tag floating in negative space over hero */
+  .hero-overlay {
+    position: absolute;
+    right: -90px;
+    top: 38px;
+    width: 200px;
+    text-align: left;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .hero-overlay .num {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 96px;
+    line-height: 0.9;
+    color: var(--rust);
+    letter-spacing: -0.03em;
+  }
+  .hero-overlay .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    border-top: 1px solid var(--hair-strong);
+    padding-top: 8px;
+    width: 120px;
+  }
+
+  /* Patinage — right column, top */
+  .tile.skate {
+    grid-column: 8 / span 5;
+    grid-row: 1;
+    align-self: start;
+    margin-top: 32px;
+  }
+  .tile.skate .frame { aspect-ratio: 4 / 5; }
+  .tile.skate .title { font-size: 40px; }
+
+  /* lower row — Badminton + Trekking */
+  .tile.badminton {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+    margin-top: 24px;
+  }
+  .tile.badminton .frame { aspect-ratio: 5 / 4; }
+  .tile.badminton .title { font-size: 36px; }
+
+  .tile.trek {
+    grid-column: 7 / span 6;
+    grid-row: 2;
+    margin-top: 8px;
+  }
+  .tile.trek .frame { aspect-ratio: 16 / 10; }
+  .tile.trek .title { font-size: 44px; }
+
+  /* a small drop-cap-like pull quote in the middle gutter */
+  .pullquote {
+    grid-column: 6 / span 1;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 60px;
+    text-align: center;
+  }
+  .pullquote .mark {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 64px;
+    line-height: 0.9;
+    color: var(--rust);
+  }
+  .pullquote .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* =================================================== colophon */
+
+  .colophon {
+    margin-top: 88px;
+    padding-top: 22px;
+    border-top: 1px solid var(--hair-strong);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .colophon .cell .mono { display: block; margin-bottom: 6px; }
+  .colophon .cell p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .colophon .cell.right { text-align: right; }
+
+  .dingbat {
+    text-align: center;
+    margin-top: 36px;
+    color: var(--rust);
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    letter-spacing: 0.6em;
+  }
+
+  /* =================================================== responsive */
+  @media (max-width: 900px) {
+    .spread { padding: 32px 22px 64px; }
+    .spread::before { display: none; }
+
+    .masthead { grid-template-columns: 1fr; text-align: left; }
+    .masthead .mid, .masthead .right { text-align: left; }
+
+    .section-head {
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 40px;
+    }
+    .section-head h1 { font-size: 64px; }
+    .section-head .standfirst { max-width: none; }
+
+    .mosaic { gap: 36px; }
+    .tile.hero,
+    .tile.skate,
+    .tile.badminton,
+    .tile.trek {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      margin-top: 0;
+    }
+    .tile.hero .title { font-size: 44px; }
+    .tile.skate .title { font-size: 32px; }
+    .tile.badminton .title { font-size: 30px; }
+    .tile.trek .title { font-size: 32px; }
+
+    .hero-overlay { display: none; }
+    .pullquote { display: none; }
+
+    .colophon { grid-template-columns: 1fr; }
+    .colophon .cell.right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+  <main class="spread">
+
+    <!-- masthead -->
+    <header class="masthead">
+      <div class="left mono">Mathieu Diep — Portfolio</div>
+      <div class="mid mono">Vol. I<span class="dot"></span>No. 04<span class="dot"></span>Sports &amp; Outdoor</div>
+      <div class="right mono">Barcelona · MMXXVI</div>
+    </header>
+
+    <!-- section head -->
+    <section class="section-head">
+      <div>
+        <div class="kicker-row">
+          <span class="rule"></span>
+          <span class="mono">§ 04 — Passions / Movement</span>
+        </div>
+        <h1 class="display">
+          Of salt, ice <span class="amp">&amp;</span><br/>
+          long quiet trails<span class="small">.</span>
+        </h1>
+      </div>
+      <p class="standfirst">
+        Four disciplines, four cadences. <em>Beach, rink, court, ridge.</em>
+        A short field-guide to the bodies of work that happen when the
+        laptop closes — written in sweat, breath, and very occasional
+        falling down.
+      </p>
+    </section>
+
+    <div class="head-rule"></div>
+
+    <!-- mosaic -->
+    <section class="mosaic">
+
+      <!-- HERO : BEACH VOLLEY -->
+      <article class="tile hero">
+        <div class="hero-overlay">
+          <div class="num">i.</div>
+          <div class="lbl">The sand piece</div>
+        </div>
+
+        <div class="frame">
+          <span class="folio">No. 01 / IV</span>
+          <img src="https://picsum.photos/seed/beachvolley-bcn-sunset/1200/1500"
+               alt="Beach volley court at golden hour on Barceloneta" loading="lazy" />
+        </div>
+
+        <div class="caption">
+          <div class="row">
+            <h2 class="title">Beach Volley</h2>
+            <span class="meta">Barceloneta · Est. 2019</span>
+          </div>
+          <p class="desc">
+            <span class="lead">Played for years</span> — summer afternoons
+            on Barceloneta, the net tilted slightly toward the sea.
+            What I love is the rhythm: serve, set, spike, the slow walk
+            back to the line while the sun fades behind the W.
+          </p>
+        </div>
+      </article>
+
+      <!-- PATINAGE -->
+      <article class="tile skate">
+        <div class="frame">
+          <span class="folio">No. 02 / IV</span>
+          <img src="https://picsum.photos/seed/iceskating-rink-night/900/1125"
+               alt="Empty ice rink with overhead lights" loading="lazy" />
+        </div>
+        <div class="caption">
+          <div class="row">
+            <h2 class="title">Patinage</h2>
+            <span class="meta">FR · Since age 14</span>
+          </div>
+          <p class="desc">
+            On the ice since I was a teenager. It rewards precision and
+            silence — the blade does most of the talking, and the rink
+            empties of words the moment you push off.
+          </p>
+        </div>
+      </article>
+
+      <!-- BADMINTON -->
+      <article class="tile badminton">
+        <div class="frame">
+          <span class="folio">No. 03 / IV</span>
+          <img src="https://picsum.photos/seed/badminton-court-shuttle/1000/800"
+               alt="Indoor badminton court with shuttlecock in motion" loading="lazy" />
+        </div>
+        <div class="caption">
+          <div class="row">
+            <h2 class="title">Badminton</h2>
+            <span class="meta">Indoor · Weekly</span>
+          </div>
+          <p class="desc">
+            Quick reflexes, short bursts of total intensity.
+            Three minutes of a rally feel like a small lifetime —
+            then the shuttle lands and everything is calm again.
+          </p>
+        </div>
+      </article>
+
+      <!-- a small typographic interlude -->
+      <aside class="pullquote">
+        <div class="mark">¶</div>
+        <div class="lbl">A field<br/>guide</div>
+      </aside>
+
+      <!-- TREKKING -->
+      <article class="tile trek">
+        <div class="frame">
+          <span class="folio">No. 04 / IV</span>
+          <img src="https://picsum.photos/seed/trekking-mountain-bivouac/1600/1000"
+               alt="Mountain ridge at dawn with a small tent" loading="lazy" />
+        </div>
+        <div class="caption">
+          <div class="row">
+            <h2 class="title">Nature, Trekking <span style="color:var(--rust)">&amp;</span> Bivouac</h2>
+            <span class="meta">Pyrénées · Alpes · Multi-day</span>
+          </div>
+          <p class="desc">
+            <span class="lead">Slow is the point.</span> Multi-day treks,
+            sleeping under canvas, water from streams, the kind of
+            tiredness that resets the calendar. Phones do not work up
+            there — and that, mostly, is the feature.
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- colophon -->
+    <footer class="colophon">
+      <div class="cell">
+        <span class="mono">Composed in</span>
+        <p>Barcelona — between two trainings.</p>
+      </div>
+      <div class="cell" style="text-align:center;">
+        <span class="mono">Set in</span>
+        <p>Newsreader · Inter Tight · JetBrains Mono</p>
+      </div>
+      <div class="cell right">
+        <span class="mono">Continued</span>
+        <p>→ p. 05 — Reading &amp; Music</p>
+      </div>
+    </footer>
+
+    <div class="dingbat">· § · § · §  ·</div>
+
+  </main>
+
+  <script>
+    // Subtle parallax-y nudge on the hero overlay when mouse moves.
+    const spread = document.querySelector('.spread');
+    const overlay = document.querySelector('.hero-overlay');
+    if (overlay && window.matchMedia('(hover:hover)').matches) {
+      spread.addEventListener('mousemove', (e) => {
+        const r = spread.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        overlay.style.transform = `translate(${x * -10}px, ${y * -6}px)`;
+      });
+      spread.addEventListener('mouseleave', () => {
+        overlay.style.transform = '';
+      });
+    }
+  </script>
+
+</body>
+</html>

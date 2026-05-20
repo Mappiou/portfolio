@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>mathieu.diep — tty/0 — phosphor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1410;
+    --bg-2:#0a0f0c;
+    --fg:#C5E8C5;
+    --phos:#6FE872;
+    --amber:#E8B547;
+    --muted:#7A8A7E;
+    --dim:#4A5550;
+    --rule:#1b231e;
+    --crt-r:18px;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+
+  html{
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(40,80,55,0.18), transparent 60%),
+      radial-gradient(80% 60% at 50% 100%, rgba(20,40,30,0.35), transparent 70%),
+      linear-gradient(180deg, #0d1310 0%, #0F1410 40%, #0a0e0b 100%);
+    color:var(--fg);
+    font-family:'JetBrains Mono','IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+    font-weight:400;
+    font-size:14px;
+    line-height:1.55;
+    letter-spacing:0.01em;
+    min-height:100%;
+  }
+
+  body{
+    min-height:100vh;
+    padding:0;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* ── SCANLINES (fixed overlay) ───────────────────────── */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.18) 0px,
+      rgba(0,0,0,0.18) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events:none;
+    z-index:90;
+    mix-blend-mode:multiply;
+    animation:scanflicker 6s ease-in-out infinite;
+  }
+  /* ── CRT VIGNETTE ─────────────────────────────────────── */
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%),
+      radial-gradient(60% 30% at 50% -10%, rgba(111,232,114,0.05), transparent 70%);
+    pointer-events:none;
+    z-index:91;
+  }
+  @keyframes scanflicker{
+    0%,100%{ opacity:.95; }
+    47%{ opacity:.85; }
+    50%{ opacity:1; }
+    52%{ opacity:.88; }
+  }
+
+  /* ── STATUS BAR ───────────────────────────────────────── */
+  .statusbar{
+    position:sticky;
+    top:0;
+    z-index:80;
+    background:#0a100c;
+    border-bottom:1px solid var(--rule);
+    padding:6px 18px;
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    align-items:center;
+    backdrop-filter:blur(1px);
+  }
+  .statusbar .seg{ display:inline-flex; align-items:center; gap:6px; }
+  .statusbar .sep{ color:var(--dim); }
+  .statusbar .mode{ color:var(--bg); background:var(--phos); padding:1px 8px; font-weight:600; text-shadow:none; }
+  .statusbar .path{ color:var(--phos); }
+  .statusbar .blink-dot{ display:inline-block; width:8px; height:8px; background:var(--phos); border-radius:50%; box-shadow:0 0 6px var(--phos); animation:dot 2s ease-in-out infinite; }
+  @keyframes dot{ 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  /* ── PAGE ─────────────────────────────────────────────── */
+  main{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px 28px 120px;
+  }
+
+  /* ── GENERAL TEXT TONES ──────────────────────────────── */
+  .phos{ color:var(--phos); text-shadow:0 0 6px currentColor, 0 0 14px rgba(111,232,114,0.25); }
+  .amber{ color:var(--amber); text-shadow:0 0 6px rgba(232,181,71,0.45); }
+  .muted{ color:var(--muted); }
+  .dim{ color:var(--dim); }
+  .fg{ color:var(--fg); }
+  .red{ color:#ff7a6a; text-shadow:0 0 6px rgba(255,122,106,0.4); }
+  .cyan{ color:#6fd9e8; text-shadow:0 0 6px rgba(111,217,232,0.35); }
+  .b{ font-weight:600; }
+  .it{ font-style:italic; }
+  .u{ text-decoration:underline; text-underline-offset:3px; }
+
+  /* ── BLINKING CURSOR ─────────────────────────────────── */
+  .cursor{
+    display:inline-block;
+    width:0.62em;
+    height:1.05em;
+    background:var(--phos);
+    box-shadow:0 0 8px var(--phos), 0 0 16px rgba(111,232,114,0.4);
+    vertical-align:-2px;
+    margin-left:2px;
+    animation:blink 1s steps(1,end) infinite;
+  }
+  .cursor.amber{ background:var(--amber); box-shadow:0 0 8px var(--amber); }
+  .cursor.thin{ width:2px; }
+  @keyframes blink{ 50%{ opacity:0 } }
+
+  /* ── PROMPT LINE ─────────────────────────────────────── */
+  .prompt{ margin:18px 0 6px; font-size:14px; }
+  .prompt .who{ color:var(--phos); text-shadow:0 0 6px rgba(111,232,114,0.45); }
+  .prompt .at{ color:var(--muted); }
+  .prompt .host{ color:var(--amber); }
+  .prompt .pth{ color:var(--cyan, #6fd9e8); }
+  .prompt .sym{ color:var(--phos); margin:0 6px 0 4px; text-shadow:0 0 6px var(--phos); font-weight:700; }
+  .prompt .cmd{ color:var(--fg); }
+  .prompt .cmd:hover{ color:#fff; text-shadow:0 0 8px var(--phos); cursor:default; }
+  .prompt .flag{ color:var(--amber); }
+  .prompt .arg{ color:var(--cyan, #6fd9e8); }
+
+  /* ── PRE BLOCKS ──────────────────────────────────────── */
+  pre, .out, .block{
+    margin:0;
+    font-family:inherit;
+    color:var(--fg);
+    white-space:pre;
+    overflow-x:auto;
+  }
+  .out{ white-space:pre-wrap; }
+
+  /* ── GUTTER / LINE NUMBERS ───────────────────────────── */
+  .gutter{
+    display:grid;
+    grid-template-columns:46px 1fr;
+    gap:0;
+    border-left:1px solid var(--rule);
+  }
+  .gutter .ln{
+    color:var(--dim);
+    text-align:right;
+    padding:0 12px 0 0;
+    border-right:1px solid var(--rule);
+    user-select:none;
+    font-variant-numeric:tabular-nums;
+  }
+  .gutter .cl{
+    padding:0 0 0 14px;
+    white-space:pre-wrap;
+  }
+
+  /* ── BOX / FRAME ─────────────────────────────────────── */
+  .frame{
+    border:1px solid var(--rule);
+    padding:14px 16px;
+    margin:6px 0;
+    background:
+      linear-gradient(180deg, rgba(20,30,22,0.6), rgba(10,15,12,0.3));
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+  }
+
+  /* ── ASCII DIVIDERS ──────────────────────────────────── */
+  .hr{
+    color:var(--dim);
+    user-select:none;
+    margin:18px 0;
+    letter-spacing:0;
+  }
+  .hr.amber{ color:var(--amber); opacity:.55; }
+
+  /* ── BOOT SEQUENCE ───────────────────────────────────── */
+  .boot{ margin-top:8px; }
+  .boot .line{
+    opacity:0;
+    transform:translateY(2px);
+    animation:bootline .35s ease-out forwards;
+  }
+  @keyframes bootline{
+    to{ opacity:1; transform:none; }
+  }
+  .ok{ color:var(--phos); }
+  .warn{ color:var(--amber); }
+  .err{ color:#ff7a6a; }
+
+  /* ── ASCII LOGO ──────────────────────────────────────── */
+  .ascii-logo{
+    color:var(--phos);
+    text-shadow:0 0 8px rgba(111,232,114,0.6), 0 0 22px rgba(111,232,114,0.25);
+    font-size:13px;
+    line-height:1.0;
+    padding:14px 0;
+    white-space:pre;
+    overflow-x:auto;
+    animation:logoflicker 4.4s ease-in-out infinite;
+  }
+  @keyframes logoflicker{
+    0%,100%{ filter:brightness(1); }
+    50%{ filter:brightness(1.12); }
+    51%{ filter:brightness(0.96); }
+  }
+
+  /* ── TABLE / LISTING ─────────────────────────────────── */
+  .ls{
+    margin:6px 0;
+    font-size:13.5px;
+    line-height:1.7;
+  }
+  .ls .row{
+    display:grid;
+    grid-template-columns: 110px 30px 90px 70px 80px 1fr 1fr;
+    gap:14px;
+    align-items:baseline;
+  }
+  .ls .row:hover{ background:rgba(111,232,114,0.04); }
+  .ls .perm{ color:var(--amber); }
+  .ls .own{ color:var(--cyan, #6fd9e8); }
+  .ls .size{ color:var(--muted); text-align:right; }
+  .ls .date{ color:var(--muted); }
+  .ls .name{ color:var(--phos); text-shadow:0 0 6px rgba(111,232,114,0.35); font-weight:500; }
+  .ls .name:hover{ color:#fff; text-decoration:underline; cursor:pointer; }
+  .ls .role{ color:var(--fg); }
+  .ls .lochead{ color:var(--muted); }
+
+  /* ── EXPERIENCE README ───────────────────────────────── */
+  .md h1, .md h2, .md h3{
+    font-family:inherit;
+    font-weight:600;
+    margin:14px 0 6px;
+    color:var(--fg);
+  }
+  .md h1{ color:var(--phos); text-shadow:0 0 6px rgba(111,232,114,0.35); font-size:20px; }
+  .md h1::before{ content:"# "; color:var(--amber); }
+  .md h2{ font-size:16px; color:var(--amber); }
+  .md h2::before{ content:"## "; color:var(--dim); }
+  .md h3{ font-size:14px; color:var(--fg); }
+  .md h3::before{ content:"### "; color:var(--dim); }
+  .md p{ margin:6px 0; }
+  .md blockquote{
+    margin:8px 0;
+    padding:2px 0 2px 14px;
+    border-left:2px solid var(--amber);
+    color:var(--muted);
+    font-style:italic;
+  }
+  .md blockquote::before{ content:"> "; color:var(--amber); font-style:normal; }
+  .md ul{ margin:6px 0 10px; padding-left:0; list-style:none; }
+  .md ul li{ padding:1px 0; }
+  .md ul li::before{ content:"- "; color:var(--dim); }
+  .md a{ color:var(--phos); text-decoration:none; border-bottom:1px dotted var(--dim); }
+  .md a:hover{ color:var(--amber); border-bottom-color:var(--amber); }
+  .md code, code.inline{
+    color:var(--amber);
+    background:rgba(232,181,71,0.07);
+    padding:0 4px;
+    border:1px solid rgba(232,181,71,0.18);
+  }
+
+  /* ── CHECKLIST ───────────────────────────────────────── */
+  .check{ list-style:none; padding:0; margin:8px 0; }
+  .check li{ padding:2px 0; }
+  .check li::before{
+    content:"[x] ";
+    color:var(--phos);
+    text-shadow:0 0 6px var(--phos);
+    font-weight:700;
+    margin-right:4px;
+  }
+  .check li:hover{ color:#fff; }
+
+  /* ── PIP LIST (stack) ────────────────────────────────── */
+  .pip{
+    margin:6px 0;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:0 28px;
+    font-size:13px;
+    line-height:1.75;
+  }
+  .pip .pkg{ color:var(--fg); }
+  .pip .ver{ color:var(--amber); }
+  .pip .pkg::before{ content:""; }
+
+  /* ── CONTACT HELP ────────────────────────────────────── */
+  .help{
+    margin:4px 0;
+    font-size:13.5px;
+    line-height:1.75;
+  }
+  .help .usage{ color:var(--phos); margin-bottom:8px; }
+  .help .row{
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap:14px;
+    padding:1px 0;
+  }
+  .help .row:hover{ background:rgba(111,232,114,0.05); }
+  .help .opt{ color:var(--amber); }
+  .help .desc{ color:var(--muted); }
+  .help a{ color:var(--phos); text-decoration:none; }
+  .help a:hover{ color:var(--amber); text-decoration:underline; }
+
+  /* ── KEY HINT (keyboard) ─────────────────────────────── */
+  .kbd{
+    display:inline-block;
+    border:1px solid var(--dim);
+    background:#101714;
+    color:var(--phos);
+    padding:0 5px;
+    margin:0 1px;
+    font-size:11.5px;
+    line-height:1.4;
+    box-shadow:0 1px 0 #0a0e0c, inset 0 -1px 0 var(--rule);
+  }
+
+  /* ── TAGS ────────────────────────────────────────────── */
+  .tags{ display:flex; flex-wrap:wrap; gap:4px 6px; margin:4px 0; }
+  .tag{
+    color:var(--phos);
+    border:1px solid var(--rule);
+    padding:1px 7px;
+    font-size:12px;
+    background:rgba(111,232,114,0.05);
+  }
+  .tag:hover{ color:var(--amber); border-color:var(--amber); }
+
+  /* ── SECTION HEADER ──────────────────────────────────── */
+  .sect-h{
+    color:var(--dim);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin:36px 0 6px;
+  }
+  .sect-h .num{ color:var(--amber); }
+
+  /* ── SELECTION ───────────────────────────────────────── */
+  ::selection{ background:rgba(111,232,114,0.35); color:#fff; text-shadow:none; }
+
+  /* ── SCROLLBAR (webkit) ──────────────────────────────── */
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb{ background:var(--rule); border:2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover{ background:#2a3530; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+
+  /* ── RESPONSIVE-ISH ──────────────────────────────────── */
+  @media (max-width:760px){
+    .ls .row{ grid-template-columns: 100px 80px 1fr; }
+    .ls .perm,.ls .own,.ls .size,.ls .date{ display:none; }
+    .help .row{ grid-template-columns: 1fr; gap:2px; }
+    .pip{ grid-template-columns:1fr; }
+    .ascii-logo{ font-size:9px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  STATUS BAR — vim/tmux style                            -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="statusbar">
+  <span class="seg"><span class="blink-dot"></span></span>
+  <span class="seg path">~/mathieu.diep</span>
+  <span class="sep">│</span>
+  <span class="mode">INSERT</span>
+  <span class="sep">│</span>
+  <span class="seg">utf-8</span>
+  <span class="sep">│</span>
+  <span class="seg amber">unix</span>
+  <span class="sep">│</span>
+  <span class="seg" id="clock">01:01</span>
+  <span class="sep">│</span>
+  <span class="seg">LANG=fr_FR.UTF-8</span>
+  <span class="sep">│</span>
+  <span class="seg muted">tty/0</span>
+  <span class="sep">│</span>
+  <span class="seg muted">42°C</span>
+  <span class="sep">│</span>
+  <span class="seg phos">●REC</span>
+</div>
+
+<main>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  1. BOOT SEQUENCE                                       -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="boot" id="boot">
+<div class="line" style="animation-delay:0ms">   <span class="muted">[</span><span class="phos">    0.000000</span><span class="muted">]</span> phosphor-os v2.6.1 booting <span class="amber">(release)</span> ...</div>
+<div class="line" style="animation-delay:60ms">  <span class="muted">[</span><span class="phos">    0.024113</span><span class="muted">]</span> Initializing tty/0 ............................. [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:120ms"> <span class="muted">[</span><span class="phos">    0.058204</span><span class="muted">]</span> Mounting filesystem /portfolio ................. [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:180ms"> <span class="muted">[</span><span class="phos">    0.091508</span><span class="muted">]</span> Loading locale fr_FR.UTF-8 ..................... [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:240ms"> <span class="muted">[</span><span class="phos">    0.114920</span><span class="muted">]</span> Reaching coffee daemon @ 127.0.0.1:8888 ........ [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:300ms"> <span class="muted">[</span><span class="phos">    0.142001</span><span class="muted">]</span> Starting LLM bridge (port 8080) ................ [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:360ms"> <span class="muted">[</span><span class="phos">    0.187540</span><span class="muted">]</span> Loading user profile :: <span class="amber">mathieu</span> ............... [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:420ms"> <span class="muted">[</span><span class="phos">    0.219114</span><span class="muted">]</span> Detecting timezone ............... Europe/Madrid  [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:480ms"> <span class="muted">[</span><span class="phos">    0.242876</span><span class="muted">]</span> Checking RAG indexes ........................... [ <span class="warn">WARN</span> ]</div>
+<div class="line" style="animation-delay:540ms"> <span class="muted">[</span><span class="phos">    0.281044</span><span class="muted">]</span> Rebuilding vector store ........................ [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:600ms"> <span class="muted">[</span><span class="phos">    0.310882</span><span class="muted">]</span> Warming caches ................................. [ <span class="ok">OK</span> ]</div>
+<div class="line" style="animation-delay:660ms"> <span class="muted">[</span><span class="phos">    0.327101</span><span class="muted">]</span> Ready in <span class="amber">327ms</span>. Type <span class="phos">`help`</span> to start.</div>
+</div>
+
+<div class="hr">════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</div>
+
+<pre class="ascii-logo" aria-hidden="true">
+   ███╗   ███╗  █████╗  ████████╗ ██╗  ██╗ ██╗ ███████╗ ██╗   ██╗
+   ████╗ ████║ ██╔══██╗ ╚══██╔══╝ ██║  ██║ ██║ ██╔════╝ ██║   ██║
+   ██╔████╔██║ ███████║    ██║    ███████║ ██║ █████╗   ██║   ██║
+   ██║╚██╔╝██║ ██╔══██║    ██║    ██╔══██║ ██║ ██╔══╝   ██║   ██║
+   ██║ ╚═╝ ██║ ██║  ██║    ██║    ██║  ██║ ██║ ███████╗ ╚██████╔╝
+   ╚═╝     ╚═╝ ╚═╝  ╚═╝    ╚═╝    ╚═╝  ╚═╝ ╚═╝ ╚══════╝  ╚═════╝
+                                                     ── d i e p ──
+</pre>
+
+<div class="muted" style="font-size:12.5px; padding-left:4px;">
+  <span class="amber">mathieu.diep</span> <span class="dim">v2.6.1</span> <span class="dim">·</span> built <span class="phos">2026.05.18</span> <span class="dim">·</span> last login from <span class="phos">eth0</span> at <span class="amber">08:42</span> <span class="dim">·</span> <span class="phos">42</span> uptime days
+</div>
+
+<div class="hr">══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══ ── ══</div>
+
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  2. PROMPT — whoami                                     -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="sect-h"><span class="num">§01</span> &nbsp;identity &nbsp;<span class="dim">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</span></div>
+
+<div class="prompt">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~</span><span class="sym">$</span><span class="cmd">whoami</span> <span class="muted">--verbose</span>
+</div>
+
+<pre class="out">┌─────────────────────────────────────────────────────────────────────────────┐
+│  <span class="phos b">Mathieu Diep</span>                                                               │
+│  <span class="amber">AI Engineer</span> · Generative AI                                                │
+│  Barcelone, Espagne  ·  <span class="muted">lat 41.3851</span>  ·  <span class="muted">lon 2.1734</span>                       │
+│                                                                             │
+│  status .... <span class="phos">online</span>     <span class="dim">│</span>     coffee .... <span class="amber">arabica · double</span>             │
+│  pronoun ... il/he       <span class="dim">│</span>     mode ...... <span class="phos">curious</span>                      │
+│  shell ..... <span class="amber">/usr/bin/zsh</span> <span class="dim">│</span>     editor .... <span class="phos">vim</span>, parfois <span class="amber">nano</span>           │
+└─────────────────────────────────────────────────────────────────────────────┘</pre>
+
+<div class="muted" style="font-size:12.5px; padding-left:6px; margin-top:6px;">
+  <span class="dim"># tip:</span> press <span class="kbd">?</span> for keymap · <span class="kbd">Ctrl</span>+<span class="kbd">L</span> clears the screen
+</div>
+
+<div class="hr">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</div>
+
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  3. PROMPT — cat about.md                               -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="sect-h"><span class="num">§02</span> &nbsp;about &nbsp;<span class="dim">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</span></div>
+
+<div class="prompt">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~</span><span class="sym">$</span><span class="cmd">cat</span> <span class="arg">about.md</span> <span class="muted"># open with shell, never a popup</span>
+</div>
+
+<div class="gutter" aria-hidden="false">
+  <div class="ln">
+01<br/>02<br/>03<br/>04<br/>05<br/>06<br/>07<br/>08<br/>09<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20
+  </div>
+  <div class="cl md">
+<h1>mathieu.diep — README</h1>
+<p class="muted">> AI Engineer · Barcelona · est. 2020 · <code class="inline">v2.6.1</code></p>
+
+<h2>tl;dr</h2>
+<p>AI Engineer basé à <span class="phos">Barcelone</span>, je conçois et déploie des systèmes <span class="amber">LLM/RAG</span> que de vraies personnes utilisent, tous les jours.</p>
+
+<h2>maintenant</h2>
+<p>Je travaille actuellement chez <span class="amber">Hexamind</span> sur la <span class="phos">generative AI</span> — entre autres, un chatbot servant <span class="amber">90&nbsp;000+</span> utilisateurs en production, articulé autour d'une architecture <span class="phos">RAG</span> et d'<span class="phos">OpenAI</span>.</p>
+
+<h2>obsession</h2>
+<blockquote>Mon obsession : la couture entre la recherche AI et les apps qu'on peut tendre à quelqu'un. J'écris beaucoup de Python, je sors des apps mobiles en Flutter en parallèle, et je cherche à rendre les choses techniques calmes et un peu joueuses.</blockquote>
+
+<h3>signal / noise</h3>
+<ul>
+  <li><span class="phos">python</span>, daily — backends, agents, glue</li>
+  <li><span class="phos">flutter</span>, the side mobile bench</li>
+  <li><span class="phos">claude code</span>, on tous les fronts</li>
+  <li><span class="muted">les bons cafés à Gràcia</span></li>
+</ul>
+  </div>
+</div>
+
+<div class="muted" style="font-size:12.5px; padding-left:6px; margin-top:10px;">
+  <span class="dim"># EOF</span> · 20 lines · 1.4 KB · markdown · last modified <span class="amber">2026-05-18 08:41</span>
+</div>
+
+<div class="hr">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</div>
+
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  4. PROMPT — ls -la experiences/                        -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="sect-h"><span class="num">§03</span> &nbsp;experiences/ &nbsp;<span class="dim">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</span></div>
+
+<div class="prompt">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~</span><span class="sym">$</span><span class="cmd">ls</span> <span class="flag">-la</span> <span class="arg">experiences/</span> <span class="muted">| sort -k6</span>
+</div>
+
+<pre class="muted" style="margin:6px 0; font-size:13px;">total 3 dirs · 12 files · 4.2K
+drwxr-xr-x   <span class="cyan">5</span> mathieu  staff   160  2026-05-18  <span class="phos">.</span>
+drwxr-xr-x  <span class="cyan">42</span> mathieu  staff  1344  2026-05-18  <span class="phos">..</span></pre>
+
+<div class="ls" role="table" aria-label="experiences directory">
+
+  <!-- HEADER -->
+  <div class="row dim" style="border-bottom:1px solid var(--rule); padding-bottom:4px; margin-bottom:4px;">
+    <span>perm</span>
+    <span>n</span>
+    <span>owner</span>
+    <span style="text-align:right;">size</span>
+    <span>date</span>
+    <span>name</span>
+    <span>role · stack</span>
+  </div>
+
+  <!-- 001 HEXAMIND -->
+  <div class="row">
+    <span class="perm">drwxr-xr-x</span>
+    <span class="cyan">3</span>
+    <span class="own">mathieu</span>
+    <span class="size">001</span>
+    <span class="date">2024-01</span>
+    <span class="name">hexamind/</span>
+    <span class="role"><span class="amber">AI Engineer</span> · Paris · <span class="muted">LLM · RAG · OpenAI</span></span>
+  </div>
+  <div class="row muted" style="font-size:12.5px;">
+    <span class="dim">└─ tag</span>
+    <span></span><span></span><span></span><span></span>
+    <span class="dim">.now</span>
+    <span><span class="tag">current</span> <span class="tag">90k+ users</span> <span class="tag">production</span></span>
+  </div>
+
+  <!-- 002 LINCOLN -->
+  <div class="row">
+    <span class="perm">drwxr-xr-x</span>
+    <span class="cyan">4</span>
+    <span class="own">mathieu</span>
+    <span class="size">002</span>
+    <span class="date">2021-10</span>
+    <span class="name">lincoln/</span>
+    <span class="role"><span class="amber">Data Scientist / AI Engineer</span> · Paris · <span class="muted">RASA · NLP · Vision</span></span>
+  </div>
+  <div class="row muted" style="font-size:12.5px;">
+    <span class="dim">└─ tag</span>
+    <span></span><span></span><span></span><span></span>
+    <span class="dim">.meta</span>
+    <span><span class="tag">18 months</span> <span class="tag">Orange chatbot</span> <span class="tag">1M+ req/month</span></span>
+  </div>
+
+  <!-- 003 CAPGEMINI -->
+  <div class="row">
+    <span class="perm">drwxr-xr-x</span>
+    <span class="cyan">2</span>
+    <span class="own">mathieu</span>
+    <span class="size">003</span>
+    <span class="date">2020-12</span>
+    <span class="name">capgemini/</span>
+    <span class="role"><span class="amber">Stage Data / Blockchain</span> · Toulouse · <span class="muted">Python · Stats · Blockchain</span></span>
+  </div>
+  <div class="row muted" style="font-size:12.5px;">
+    <span class="dim">└─ tag</span>
+    <span></span><span></span><span></span><span></span>
+    <span class="dim">.meta</span>
+    <span><span class="tag">6 months</span> <span class="tag">stage de fin d'études</span></span>
+  </div>
+
+</div>
+
+<div class="muted" style="font-size:12.5px; padding-left:6px; margin-top:10px;">
+  <span class="dim"># hint:</span> <span class="phos">cd</span> into a dir for the full <span class="amber">README</span>, ex&nbsp;: <span class="amber">cd hexamind/</span>
+</div>
+
+<div class="hr">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</div>
+
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  5. PROMPT — cd hexamind/ && cat README                 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="sect-h"><span class="num">§04</span> &nbsp;hexamind/README.md &nbsp;<span class="dim">── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</span></div>
+
+<div class="prompt">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~</span><span class="sym">$</span><span class="cmd">cd</span> <span class="arg">experiences/hexamind/</span> <span class="phos">&amp;&amp;</span> <span class="cmd">cat</span> <span class="arg">README.md</span>
+</div>
+
+<div class="frame">
+
+<pre style="margin:0 0 8px; color:var(--muted); font-size:12.5px;">╔══════════════════════════════════════════════════════════════════════════════╗
+║  exp.001  <span class="amber b">HEXAMIND</span>                                              <span class="phos">[active]</span> ║
+║  ──────────────────────────────────────────────────────────────────────────  ║
+║  role     <span class="fg">AI Engineer, Generative AI</span>                                       ║
+║  city     <span class="fg">Paris, FR</span>                                                        ║
+║  period   <span class="phos">2024-01</span> <span class="dim">→</span> <span class="phos">present</span>     <span class="dim">·</span>   <span class="amber">~16 months</span>                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝</pre>
+
+<div class="md">
+  <h2>mission</h2>
+  <p>Conception et déploiement d'un <span class="phos">chatbot LLM/RAG</span> en production servant <span class="amber">90&nbsp;000+</span> utilisateurs, avec une équipe orientée produit et un focus sur la fiabilité du retrieval et la latence end-to-end.</p>
+
+  <h2>shipped</h2>
+  <ul class="check">
+    <li>Développement de systèmes <span class="phos">IA multi-agents</span></li>
+    <li>Adoption de <span class="amber">Claude Code</span> au quotidien</li>
+    <li>Architectures <span class="phos">RAG</span> (Retrieval-Augmented Generation)</li>
+    <li>Optimisation de <span class="phos">LLM</span> avec <span class="amber">LangChain</span> et bases vectorielles</li>
+  </ul>
+
+  <h2>stack — <code class="inline">pip list</code></h2>
+</div>
+
+<pre class="muted" style="font-size:12.5px; margin:6px 0 4px;">Package           Version       Source</pre>
+<pre class="dim" style="font-size:12.5px; margin:0 0 8px;">─────────────     ─────────     ──────────────────</pre>
+
+<div class="pip">
+  <div><span class="pkg">llm</span>                       <span class="ver">∞ ·</span> <span class="muted">production</span></div>
+  <div><span class="pkg">rag</span>                       <span class="ver">∞ ·</span> <span class="muted">retrieval</span></div>
+  <div><span class="pkg">multi-agent</span>               <span class="ver">∞ ·</span> <span class="muted">orchestration</span></div>
+  <div><span class="pkg">claude-code</span>               <span class="ver">∞ ·</span> <span class="muted">daily driver</span></div>
+  <div><span class="pkg">python</span>                    <span class="ver">3.12</span></div>
+  <div><span class="pkg">langchain</span>                 <span class="ver">0.3.x</span></div>
+  <div><span class="pkg">openai</span>                    <span class="ver">latest</span></div>
+  <div><span class="pkg">vector-db</span>                 <span class="ver">qdrant·pgvector</span></div>
+</div>
+
+<pre class="dim" style="font-size:12.5px; margin:8px 0 0;">─────────────────────────────────────────────────────
+8 packages installed · 0 conflicts · last sync 12m ago</pre>
+
+<div class="tags" style="margin-top:14px;">
+  <span class="tag">LLM</span>
+  <span class="tag">RAG</span>
+  <span class="tag">Multi-agent</span>
+  <span class="tag">Claude-Code</span>
+  <span class="tag">Python</span>
+  <span class="tag">LangChain</span>
+  <span class="tag">OpenAI</span>
+  <span class="tag">Vector-DB</span>
+</div>
+
+</div>
+
+<!-- collapsed previews of the other 2 experiences -->
+<div class="prompt" style="margin-top:22px;">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~/experiences/hexamind</span><span class="sym">$</span><span class="cmd">tail</span> <span class="flag">-n 20</span> <span class="arg">../lincoln/README.md</span>
+</div>
+
+<div class="frame" style="padding:12px 16px;">
+<pre style="margin:0 0 6px; color:var(--muted); font-size:12.5px;">┌──────────────────────────────────────────────────────────────────────────────┐
+│  exp.002  <span class="amber b">LINCOLN</span>                                                <span class="dim">[archived]</span> │
+│  role     <span class="fg">Data Scientist / AI Engineer</span>                                     │
+│  city     <span class="fg">Paris, FR</span>                                                        │
+│  period   <span class="phos">2021-10</span> <span class="dim">→</span> <span class="phos">2023-03</span>     <span class="dim">·</span>   <span class="amber">18 months</span>                       │
+└──────────────────────────────────────────────────────────────────────────────┘</pre>
+
+<div class="md">
+  <p>Mission sur le <span class="phos">chatbot Orange</span> (<span class="amber">1M+</span> requêtes/mois) en équipe <span class="amber">Agile/Scrum</span>, déclinée en 4 sous-missions.</p>
+  <ul class="check">
+    <li><span class="amber">6 mois</span> — ORANGE <span class="phos">RASA</span> Chatbot</li>
+    <li><span class="amber">5 mois</span> — Réseau de neurones from scratch <span class="dim">::</span> <span class="phos">+20%</span> performance</li>
+    <li><span class="amber">2 mois</span> — Transformation du chatbot en <span class="phos">voicebot</span></li>
+    <li><span class="amber">1 mois</span> — Export <span class="phos">Computer Vision</span> dans site Angular</li>
+  </ul>
+</div>
+<div class="tags" style="margin-top:8px;">
+  <span class="tag">RASA</span>
+  <span class="tag">Python</span>
+  <span class="tag">NLP</span>
+  <span class="tag">Computer-Vision</span>
+  <span class="tag">Angular</span>
+  <span class="tag">React</span>
+  <span class="tag">Voicebot</span>
+</div>
+</div>
+
+<div class="prompt" style="margin-top:18px;">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~/experiences/hexamind</span><span class="sym">$</span><span class="cmd">tail</span> <span class="flag">-n 12</span> <span class="arg">../capgemini/README.md</span>
+</div>
+
+<div class="frame" style="padding:12px 16px;">
+<pre style="margin:0 0 6px; color:var(--muted); font-size:12.5px;">┌──────────────────────────────────────────────────────────────────────────────┐
+│  exp.003  <span class="amber b">CAPGEMINI</span>                                              <span class="dim">[archived]</span> │
+│  role     <span class="fg">Stage Data / Blockchain</span>                                          │
+│  city     <span class="fg">Toulouse, FR</span>                                                     │
+│  period   <span class="phos">2020-12</span> <span class="dim">→</span> <span class="phos">2021-05</span>     <span class="dim">·</span>   <span class="amber">6 months</span>                        │
+└──────────────────────────────────────────────────────────────────────────────┘</pre>
+<div class="md">
+  <p>Stage de fin d'études <span class="dim">::</span> évaluation et optimisation des performances d'un réseau <span class="phos">blockchain</span>.</p>
+</div>
+<div class="tags" style="margin-top:6px;">
+  <span class="tag">Python</span>
+  <span class="tag">Data-Analysis</span>
+  <span class="tag">Statistics</span>
+  <span class="tag">Blockchain</span>
+</div>
+</div>
+
+<div class="hr">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</div>
+
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  6. PROMPT — ./contact --help                           -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="sect-h"><span class="num">§05</span> &nbsp;contact &nbsp;<span class="dim">── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──</span></div>
+
+<div class="prompt">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~</span><span class="sym">$</span><span class="cmd">./contact</span> <span class="flag">--help</span>
+</div>
+
+<div class="help">
+
+<div class="usage">
+  <span class="muted">Usage:</span> <span class="phos b">contact</span> <span class="amber">[METHOD]</span> <span class="muted">[OPTIONS]</span>
+</div>
+
+<div class="muted" style="margin-bottom:4px;">Reach Mathieu via one of the methods below. All channels open, response in &lt; 24h.</div>
+
+<pre class="dim" style="margin:8px 0;">─── OPTIONS ────────────────────────────────────────────────────────────────────</pre>
+
+<div class="row">
+  <span class="opt">  <span class="phos">-e</span>, --email <span class="amber">&lt;addr&gt;</span></span>
+  <span class="desc">primary inbox · <a href="mailto:mathieu.diep.95@gmail.com">mathieu.diep.95@gmail.com</a></span>
+</div>
+<div class="row">
+  <span class="opt">  <span class="phos">-g</span>, --github <span class="amber">&lt;user&gt;</span></span>
+  <span class="desc">code · <a href="https://github.com/Mappiou" target="_blank" rel="noopener">github.com/Mappiou</a></span>
+</div>
+<div class="row">
+  <span class="opt">  <span class="phos">-l</span>, --linkedin <span class="amber">&lt;handle&gt;</span></span>
+  <span class="desc">work · <a href="https://www.linkedin.com/in/mathieu-diep" target="_blank" rel="noopener">linkedin.com/in/mathieu-diep</a></span>
+</div>
+<div class="row">
+  <span class="opt">  <span class="phos">-c</span>, --city <span class="amber">&lt;name&gt;</span></span>
+  <span class="desc">currently in <span class="phos">Barcelona</span> · open to remote &amp; on-site EU</span>
+</div>
+<div class="row">
+  <span class="opt">  <span class="phos">-l</span>, --lang <span class="amber">&lt;code&gt;</span></span>
+  <span class="desc"><span class="phos">fr</span>, <span class="phos">en</span>, <span class="phos">es</span> · technical and human</span>
+</div>
+<div class="row">
+  <span class="opt">  <span class="phos">-h</span>, --help</span>
+  <span class="desc">print this message and exit</span>
+</div>
+<div class="row">
+  <span class="opt">  <span class="phos">-v</span>, --version</span>
+  <span class="desc">mathieu.diep <span class="amber">v2.6.1</span></span>
+</div>
+
+<pre class="dim" style="margin:10px 0 0;">─── EXAMPLES ───────────────────────────────────────────────────────────────────</pre>
+
+<div class="muted" style="margin-top:6px;">
+  <span class="dim">$</span> <span class="phos">./contact</span> <span class="amber">--email</span> <span class="cyan" style="color:#6fd9e8;">"hello, je travaille sur..."</span><br>
+  <span class="dim">$</span> <span class="phos">./contact</span> <span class="amber">--linkedin</span>  <span class="dim"># pour les pros</span><br>
+  <span class="dim">$</span> <span class="phos">./contact</span> <span class="amber">--github</span>    <span class="dim"># pour le code</span><br>
+</div>
+
+</div>
+
+<div class="hr amber">═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</div>
+
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  7. END / FINAL CURSOR                                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="prompt" style="margin-top:22px;">
+  <span class="who">mathieu</span><span class="at">@</span><span class="host">phosphor</span><span class="dim">:</span><span class="pth">~</span><span class="sym">$</span><span class="cursor" aria-hidden="true"></span>
+</div>
+
+<div class="muted" style="font-size:11.5px; margin-top:34px; padding-top:14px; border-top:1px solid var(--rule); display:flex; gap:14px; flex-wrap:wrap;">
+  <span><span class="dim">©</span> <span class="phos">2026</span> mathieu.diep</span>
+  <span class="dim">·</span>
+  <span>compiled with <span class="amber">gcc</span> and <span class="amber">coffee</span></span>
+  <span class="dim">·</span>
+  <span>powered by <span class="phos">phosphor-os</span> v2.6.1</span>
+  <span class="dim">·</span>
+  <span>signal good <span class="phos">●●●●●</span></span>
+  <span class="dim">·</span>
+  <span><span class="kbd">q</span> to quit · <span class="kbd">:</span><span class="kbd">w</span><span class="kbd">q</span> to save</span>
+</div>
+
+</main>
+
+<script>
+  // ── live clock (HH:MM, Europe/Madrid) ─────────────────
+  (function(){
+    const el = document.getElementById('clock');
+    if(!el) return;
+    function tick(){
+      const d = new Date();
+      const fmt = new Intl.DateTimeFormat('fr-FR', {
+        hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Europe/Madrid'
+      }).format(d);
+      el.textContent = fmt;
+    }
+    tick();
+    setInterval(tick, 15000);
+  })();
+
+  // ── boot lines stagger fallback ───────────────────────
+  // (handled by CSS animation-delay; nothing else needed)
+
+  // ── subtle horizontal scanline jitter every few seconds
+  (function(){
+    const body = document.body;
+    let t = 0;
+    setInterval(() => {
+      t = (t + 1) % 7;
+      if(t === 0){
+        body.style.transform = 'translateY(' + (Math.random() < .5 ? -1 : 1) + 'px)';
+        setTimeout(() => { body.style.transform = ''; }, 60);
+      }
+    }, 1800);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-import type { Language } from "../i18n";
+import type { Language } from "../i18n/languages";
 
 export type Translated = Record<Language, string>;
 

@@ -54,6 +54,85 @@ pnpm dev              # http://localhost:5173
 | `pnpm test:e2e:install`        | Télécharge les browsers Chromium                            |
 | `pnpm verify`                  | Pipeline complète locale : lint + typecheck + tests + build |
 
+## ✏️ Éditer le contenu du site (`src/content.ts`)
+
+**Tous les textes éditables et tous les chemins d'images du site sont regroupés dans un seul fichier :**
+
+> 📍 **`src/content.ts`** (~1000 lignes, en sections bien séparées)
+
+Pour modifier n'importe quel texte (FR/EN/ES) ou changer une photo, il suffit d'éditer ce fichier — tout le reste de l'app (i18n, data, composants) le consomme automatiquement.
+
+### Sections du fichier
+
+| # | Section          | Contenu                                                                |
+| - | ---------------- | ---------------------------------------------------------------------- |
+| 1 | `photos`         | Tous les chemins d'images (voir tableau ci-dessous)                    |
+| 2 | `profile`        | Nom, email, téléphone, localisation, liens GitHub/LinkedIn             |
+| 3 | `uiStrings`      | Libellés UI FR / EN / ES (nav, hero, footer, boutons, page 404…)       |
+| 4 | `experiences`    | Timeline pro (Hexamind, Lincoln, Capgemini, Aubay, Orange Labs)        |
+| 5 | `education`      | Timeline formation (Bac, UTT, Master Cybersécurité, échanges, stages)  |
+| 6 | `projects`       | 3 apps Android (Volley Météo, Scan2PDF, Triolinguo)                    |
+| 7 | `skills`         | Catégories de compétences (IA, Data, Programmation, Outils, Langues)   |
+| 8 | `passions`       | Sport / Nouvelles technologies / Voyages                               |
+
+### 🖼️ Photos référencées (chemins à remplir)
+
+Toutes les photos sont déclarées en haut de `src/content.ts` dans l'objet `photos`. Pour ajouter une photo :
+
+1. Place le fichier dans `public/images/...` (n'importe quel sous-dossier).
+2. Renseigne le chemin **absolu** (commençant par `/`) dans `photos` à la clé indicative qui correspond.
+3. Sauvegarde — le site la pioche automatiquement (placeholder dégradé tant que la valeur est `""`).
+
+| Clé dans `photos`                                | Nom indicatif                  | Où elle apparaît                          |
+| ------------------------------------------------ | ------------------------------ | ----------------------------------------- |
+| `photos.bioPortrait`                             | Portrait Bio                   | Section Bio (à côté de "Salut, je suis…") |
+| `photos.education.bac`                           | Photo Bac                      | Frise Formation — Baccalauréat            |
+| `photos.education.uttStart`                      | Photo entrée UTT               | Frise Formation — Entrée à l'UTT          |
+| `photos.education.uttPrepaEnd`                   | Photo fin de prépa             | Frise Formation — Fin de prépa intégrée   |
+| `photos.education.exchangeCanada`                | Photo Erasmus Canada           | Frise Formation — Échange Canada          |
+| `photos.education.exchangeChina`                 | Photo Erasmus Chine            | Frise Formation — Échange Chine           |
+| `photos.education.internshipOrangeLabs`          | Photo stage Orange Labs        | Frise Formation — Stage Orange Labs       |
+| `photos.education.internshipAubay`               | Photo stage Aubay              | Frise Formation — Stage Aubay             |
+| `photos.education.internshipCapgemini`           | Photo stage Capgemini          | Frise Formation — Stage Capgemini         |
+| `photos.education.engineeringUtt`                | Photo diplôme ingénieur UTT    | Frise Formation — Diplôme d'ingénieur     |
+| `photos.education.masterCybersecurity`           | Photo Master Cybersécurité     | Frise Formation — Master Cybersécurité    |
+| `photos.passions.sport.badminton`                | Photo badminton                | Section Passions — Sport                  |
+| `photos.passions.sport.beachVolley`              | Photo beach volley             | Section Passions — Sport                  |
+| `photos.passions.sport.iceSkating`               | Photo patin à glace            | Section Passions — Sport                  |
+| `photos.passions.sport.trekking`                 | Photo trekking                 | Section Passions — Sport                  |
+| `photos.passions.travel.usa1`, `usa2`            | Photos USA 1 / 2               | Section Passions — Voyages                |
+| `photos.passions.travel.southAmerica1`..`4`      | Photos Chili 1 / 2 / 3 / 4     | Section Passions — Voyages                |
+| `photos.passions.travel.asia1`, `asia2`          | Photos Asie 1 / 2              | Section Passions — Voyages                |
+| `photos.passions.travel.europe1`, `europe2`      | Photos Europe 1 / 2            | Section Passions — Voyages                |
+| `photos.projects.volleyMeteo[]`                  | Screenshots Volley Météo       | Page détail `/projects/volley-meteo`      |
+| `photos.projects.scan2pdf[]`                     | Screenshots Scan2PDF           | Page détail `/projects/scan2pdf`          |
+| `photos.projects.triolinguo[]`                   | Screenshots Triolinguo         | Page détail `/projects/triolinguo`        |
+
+### Exemple — ajouter le portrait Bio
+
+```bash
+# 1) Déposer la photo
+cp ~/Pictures/mathieu.jpg public/images/bio/mathieu.jpg
+```
+
+```ts
+// 2) Dans src/content.ts → section 1 (PHOTOS)
+export const photos = {
+  bioPortrait: "/images/bio/mathieu.jpg",  // ← avant : ""
+  // …
+};
+```
+
+C'est tout — un `pnpm dev` (déjà lancé en hot-reload) suffit pour voir le changement.
+
+### Notes de cohérence
+
+- Les **3 langues partagent obligatoirement les mêmes clés** dans `uiStrings` (`tests/unit/locales.test.ts` plante sinon).
+- Les balises `<italic>…</italic>` dans les titres sont traitées par `<Trans>` (react-i18next) → laisser telles quelles.
+- TypeScript empêche les fautes de structure : si tu casses une clé, `pnpm typecheck` te le dira.
+
+---
+
 ## Structure du projet
 
 ```
@@ -68,9 +147,10 @@ portfolio/
 │   │   ├── ui/             # AuraCanvas (gradient blobs), MegaButton, PortraitTile, BrandIcons (Github/LinkedIn/X)
 │   │   ├── projects/       # QRCode, DownloadButton
 │   │   └── seo/            # SEO (title + meta description par page)
-│   ├── data/                # types.ts, profile, experiences, education, skills, projects, principles
+│   ├── content.ts           # ✏️ SOURCE UNIQUE — tous les textes du site + chemins des photos
+│   ├── data/                # types.ts + ré-exports thin depuis content.ts (profile, experiences, education, skills, projects, passions)
 │   ├── hooks/               # useLanguageRoute, usePrefersReducedMotion
-│   ├── i18n/                # Config + locales/{fr,en,es}.json (utilise <Trans> pour les italiques)
+│   ├── i18n/                # Config react-i18next + languages.ts (les libellés vivent dans content.ts)
 │   ├── pages/               # Home (orchestre les 6 sections), ProjectDetail, NotFound
 │   ├── styles/              # palette.ts (couleurs + design tokens)
 │   ├── App.tsx              # Routing /:lang + ProjectDetail + NotFound

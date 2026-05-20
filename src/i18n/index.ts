@@ -1,26 +1,24 @@
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
-import fr from "./locales/fr.json";
-import en from "./locales/en.json";
-import es from "./locales/es.json";
+import { uiStrings } from "../content";
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "./languages";
 
-export const SUPPORTED_LANGUAGES = ["fr", "en", "es"] as const;
-export type Language = (typeof SUPPORTED_LANGUAGES)[number];
-export const DEFAULT_LANGUAGE: Language = "fr";
-
-export function isSupportedLanguage(value: string): value is Language {
-  return (SUPPORTED_LANGUAGES as readonly string[]).includes(value);
-}
+export {
+  SUPPORTED_LANGUAGES,
+  DEFAULT_LANGUAGE,
+  isSupportedLanguage,
+  type Language,
+} from "./languages";
 
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
-      fr: { translation: fr },
-      en: { translation: en },
-      es: { translation: es },
+      fr: { translation: uiStrings.fr },
+      en: { translation: uiStrings.en },
+      es: { translation: uiStrings.es },
     },
     fallbackLng: DEFAULT_LANGUAGE,
     supportedLngs: [...SUPPORTED_LANGUAGES],
