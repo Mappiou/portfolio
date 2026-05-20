@@ -16,25 +16,27 @@ const LOCALES = {
 } as const;
 
 const VISUAL: Record<Variant, {
-  image: string;
+  background: string;
+  accent: string;
   fontTitle: string;
-  ctaColor: string;
-  gradient: string;
   textColor: string;
+  taglineColor: string;
 }> = {
   cinema: {
-    image: "/shared/chooser/cinema.webp",
+    background:
+      "radial-gradient(ellipse 85% 70% at 50% 35%, #1f1b16 0%, #0d0c0a 55%, #050403 100%)",
+    accent: "#D9A648",
     fontTitle: "'Cormorant Garamond', Georgia, serif",
-    ctaColor: "#D9A648",
-    gradient: "linear-gradient(180deg, rgba(14,13,11,0) 0%, rgba(14,13,11,0.7) 100%)",
     textColor: "#EFE9DD",
+    taglineColor: "rgba(239,233,221,0.65)",
   },
   editorial: {
-    image: "/shared/chooser/editorial.webp",
+    background:
+      "radial-gradient(ellipse 85% 70% at 50% 35%, #FAF5EB 0%, #EFE2C9 60%, #DCC9A2 100%)",
+    accent: "#A04A2D",
     fontTitle: "'Newsreader', Georgia, serif",
-    ctaColor: "#A04A2D",
-    gradient: "linear-gradient(180deg, rgba(245,237,224,0) 0%, rgba(245,237,224,0.85) 100%)",
     textColor: "#1F1A14",
+    taglineColor: "rgba(31,26,20,0.6)",
   },
 };
 
@@ -58,65 +60,12 @@ export function Chooser() {
   };
 
   return (
-    <main style={{ height: "100vh", width: "100vw", overflow: "hidden", position: "relative" }}>
-      <div
-        style={{
-          position: "absolute",
-          top: "1.25rem",
-          left: "1.5rem",
-          right: "1.5rem",
-          zIndex: 10,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: "1rem",
-          pointerEvents: "none",
-        }}
-      >
-        <div
-          style={{
-            color: "#fff",
-            maxWidth: "min(60ch, 60%)",
-            textShadow: "0 1px 2px rgba(0,0,0,0.4)",
-          }}
-        >
-          <h1
-            style={{
-              fontFamily: "'Inter Tight', system-ui, sans-serif",
-              fontSize: "clamp(1.15rem, 2vw, 1.65rem)",
-              fontWeight: 600,
-              letterSpacing: "0.02em",
-              margin: 0,
-            }}
-          >
-            {t.heading}
-          </h1>
-          <p
-            style={{
-              fontFamily: "'Inter Tight', system-ui, sans-serif",
-              fontSize: "clamp(0.85rem, 1.15vw, 1rem)",
-              opacity: 0.9,
-              margin: "0.2rem 0 0",
-            }}
-          >
-            {t.subtitle}
-          </p>
-        </div>
-        <div
-          style={{
-            color: "#fff",
-            background: "rgba(0,0,0,0.45)",
-            backdropFilter: "blur(6px)",
-            padding: "0.45rem 1rem",
-            borderRadius: "999px",
-            pointerEvents: "auto",
-          }}
-        >
-          <LanguageDropdown
-            value={lang}
-            onChange={(next) => setLang(next as SupportedLang)}
-          />
-        </div>
+    <main className="chooser-root">
+      <div className="chooser-langbar">
+        <LanguageDropdown
+          value={lang}
+          onChange={(next) => setLang(next as SupportedLang)}
+        />
       </div>
 
       <div className="chooser-split">
@@ -133,89 +82,93 @@ export function Chooser() {
               onClick={() => enter(key)}
               onMouseEnter={() => setHovered(key)}
               onMouseLeave={() => setHovered(null)}
-              className="chooser-half"
-              initial={{ opacity: 0 }}
+              className={`chooser-half chooser-half--${key}`}
+              initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
               animate={{
                 opacity: 1,
-                flex: isHovered ? 1.1 : 1,
-                filter: isDimmed ? "brightness(0.6)" : "brightness(1)",
+                x: 0,
+                flex: isHovered ? 1.08 : 1,
+                filter: isDimmed ? "brightness(0.5)" : "brightness(1)",
               }}
               transition={{
-                duration: 0.4,
-                ease: "easeOut",
-                delay: idx * 0.1,
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1],
+                delay: idx * 0.08,
               }}
               style={{
-                position: "relative",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                backgroundImage: `url(${visual.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                background: visual.background,
                 color: visual.textColor,
                 fontFamily: visual.fontTitle,
-                overflow: "hidden",
-                flex: 1,
               }}
             >
-              <div style={{ position: "absolute", inset: 0, background: visual.gradient }} />
-              <div
-                style={{
-                  position: "relative",
-                  height: "100%",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  padding: "4rem 2rem",
-                  gap: "1rem",
-                }}
-              >
+              <div className="chooser-half__grain" aria-hidden />
+
+              <div className="chooser-half__bottom">
                 {previous?.variant === key && (
                   <span
-                    style={{
-                      fontFamily: "'Inter Tight', system-ui, sans-serif",
-                      fontSize: "0.85rem",
-                      opacity: 0.75,
-                      letterSpacing: "0.05em",
-                    }}
+                    className="chooser-half__chip"
+                    style={{ color: visual.taglineColor }}
                   >
-                    ↪ {t.lastVisit}
+                    <span aria-hidden>↪</span> {t.lastVisit}
                   </span>
                 )}
-                <span style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 600, letterSpacing: "0.05em" }}>
+                <span
+                  className="chooser-half__title"
+                  style={{ color: visual.textColor }}
+                >
                   {copy.title}
                 </span>
                 <span
-                  style={{
-                    fontFamily: "'Inter Tight', system-ui, sans-serif",
-                    fontSize: "1.1rem",
-                    opacity: 0.9,
-                    textAlign: "center",
-                    maxWidth: "32ch",
-                  }}
+                  className="chooser-half__tagline"
+                  style={{ color: visual.taglineColor }}
                 >
                   {copy.tagline}
                 </span>
                 <span
+                  className="chooser-half__cta"
                   style={{
-                    fontFamily: "'Inter Tight', system-ui, sans-serif",
-                    fontSize: "1rem",
-                    fontWeight: 500,
-                    color: visual.ctaColor,
-                    marginTop: "0.5rem",
-                    letterSpacing: "0.05em",
+                    color: visual.accent,
+                    borderColor: visual.accent,
                   }}
                 >
-                  {t.cta} →
+                  <span>{t.cta}</span>
+                  <span
+                    aria-hidden
+                    className="chooser-half__cta-arrow"
+                    style={{
+                      transform: isHovered ? "translateX(6px)" : "translateX(0)",
+                    }}
+                  >
+                    →
+                  </span>
                 </span>
               </div>
             </motion.button>
           );
         })}
       </div>
+
+      <div className="chooser-divider" aria-hidden />
+
+      <motion.div
+        className="chooser-curator"
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+      >
+        <span className="chooser-curator__kicker">{t.kicker}</span>
+        <h1 className="chooser-curator__heading">{t.heading}</h1>
+        <p className="chooser-curator__subtitle">{t.subtitle}</p>
+        <div className="chooser-curator__prompt" aria-hidden>
+          <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--left">
+            ←
+          </span>
+          <span className="chooser-curator__prompt-label">{t.prompt}</span>
+          <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--right">
+            →
+          </span>
+        </div>
+      </motion.div>
     </main>
   );
 }

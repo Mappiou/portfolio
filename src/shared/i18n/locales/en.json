@@ -103,8 +103,10 @@
     "photoPlaceholder": "photo coming soon"
   },
   "chooser": {
+    "kicker": "Mathieu Diep — Portfolio",
     "heading": "Pick your universe",
-    "subtitle": "Two styles for one portfolio — your call.",
+    "subtitle": "Two styles, one portfolio — pick the one that speaks to you.",
+    "prompt": "Select",
     "cinema": {
       "title": "CINEMA",
       "tagline": "Dark, artistic and cinematic",

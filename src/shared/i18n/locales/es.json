@@ -103,8 +103,10 @@
     "photoPlaceholder": "foto próximamente"
   },
   "chooser": {
+    "kicker": "Mathieu Diep — Portafolio",
     "heading": "Elige tu universo",
-    "subtitle": "Dos estilos para un mismo portafolio — tú decides.",
+    "subtitle": "Dos estilos, un mismo portafolio — elige el que te habla.",
+    "prompt": "Selecciona",
     "cinema": {
       "title": "CINEMA",
       "tagline": "Oscuro, artístico y cinematográfico",
