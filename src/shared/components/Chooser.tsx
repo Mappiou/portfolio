@@ -16,27 +16,25 @@ const LOCALES = {
 } as const;
 
 const VISUAL: Record<Variant, {
-  background: string;
+  image: string;
   accent: string;
   fontTitle: string;
   textColor: string;
   taglineColor: string;
 }> = {
   cinema: {
-    background:
-      "radial-gradient(ellipse 85% 70% at 50% 35%, #1f1b16 0%, #0d0c0a 55%, #050403 100%)",
+    image: "/shared/chooser/cinema.webp",
     accent: "#D9A648",
     fontTitle: "'Cormorant Garamond', Georgia, serif",
     textColor: "#EFE9DD",
-    taglineColor: "rgba(239,233,221,0.65)",
+    taglineColor: "rgba(239,233,221,0.72)",
   },
   editorial: {
-    background:
-      "radial-gradient(ellipse 85% 70% at 50% 35%, #FAF5EB 0%, #EFE2C9 60%, #DCC9A2 100%)",
+    image: "/shared/chooser/editorial.webp",
     accent: "#A04A2D",
     fontTitle: "'Newsreader', Georgia, serif",
     textColor: "#1F1A14",
-    taglineColor: "rgba(31,26,20,0.6)",
+    taglineColor: "rgba(31,26,20,0.65)",
   },
 };
 
@@ -88,7 +86,7 @@ export function Chooser() {
                 opacity: 1,
                 x: 0,
                 flex: isHovered ? 1.08 : 1,
-                filter: isDimmed ? "brightness(0.5)" : "brightness(1)",
+                filter: isDimmed ? "brightness(0.55) saturate(0.7)" : "brightness(1) saturate(1)",
               }}
               transition={{
                 duration: 0.8,
@@ -96,11 +94,12 @@ export function Chooser() {
                 delay: idx * 0.08,
               }}
               style={{
-                background: visual.background,
+                backgroundImage: `url(${visual.image})`,
                 color: visual.textColor,
                 fontFamily: visual.fontTitle,
               }}
             >
+              <div className="chooser-half__tint" aria-hidden />
               <div className="chooser-half__grain" aria-hidden />
 
               <div className="chooser-half__bottom">
