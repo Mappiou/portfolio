@@ -50,4 +50,26 @@ test.describe("portfolio routing", () => {
     await page.goto("/");
     await expect(page.getByText(/Ta dernière visite/i)).toBeVisible();
   });
+
+  test("internal nav links stay under /cinema/... (regression: variant prefix preserved)", async ({ page }) => {
+    await page.goto("/cinema/fr");
+    await page.waitForURL(/\/cinema\/fr/);
+    const navLinks = page.getByRole("navigation").getByRole("link");
+    const count = await navLinks.count();
+    for (let i = 0; i < count; i++) {
+      const href = await navLinks.nth(i).getAttribute("href");
+      if (href && href.startsWith("/") && !href.startsWith("/#") && href !== "/") {
+        expect(href).toMatch(/^\/(cinema|editorial)\//);
+      }
+    }
+  });
+
+  test("direct navigation to /cinema/en persists preference to localStorage", async ({ page }) => {
+    await page.goto("/cinema/en");
+    const pref = await page.evaluate(() => window.localStorage.getItem("portfolio:preference"));
+    expect(pref).not.toBeNull();
+    const parsed = JSON.parse(pref!);
+    expect(parsed.variant).toBe("cinema");
+    expect(parsed.lang).toBe("en");
+  });
 });
