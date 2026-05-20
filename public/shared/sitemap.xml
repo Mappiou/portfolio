@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://mathieu-diep.vercel.app/fr</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mathieu-diep.vercel.app/fr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mathieu-diep.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://mathieu-diep.vercel.app/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mathieu-diep.vercel.app/fr"/>
+  </url>
+  <url><loc>https://mathieu-diep.vercel.app/en</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/es</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/fr/projects/volley-meteo</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/en/projects/volley-meteo</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/es/projects/volley-meteo</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/fr/projects/scan2pdf</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/en/projects/scan2pdf</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/es/projects/scan2pdf</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/fr/projects/triolinguo</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/en/projects/triolinguo</loc></url>
+  <url><loc>https://mathieu-diep.vercel.app/es/projects/triolinguo</loc></url>
+</urlset>
