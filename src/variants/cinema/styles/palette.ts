@@ -1,0 +1,33 @@
+export const palette = {
+  beige: "#0E0D0B",
+  beigeDeep: "#131210",
+  cream: "#0E0D0B",
+  teal: "#D9A648",
+  tealHover: "#C49236",
+  mintLight: "rgba(111, 168, 144, 0.35)",
+  mint: "#6FA890",
+  rust: "#C97A5C",
+  lilac: "#A89BB0",
+  pink: "#C97A5C",
+  yellow: "#D9A648",
+  babyblue: "#6FA890",
+  textPrimary: "#EFE9DD",
+  textSecondary: "#857D70",
+  textTertiary: "#EFE9DD",
+  textQuarterly: "rgba(239,233,221,0.7)",
+  white50: "rgba(14,13,11,0.55)",
+  white30: "rgba(14,13,11,0.3)",
+  white20: "rgba(14,13,11,0.2)",
+} as const;
+
+export const tokens = {
+  fontTitle: "'Cormorant Garamond', Georgia, serif",
+  fontItalic: "'Cormorant Garamond', Georgia, serif",
+  fontBody: "'Inter Tight', system-ui, sans-serif",
+  fontMono: "'JetBrains Mono', monospace",
+  fontVariation: "normal",
+  pageMaxWidth: 1100,
+  radiusBase: 24,
+  radiusLg: 28,
+  radiusXl: 64,
+} as const;

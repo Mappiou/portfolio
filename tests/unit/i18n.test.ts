@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, isSupportedLanguage } from "../../src/i18n";
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, isSupportedLanguage } from "@shared/i18n";
 
 describe("i18n config", () => {
   it("supports fr, en, es", () => {

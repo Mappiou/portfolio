@@ -1,0 +1,16 @@
+.chooser-split {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: row;
+}
+
+@media (max-width: 767px) {
+  .chooser-split {
+    flex-direction: column;
+  }
+  .chooser-half {
+    flex: 1 !important;
+    filter: none !important;
+  }
+}
