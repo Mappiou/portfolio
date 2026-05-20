@@ -694,14 +694,14 @@ function DetailPanel({
         )}
         {thumbs.length > 0 && (
           <div
-            className="mt-6 grid gap-2"
+            className="mt-6 grid gap-3"
             style={{
               gridTemplateColumns: `repeat(${thumbs.length}, minmax(0, 1fr))`,
-              maxWidth: 320,
+              maxWidth: 540,
             }}
           >
             {thumbs.map((p, idx) => {
-              const src = p.src ?? `https://picsum.photos/seed/${p.seed}/240/240`;
+              const src = p.src ?? `https://picsum.photos/seed/${p.seed}/480/480`;
               const a = p.caption?.[lang] ?? `${entry.country[lang]} — ${idx + 2}`;
               return (
                 <div
