@@ -690,59 +690,96 @@ function DetailPanel({
           </div>
         )}
       </div>
-      <PhotoSlot
-        photoSrc={entry.photoSrc}
-        photoSeed={entry.photoSeed}
+      <PhotoGallery
+        photos={entry.photos}
         flag={entry.flag}
         tint={tint}
         alt={entry.country[lang]}
+        lang={lang}
       />
     </div>
   );
 }
 
-function PhotoSlot({
-  photoSrc,
-  photoSeed,
+function PhotoGallery({
+  photos,
   flag,
   tint,
   alt,
+  lang,
 }: {
-  photoSrc?: string;
-  photoSeed: string;
+  photos: Travel["photos"];
   flag: string;
   tint: string;
   alt: string;
+  lang: Language;
 }) {
-  const src = photoSrc ?? `https://picsum.photos/seed/${photoSeed}/640/640`;
+  if (photos.length === 0) return null;
+  const hero = photos[0];
+  const thumbs = photos.slice(1, 4);
+
+  const heroSrc = hero.src ?? `https://picsum.photos/seed/${hero.seed}/640/640`;
+  const heroAlt = hero.caption?.[lang] ?? alt;
+
   return (
-    <div
-      className="overflow-hidden relative"
-      style={{ width: "100%", aspectRatio: "1 / 1" }}
-    >
-      <img
-        src={src}
-        alt={alt}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          filter: "sepia(10%) saturate(110%)",
-        }}
-      />
-      <span
-        aria-hidden="true"
-        className="absolute"
-        style={{
-          left: 10,
-          bottom: 8,
-          fontSize: 22,
-          textShadow: "0 2px 6px rgba(0,0,0,0.35)",
-          color: tint,
-        }}
+    <div className="flex flex-col gap-2">
+      <div
+        className="overflow-hidden relative"
+        style={{ width: "100%", aspectRatio: "1 / 1" }}
       >
-        {flag}
-      </span>
+        <img
+          src={heroSrc}
+          alt={heroAlt}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            filter: "sepia(10%) saturate(110%)",
+          }}
+        />
+        <span
+          aria-hidden="true"
+          className="absolute"
+          style={{
+            left: 10,
+            bottom: 8,
+            fontSize: 22,
+            textShadow: "0 2px 6px rgba(0,0,0,0.35)",
+            color: tint,
+          }}
+        >
+          {flag}
+        </span>
+      </div>
+      {thumbs.length > 0 && (
+        <div
+          className="grid gap-2"
+          style={{ gridTemplateColumns: `repeat(${thumbs.length}, minmax(0, 1fr))` }}
+        >
+          {thumbs.map((p, idx) => {
+            const src = p.src ?? `https://picsum.photos/seed/${p.seed}/240/240`;
+            const a = p.caption?.[lang] ?? `${alt} — ${idx + 2}`;
+            return (
+              <div
+                key={p.seed}
+                className="overflow-hidden relative"
+                style={{ width: "100%", aspectRatio: "1 / 1" }}
+              >
+                <img
+                  src={src}
+                  alt={a}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    filter: "sepia(10%) saturate(110%)",
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

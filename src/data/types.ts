@@ -42,6 +42,15 @@ export type Education = {
   stack?: string[];
 };
 
+export type TravelPhoto = {
+  /** Stable picsum seed (deterministic — same seed = same image) */
+  seed: string;
+  /** Optional override path to a real photo (e.g. /images/travels/vietnam-1.jpg) */
+  src?: string;
+  /** Optional short caption shown on hover / for a11y */
+  caption?: Translated;
+};
+
 export type Travel = {
   id: string;
   /** Sort key — months since January 2023 (e.g. March 2023 = 2, February 2024 = 13). */
@@ -56,10 +65,8 @@ export type Travel = {
   description: Translated;
   /** Standout places / experiences */
   highlights: Translated[];
-  /** Picsum seed for the placeholder photo */
-  photoSeed: string;
-  /** Optional override (real photo) */
-  photoSrc?: string;
+  /** Gallery of 1–4 photos; first is the lead/hero shot */
+  photos: TravelPhoto[];
   /** Short note about ancestral origins (Vietnam / Laos) */
   origin?: Translated;
 };
