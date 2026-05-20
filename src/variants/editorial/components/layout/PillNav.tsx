@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { palette, tokens } from "../../styles/palette";
+import { VariantSwitchButton } from "./VariantSwitchButton";
 
 type Theme = "light" | "dark";
 
@@ -93,6 +94,9 @@ export function PillNav({ theme = "light" }: Props) {
             </Link>
           </li>
         ))}
+        <li style={{ marginLeft: 8, listStyle: "none" }}>
+          <VariantSwitchButton />
+        </li>
       </ul>
     </nav>
   );
