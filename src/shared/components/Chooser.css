@@ -152,8 +152,8 @@
 
 .chooser-divider {
   position: absolute;
-  top: 12%;
-  bottom: 35%;
+  top: 60%;
+  bottom: 18%;
   left: 50%;
   width: 1px;
   background: linear-gradient(
@@ -174,7 +174,7 @@
    with the centering transform. */
 .chooser-curator-wrap {
   position: fixed;
-  top: 50%;
+  top: 36%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
