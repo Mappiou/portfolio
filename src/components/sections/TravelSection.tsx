@@ -571,7 +571,7 @@ function DetailPanel({
 
   return (
     <div
-      className="px-6 md:px-8 py-7 grid grid-cols-1 md:grid-cols-[1fr_360px] gap-8 items-start"
+      className="px-6 md:px-8 py-7 grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 items-stretch"
       style={{
         background: "rgba(239,233,221,0.04)",
         border: "1px solid rgba(239,233,221,0.12)",
@@ -721,22 +721,22 @@ function PhotoHero({
   alt: string;
   lang: Language;
 }) {
-  const src = photo.src ?? `https://picsum.photos/seed/${photo.seed}/720/720`;
+  const src = photo.src ?? `https://picsum.photos/seed/${photo.seed}/720/960`;
   const heroAlt = photo.caption?.[lang] ?? alt;
 
   return (
     <div
       className="cinema-frame relative"
-      style={{ width: "100%", aspectRatio: "1 / 1" }}
+      style={{ width: "100%", height: "100%", minHeight: 380 }}
     >
       <img src={src} alt={heroAlt} />
       <span
         aria-hidden="true"
         className="absolute"
         style={{
-          left: 14,
-          bottom: 12,
-          fontSize: 28,
+          left: 16,
+          bottom: 14,
+          fontSize: 30,
           color: tint,
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))",
           zIndex: 3,
