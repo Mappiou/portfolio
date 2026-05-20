@@ -567,16 +567,17 @@ function DetailPanel({
   t: (k: string) => string;
 }) {
   const tint = tintFor[entry.region];
+  const thumbs = entry.photos.slice(1, 4);
 
   return (
     <div
-      className="px-6 md:px-8 py-7 grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 items-start"
+      className="px-6 md:px-8 py-7 grid grid-cols-1 md:grid-cols-[1fr_360px] gap-8 items-start"
       style={{
         background: "rgba(239,233,221,0.04)",
         border: "1px solid rgba(239,233,221,0.12)",
       }}
     >
-      <div>
+      <div className="flex flex-col">
         <p
           style={{
             fontFamily: tokens.fontMono,
@@ -608,7 +609,7 @@ function DetailPanel({
         </h3>
         {entry.origin && (
           <p
-            className="inline-flex items-center gap-1.5 mb-4"
+            className="inline-flex items-center gap-1.5 mb-3"
             style={{
               fontFamily: tokens.fontMono,
               fontSize: 11,
@@ -625,16 +626,17 @@ function DetailPanel({
           style={{
             fontFamily: tokens.fontBody,
             fontWeight: 300,
-            fontSize: 16,
-            lineHeight: 1.7,
+            fontSize: 15,
+            lineHeight: 1.65,
             color: palette.textPrimary,
             opacity: 0.85,
+            maxWidth: 540,
           }}
         >
           {entry.description[lang]}
         </p>
         {entry.highlights.length > 0 && (
-          <div className="mt-5">
+          <div className="mt-4">
             <p
               className="mb-2"
               style={{
@@ -671,9 +673,32 @@ function DetailPanel({
             </ul>
           </div>
         )}
+        {thumbs.length > 0 && (
+          <div
+            className="mt-6 grid gap-2"
+            style={{
+              gridTemplateColumns: `repeat(${thumbs.length}, minmax(0, 1fr))`,
+              maxWidth: 320,
+            }}
+          >
+            {thumbs.map((p, idx) => {
+              const src = p.src ?? `https://picsum.photos/seed/${p.seed}/240/240`;
+              const a = p.caption?.[lang] ?? `${entry.country[lang]} — ${idx + 2}`;
+              return (
+                <div
+                  key={p.seed}
+                  className="cinema-frame relative"
+                  style={{ width: "100%", aspectRatio: "1 / 1" }}
+                >
+                  <img src={src} alt={a} />
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
-      <PhotoGallery
-        photos={entry.photos}
+      <PhotoHero
+        photo={entry.photos[0]}
         flag={entry.flag}
         tint={tint}
         alt={entry.country[lang]}
@@ -683,68 +708,42 @@ function DetailPanel({
   );
 }
 
-function PhotoGallery({
-  photos,
+function PhotoHero({
+  photo,
   flag,
   tint,
   alt,
   lang,
 }: {
-  photos: Travel["photos"];
+  photo: Travel["photos"][number];
   flag: string;
   tint: string;
   alt: string;
   lang: Language;
 }) {
-  if (photos.length === 0) return null;
-  const hero = photos[0];
-  const thumbs = photos.slice(1, 4);
-
-  const heroSrc = hero.src ?? `https://picsum.photos/seed/${hero.seed}/640/640`;
-  const heroAlt = hero.caption?.[lang] ?? alt;
+  const src = photo.src ?? `https://picsum.photos/seed/${photo.seed}/720/720`;
+  const heroAlt = photo.caption?.[lang] ?? alt;
 
   return (
-    <div className="flex flex-col gap-2">
-      <div
-        className="cinema-frame relative"
-        style={{ width: "100%", aspectRatio: "1 / 1" }}
+    <div
+      className="cinema-frame relative"
+      style={{ width: "100%", aspectRatio: "1 / 1" }}
+    >
+      <img src={src} alt={heroAlt} />
+      <span
+        aria-hidden="true"
+        className="absolute"
+        style={{
+          left: 14,
+          bottom: 12,
+          fontSize: 28,
+          color: tint,
+          filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))",
+          zIndex: 3,
+        }}
       >
-        <img src={heroSrc} alt={heroAlt} />
-        <span
-          aria-hidden="true"
-          className="absolute"
-          style={{
-            left: 12,
-            bottom: 10,
-            fontSize: 24,
-            color: tint,
-            filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))",
-            zIndex: 3,
-          }}
-        >
-          {flag}
-        </span>
-      </div>
-      {thumbs.length > 0 && (
-        <div
-          className="grid gap-2"
-          style={{ gridTemplateColumns: `repeat(${thumbs.length}, minmax(0, 1fr))` }}
-        >
-          {thumbs.map((p, idx) => {
-            const src = p.src ?? `https://picsum.photos/seed/${p.seed}/240/240`;
-            const a = p.caption?.[lang] ?? `${alt} — ${idx + 2}`;
-            return (
-              <div
-                key={p.seed}
-                className="cinema-frame relative"
-                style={{ width: "100%", aspectRatio: "1 / 1" }}
-              >
-                <img src={src} alt={a} />
-              </div>
-            );
-          })}
-        </div>
-      )}
+        {flag}
+      </span>
     </div>
   );
 }
