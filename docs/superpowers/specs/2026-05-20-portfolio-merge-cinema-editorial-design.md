@@ -161,7 +161,7 @@ Mobile (<768 px) : empilé verticalement, 50vh chacun, pas de hover effect.
   3. Lang détectée depuis `navigator.language` si supportée (FR/EN/ES).
   4. Fallback `DEFAULT_LANGUAGE` (FR).
 - À l'arrivée sur `/`, fade-in léger des deux moitiés (~500 ms stagger).
-- Lien "Choisir la langue" en bas centré (dropdown FR/EN/ES) — change la `lang` cible avant le clic.
+- **Dropdown langue en haut à droite du Chooser** (overlay au-dessus du split-screen) : `FR · EN · ES`, lang active soulignée. Style neutre (fond transparent ou semi-transparent blanc), typo Inter Tight. Change la `lang` cible avant le clic sur une moitié.
 
 ### Accessibilité
 
@@ -264,7 +264,7 @@ Idem Phase 2, symétrique. Vérifier qu'aucune dépendance croisée n'existe ent
 | Composants référant des classes CSS globales par variant | Isoler les `index.css` + scoper sélecteurs (`.cinema-app .my-class`) |
 | Liens legacy (`/projects/:id`) | Catch-all redirige vers `/` (Chooser) |
 | Le `ChapterCard` existe seulement dans cinema | Reste dans `variants/cinema/components/ui/`, jamais importé ailleurs |
-| Bundle size potentiellement doublé (2 jeux de composants) | Code-splitting via React.lazy au niveau `CinemaApp` / `EditorialApp` si nécessaire |
+| Bundle size potentiellement doublé (2 jeux de composants) | Accepté. Pas de code-splitting — les deux variantes restent dans le même bundle pour simplicité. À surveiller seulement si ça devient un problème de performance perçue. |
 
 ## Estimation
 
