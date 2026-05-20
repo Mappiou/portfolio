@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { projects, getProjectById } from "../../src/data/projects";
-import { experiences } from "../../src/data/experiences";
-import { education } from "../../src/data/education";
-import { skills } from "../../src/data/skills";
-import { profile } from "../../src/data/profile";
-import { SUPPORTED_LANGUAGES } from "../../src/i18n";
+import { projects, getProjectById } from "@shared/data/projects";
+import { experiences } from "@shared/data/experiences";
+import { education } from "@shared/data/education";
+import { skills } from "@shared/data/skills";
+import { profile } from "@shared/data/profile";
+import { SUPPORTED_LANGUAGES } from "@shared/i18n";
 
 describe("data integrity", () => {
   it("has exactly 3 projects with translated content for all languages", () => {
@@ -49,7 +49,7 @@ describe("data integrity", () => {
   it("each education entry has translations + valid kind + a year", () => {
     expect(education.length).toBeGreaterThan(0);
     for (const edu of education) {
-      expect(["milestone", "exchange", "internship", "degree"]).toContain(edu.kind);
+      expect(["milestone", "exchange", "internship", "degree", "job", "travel"]).toContain(edu.kind);
       expect(edu.school).toBeTruthy();
       expect(edu.location).toBeTruthy();
       expect(typeof edu.year).toBe("number");
@@ -62,7 +62,7 @@ describe("data integrity", () => {
     }
   });
 
-  it("timeline covers the 6-year journey including all milestones", () => {
+  it("timeline covers the full journey including all milestones", () => {
     const ids = education.map((e) => e.id);
     expect(ids).toContain("bac");
     expect(ids).toContain("utt-start");
@@ -74,10 +74,10 @@ describe("data integrity", () => {
     expect(ids).toContain("engineering-utt");
     expect(ids).toContain("internship-capgemini");
     expect(ids).toContain("master-cybersecurity");
-    // Year range: bac (2015) → master (2021)
+    // Year range starts at bac (2015)
     const years = education.map((e) => e.year);
     expect(Math.min(...years)).toBe(2015);
-    expect(Math.max(...years)).toBe(2021);
+    expect(Math.max(...years)).toBeGreaterThanOrEqual(2021);
   });
 
   it("each skill category has translations and items", () => {

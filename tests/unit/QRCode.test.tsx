@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
-import { QRCode } from "../../src/components/projects/QRCode";
+import { QRCode } from "../../src/variants/cinema/components/projects/QRCode";
 
 describe("<QRCode />", () => {
   it("renders an SVG with the provided value as title (absolute URL kept as-is)", () => {

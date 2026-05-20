@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { LanguageSwitcher } from "../../src/components/layout/LanguageSwitcher";
-import "../../src/i18n";
+import { LanguageSwitcher } from "../../src/variants/cinema/components/layout/LanguageSwitcher";
+import "@shared/i18n";
 
 function renderAt(path: string) {
   return render(

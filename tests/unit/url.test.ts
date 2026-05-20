@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { resolveAbsoluteUrl } from "../../src/lib/url";
+import { resolveAbsoluteUrl } from "@shared/lib/url";
 
 describe("resolveAbsoluteUrl", () => {
   it("keeps absolute https URLs unchanged", () => {

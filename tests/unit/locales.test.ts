@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { uiStrings } from "../../src/content";
-
-const fr = uiStrings.fr;
-const en = uiStrings.en;
-const es = uiStrings.es;
+import fr from "../../src/shared/i18n/locales/fr.json";
+import en from "../../src/shared/i18n/locales/en.json";
+import es from "../../src/shared/i18n/locales/es.json";
 
 function collectKeys(obj: unknown, prefix = ""): string[] {
   if (typeof obj !== "object" || obj === null) return [prefix];
@@ -12,7 +10,7 @@ function collectKeys(obj: unknown, prefix = ""): string[] {
   );
 }
 
-describe("locale bundles (uiStrings in src/content.ts)", () => {
+describe("locale bundles (src/shared/i18n/locales/)", () => {
   it("FR, EN, ES all share the exact same key set", () => {
     const frKeys = collectKeys(fr).sort();
     const enKeys = collectKeys(en).sort();

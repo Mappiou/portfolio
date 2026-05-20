@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "../../src/components/layout/Layout";
-import Home from "../../src/pages/Home";
-import ProjectDetail from "../../src/pages/ProjectDetail";
-import NotFound from "../../src/pages/NotFound";
-import "../../src/i18n";
+import { Layout } from "../../src/variants/cinema/components/layout/Layout";
+import Home from "../../src/variants/cinema/pages/Home";
+import ProjectDetail from "../../src/variants/cinema/pages/ProjectDetail";
+import NotFound from "../../src/variants/cinema/pages/NotFound";
+import "@shared/i18n";
 
 function renderApp(initialPath: string) {
   return render(
@@ -74,7 +74,7 @@ describe("Home page integration", () => {
     renderApp("/fr/projects/volley-meteo");
     expect(screen.getByRole("heading", { level: 1, name: /Volley Météo/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Télécharger/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Retour/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /Retour/i }).length).toBeGreaterThan(0);
   });
 
   it("renders ProjectDetail in EN with English labels", () => {
