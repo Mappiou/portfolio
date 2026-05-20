@@ -102,6 +102,11 @@
     "photo": "photo",
     "photoPlaceholder": "photo coming soon"
   },
+  "variantSwitch": {
+    "toEditorial": "Switch to editorial mode",
+    "toCinema": "Switch to cinema mode",
+    "tooltip": "Change portfolio style"
+  },
   "chooser": {
     "kicker": "Mathieu Diep — Portfolio",
     "heading": "Pick your universe",

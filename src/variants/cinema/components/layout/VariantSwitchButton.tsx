@@ -1,10 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowLeftRight } from "lucide-react";
 import { useVariantPreference } from "@shared/hooks/useVariantPreference";
 import { palette } from "../../styles/palette";
 
 export function VariantSwitchButton() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const { set } = useVariantPreference();
 
@@ -14,12 +16,14 @@ export function VariantSwitchButton() {
     navigate(`/editorial/${targetLang}`);
   };
 
+  const label = t("variantSwitch.toEditorial");
+
   return (
     <button
       type="button"
       onClick={handleClick}
-      aria-label="Voir l'autre vue (editorial)"
-      title="Changer de portfolio"
+      aria-label={label}
+      title={t("variantSwitch.tooltip")}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -37,7 +41,7 @@ export function VariantSwitchButton() {
       }}
     >
       <ArrowLeftRight size={14} />
-      <span>Voir l'autre vue</span>
+      <span>{label}</span>
     </button>
   );
 }

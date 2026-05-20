@@ -26,13 +26,13 @@ test.describe("portfolio routing", () => {
 
   test("VariantSwitchButton on /cinema goes to /editorial", async ({ page }) => {
     await page.goto("/cinema/fr");
-    await page.getByRole("button", { name: /Voir l'autre vue/i }).click();
+    await page.getByRole("button", { name: /Passer en mode éditorial/i }).click();
     await expect(page).toHaveURL(/\/editorial\/fr/);
   });
 
   test("VariantSwitchButton on /editorial goes to /cinema", async ({ page }) => {
     await page.goto("/editorial/fr");
-    await page.getByRole("button", { name: /Voir l'autre vue/i }).click();
+    await page.getByRole("button", { name: /Passer en mode cinéma/i }).click();
     await expect(page).toHaveURL(/\/cinema\/fr/);
   });
 
@@ -48,7 +48,10 @@ test.describe("portfolio routing", () => {
     await expect(page).toHaveURL(/\/editorial\/(fr|en|es)/);
 
     await page.goto("/");
-    await expect(page.getByText(/Ta dernière visite/i)).toBeVisible();
+    // The "last visit" chip text is localised. Use the ↪ marker which
+    // is the same in FR/EN/ES so the test does not depend on
+    // navigator.language.
+    await expect(page.getByText(/↪/)).toBeVisible();
   });
 
   test("internal nav links stay under /cinema/... (regression: variant prefix preserved)", async ({ page }) => {
