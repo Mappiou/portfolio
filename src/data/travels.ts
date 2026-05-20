@@ -19,9 +19,9 @@ export const travels: Travel[] = [
       es: "Pho al amanecer, juncos en Halong, terrazas de Sapa.",
     },
     description: {
-      fr: "Premier mois du voyage, sur les traces de mes origines paternelles. Hanoï la frénétique, la baie d'Halong au lever du jour, Sapa et ses rizières en terrasse au nord, puis descente vers Hoï An et Hô Chi Minh-Ville. Le bruit des klaxons, le pho fumant à 6 h du matin, et la sensation troublante de marcher sur une terre familière sans l'avoir jamais foulée.",
-      en: "First month of the trip, retracing my paternal roots. Frenetic Hanoi, Halong Bay at sunrise, Sapa and its terraced rice paddies up north, then south to Hoi An and Ho Chi Minh City. Honking horns, steaming pho at 6 a.m., and the unsettling feeling of walking a familiar land I'd never set foot on.",
-      es: "Primer mes del viaje, sobre los pasos de mis raíces paternas. Hanói frenética, la bahía de Halong al amanecer, Sapa y sus arrozales en terraza al norte, después Hoi An y Ho Chi Minh. El claxon, el pho humeante a las 6 h, y la sensación turbadora de pisar una tierra familiar nunca antes recorrida.",
+      fr: "Premier mois du voyage, sur les traces de mes origines paternelles. Hanoï, la baie d'Halong, les rizières de Sapa, puis cap au sud jusqu'à Hô Chi Minh.",
+      en: "First month, retracing my paternal roots. Hanoi, Halong Bay, the rice terraces of Sapa, then south to Ho Chi Minh City.",
+      es: "Primer mes, sobre los pasos de mis raíces paternas. Hanói, la bahía de Halong, los arrozales de Sapa, después al sur hasta Ho Chi Minh.",
     },
     highlights: [
       { fr: "Baie d'Halong", en: "Halong Bay", es: "Bahía de Halong" },
@@ -55,9 +55,9 @@ export const travels: Travel[] = [
       es: "Luang Prabang, Mekong tranquilo, templos entre la bruma.",
     },
     description: {
-      fr: "Le pays de ma mère. Plus calme, plus lent que le Vietnam. Luang Prabang et ses temples bouddhistes au lever du jour, la procession des moines, la descente du Mékong sur deux jours, les villages le long du fleuve, Vientiane la modeste. Un mois qui a laissé une trace profonde — un endroit où le temps fonctionne autrement.",
-      en: "My mother's country. Quieter and slower than Vietnam. Luang Prabang and its Buddhist temples at dawn, the alms procession, two days drifting down the Mekong, villages along the river, modest Vientiane. A month that left a deep mark — a place where time runs differently.",
-      es: "El país de mi madre. Más tranquilo y lento que Vietnam. Luang Prabang y sus templos budistas al amanecer, la procesión de los monjes, dos días por el Mekong, los pueblos a lo largo del río, la sobria Vientián. Un mes que dejó una marca profunda — un lugar donde el tiempo corre distinto.",
+      fr: "Le pays de ma mère. Plus calme, plus lent. Luang Prabang, la descente du Mékong sur deux jours, les temples dans la brume.",
+      en: "My mother's country. Quieter and slower. Luang Prabang, two days drifting down the Mekong, temples in the morning mist.",
+      es: "El país de mi madre. Más tranquilo, más lento. Luang Prabang, dos días por el Mekong, templos en la bruma.",
     },
     highlights: [
       { fr: "Luang Prabang", en: "Luang Prabang", es: "Luang Prabang" },
@@ -85,9 +85,9 @@ export const travels: Travel[] = [
       es: "Palomino, Amazonía — primer choque sudamericano.",
     },
     description: {
-      fr: "Traversée vers l'Amérique du Sud. Bogotá d'abord, perchée à 2 600 m, puis Palomino sur la côte caraïbe — plages paradisiaques, sable blanc et eau tiède. Enfin vol vers Leticia et l'Amazonie : la jungle, le silence dense, le bruit des oiseaux la nuit, le fleuve immense. Premier choc du voyage en backpacking long.",
-      en: "Crossing into South America. Bogotá first, perched at 2,600 m, then Palomino on the Caribbean coast — paradise beaches, white sand and warm water. Finally flying to Leticia and the Amazon: the jungle, dense silence, birds calling at night, the immense river. The first real shock of long-haul backpacking.",
-      es: "Cruce hacia Sudamérica. Primero Bogotá, a 2 600 m, después Palomino en la costa caribe — playas paradisíacas, arena blanca y agua templada. Por fin vuelo a Leticia y la Amazonía: la selva, el silencio denso, los pájaros de noche, el río inmenso. El primer choque real del mochileo largo.",
+      fr: "Premier choc d'Amérique du Sud. Bogotá perchée à 2 600 m, Palomino sur la côte caraïbe, puis l'Amazonie depuis Leticia.",
+      en: "First shock of South America. Bogotá at 2,600 m, Palomino on the Caribbean coast, then the Amazon from Leticia.",
+      es: "Primer choque sudamericano. Bogotá a 2 600 m, Palomino en la costa caribe, después la Amazonía desde Leticia.",
     },
     highlights: [
       { fr: "Bogotá", en: "Bogotá", es: "Bogotá" },
@@ -119,9 +119,9 @@ export const travels: Travel[] = [
       es: "Andes, desiertos, Machu Picchu.",
     },
     description: {
-      fr: "Deux mois à parcourir les Andes du nord au sud. Le sable de Huacachina autour de l'oasis, les lignes de Nazca depuis un petit avion, la montagne arc-en-ciel de Vinicunca à 5 200 m, et bien sûr le Machu Picchu au lever du soleil. Le Pérou m'a appris à respirer en altitude.",
-      en: "Two months traversing the Andes north to south. The Huacachina dunes around the oasis, the Nazca lines from a tiny plane, Vinicunca rainbow mountain at 5,200 m, and of course Machu Picchu at sunrise. Peru taught me to breathe at altitude.",
-      es: "Dos meses atravesando los Andes de norte a sur. Las dunas de Huacachina alrededor del oasis, las líneas de Nazca desde una avioneta, la montaña arcoíris de Vinicunca a 5 200 m, y por supuesto Machu Picchu al amanecer. Perú me enseñó a respirar en altura.",
+      fr: "Deux mois dans les Andes du nord au sud. Huacachina, Nazca, Vinicunca, et le Machu Picchu au lever du soleil.",
+      en: "Two months across the Andes, north to south. Huacachina, Nazca, Vinicunca, and Machu Picchu at sunrise.",
+      es: "Dos meses por los Andes, de norte a sur. Huacachina, Nazca, Vinicunca, y Machu Picchu al amanecer.",
     },
     highlights: [
       { fr: "Huacachina (oasis)", en: "Huacachina oasis", es: "Oasis de Huacachina" },
@@ -150,9 +150,9 @@ export const travels: Travel[] = [
       es: "Cumbre a 6 060 m, Salar de Uyuni — espejo infinito.",
     },
     description: {
-      fr: "La Bolivie m'a poussé plus loin que je ne l'imaginais. Ascension du Huayna Potosí à 6 088 m — trois jours sur la neige, le souffle court, le coucher de soleil au sommet. Puis le Salar d'Uyuni, miroir infini de sel à la saison des pluies, où le ciel et la terre se confondent. La Paz, dense et verticale.",
-      en: "Bolivia pushed me further than I thought possible. Climbing Huayna Potosí to 6,088 m — three days on snow, gasping for air, watching the sunset from the summit. Then the Salar de Uyuni, an infinite mirror of salt in the rainy season, where sky and earth blur into one. La Paz, vertical and dense.",
-      es: "Bolivia me empujó más lejos de lo que imaginaba. Ascenso al Huayna Potosí a 6 088 m — tres días sobre la nieve, sin aliento, el atardecer en la cumbre. Después el Salar de Uyuni, espejo infinito de sal en temporada de lluvias, donde cielo y tierra se confunden. La Paz, vertical y densa.",
+      fr: "Ascension du Huayna Potosí à 6 088 m, trois jours sur la neige. Puis le Salar d'Uyuni, miroir infini à la saison des pluies.",
+      en: "Climbed Huayna Potosí to 6,088 m — three days on snow. Then the Salar de Uyuni, an infinite mirror in the rainy season.",
+      es: "Ascenso al Huayna Potosí a 6 088 m, tres días sobre la nieve. Después el Salar de Uyuni, espejo infinito en temporada de lluvias.",
     },
     highlights: [
       { fr: "Huayna Potosí (6 088 m)", en: "Huayna Potosí (6,088 m)", es: "Huayna Potosí (6 088 m)" },
@@ -180,9 +180,9 @@ export const travels: Travel[] = [
       es: "Desierto de Atacama — los cielos más puros del mundo.",
     },
     description: {
-      fr: "Le désert le plus aride de la planète. San Pedro d'Atacama comme camp de base, puis les lagons d'altitude, la Vallée de la Lune au coucher du soleil, les geysers du Tatio à l'aube. Les nuits dans l'Atacama sont les plus étoilées que j'aie jamais vues — la Voie lactée à l'œil nu, presque trop nette.",
-      en: "The driest desert on Earth. San Pedro de Atacama as base camp, then high-altitude lagoons, the Valle de la Luna at sunset, the Tatio geysers at dawn. Nights in Atacama have the clearest skies I've ever seen — the Milky Way visible to the naked eye, almost too sharp.",
-      es: "El desierto más árido del planeta. San Pedro de Atacama como campamento base, luego las lagunas altiplánicas, el Valle de la Luna al atardecer, los géiseres del Tatio al amanecer. Las noches del Atacama tienen el cielo más estrellado que he visto — la Vía Láctea a simple vista, casi demasiado nítida.",
+      fr: "Le désert le plus aride du monde. San Pedro, Vallée de la Lune, geysers du Tatio, et la Voie lactée à l'œil nu.",
+      en: "The driest desert on Earth. San Pedro, Valle de la Luna, Tatio geysers, and the Milky Way to the naked eye.",
+      es: "El desierto más árido del mundo. San Pedro, Valle de la Luna, géiseres del Tatio, y la Vía Láctea a simple vista.",
     },
     highlights: [
       { fr: "San Pedro de Atacama", en: "San Pedro de Atacama", es: "San Pedro de Atacama" },
@@ -214,9 +214,9 @@ export const travels: Travel[] = [
       es: "De norte a sur — Patagonia, Buenos Aires, Salta.",
     },
     description: {
-      fr: "Deux mois à descendre l'Argentine entière. Les vignes de Mendoza, les couleurs ocre de Salta, puis cap au sud — Buenos Aires et ses milongas de tango, et enfin la Patagonie. El Chaltén, le Perito Moreno, le bout du monde à Ushuaia. La Patagonie m'a marqué comme aucun autre paysage — la solitude, le vent, l'échelle inhumaine.",
-      en: "Two months descending all of Argentina. The vineyards of Mendoza, the ochre hues of Salta, then south — Buenos Aires and its tango milongas, and finally Patagonia. El Chaltén, Perito Moreno, the end of the world at Ushuaia. Patagonia marked me like no other landscape — the solitude, the wind, the inhuman scale.",
-      es: "Dos meses descendiendo toda Argentina. Los viñedos de Mendoza, los ocres de Salta, después al sur — Buenos Aires y sus milongas de tango, y por fin la Patagonia. El Chaltén, el Perito Moreno, el fin del mundo en Ushuaia. La Patagonia me marcó como ningún otro paisaje — la soledad, el viento, la escala inhumana.",
+      fr: "Deux mois à descendre tout le pays — Salta, Mendoza, Buenos Aires, puis la Patagonie. Solitude, vent, échelle inhumaine.",
+      en: "Two months descending the whole country — Salta, Mendoza, Buenos Aires, then Patagonia. Solitude, wind, inhuman scale.",
+      es: "Dos meses descendiendo todo el país — Salta, Mendoza, Buenos Aires, después la Patagonia. Soledad, viento, escala inhumana.",
     },
     highlights: [
       { fr: "Patagonie", en: "Patagonia", es: "Patagonia" },
@@ -250,9 +250,9 @@ export const travels: Travel[] = [
       es: "Iguazú, Carnaval de Río, São Paulo, Salvador.",
     },
     description: {
-      fr: "Entrée par les chutes d'Iguazu, l'eau qui tombe sur trois kilomètres. Puis Rio de Janeiro pour le Carnaval — Sambodrome, écoles de samba, défilés jusqu'à l'aube. São Paulo l'immense, et enfin Salvador de Bahia, l'Afrique du Brésil. Un mois et demi de chaleur, de musique, de couleurs.",
-      en: "Entered through Iguazu Falls — water cascading over three kilometres. Then Rio for Carnival — Sambodromo, samba schools, parades till dawn. Vast São Paulo, and finally Salvador de Bahia, the Africa of Brazil. A month and a half of heat, music, colour.",
-      es: "Entrada por las cataratas de Iguazú — el agua cayendo sobre tres kilómetros. Después Río para el Carnaval — Sambódromo, escuelas de samba, desfiles hasta el amanecer. São Paulo inmensa, y por fin Salvador de Bahía, la África de Brasil. Mes y medio de calor, música, color.",
+      fr: "Iguazu, puis Rio pour le Carnaval — Sambodrome, défilés jusqu'à l'aube. São Paulo, Salvador. Chaleur, musique, couleurs.",
+      en: "Iguazu, then Rio for Carnival — Sambodromo, parades till dawn. São Paulo, Salvador. Heat, music, colour.",
+      es: "Iguazú, después Río para el Carnaval — Sambódromo, desfiles hasta el amanecer. São Paulo, Salvador. Calor, música, color.",
     },
     highlights: [
       { fr: "Chutes d'Iguazu", en: "Iguazu Falls", es: "Cataratas de Iguazú" },
@@ -281,9 +281,9 @@ export const travels: Travel[] = [
       es: "Pirámide de Chichén Itzá, callejuelas de Oaxaca, comida mexicana.",
     },
     description: {
-      fr: "Dernière escale avant le retour. Mexico la trépidante, les ruelles d'Oaxaca, la péninsule du Yucatán et ses cénotes turquoise, les ruines mayas de Palenque et Chichén Itzá — et beaucoup de tacos, mole, tamales, mezcal. (Placeholder — à compléter.)",
-      en: "Final stop before the return. Pulsing Mexico City, the lanes of Oaxaca, the Yucatán peninsula and its turquoise cenotes, Mayan ruins at Palenque and Chichén Itzá — and a lot of tacos, mole, tamales, mezcal. (Placeholder — to be expanded.)",
-      es: "Última escala antes del regreso. Ciudad de México trepidante, las callejuelas de Oaxaca, la península de Yucatán y sus cenotes turquesas, las ruinas mayas de Palenque y Chichén Itzá — y mucho taco, mole, tamales, mezcal. (Placeholder — por completar.)",
+      fr: "Dernière escale. Chichén Itzá, Oaxaca, le Yucatán et ses cénotes — et beaucoup de tacos et de mezcal.",
+      en: "Final stop. Chichén Itzá, Oaxaca, the Yucatán and its cenotes — and a lot of tacos and mezcal.",
+      es: "Última escala. Chichén Itzá, Oaxaca, el Yucatán y sus cenotes — y mucho taco y mezcal.",
     },
     highlights: [
       { fr: "Chichén Itzá", en: "Chichén Itzá", es: "Chichén Itzá" },
