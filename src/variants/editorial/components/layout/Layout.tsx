@@ -1,13 +1,25 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import { palette, tokens } from "../../styles/palette";
 import { AuraCanvas } from "../ui/AuraCanvas";
 import { PillNav } from "./PillNav";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Footer } from "./Footer";
+import { useVariantPreference } from "@shared/hooks/useVariantPreference";
+import { VARIANT } from "../../lib/variant";
 
 export function Layout() {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const { set } = useVariantPreference();
+
+  useEffect(() => {
+    if (lang === "fr" || lang === "en" || lang === "es") {
+      set({ variant: VARIANT, lang });
+    }
+  }, [lang, set]);
+
   return (
     <div
       style={{
