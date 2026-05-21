@@ -19,26 +19,20 @@ const VISUAL: Record<Variant, {
   image: string;
   accent: string;
   fontTitle: string;
-  textColor: string;
-  taglineColor: string;
 }> = {
   cinema: {
     image: "/shared/chooser/cinema.webp",
     accent: "#D9A648",
     fontTitle: "'Cormorant Garamond', Georgia, serif",
-    textColor: "#EFE9DD",
-    taglineColor: "rgba(239,233,221,0.72)",
   },
   editorial: {
     image: "/shared/chooser/editorial.webp",
-    accent: "#A04A2D",
+    accent: "#E5B889",
     fontTitle: "'Newsreader', Georgia, serif",
-    textColor: "#1F1A14",
-    taglineColor: "rgba(31,26,20,0.65)",
   },
 };
 
-// Editorial on top, cinema on bottom — vertical split.
+// Editorial on the LEFT, cinema on the RIGHT — horizontal split.
 const ORDER: Variant[] = ["editorial", "cinema"];
 
 export function Chooser() {
@@ -82,12 +76,12 @@ export function Chooser() {
               onMouseEnter={() => setHovered(key)}
               onMouseLeave={() => setHovered(null)}
               className={`chooser-half chooser-half--${key}`}
-              initial={{ opacity: 0, y: idx === 0 ? -30 : 30 }}
+              initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
               animate={{
                 opacity: 1,
-                y: 0,
+                x: 0,
                 flex: isHovered ? 1.08 : 1,
-                filter: isDimmed ? "brightness(0.55) saturate(0.7)" : "brightness(1) saturate(1)",
+                filter: isDimmed ? "brightness(0.55) saturate(0.75)" : "brightness(1) saturate(1)",
               }}
               transition={{
                 duration: 0.8,
@@ -96,34 +90,19 @@ export function Chooser() {
               }}
               style={{
                 backgroundImage: `url(${visual.image})`,
-                color: visual.textColor,
                 fontFamily: visual.fontTitle,
               }}
             >
-              <div className="chooser-half__tint" aria-hidden />
               <div className="chooser-half__grain" aria-hidden />
 
               <div className="chooser-half__caption">
                 {previous?.variant === key && (
-                  <span
-                    className="chooser-half__chip"
-                    style={{ color: visual.taglineColor }}
-                  >
+                  <span className="chooser-half__chip">
                     <span aria-hidden>↪</span> {t.lastVisit}
                   </span>
                 )}
-                <span
-                  className="chooser-half__title"
-                  style={{ color: visual.textColor }}
-                >
-                  {copy.title}
-                </span>
-                <span
-                  className="chooser-half__tagline"
-                  style={{ color: visual.taglineColor }}
-                >
-                  {copy.tagline}
-                </span>
+                <span className="chooser-half__title">{copy.title}</span>
+                <span className="chooser-half__tagline">{copy.tagline}</span>
                 <span
                   className="chooser-half__cta"
                   style={{
@@ -159,12 +138,12 @@ export function Chooser() {
           <h1 className="chooser-curator__heading">{t.heading}</h1>
           <p className="chooser-curator__subtitle">{t.subtitle}</p>
           <div className="chooser-curator__prompt" aria-hidden>
-            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--up">
-              ↑
+            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--left">
+              ←
             </span>
             <span className="chooser-curator__prompt-label">{t.prompt}</span>
-            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--down">
-              ↓
+            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--right">
+              →
             </span>
           </div>
         </motion.div>

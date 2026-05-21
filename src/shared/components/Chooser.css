@@ -20,41 +20,28 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* VERTICAL SPLIT — editorial on top, cinema on bottom. */
+/* HORIZONTAL SPLIT — editorial on left, cinema on right. */
 .chooser-split {
   display: flex;
   height: 100%;
   width: 100%;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .chooser-half {
   position: relative;
   flex: 1;
-  width: 100%;
+  height: 100%;
   border: none;
   cursor: pointer;
   padding: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* Show the whole screenshot — no crop. Letterboxing is filled by the
-     variant's own background-color so it reads as a framed photo. */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.chooser-half--editorial {
-  /* caption sits at TOP of the half (magazine masthead) */
-  justify-content: flex-start;
-  background-color: #F5EDE0;
-}
-
-.chooser-half--cinema {
-  /* caption sits at BOTTOM of the half (film credit) */
   justify-content: flex-end;
-  background-color: #0A0908;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 
 .chooser-half:focus-visible {
@@ -62,32 +49,12 @@
   outline-offset: -10px;
 }
 
-/* Per-variant overlay tint — keep the screenshot legible but not noisy. */
-.chooser-half__tint {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
+.chooser-half--editorial {
+  background-color: #F5EDE0;
 }
 
-.chooser-half--cinema .chooser-half__tint {
-  /* Light touch: keep the screenshot crisp. Slight darkening near the
-     edges where the caption sits, transparent over the image content. */
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0) 35%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-
-.chooser-half--editorial .chooser-half__tint {
-  background: linear-gradient(
-    180deg,
-    rgba(245, 237, 224, 0.35) 0%,
-    rgba(245, 237, 224, 0) 35%,
-    rgba(245, 237, 224, 0) 100%
-  );
+.chooser-half--cinema {
+  background-color: #0A0908;
 }
 
 .chooser-half__grain {
@@ -95,7 +62,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  opacity: 0.07;
+  opacity: 0.06;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
@@ -105,53 +72,51 @@
   mix-blend-mode: multiply;
 }
 
-/* Caption block — variant identity card at the outer edge of each half. */
+/* CAPTION = black bar at the bottom of each half. Guaranteed black so the
+   variant label sits on solid color, never on top of the screenshot text. */
 .chooser-half__caption {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.45rem;
-  padding: 3rem 2rem;
-  max-width: 38ch;
-  margin: 0 auto;
+  padding: 2.25rem 2rem 2.5rem;
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    #050403 0%,
+    rgba(5, 4, 3, 0.96) 70%,
+    rgba(5, 4, 3, 0) 100%
+  );
   text-align: center;
-}
-
-.chooser-half--editorial .chooser-half__caption {
-  padding-top: 3.5rem;
-  padding-bottom: 1.5rem;
-}
-
-.chooser-half--cinema .chooser-half__caption {
-  padding-top: 1.5rem;
-  padding-bottom: 3rem;
 }
 
 .chooser-half__chip {
   font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-bottom: 0.4rem;
-  opacity: 0.85;
+  margin-bottom: 0.35rem;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .chooser-half__title {
-  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   font-weight: 500;
   letter-spacing: 0.28em;
   line-height: 1;
   margin: 0;
+  color: #fff;
 }
 
 .chooser-half__tagline {
   font-family: "Inter Tight", system-ui, sans-serif;
   font-style: italic;
-  font-size: clamp(0.82rem, 1vw, 0.95rem);
+  font-size: clamp(0.84rem, 1vw, 0.96rem);
   line-height: 1.5;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .chooser-half__cta {
@@ -159,7 +124,7 @@
   font-family: "Inter Tight", system-ui, sans-serif;
   font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   padding: 0.55rem 1.4rem 0.5rem;
   border-radius: 999px;
@@ -167,7 +132,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  transition: background-color 0.4s ease-out;
+  transition: background-color 0.4s ease-out, color 0.4s ease-out;
 }
 
 .chooser-half:hover .chooser-half__cta {
@@ -176,7 +141,7 @@
 
 .chooser-half:hover .chooser-half__cta > span:first-child,
 .chooser-half:hover .chooser-half__cta-arrow {
-  color: #fff;
+  color: #050403;
   filter: invert(1);
 }
 
@@ -185,10 +150,10 @@
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* CURATOR — discreet horizontal sliver sitting on the seam. */
+/* CURATOR — discreet glass panel on the vertical seam. */
 .chooser-curator-wrap {
   position: fixed;
-  top: 50%;
+  top: 42%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
@@ -207,15 +172,15 @@
   gap: 0.55rem;
   text-align: center;
   color: #ffffff;
-  padding: 1.6rem 2.25rem;
-  background: rgba(8, 7, 6, 0.42);
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border-top: 1px solid rgba(217, 166, 72, 0.45);
-  border-bottom: 1px solid rgba(217, 166, 72, 0.45);
+  padding: 1.75rem 2.25rem 1.6rem;
+  background: rgba(8, 7, 6, 0.55);
+  backdrop-filter: blur(14px) saturate(125%);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  border-top: 1px solid rgba(217, 166, 72, 0.5);
+  border-bottom: 1px solid rgba(217, 166, 72, 0.5);
   box-shadow:
-    0 18px 50px -20px rgba(0, 0, 0, 0.5),
-    inset 0 0 40px rgba(0, 0, 0, 0.25);
+    0 18px 50px -20px rgba(0, 0, 0, 0.6),
+    inset 0 0 50px rgba(0, 0, 0, 0.3);
 }
 
 .chooser-curator__kicker {
@@ -232,8 +197,8 @@
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  line-height: 1.1;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  line-height: 1.05;
   letter-spacing: -0.005em;
   margin: 0;
   color: #ffffff;
@@ -260,7 +225,7 @@
   font-weight: 500;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .chooser-curator__prompt-arrow {
@@ -271,61 +236,61 @@
   color: rgba(217, 166, 72, 0.85);
 }
 
-.chooser-curator__prompt-arrow--up {
-  animation: chooser-pulse-up 2.4s ease-in-out infinite;
+.chooser-curator__prompt-arrow--left {
+  animation: chooser-pulse-left 2.4s ease-in-out infinite;
 }
 
-.chooser-curator__prompt-arrow--down {
-  animation: chooser-pulse-down 2.4s ease-in-out infinite;
+.chooser-curator__prompt-arrow--right {
+  animation: chooser-pulse-right 2.4s ease-in-out infinite;
 }
 
-@keyframes chooser-pulse-up {
+@keyframes chooser-pulse-left {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 0.7;
   }
   50% {
-    transform: translateY(-4px);
+    transform: translateX(-4px);
     opacity: 1;
   }
 }
 
-@keyframes chooser-pulse-down {
+@keyframes chooser-pulse-right {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 0.7;
   }
   50% {
-    transform: translateY(4px);
+    transform: translateX(4px);
     opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chooser-curator__prompt-arrow--up,
-  .chooser-curator__prompt-arrow--down {
+  .chooser-curator__prompt-arrow--left,
+  .chooser-curator__prompt-arrow--right {
     animation: none;
   }
 }
 
 @media (max-width: 767px) {
+  .chooser-split {
+    flex-direction: column;
+  }
+  .chooser-half {
+    flex: 1 !important;
+    filter: none !important;
+  }
+  .chooser-half__caption {
+    padding: 1.5rem 1.25rem 1.75rem;
+  }
   .chooser-curator-wrap {
     width: 88vw;
+    top: 50%;
   }
   .chooser-curator {
     padding: 1.25rem 1.25rem;
-  }
-  .chooser-half__caption {
-    padding: 2rem 1.25rem;
-  }
-  .chooser-half--editorial .chooser-half__caption {
-    padding-top: 2.5rem;
-    padding-bottom: 1rem;
-  }
-  .chooser-half--cinema .chooser-half__caption {
-    padding-top: 1rem;
-    padding-bottom: 2rem;
   }
 }
