@@ -108,21 +108,28 @@
     "tooltip": "Change portfolio style"
   },
   "chooser": {
-    "kicker": "Mathieu Diep — Portfolio",
-    "heading": "Pick your universe",
-    "subtitle": "Two styles, one portfolio — pick the one that speaks to you.",
-    "prompt": "Select",
-    "cinema": {
-      "title": "CINEMA",
-      "tagline": "Dark, artistic and cinematic",
-      "aria": "Portfolio Cinema — dark and cinematic"
-    },
+    "masthead": "Mathieu Diep · A Portfolio Quarterly",
+    "instructionLead": "Two issues, two styles.",
+    "instructionAction": "Click one",
+    "instructionTrail": "to open it.",
+    "lastVisit": "Your last visit",
     "editorial": {
-      "title": "EDITORIAL",
-      "tagline": "Bright, joyful and magazine-like",
-      "aria": "Portfolio Editorial — bright and magazine-like"
+      "issueLabel": "Nº 01 — 2026",
+      "kicker": "a quarterly portfolio",
+      "title": ["Editorial,", "a quiet", "magazine"],
+      "tagline": "Bright, joyful and warm. My work as a magazine — set in Newsreader, served in cream and ink.",
+      "footerLabel": "Cover · Issue Nº 01",
+      "cta": "Open this issue",
+      "aria": "Portfolio Editorial — a quiet magazine"
     },
-    "cta": "Enter",
-    "lastVisit": "Your last visit"
+    "cinema": {
+      "issueLabel": "Nº 02 — 2026",
+      "kicker": "a nocturnal portfolio",
+      "title": ["Cinema,", "a long", "shot"],
+      "tagline": "Dark, artistic and slow. My work as a film — set in Cormorant Garamond, served in black and gold.",
+      "footerLabel": "Cover · Issue Nº 02",
+      "cta": "Open this issue",
+      "aria": "Portfolio Cinema — a long nocturnal shot"
+    }
   }
 }

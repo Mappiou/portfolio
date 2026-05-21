@@ -16,23 +16,41 @@ const LOCALES = {
 } as const;
 
 const VISUAL: Record<Variant, {
-  image: string;
+  background: string;
+  ink: string;
   accent: string;
   fontTitle: string;
+  pillBg: string;
+  pillBgHover: string;
+  pillFg: string;
+  hairline: string;
+  watermarkColor: string;
 }> = {
+  editorial: {
+    background: "#F5EDE0",
+    ink: "#1F1A14",
+    accent: "#A04A2D",
+    fontTitle: "'Newsreader', Georgia, serif",
+    pillBg: "#1F1A14",
+    pillBgHover: "#A04A2D",
+    pillFg: "#F5EDE0",
+    hairline: "rgba(31, 26, 20, 0.22)",
+    watermarkColor: "rgba(31, 26, 20, 0.06)",
+  },
   cinema: {
-    image: "/shared/chooser/cinema.webp",
+    background: "linear-gradient(180deg, #0E0D0B 0%, #050403 100%)",
+    ink: "#EFE9DD",
     accent: "#D9A648",
     fontTitle: "'Cormorant Garamond', Georgia, serif",
-  },
-  editorial: {
-    image: "/shared/chooser/editorial.webp",
-    accent: "#E5B889",
-    fontTitle: "'Newsreader', Georgia, serif",
+    pillBg: "#D9A648",
+    pillBgHover: "#EFC974",
+    pillFg: "#0E0D0B",
+    hairline: "rgba(239, 233, 221, 0.18)",
+    watermarkColor: "rgba(239, 233, 221, 0.06)",
   },
 };
 
-// Editorial on the LEFT, cinema on the RIGHT — horizontal split.
+// Editorial on the LEFT, cinema on the RIGHT.
 const ORDER: Variant[] = ["editorial", "cinema"];
 
 export function Chooser() {
@@ -54,6 +72,21 @@ export function Chooser() {
 
   return (
     <main className="chooser-root">
+      <motion.header
+        className="chooser-masthead"
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="chooser-masthead__brand">{t.masthead}</div>
+        <div className="chooser-masthead__rule" aria-hidden />
+        <div className="chooser-masthead__instruction">
+          {t.instructionLead}{" "}
+          <strong>{t.instructionAction}</strong>{" "}
+          {t.instructionTrail}
+        </div>
+      </motion.header>
+
       <div className="chooser-langbar">
         <LanguageDropdown
           value={lang}
@@ -61,12 +94,16 @@ export function Chooser() {
         />
       </div>
 
-      <div className="chooser-split">
+      <div className="chooser-spread">
         {ORDER.map((key, idx) => {
           const visual = VISUAL[key];
           const copy = t[key];
           const isHovered = hovered === key;
           const isDimmed = hovered !== null && hovered !== key;
+          const isLast = previous?.variant === key;
+          const watermarkNumber = idx === 0 ? "01" : "02";
+          const arrow = key === "editorial" ? "→" : "←";
+
           return (
             <motion.button
               key={key}
@@ -75,78 +112,124 @@ export function Chooser() {
               onClick={() => enter(key)}
               onMouseEnter={() => setHovered(key)}
               onMouseLeave={() => setHovered(null)}
-              className={`chooser-half chooser-half--${key}`}
-              initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
+              className={`chooser-cover chooser-cover--${key}`}
+              initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
-                x: 0,
-                flex: isHovered ? 1.08 : 1,
-                filter: isDimmed ? "brightness(0.55) saturate(0.75)" : "brightness(1) saturate(1)",
+                y: isHovered ? -6 : 0,
+                flex: isHovered ? 1.07 : 1,
+                filter: isDimmed
+                  ? "brightness(0.72) saturate(0.85)"
+                  : "brightness(1) saturate(1)",
               }}
               transition={{
-                duration: 0.8,
+                duration: 0.7,
                 ease: [0.22, 1, 0.36, 1],
-                delay: idx * 0.08,
+                delay: 0.15 + idx * 0.1,
               }}
               style={{
-                backgroundImage: `url(${visual.image})`,
+                background: visual.background,
+                color: visual.ink,
                 fontFamily: visual.fontTitle,
               }}
             >
-              <div className="chooser-half__grain" aria-hidden />
+              <div
+                className="chooser-cover__top"
+                style={{ borderBottomColor: visual.hairline }}
+              >
+                <span
+                  className="chooser-cover__issue"
+                  style={{ color: visual.accent }}
+                >
+                  {copy.issueLabel}
+                </span>
+                <span className="chooser-cover__attribution">Mathieu Diep</span>
+              </div>
 
-              <div className="chooser-half__caption">
-                {previous?.variant === key && (
-                  <span className="chooser-half__chip">
+              <div className="chooser-cover__title-block">
+                {isLast && (
+                  <span
+                    className="chooser-cover__chip"
+                    style={{ color: visual.accent }}
+                  >
                     <span aria-hidden>↪</span> {t.lastVisit}
                   </span>
                 )}
-                <span className="chooser-half__title">{copy.title}</span>
-                <span className="chooser-half__tagline">{copy.tagline}</span>
+                <div className="chooser-cover__kicker">— {copy.kicker} —</div>
+                <h2 className="chooser-cover__title">
+                  {copy.title.map((line, i) => (
+                    <span key={i} className="chooser-cover__title-line">
+                      {line}
+                      {i === copy.title.length - 1 && (
+                        <span
+                          className="chooser-cover__title-dot"
+                          style={{ color: visual.accent }}
+                        >
+                          .
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </h2>
+                <p className="chooser-cover__tagline">{copy.tagline}</p>
+              </div>
+
+              <div className="chooser-cover__footer">
+                {key === "editorial" && (
+                  <span className="chooser-cover__footer-label">
+                    {copy.footerLabel}
+                  </span>
+                )}
                 <span
-                  className="chooser-half__cta"
+                  className="chooser-cover__pill"
                   style={{
-                    color: visual.accent,
-                    borderColor: visual.accent,
+                    background: isHovered ? visual.pillBgHover : visual.pillBg,
+                    color: visual.pillFg,
                   }}
                 >
-                  <span>{t.cta}</span>
-                  <span
-                    aria-hidden
-                    className="chooser-half__cta-arrow"
-                    style={{
-                      transform: isHovered ? "translateX(6px)" : "translateX(0)",
-                    }}
-                  >
-                    →
-                  </span>
+                  {key === "cinema" && (
+                    <span
+                      aria-hidden
+                      className="chooser-cover__pill-arrow chooser-cover__pill-arrow--left"
+                      style={{
+                        transform: isHovered ? "translateX(-4px)" : "translateX(0)",
+                      }}
+                    >
+                      {arrow}
+                    </span>
+                  )}
+                  <span>{copy.cta}</span>
+                  {key === "editorial" && (
+                    <span
+                      aria-hidden
+                      className="chooser-cover__pill-arrow chooser-cover__pill-arrow--right"
+                      style={{
+                        transform: isHovered ? "translateX(4px)" : "translateX(0)",
+                      }}
+                    >
+                      {arrow}
+                    </span>
+                  )}
                 </span>
+                {key === "cinema" && (
+                  <span className="chooser-cover__footer-label">
+                    {copy.footerLabel}
+                  </span>
+                )}
+              </div>
+
+              <div
+                className="chooser-cover__watermark"
+                style={{ color: visual.watermarkColor }}
+                aria-hidden
+              >
+                {watermarkNumber}
               </div>
             </motion.button>
           );
         })}
-      </div>
 
-      <div className="chooser-curator-wrap">
-        <motion.div
-          className="chooser-curator"
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-        >
-          <span className="chooser-curator__kicker">{t.kicker}</span>
-          <h1 className="chooser-curator__heading">{t.heading}</h1>
-          <p className="chooser-curator__subtitle">{t.subtitle}</p>
-          <div className="chooser-curator__prompt" aria-hidden>
-            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--left">
-              ←
-            </span>
-            <span className="chooser-curator__prompt-label">{t.prompt}</span>
-            <span className="chooser-curator__prompt-arrow chooser-curator__prompt-arrow--right">
-              →
-            </span>
-          </div>
-        </motion.div>
+        <div className="chooser-spine" aria-hidden />
       </div>
     </main>
   );

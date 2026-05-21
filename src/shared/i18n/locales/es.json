@@ -108,21 +108,28 @@
     "tooltip": "Cambiar de portafolio"
   },
   "chooser": {
-    "kicker": "Mathieu Diep — Portafolio",
-    "heading": "Elige tu universo",
-    "subtitle": "Dos estilos, un mismo portafolio — elige el que te habla.",
-    "prompt": "Selecciona",
-    "cinema": {
-      "title": "CINEMA",
-      "tagline": "Oscuro, artístico y cinematográfico",
-      "aria": "Portfolio Cinema — oscuro y cinematográfico"
-    },
+    "masthead": "Mathieu Diep · Un Portafolio Trimestral",
+    "instructionLead": "Dos números, dos estilos.",
+    "instructionAction": "Haz clic en uno",
+    "instructionTrail": "para abrirlo.",
+    "lastVisit": "Tu última visita",
     "editorial": {
-      "title": "EDITORIAL",
-      "tagline": "Claro, alegre y de revista",
-      "aria": "Portfolio Editorial — claro y de revista"
+      "issueLabel": "Nº 01 — 2026",
+      "kicker": "un portafolio trimestral",
+      "title": ["Editorial,", "una revista", "tranquila"],
+      "tagline": "Claro, alegre y cálido. Mi trabajo como revista — compuesto en Newsreader, servido en crema y tinta.",
+      "footerLabel": "Portada · Nº 01",
+      "cta": "Abrir este número",
+      "aria": "Portfolio Editorial — una revista tranquila"
     },
-    "cta": "Entrar",
-    "lastVisit": "Tu última visita"
+    "cinema": {
+      "issueLabel": "Nº 02 — 2026",
+      "kicker": "un portafolio nocturno",
+      "title": ["Cinema,", "un plano", "largo"],
+      "tagline": "Oscuro, artístico y lento. Mi trabajo como película — compuesto en Cormorant Garamond, servido en negro y oro.",
+      "footerLabel": "Portada · Nº 02",
+      "cta": "Abrir este número",
+      "aria": "Portfolio Cinema — un plano largo y nocturno"
+    }
   }
 }

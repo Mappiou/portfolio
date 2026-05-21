@@ -3,294 +3,331 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #000;
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter Tight", system-ui, sans-serif;
+  background: linear-gradient(180deg, #1e1a16 0%, #14110d 100%);
 }
 
+/* MASTHEAD — at the very top, identifies the page as a publication */
+.chooser-masthead {
+  flex: 0 0 auto;
+  padding: 1.5rem 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(245, 237, 217, 0.9);
+  position: relative;
+  z-index: 30;
+}
+
+.chooser-masthead__brand {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: #f5edd9;
+}
+
+.chooser-masthead__rule {
+  width: 32px;
+  height: 1px;
+  background: rgba(217, 166, 72, 0.8);
+}
+
+.chooser-masthead__instruction {
+  font-family: "Newsreader", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.05vw, 1rem);
+  font-weight: 300;
+  color: rgba(245, 237, 217, 0.7);
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.chooser-masthead__instruction strong {
+  font-weight: 500;
+  color: #d9a648;
+  font-style: italic;
+}
+
+/* LANGUAGE — top right corner */
 .chooser-langbar {
   position: absolute;
-  top: 1.25rem;
-  right: 1.5rem;
-  z-index: 30;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.45);
+  top: 1.55rem;
+  right: 1.75rem;
+  z-index: 35;
+  color: rgba(245, 237, 217, 0.85);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 0.45rem 1rem;
+  padding: 0.4rem 0.95rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* HORIZONTAL SPLIT — editorial on left, cinema on right. */
-.chooser-split {
+/* SPREAD — the two covers side by side */
+.chooser-spread {
+  flex: 1 1 auto;
   display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: row;
+  padding: 0 1.75rem 1.75rem;
+  position: relative;
+  min-height: 0;
 }
 
-.chooser-half {
-  position: relative;
+.chooser-cover {
   flex: 1;
-  height: 100%;
-  border: none;
+  position: relative;
   cursor: pointer;
-  padding: 0;
+  padding: 2.5rem 3rem 2.25rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top center;
-}
-
-.chooser-half:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.6);
-  outline-offset: -10px;
-}
-
-.chooser-half--editorial {
-  background-color: #F5EDE0;
-}
-
-.chooser-half--cinema {
-  background-color: #0A0908;
-}
-
-.chooser-half__grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-.chooser-half--editorial .chooser-half__grain {
-  opacity: 0.04;
-  mix-blend-mode: multiply;
-}
-
-/* CAPTION = black bar at the bottom of each half. Guaranteed black so the
-   variant label sits on solid color, never on top of the screenshot text. */
-.chooser-half__caption {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 2.25rem 2rem 2.5rem;
-  width: 100%;
-  background: linear-gradient(
-    0deg,
-    #050403 0%,
-    rgba(5, 4, 3, 0.96) 70%,
-    rgba(5, 4, 3, 0) 100%
-  );
-  text-align: center;
-}
-
-.chooser-half__chip {
-  font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  margin-bottom: 0.35rem;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.chooser-half__title {
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  line-height: 1;
-  margin: 0;
-  color: #fff;
-}
-
-.chooser-half__tagline {
-  font-family: "Inter Tight", system-ui, sans-serif;
-  font-style: italic;
-  font-size: clamp(0.84rem, 1vw, 0.96rem);
-  line-height: 1.5;
-  margin-top: 0.3rem;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.chooser-half__cta {
-  margin-top: 1rem;
-  font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  padding: 0.55rem 1.4rem 0.5rem;
-  border-radius: 999px;
-  border: 1px solid;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  transition: background-color 0.4s ease-out, color 0.4s ease-out;
-}
-
-.chooser-half:hover .chooser-half__cta {
-  background-color: currentColor;
-}
-
-.chooser-half:hover .chooser-half__cta > span:first-child,
-.chooser-half:hover .chooser-half__cta-arrow {
-  color: #050403;
-  filter: invert(1);
-}
-
-.chooser-half__cta-arrow {
-  display: inline-block;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* CURATOR — discreet glass panel on the vertical seam. */
-.chooser-curator-wrap {
-  position: fixed;
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  pointer-events: none;
-  width: min(92vw, 460px);
-  display: flex;
-  justify-content: center;
-}
-
-.chooser-curator {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.55rem;
-  text-align: center;
-  color: #ffffff;
-  padding: 1.75rem 2.25rem 1.6rem;
-  background: rgba(8, 7, 6, 0.55);
-  backdrop-filter: blur(14px) saturate(125%);
-  -webkit-backdrop-filter: blur(14px) saturate(125%);
-  border-top: 1px solid rgba(217, 166, 72, 0.5);
-  border-bottom: 1px solid rgba(217, 166, 72, 0.5);
+  font-family: inherit;
+  text-align: left;
   box-shadow:
-    0 18px 50px -20px rgba(0, 0, 0, 0.6),
-    inset 0 0 50px rgba(0, 0, 0, 0.3);
+    0 30px 60px -25px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
-.chooser-curator__kicker {
+.chooser-cover:focus-visible {
+  outline: 2px solid rgba(217, 166, 72, 0.7);
+  outline-offset: -8px;
+}
+
+.chooser-cover--editorial {
+  border-radius: 2px 0 0 2px;
+}
+
+.chooser-cover--cinema {
+  border-radius: 0 2px 2px 0;
+}
+
+.chooser-cover:hover {
+  box-shadow:
+    0 50px 100px -30px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(217, 166, 72, 0.28);
+}
+
+/* TOP BAR inside each cover */
+.chooser-cover__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid;
+  padding-bottom: 0.9rem;
   font-family: "Inter Tight", system-ui, sans-serif;
   font-size: 0.6rem;
   font-weight: 500;
-  letter-spacing: 0.42em;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0;
 }
 
-.chooser-curator__heading {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  line-height: 1.05;
-  letter-spacing: -0.005em;
-  margin: 0;
-  color: #ffffff;
-}
-
-.chooser-curator__subtitle {
+.chooser-cover__issue {
   font-family: "Newsreader", Georgia, serif;
   font-style: italic;
-  font-weight: 300;
-  font-size: clamp(0.82rem, 1vw, 0.95rem);
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.78);
-  margin: 0;
-  max-width: 36ch;
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
-.chooser-curator__prompt {
+.chooser-cover--cinema .chooser-cover__issue {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+/* TITLE BLOCK — center of the cover */
+.chooser-cover__title-block {
+  margin: auto 0;
+  position: relative;
+  z-index: 2;
+}
+
+.chooser-cover__chip {
+  display: inline-block;
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.chooser-cover__kicker {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 1.25rem;
+}
+
+.chooser-cover__title {
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 6vw, 5.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.012em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chooser-cover--editorial .chooser-cover__title {
+  font-weight: 400;
+}
+
+.chooser-cover__title-line {
+  display: block;
+}
+
+.chooser-cover__title-dot {
+  font-weight: 500;
+}
+
+.chooser-cover__tagline {
+  margin: 1.3rem 0 0;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: 1.55;
+  max-width: 30ch;
+  opacity: 0.72;
+  font-style: italic;
+}
+
+.chooser-cover--editorial .chooser-cover__tagline {
+  font-family: "Newsreader", Georgia, serif;
+}
+
+.chooser-cover--cinema .chooser-cover__tagline {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+/* FOOTER — pill CTA + small cover label */
+.chooser-cover__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.75rem;
+}
+
+.chooser-cover__footer-label {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+/* FILLED PILL CTA — the main affordance, with a slow breath animation */
+.chooser-cover__pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  margin-top: 0.3rem;
+  gap: 0.7rem;
   font-family: "Inter Tight", system-ui, sans-serif;
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.4em;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
+  padding: 0.85rem 1.5rem 0.8rem;
+  border-radius: 999px;
+  transition: gap 0.4s ease, padding 0.4s ease, background 0.5s ease;
+  animation: chooser-breathe 3.4s ease-in-out infinite;
 }
 
-.chooser-curator__prompt-arrow {
+.chooser-cover:hover .chooser-cover__pill {
+  gap: 1.1rem;
+  padding: 0.85rem 1.8rem 0.8rem;
+}
+
+@keyframes chooser-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 166, 72, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(217, 166, 72, 0.15);
+  }
+}
+
+.chooser-cover__pill-arrow {
   display: inline-block;
-  font-size: 0.95rem;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
-  color: rgba(217, 166, 72, 0.85);
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.chooser-curator__prompt-arrow--left {
-  animation: chooser-pulse-left 2.4s ease-in-out infinite;
+/* SPINE — gold seam between the two covers */
+.chooser-spine {
+  position: absolute;
+  top: 0;
+  bottom: 1.75rem;
+  left: 50%;
+  width: 6px;
+  transform: translateX(-3px);
+  z-index: 20;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(217, 166, 72, 0.55) 16%, rgba(217, 166, 72, 0.55) 84%, transparent 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, transparent 50%, rgba(0, 0, 0, 0.35) 100%);
+  background-size: 1px 100%, 6px 100%;
+  background-position: center center, 0 0;
+  background-repeat: no-repeat;
 }
 
-.chooser-curator__prompt-arrow--right {
-  animation: chooser-pulse-right 2.4s ease-in-out infinite;
+/* WATERMARK — giant issue number in low opacity */
+.chooser-cover__watermark {
+  position: absolute;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(10rem, 18vw, 22rem);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
 }
 
-@keyframes chooser-pulse-left {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateX(-4px);
-    opacity: 1;
-  }
+.chooser-cover--editorial .chooser-cover__watermark {
+  bottom: 4rem;
+  right: -1.5rem;
 }
 
-@keyframes chooser-pulse-right {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateX(4px);
-    opacity: 1;
-  }
+.chooser-cover--cinema .chooser-cover__watermark {
+  bottom: 4rem;
+  left: -1.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chooser-curator__prompt-arrow--left,
-  .chooser-curator__prompt-arrow--right {
+  .chooser-cover__pill {
     animation: none;
   }
 }
 
 @media (max-width: 767px) {
-  .chooser-split {
+  .chooser-spread {
     flex-direction: column;
+    padding: 0 1rem 1rem;
+    gap: 0.75rem;
   }
-  .chooser-half {
-    flex: 1 !important;
-    filter: none !important;
+  .chooser-cover {
+    flex: 1 1 0 !important;
+    padding: 1.75rem 1.5rem;
+    border-radius: 2px !important;
   }
-  .chooser-half__caption {
-    padding: 1.5rem 1.25rem 1.75rem;
+  .chooser-cover__watermark {
+    font-size: 10rem;
   }
-  .chooser-curator-wrap {
-    width: 88vw;
-    top: 50%;
+  .chooser-spine {
+    display: none;
   }
-  .chooser-curator {
-    padding: 1.25rem 1.25rem;
+  .chooser-masthead {
+    padding: 1rem 1rem 0.75rem;
   }
 }
