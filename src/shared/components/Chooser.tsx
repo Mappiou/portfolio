@@ -29,10 +29,10 @@ const VISUAL: Record<Variant, {
   editorial: {
     background: "#F5EDE0",
     ink: "#1F1A14",
-    accent: "#A04A2D",
+    accent: "#8B6F47",
     fontTitle: "'Newsreader', Georgia, serif",
     pillBg: "#1F1A14",
-    pillBgHover: "#A04A2D",
+    pillBgHover: "#8B6F47",
     pillFg: "#F5EDE0",
     hairline: "rgba(31, 26, 20, 0.22)",
     watermarkColor: "rgba(31, 26, 20, 0.06)",
