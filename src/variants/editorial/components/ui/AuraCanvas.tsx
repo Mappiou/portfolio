@@ -4,7 +4,7 @@ type Props = {
 };
 
 export function AuraCanvas({ colors, opacity = 0.35 }: Props) {
-  const [a, b, c] = [colors[0] ?? "#C7C0A8", colors[1] ?? "#D4B5C7", colors[2] ?? "#A04A2D"];
+  const [a, b, c] = [colors[0] ?? "#C7C0A8", colors[1] ?? "#D4B5C7", colors[2] ?? "#6F5736"];
   return (
     <div
       className="absolute inset-0 pointer-events-none overflow-hidden"
