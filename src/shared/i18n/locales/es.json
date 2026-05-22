@@ -5,10 +5,14 @@
   },
   "nav": {
     "home": "Inicio",
+    "experience": "Experiencia",
     "projects": "Proyectos",
     "contact": "Contacto",
+    "cv": "CV",
     "language": "Idioma",
-    "downloadCv": "Descargar CV"
+    "downloadCv": "Descargar CV",
+    "top": "Arriba",
+    "sideDock": "Navegación rápida"
   },
   "language": {
     "fr": "Francés",
@@ -20,7 +24,9 @@
   },
   "hero": {
     "kicker": "Sobre mí",
-    "title": "Hola, soy <italic>Mathieu.</italic>"
+    "title": "Hola, soy <italic>Mathieu.</italic>",
+    "sceneLabel": "ESCENA 01 / APERTURA",
+    "dateLabel": "MAYO · 2026"
   },
   "bio": {
     "intro": "AI Engineer basado en Barcelona, construyendo sistemas LLM/RAG que personas reales usan, cada día.",
@@ -28,14 +34,6 @@
       "Actualmente lidero el trabajo de IA generativa en Hexamind — entre otras cosas, un chatbot que sirve a más de 90 000 usuarios en producción, construido sobre arquitecturas RAG y OpenAI.",
       "Mi obsesión es la costura entre la IA de investigación y las apps que se le pueden pasar a un amigo. Escribo mucho Python, lanzo apps móviles en Flutter en paralelo, y trabajo en hacer que las cosas técnicas se sientan calmadas y un poco juguetonas."
     ]
-  },
-  "timeline": {
-    "title": "Algunas paradas <italic>en el camino.</italic>",
-    "note": "5 puestos · 6 años de IA aplicada",
-    "expandHint": "Haz clic en una experiencia para ver los detalles",
-    "stackLabel": "Stack",
-    "expand": "Ver detalles",
-    "collapse": "Plegar"
   },
   "education": {
     "kicker": "Formación",
@@ -52,7 +50,12 @@
   },
   "passions": {
     "kicker": "Pasiones",
-    "title": "Lo que me gusta <italic>fuera del código.</italic>"
+    "title": "Lo que me gusta <italic>fuera del código.</italic>",
+    "actI": "Acto I",
+    "actII": "Acto II",
+    "bodyTitle": "El cuerpo, <1>en movimiento</1><2>.</2>",
+    "bodyTitleEditorial": "El cuerpo, <1>en movimiento.</1>",
+    "count": "4 disciplinas"
   },
   "travels": {
     "kicker": "Cuaderno de viaje",

@@ -17,7 +17,7 @@ export function PassionsSection() {
     <section id="passions" className="relative w-full" aria-labelledby="passions-heading">
       <ChapterCard
         chapter="CHAPITRE 05"
-        bgSrc="https://picsum.photos/seed/mountain-cinema/1800/600"
+        bgSrc="/cinema/passions-bg.jpg"
         headingId="passions-heading"
         title={
           <>
@@ -33,8 +33,12 @@ export function PassionsSection() {
       />
 
       <div
-        className="relative mx-auto px-6"
-        style={{ padding: "80px 24px 140px", maxWidth: tokens.pageMaxWidth }}
+        className="relative mx-auto"
+        style={{
+          padding:
+            "clamp(60px, 12vw, 80px) clamp(16px, 5vw, 24px) clamp(80px, 14vw, 140px)",
+          maxWidth: tokens.pageMaxWidth,
+        }}
       >
         {sport && (
           <SportAct passion={sport} lang={lang} t={t} />
@@ -72,7 +76,7 @@ function SportAct({
           color: palette.teal,
         }}
       >
-        — Acte I · {passion.title[lang]}
+        — {t("passions.actI")} · {passion.title[lang]}
       </p>
       <h3
         className="mb-6"
@@ -86,9 +90,14 @@ function SportAct({
           color: palette.textPrimary,
         }}
       >
-        Le corps,{" "}
-        <span style={{ color: palette.teal, fontStyle: "italic" }}>en mouvement</span>
-        <span style={{ color: palette.teal }}>.</span>
+        <Trans
+          i18nKey="passions.bodyTitle"
+          components={[
+            <span />,
+            <span style={{ color: palette.teal, fontStyle: "italic" }} />,
+            <span style={{ color: palette.teal }} />,
+          ]}
+        />
       </h3>
       <p
         className="mb-16"
@@ -106,17 +115,170 @@ function SportAct({
       </p>
 
       <div className="flex flex-col" style={{ gap: 0 }}>
-        {passion.items.map((item, idx) => (
-          <Scene
-            key={item.id}
-            item={item}
-            lang={lang}
-            t={t}
-            index={idx}
-            total={passion.items.length}
-          />
+        {passion.items.map((item, idx) =>
+          item.photoSrcs && item.photoSrcs.length >= 4 ? (
+            <TrekScene
+              key={item.id}
+              item={item}
+              lang={lang}
+              index={idx}
+              total={passion.items.length}
+            />
+          ) : (
+            <Scene
+              key={item.id}
+              item={item}
+              lang={lang}
+              t={t}
+              index={idx}
+              total={passion.items.length}
+            />
+          ),
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TrekScene({
+  item,
+  lang,
+  index,
+  total,
+}: {
+  item: PassionItem;
+  lang: Language;
+  index: number;
+  total: number;
+}) {
+  const isLast = index === total - 1;
+  const [lead, ...rest] = item.photoSrcs ?? [];
+  const frameLabel = `Frame ${String(index + 1).padStart(2, "0")}`;
+
+  return (
+    <div className="relative">
+      <div
+        className="grid grid-cols-1 md:grid-cols-3 items-start"
+        style={{
+          columnGap: "clamp(12px, 1.8vw, 24px)",
+          rowGap: "clamp(20px, 2.5vw, 32px)",
+          padding: "clamp(28px, 8vw, 48px) 0",
+          direction: "ltr",
+        }}
+      >
+        <div>
+          {item.kicker && (
+            <p
+              className="mb-3"
+              style={{
+                fontFamily: tokens.fontMono,
+                fontSize: 11,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: palette.textSecondary,
+              }}
+            >
+              {String(index + 1).padStart(2, "0")} — {item.kicker[lang]}
+            </p>
+          )}
+          <h4
+            className="mb-4"
+            style={{
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "clamp(26px, 2.8vw, 40px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.05,
+              color: palette.textPrimary,
+            }}
+          >
+            {item.label[lang]}
+            <span style={{ color: palette.teal }}>.</span>
+          </h4>
+          {item.prose && (
+            <p
+              style={{
+                fontFamily: tokens.fontBody,
+                fontWeight: 300,
+                fontSize: 15,
+                lineHeight: 1.7,
+                color: palette.textPrimary,
+                opacity: 0.82,
+              }}
+            >
+              {item.prose[lang]}
+            </p>
+          )}
+        </div>
+
+        <div
+          className="cinema-frame relative md:col-span-2"
+          style={{ width: "100%", aspectRatio: "4/3" }}
+        >
+          <img src={lead} alt="" aria-hidden="true" />
+          <span
+            aria-hidden="true"
+            className="absolute"
+            style={{
+              top: 12,
+              left: 12,
+              padding: "4px 8px",
+              fontFamily: tokens.fontMono,
+              fontSize: 10,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: palette.textPrimary,
+              background: "rgba(14,13,11,0.45)",
+              border: "1px solid rgba(239,233,221,0.18)",
+              zIndex: 3,
+            }}
+          >
+            {frameLabel}
+          </span>
+          <span
+            aria-hidden="true"
+            className="absolute"
+            style={{
+              bottom: 8,
+              right: 16,
+              fontFamily: tokens.fontTitle,
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: 64,
+              lineHeight: 1,
+              color: palette.textPrimary,
+              opacity: 0.55,
+              textShadow: "0 4px 16px rgba(0,0,0,0.5)",
+              zIndex: 3,
+            }}
+          >
+            {romans[index]}
+          </span>
+        </div>
+
+        {rest.map((src, i) => (
+          <div
+            key={i}
+            className="cinema-frame relative"
+            style={{ width: "100%", aspectRatio: "4/5" }}
+          >
+            <img src={src} alt="" aria-hidden="true" />
+          </div>
         ))}
       </div>
+
+      {!isLast && (
+        <span
+          aria-hidden="true"
+          className="block"
+          style={{
+            height: 1,
+            background:
+              "linear-gradient(90deg, rgba(239,233,221,0) 0%, rgba(239,233,221,0.18) 50%, rgba(239,233,221,0) 100%)",
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -148,8 +310,8 @@ function Scene({
       <div
         className="grid grid-cols-1 md:grid-cols-2 items-center"
         style={{
-          gap: "clamp(32px, 5vw, 72px)",
-          padding: "48px 0",
+          gap: "clamp(24px, 5vw, 72px)",
+          padding: "clamp(28px, 8vw, 48px) 0",
           direction: "ltr",
         }}
       >
@@ -161,14 +323,40 @@ function Scene({
             aspectRatio: aspect,
           }}
         >
-          <img
-            src={
-              item.photoSrc ??
-              `https://picsum.photos/seed/${photoSeed}/${aspect === "4/5" ? "640/800" : "900/562"}`
-            }
-            alt=""
-            aria-hidden="true"
-          />
+          {item.photoSrcs && item.photoSrcs.length > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                gap: 4,
+              }}
+            >
+              {item.photoSrcs.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt=""
+                  aria-hidden="true"
+                  style={{
+                    flex: 1,
+                    width: 0,
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <img
+              src={
+                item.photoSrc ??
+                `https://picsum.photos/seed/${photoSeed}/${aspect === "4/5" ? "640/800" : "900/562"}`
+              }
+              alt=""
+              aria-hidden="true"
+            />
+          )}
           {/* Frame tag, top-left */}
           <span
             aria-hidden="true"
@@ -282,13 +470,12 @@ function Scene({
 function TechBlock({
   passion,
   lang,
-  t: _t,
+  t,
 }: {
   passion: Passion;
   lang: Language;
   t: (k: string) => string;
 }) {
-  void _t;
   return (
     <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-16 items-start">
       <div>
@@ -302,7 +489,7 @@ function TechBlock({
             color: palette.teal,
           }}
         >
-          — Acte II
+          — {t("passions.actII")}
         </p>
         <h3
           style={{

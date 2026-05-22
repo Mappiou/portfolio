@@ -20,6 +20,7 @@ export function DownloadButton({ href, filename }: Props) {
         color: palette.beige,
         border: `1.5px solid ${palette.teal}`,
         padding: "14px 26px",
+        minHeight: 44,
         fontFamily: "Inter, system-ui, sans-serif",
         fontSize: 16,
         textDecoration: "none",

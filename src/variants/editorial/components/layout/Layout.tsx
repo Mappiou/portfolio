@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import { palette, tokens } from "../../styles/palette";
 import { AuraCanvas } from "../ui/AuraCanvas";
 import { PillNav } from "./PillNav";
+import { SideDock } from "./SideDock";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { MobileHeader } from "./MobileHeader";
 import { Footer } from "./Footer";
 import { useVariantPreference } from "@shared/hooks/useVariantPreference";
 import { VARIANT } from "../../lib/variant";
@@ -39,12 +41,14 @@ export function Layout() {
 
       <AuraCanvas colors={[palette.mint, palette.lilac, palette.rust]} opacity={0.35} />
 
-      <header className="relative z-30">
+      <MobileHeader />
+      <header className="relative z-30 hidden md:block">
         <PillNav theme="light" />
         <div className="absolute right-6 top-7" style={{ zIndex: 31 }}>
           <LanguageSwitcher theme="light" />
         </div>
       </header>
+      <SideDock />
 
       <main id="main-content" className="relative z-10">
         <Outlet />

@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { Analytics } from "@vercel/analytics/react";
 import { Chooser } from "@shared/components/Chooser";
 import { CinemaApp } from "./variants/cinema/routes";
@@ -30,6 +32,13 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    document.title = t("meta.siteTitle");
+    document.documentElement.lang = i18n.language;
+  }, [t, i18n.language]);
+
   return (
     <BrowserRouter>
       <AnimatedRoutes />

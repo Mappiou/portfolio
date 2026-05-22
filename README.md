@@ -54,80 +54,144 @@ pnpm dev              # http://localhost:5173
 | `pnpm test:e2e:install`        | Télécharge les browsers Chromium                            |
 | `pnpm verify`                  | Pipeline complète locale : lint + typecheck + tests + build |
 
-## ✏️ Éditer le contenu du site (`src/content.ts`)
+## ✏️ Éditer le contenu du site
 
-**Tous les textes éditables et tous les chemins d'images du site sont regroupés dans un seul fichier :**
+Le contenu est désormais éclaté en plusieurs fichiers de données dans `src/shared/data/` (et les chaînes UI dans `src/shared/i18n/locales/{fr,en,es}.json`).
 
-> 📍 **`src/content.ts`** (~1000 lignes, en sections bien séparées)
+| Fichier                              | Contenu                                                                |
+| ------------------------------------ | ---------------------------------------------------------------------- |
+| `src/shared/data/profile.ts`         | Nom, email, téléphone, localisation, liens GitHub/LinkedIn             |
+| `src/shared/data/experiences.ts`     | Timeline pro (Hexamind, Lincoln, Capgemini, Aubay, Orange Labs)        |
+| `src/shared/data/education.ts`       | Timeline formation (Bac, UTT, Master Cybersécurité, échanges, stages)  |
+| `src/shared/data/projects.ts`        | 3 apps Android (Volley Météo, Scan2PDF, Triolinguo)                    |
+| `src/shared/data/skills.ts`          | Catégories de compétences (IA, Data, Programmation, Outils, Langues)   |
+| `src/shared/data/passions.ts`        | Sport / Nouvelles technologies                                         |
+| `src/shared/data/travels.ts`         | Section voyages (par région)                                           |
+| `src/shared/i18n/locales/*.json`     | Libellés UI FR / EN / ES (nav, hero, footer, boutons, page 404…)       |
 
-Pour modifier n'importe quel texte (FR/EN/ES) ou changer une photo, il suffit d'éditer ce fichier — tout le reste de l'app (i18n, data, composants) le consomme automatiquement.
+---
 
-### Sections du fichier
+## 🖼️ Photos du site — guide complet
 
-| # | Section          | Contenu                                                                |
-| - | ---------------- | ---------------------------------------------------------------------- |
-| 1 | `photos`         | Tous les chemins d'images (voir tableau ci-dessous)                    |
-| 2 | `profile`        | Nom, email, téléphone, localisation, liens GitHub/LinkedIn             |
-| 3 | `uiStrings`      | Libellés UI FR / EN / ES (nav, hero, footer, boutons, page 404…)       |
-| 4 | `experiences`    | Timeline pro (Hexamind, Lincoln, Capgemini, Aubay, Orange Labs)        |
-| 5 | `education`      | Timeline formation (Bac, UTT, Master Cybersécurité, échanges, stages)  |
-| 6 | `projects`       | 3 apps Android (Volley Météo, Scan2PDF, Triolinguo)                    |
-| 7 | `skills`         | Catégories de compétences (IA, Data, Programmation, Outils, Langues)   |
-| 8 | `passions`       | Sport / Nouvelles technologies / Voyages                               |
+Toutes les images réelles vivent dans `public/`. Le chemin que tu mets dans un `src=` ou un `photoSrc` doit être **absolu, commençant par `/`** (et non `public/`).
 
-### 🖼️ Photos référencées (chemins à remplir)
+> **Règle d'organisation** :
+> - `public/cinema/` → **uniquement** les images de fond (`bgSrc`/Hero) propres au mode **cinema**. Elles n'ont pas d'équivalent en editorial.
+> - `public/passions/`, `public/portrait.jpg`, etc. → images **partagées** entre les deux modes (le même fichier alimente les deux variantes via `src/shared/data/*.ts`).
+>
+> **Convention de nommage** : kebab-case, préfixe explicite. Pour les bg cinema : `<section>-bg.jpg`. Pour les passions/education/travels : `<sujet>-<nom>.jpg` ou `<nom>.jpg`.
 
-Toutes les photos sont déclarées en haut de `src/content.ts` dans l'objet `photos`. Pour ajouter une photo :
+### A — Images actuellement déposées (dans `public/`)
 
-1. Place le fichier dans `public/images/...` (n'importe quel sous-dossier).
-2. Renseigne le chemin **absolu** (commençant par `/`) dans `photos` à la clé indicative qui correspond.
-3. Sauvegarde — le site la pioche automatiquement (placeholder dégradé tant que la valeur est `""`).
+| Fichier (chemin public absolu)   | Mode(s)            | Affichée à                                                                  | Référencée depuis                                                          |
+| -------------------------------- | ------------------ | --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `/portrait.jpg`                  | cinema + editorial | Portrait Hero (editorial) **et** portrait dans la BioSection (cinema)       | `editorial/Hero.tsx:22`, `cinema/BioSection.tsx:100` (`src=`)              |
+| `/cinema/passions-bg.jpg`        | cinema uniquement  | Bandeau "Chapitre 05 — Passions" (ChapterCard)                              | `cinema/PassionsSection.tsx:20` (`bgSrc`)                                  |
+| `/passions/beach.jpg`            | cinema + editorial | Item Beach volley                                                           | `src/shared/data/passions.ts` → `beach-volley.photoSrc`                    |
+| `/passions/skating.jpg`          | cinema + editorial | Item Patin à glace                                                          | `src/shared/data/passions.ts` → `skating.photoSrc`                         |
+| `/passions/trek1.jpg`            | cinema + editorial | Trekking — image 1 du quadriptyque                                          | `src/shared/data/passions.ts` → `trekking.photoSrcs[0]`                    |
+| `/passions/trek2.jpg`            | cinema + editorial | Trekking — image 2                                                          | `src/shared/data/passions.ts` → `trekking.photoSrcs[1]`                    |
+| `/passions/trek3.jpg`            | cinema + editorial | Trekking — image 3                                                          | `src/shared/data/passions.ts` → `trekking.photoSrcs[2]`                    |
+| `/passions/trek4.jpg`            | cinema + editorial | Trekking — image 4                                                          | `src/shared/data/passions.ts` → `trekking.photoSrcs[3]`                    |
 
-| Clé dans `photos`                                | Nom indicatif                  | Où elle apparaît                          |
-| ------------------------------------------------ | ------------------------------ | ----------------------------------------- |
-| `photos.bioPortrait`                             | Portrait Bio                   | Section Bio (à côté de "Salut, je suis…") |
-| `photos.education.bac`                           | Photo Bac                      | Frise Formation — Baccalauréat            |
-| `photos.education.uttStart`                      | Photo entrée UTT               | Frise Formation — Entrée à l'UTT          |
-| `photos.education.uttPrepaEnd`                   | Photo fin de prépa             | Frise Formation — Fin de prépa intégrée   |
-| `photos.education.exchangeCanada`                | Photo Erasmus Canada           | Frise Formation — Échange Canada          |
-| `photos.education.exchangeChina`                 | Photo Erasmus Chine            | Frise Formation — Échange Chine           |
-| `photos.education.internshipOrangeLabs`          | Photo stage Orange Labs        | Frise Formation — Stage Orange Labs       |
-| `photos.education.internshipAubay`               | Photo stage Aubay              | Frise Formation — Stage Aubay             |
-| `photos.education.internshipCapgemini`           | Photo stage Capgemini          | Frise Formation — Stage Capgemini         |
-| `photos.education.engineeringUtt`                | Photo diplôme ingénieur UTT    | Frise Formation — Diplôme d'ingénieur     |
-| `photos.education.masterCybersecurity`           | Photo Master Cybersécurité     | Frise Formation — Master Cybersécurité    |
-| `photos.passions.sport.badminton`                | Photo badminton                | Section Passions — Sport                  |
-| `photos.passions.sport.beachVolley`              | Photo beach volley             | Section Passions — Sport                  |
-| `photos.passions.sport.iceSkating`               | Photo patin à glace            | Section Passions — Sport                  |
-| `photos.passions.sport.trekking`                 | Photo trekking                 | Section Passions — Sport                  |
-| `photos.passions.travel.usa1`, `usa2`            | Photos USA 1 / 2               | Section Passions — Voyages                |
-| `photos.passions.travel.southAmerica1`..`4`      | Photos Chili 1 / 2 / 3 / 4     | Section Passions — Voyages                |
-| `photos.passions.travel.asia1`, `asia2`          | Photos Asie 1 / 2              | Section Passions — Voyages                |
-| `photos.passions.travel.europe1`, `europe2`      | Photos Europe 1 / 2            | Section Passions — Voyages                |
-| `photos.projects.volleyMeteo[]`                  | Screenshots Volley Météo       | Page détail `/projects/volley-meteo`      |
-| `photos.projects.scan2pdf[]`                     | Screenshots Scan2PDF           | Page détail `/projects/scan2pdf`          |
-| `photos.projects.triolinguo[]`                   | Screenshots Triolinguo         | Page détail `/projects/triolinguo`        |
+> Pour remplacer une de ces images, **écrase simplement le fichier à son chemin actuel**. Pas besoin de toucher au code.
 
-### Exemple — ajouter le portrait Bio
+### B — Photos encore en placeholder (à remplacer si tu veux du contenu réel)
 
-```bash
-# 1) Déposer la photo
-cp ~/Pictures/mathieu.jpg public/images/bio/mathieu.jpg
-```
+Pour chaque ligne ci-dessous : crée le fichier suggéré dans `public/<dossier>/`, puis édite la ligne pointée pour remplacer l'URL `https://picsum.photos/...` par le chemin absolu.
+
+#### B.1 — Backgrounds **cinema uniquement** (à déposer dans `public/cinema/`)
+
+Ces images n'ont **pas d'équivalent en editorial** — elles servent uniquement les ChapterCards et le fond du Hero du mode cinema.
+
+| Fichier suggéré              | Section affichée                       | Ligne à éditer                                                              |
+| ---------------------------- | -------------------------------------- | --------------------------------------------------------------------------- |
+| `/cinema/hero-bg.jpg`        | Fond du Hero cinema                    | `src/variants/cinema/components/sections/Hero.tsx:16` (`src=`)              |
+| `/cinema/bio-bg.jpg`         | Chapitre 01 — Bio (bandeau)            | `src/variants/cinema/components/sections/BioSection.tsx:16` (`bgSrc`)       |
+| `/cinema/timeline-bg.jpg`    | Chapitre 02 — Expérience pro (bandeau) | `src/variants/cinema/components/sections/TimelineSection.tsx:28` (`bgSrc`)  |
+| `/cinema/education-bg.jpg`   | Chapitre 03 — Formation (bandeau)      | `src/variants/cinema/components/sections/EducationSection.tsx:185` (`bgSrc`)|
+| `/cinema/travel-bg.jpg`      | Chapitre 04 — Voyages (bandeau)        | `src/variants/cinema/components/sections/TravelSection.tsx:180` (`bgSrc`)   |
+| `/cinema/projects-bg.jpg`    | Chapitre 06 — Projets (bandeau)        | `src/variants/cinema/components/sections/ProjectsSection.tsx:17` (`bgSrc`)  |
+| `/cinema/contact-bg.jpg`     | Fond de la section Contact cinema      | `src/variants/cinema/components/sections/ContactSection.tsx:20` (`src=`)    |
+
+#### B.2 — Image scène Bio (editorial uniquement)
+
+| Fichier suggéré              | Section affichée    | Comment l'activer                                                                              |
+| ---------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
+| `/bio-desk.jpg`              | Bio editorial       | `src/variants/editorial/components/sections/BioSection.tsx:57` — remplacer l'URL `src=`         |
+
+#### B.3 — Passions (l'image manquante)
+
+| Fichier suggéré                        | Section affichée   | Comment l'activer                                                                                                              |
+| -------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `/passions/badminton.jpg`              | Item Badminton     | Dans `src/shared/data/passions.ts`, sur l'item `badminton`, remplacer la valeur de `photoSrc:` (actuellement une URL Unsplash) par `"/passions/badminton.jpg"` |
+
+#### B.4 — Frise formation (panneau étendu de chaque entrée)
+
+Pour chaque entrée de la frise formation, tu peux ajouter une vraie photo. Dans `src/shared/data/education.ts`, sur l'entrée correspondante, ajoute la propriété `photoSrc: "/education/<fichier>.jpg"`.
+
+| Fichier suggéré                        | Entrée                                  | `id` à éditer dans `education.ts` |
+| -------------------------------------- | --------------------------------------- | --------------------------------- |
+| `/education/bac.jpg`                   | Baccalauréat                            | `bac`                             |
+| `/education/utt-start.jpg`             | Entrée à l'UTT                          | `utt-start`                       |
+| `/education/utt-prepa-end.jpg`         | Fin de prépa intégrée                   | `utt-prepa-end`                   |
+| `/education/exchange-canada.jpg`       | Échange Canada                          | `exchange-canada`                 |
+| `/education/exchange-china.jpg`        | Échange Chine                           | `exchange-china`                  |
+| `/education/internship-orange-labs.jpg`| Stage Orange Labs                       | `internship-orange-labs`          |
+| `/education/internship-aubay.jpg`      | Stage Aubay                             | `internship-aubay`                |
+| `/education/internship-capgemini.jpg`  | Stage Capgemini                         | `internship-capgemini`            |
+| `/education/engineering-utt.jpg`       | Diplôme d'ingénieur UTT                 | `engineering-utt`                 |
+| `/education/master-cybersecurity.jpg`  | Master Cybersécurité                    | `master-cybersecurity`            |
+| `/education/job-lincoln.jpg`           | Data Scientist — Lincoln                | `job-lincoln`                     |
+
+> Les `id` exacts à utiliser sont ceux déjà présents dans `src/shared/data/education.ts` — vérifie le fichier si une ligne diffère.
+
+#### B.5 — Section Voyages
+
+Dans `src/shared/data/travels.ts`, chaque photo a un `seed` (placeholder picsum). Ajoute `src: "/travels/<fichier>.jpg"` à côté pour utiliser une vraie photo. Exemple :
 
 ```ts
-// 2) Dans src/content.ts → section 1 (PHOTOS)
-export const photos = {
-  bioPortrait: "/images/bio/mathieu.jpg",  // ← avant : ""
-  // …
-};
+// Avant
+{ seed: "vietnam-sapa-rice" },
+// Après
+{ seed: "vietnam-sapa-rice", src: "/travels/vietnam-sapa-rice.jpg" },
 ```
 
-C'est tout — un `pnpm dev` (déjà lancé en hot-reload) suffit pour voir le changement.
+Suggestion de nommage : `/travels/<pays>-<lieu>-<n>.jpg` (ex : `/travels/vietnam-halong-1.jpg`).
+
+#### B.6 — Captures d'écran d'apps (pages détails projets)
+
+Dans `src/shared/data/projects.ts`, chaque projet peut avoir un tableau `screenshots: string[]`. Conventions :
+
+| Fichier suggéré                        | Projet                                  |
+| -------------------------------------- | --------------------------------------- |
+| `/projects/volley-meteo-1.png` à `-N.png` | Volley Météo (`/projects/volley-meteo`) |
+| `/projects/scan2pdf-1.png` à `-N.png`     | Scan2PDF (`/projects/scan2pdf`)         |
+| `/projects/triolinguo-1.png` à `-N.png`   | Triolinguo (`/projects/triolinguo`)     |
+
+---
+
+### Exemple complet — remplacer le portrait du Hero editorial
+
+```bash
+# 1) Crée le dossier si besoin et dépose la photo
+mkdir -p public/editorial
+cp ~/Pictures/portrait.jpg public/editorial/hero-portrait.jpg
+```
+
+```tsx
+// 2) Édite src/variants/editorial/components/sections/Hero.tsx (ligne 22)
+// AVANT
+<img src="https://picsum.photos/seed/mathieu-portrait/800/1000" alt="..." />
+// APRÈS
+<img src="/editorial/hero-portrait.jpg" alt="..." />
+```
+
+C'est tout — Vite est en hot-reload, la nouvelle image apparaît tout de suite.
 
 ### Notes de cohérence
 
-- Les **3 langues partagent obligatoirement les mêmes clés** dans `uiStrings` (`tests/unit/locales.test.ts` plante sinon).
+- Les **3 langues partagent obligatoirement les mêmes clés** (`tests/unit/locales.test.ts` plante sinon).
 - Les balises `<italic>…</italic>` dans les titres sont traitées par `<Trans>` (react-i18next) → laisser telles quelles.
 - TypeScript empêche les fautes de structure : si tu casses une clé, `pnpm typecheck` te le dira.
 

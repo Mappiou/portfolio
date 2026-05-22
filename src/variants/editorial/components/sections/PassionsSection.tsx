@@ -76,6 +76,7 @@ export function PassionsSection() {
 }
 
 function SportAct({ passion, lang }: { passion: Passion; lang: Language }) {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 mb-12">
@@ -102,7 +103,7 @@ function SportAct({ passion, lang }: { passion: Passion; lang: Language }) {
               color: palette.textSecondary,
             }}
           >
-            4 disciplines
+            {t("passions.count")}
           </p>
         </div>
         <div>
@@ -120,7 +121,10 @@ function SportAct({ passion, lang }: { passion: Passion; lang: Language }) {
               maxWidth: 720,
             }}
           >
-            Le corps, <span style={{ color: palette.teal }}>en mouvement.</span>
+            <Trans
+              i18nKey="passions.bodyTitleEditorial"
+              components={[<span />, <span style={{ color: palette.teal }} />]}
+            />
           </h3>
           <p
             style={{
@@ -136,16 +140,195 @@ function SportAct({ passion, lang }: { passion: Passion; lang: Language }) {
       </div>
 
       <div className="flex flex-col">
-        {passion.items.map((item, idx) => (
-          <Scene
-            key={item.id}
-            item={item}
-            lang={lang}
-            index={idx}
-            total={passion.items.length}
-          />
-        ))}
+        {passion.items.map((item, idx) =>
+          item.photoSrcs && item.photoSrcs.length >= 4 ? (
+            <TrekScene
+              key={item.id}
+              item={item}
+              lang={lang}
+              index={idx}
+              total={passion.items.length}
+            />
+          ) : (
+            <Scene
+              key={item.id}
+              item={item}
+              lang={lang}
+              index={idx}
+              total={passion.items.length}
+            />
+          ),
+        )}
       </div>
+    </div>
+  );
+}
+
+function TrekScene({
+  item,
+  lang,
+  index,
+  total,
+}: {
+  item: PassionItem;
+  lang: Language;
+  index: number;
+  total: number;
+}) {
+  const isLast = index === total - 1;
+  const [lead, ...rest] = item.photoSrcs ?? [];
+  const frameLabel = `No. ${String(index + 1).padStart(2, "0")} / IV`;
+
+  return (
+    <div className="relative">
+      <div style={{ padding: "clamp(36px, 4vw, 56px) 0" }}>
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 items-start"
+          style={{
+            columnGap: "clamp(12px, 1.5vw, 20px)",
+            rowGap: "clamp(24px, 3vw, 40px)",
+          }}
+        >
+          <div>
+            {item.kicker && (
+              <p
+                className="mb-3"
+                style={{
+                  fontFamily: tokens.fontMono,
+                  fontSize: 11,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: palette.textSecondary,
+                }}
+              >
+                {String(index + 1).padStart(2, "0")} — {item.kicker[lang]}
+              </p>
+            )}
+            <h4
+              className="mb-4"
+              style={{
+                fontFamily: tokens.fontTitle,
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: "clamp(26px, 2.8vw, 38px)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.05,
+                color: palette.textPrimary,
+                fontFeatureSettings: '"ss01", "ss02"',
+              }}
+            >
+              {item.label[lang]}
+              <span style={{ color: palette.teal }}>.</span>
+            </h4>
+            {item.prose && (
+              <p
+                style={{
+                  fontFamily: tokens.fontBody,
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                  color: palette.textPrimary,
+                }}
+              >
+                {item.prose[lang]}
+              </p>
+            )}
+          </div>
+
+          <div
+            className="overflow-hidden relative md:col-span-2"
+            style={{
+              width: "100%",
+              aspectRatio: "4/3",
+              background: palette.beigeDeep,
+            }}
+          >
+            <img
+              src={lead}
+              alt=""
+              aria-hidden="true"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                filter: "sepia(8%) saturate(110%) contrast(0.97)",
+              }}
+            />
+            <span
+              aria-hidden="true"
+              className="absolute"
+              style={{
+                top: 10,
+                left: 10,
+                padding: "4px 8px",
+                fontFamily: tokens.fontMono,
+                fontSize: 10,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: palette.textPrimary,
+                background: palette.cream,
+                border: `1px solid ${palette.hairlineStrong}`,
+                zIndex: 3,
+              }}
+            >
+              {frameLabel}
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute"
+              style={{
+                bottom: 4,
+                right: 14,
+                fontFamily: tokens.fontTitle,
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: 64,
+                lineHeight: 1,
+                color: palette.cream,
+                opacity: 0.75,
+                textShadow: "0 2px 8px rgba(31,26,20,0.35)",
+                zIndex: 3,
+              }}
+            >
+              {romans[index]}
+            </span>
+          </div>
+
+          {rest.map((src, i) => (
+            <div
+              key={i}
+              className="overflow-hidden"
+              style={{
+                width: "100%",
+                aspectRatio: "4/5",
+                background: palette.beigeDeep,
+              }}
+            >
+              <img
+                src={src}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  filter: "sepia(8%) saturate(110%) contrast(0.97)",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {!isLast && (
+        <span
+          aria-hidden="true"
+          className="block"
+          style={{
+            height: 1,
+            background: `linear-gradient(90deg, transparent 0%, ${palette.hairlineStrong} 50%, transparent 100%)`,
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -186,20 +369,47 @@ function Scene({
             background: palette.beigeDeep,
           }}
         >
-          <img
-            src={
-              item.photoSrc ??
-              `https://picsum.photos/seed/${photoSeed}/${aspect === "4/5" ? "640/800" : "900/562"}`
-            }
-            alt=""
-            aria-hidden="true"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "sepia(8%) saturate(110%) contrast(0.97)",
-            }}
-          />
+          {item.photoSrcs && item.photoSrcs.length > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                gap: 4,
+              }}
+            >
+              {item.photoSrcs.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt=""
+                  aria-hidden="true"
+                  style={{
+                    flex: 1,
+                    width: 0,
+                    height: "100%",
+                    objectFit: "cover",
+                    filter: "sepia(8%) saturate(110%) contrast(0.97)",
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <img
+              src={
+                item.photoSrc ??
+                `https://picsum.photos/seed/${photoSeed}/${aspect === "4/5" ? "640/800" : "900/562"}`
+              }
+              alt=""
+              aria-hidden="true"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                filter: "sepia(8%) saturate(110%) contrast(0.97)",
+              }}
+            />
+          )}
           {/* Folio label, top-left */}
           <span
             aria-hidden="true"

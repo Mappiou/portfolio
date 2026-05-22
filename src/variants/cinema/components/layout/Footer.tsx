@@ -26,7 +26,7 @@ export function Footer({ theme = "dark" }: { theme?: Theme }) {
     <footer
       className="relative z-10 mx-auto text-center"
       style={{
-        padding: "120px 32px 80px",
+        padding: "clamp(64px, 14vw, 120px) clamp(16px, 5vw, 32px) clamp(48px, 12vw, 80px)",
         borderTop: `1px solid ${borderColor}`,
         background: palette.beige,
       }}
@@ -61,17 +61,24 @@ export function Footer({ theme = "dark" }: { theme?: Theme }) {
       ))}
 
       <div
-        className="flex justify-center gap-7 mt-10 mb-10 flex-wrap"
+        className="flex justify-center items-center gap-3 sm:gap-7 mt-10 mb-10 flex-wrap"
         style={{
           fontFamily: tokens.fontMono,
-          fontSize: 10,
+          fontSize: 11,
           textTransform: "uppercase",
           letterSpacing: "0.18em",
         }}
       >
         <a
           href={`mailto:${profile.email}`}
-          style={{ color: palette.textSecondary, textDecoration: "none" }}
+          style={{
+            color: palette.textSecondary,
+            textDecoration: "none",
+            minHeight: 44,
+            padding: "10px 6px",
+            display: "inline-flex",
+            alignItems: "center",
+          }}
           className="hover:!text-[#D9A648] transition-colors"
         >
           {t("contact.email")}
@@ -81,7 +88,14 @@ export function Footer({ theme = "dark" }: { theme?: Theme }) {
             href={profile.links.github}
             target="_blank"
             rel="noreferrer"
-            style={{ color: palette.textSecondary, textDecoration: "none" }}
+            style={{
+              color: palette.textSecondary,
+              textDecoration: "none",
+              minHeight: 44,
+              padding: "10px 6px",
+              display: "inline-flex",
+              alignItems: "center",
+            }}
             className="hover:!text-[#D9A648] transition-colors"
           >
             {t("contact.github")}
@@ -91,7 +105,14 @@ export function Footer({ theme = "dark" }: { theme?: Theme }) {
           href={profile.links.linkedin}
           target="_blank"
           rel="noreferrer"
-          style={{ color: palette.textSecondary, textDecoration: "none" }}
+          style={{
+            color: palette.textSecondary,
+            textDecoration: "none",
+            minHeight: 44,
+            padding: "10px 6px",
+            display: "inline-flex",
+            alignItems: "center",
+          }}
           className="hover:!text-[#D9A648] transition-colors"
         >
           {t("contact.linkedin")}

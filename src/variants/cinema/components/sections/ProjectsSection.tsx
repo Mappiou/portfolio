@@ -11,7 +11,7 @@ export function ProjectsSection() {
   const lang = useLanguageRoute();
 
   return (
-    <section id="projects" className="relative w-full" aria-labelledby="projects-heading">
+    <section id="projects" className="relative w-full" style={{ scrollMarginTop: 96 }} aria-labelledby="projects-heading">
       <ChapterCard
         chapter="CHAPITRE 06"
         bgSrc="https://picsum.photos/seed/apps-cinema/1800/500"
@@ -30,8 +30,12 @@ export function ProjectsSection() {
       />
 
       <div
-        className="relative mx-auto px-6"
-        style={{ padding: "100px 24px 180px", maxWidth: tokens.pageMaxWidth }}
+        className="relative mx-auto"
+        style={{
+          padding:
+            "clamp(60px, 14vw, 100px) clamp(16px, 5vw, 24px) clamp(80px, 18vw, 180px)",
+          maxWidth: tokens.pageMaxWidth,
+        }}
       >
         <p
           className="text-center mb-12 mx-auto"
@@ -65,7 +69,7 @@ export function ProjectsSection() {
                 }}
               >
                 <img
-                  src={`https://picsum.photos/seed/${project.id}-cinema/450/600`}
+                  src={`https://picsum.photos/seed/${project.id}/450/600`}
                   alt=""
                   aria-hidden="true"
                 />

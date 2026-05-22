@@ -10,8 +10,8 @@ export function ContactSection() {
       id="contact"
       className="relative w-full overflow-hidden"
       style={{
-        minHeight: "100vh",
-        padding: "140px 0",
+        minHeight: "100dvh",
+        padding: "clamp(80px, 16vw, 140px) 0",
       }}
       aria-labelledby="contact-heading"
     >
@@ -42,8 +42,8 @@ export function ContactSection() {
         style={{
           zIndex: 2,
           maxWidth: 720,
-          padding: "0 32px",
-          minHeight: "calc(100vh - 280px)",
+          padding: "0 clamp(16px, 5vw, 32px)",
+          minHeight: "calc(100dvh - clamp(160px, 32vw, 280px))",
         }}
       >
         <p

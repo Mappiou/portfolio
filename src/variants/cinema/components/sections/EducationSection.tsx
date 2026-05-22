@@ -198,8 +198,12 @@ export function EducationSection() {
       />
 
       <div
-        className="relative mx-auto px-6"
-        style={{ padding: "70px 24px 126px", maxWidth: tokens.pageMaxWidth }}
+        className="relative mx-auto"
+        style={{
+          padding:
+            "clamp(48px, 10vw, 70px) clamp(16px, 5vw, 24px) clamp(80px, 14vw, 126px)",
+          maxWidth: tokens.pageMaxWidth,
+        }}
       >
         <p
           className="text-center mb-10 flex items-center justify-center gap-2"
@@ -415,6 +419,7 @@ export function EducationSection() {
 
     return (
       <div
+        id={entry.id}
         className="absolute"
         style={{
           left,
@@ -422,6 +427,7 @@ export function EducationSection() {
           transform: "translate(-50%, -50%)",
           width: CARD_WIDTH,
           height: "100%",
+          scrollMarginTop: 96,
         }}
       >
         <div className="relative w-full h-full flex items-center justify-center">

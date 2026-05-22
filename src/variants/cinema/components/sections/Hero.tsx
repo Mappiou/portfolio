@@ -7,9 +7,8 @@ export function Hero() {
     <section
       className="relative w-full overflow-hidden"
       style={{
-        height: "100vh",
-        minHeight: 720,
-        marginTop: -96,
+        minHeight: "100dvh",
+        marginTop: 0,
       }}
     >
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
@@ -36,7 +35,11 @@ export function Hero() {
 
       <div
         className="absolute inset-0 flex flex-col justify-end"
-        style={{ zIndex: 2, padding: "0 80px 96px" }}
+        style={{
+          zIndex: 2,
+          padding:
+            "0 clamp(20px, 6vw, 80px) clamp(48px, 10vw, 96px)",
+        }}
       >
         <p
           style={{
@@ -56,11 +59,12 @@ export function Hero() {
             fontFamily: tokens.fontTitle,
             fontWeight: 300,
             fontStyle: "italic",
-            fontSize: "clamp(120px, 18vw, 220px)",
-            lineHeight: 0.88,
-            letterSpacing: "-0.04em",
+            fontSize: "clamp(56px, 16vw, 220px)",
+            lineHeight: 0.92,
+            letterSpacing: "-0.03em",
             color: palette.textPrimary,
             margin: 0,
+            wordBreak: "break-word",
           }}
         >
           <Trans
@@ -90,9 +94,9 @@ export function Hero() {
             opacity: 0.55,
           }}
         >
-          <span>SCÈNE 01 / OUVERTURE</span>
+          <span>{t("hero.sceneLabel")}</span>
           <span>41°23′N · 2°09′E</span>
-          <span>MAI · 2026</span>
+          <span>{t("hero.dateLabel")}</span>
         </div>
       </div>
     </section>

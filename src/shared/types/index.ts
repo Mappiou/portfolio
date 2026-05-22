@@ -2,18 +2,6 @@ import type { Language } from "@shared/i18n";
 
 export type Translated = Record<Language, string>;
 
-export type Experience = {
-  id: string;
-  role: Translated;
-  company: string;
-  location: Translated;
-  period: Translated;
-  description: Translated;
-  bullets: Translated[];
-  stack: string[];
-  illustration: "chatbot" | "rasa" | "blockchain" | "music" | "health";
-};
-
 export type Education = {
   id: string;
   /** Sort key for the chronological timeline */

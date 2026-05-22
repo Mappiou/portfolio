@@ -35,13 +35,21 @@ export default function ProjectDetail() {
         description={project.description[lang]}
       />
       <article
-        className="relative z-10 mx-auto px-6 pt-12 pb-24"
-        style={{ maxWidth: tokens.pageMaxWidth }}
+        className="relative z-10 mx-auto"
+        style={{
+          maxWidth: tokens.pageMaxWidth,
+          padding:
+            "clamp(32px, 6vw, 48px) clamp(16px, 5vw, 24px) clamp(64px, 12vw, 96px)",
+        }}
       >
         <Link
           to={`/${VARIANT}/${lang}`}
           className="inline-flex items-center gap-1.5 text-sm hover:underline mb-8"
-          style={{ color: palette.textSecondary }}
+          style={{
+            color: palette.textSecondary,
+            minHeight: 44,
+            padding: "10px 0",
+          }}
         >
           <ArrowLeft size={14} /> {t("projects.back")}
         </Link>
@@ -142,7 +150,7 @@ export default function ProjectDetail() {
           </div>
 
           <aside
-            className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5"
+            className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5 w-full"
             aria-label={t("projects.scanQr")}
           >
             {/* Phone mockup (real screenshot when project.screenshots[0] is set, placeholder otherwise) */}
@@ -150,11 +158,12 @@ export default function ProjectDetail() {
 
             {/* QR + download card to the right of the mockup */}
             <div
-              className="rounded-[28px] p-5 text-center flex flex-col"
+              className="rounded-[28px] p-5 text-center flex flex-col w-full sm:w-auto"
               style={{
                 background: bg,
                 boxShadow: "0 6px 24px -10px rgba(14,83,77,0.18)",
-                width: 220,
+                maxWidth: 320,
+                minWidth: 220,
               }}
             >
               <p

@@ -4,6 +4,8 @@ import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { palette, tokens } from "../../styles/palette";
 import { VariantSwitchButton } from "./VariantSwitchButton";
 import { VARIANT } from "../../lib/variant";
+import { scrollToHashTarget } from "@shared/hooks/useHashScroll";
+import type { MouseEvent } from "react";
 
 type Theme = "light" | "dark";
 
@@ -19,17 +21,33 @@ export function PillNav({ theme = "dark" }: Props) {
   const home = `/${VARIANT}/${lang}`;
   const isHome = location.pathname === home || location.pathname === `${home}/`;
 
+  const handleHashClick = (e: MouseEvent<HTMLAnchorElement>, hash: string) => {
+    if (!isHome) return;
+    e.preventDefault();
+    if (scrollToHashTarget(hash)) {
+      window.history.pushState(null, "", `${location.pathname}${hash}`);
+    }
+  };
+
   const items = [
-    { to: home, label: t("nav.home"), active: isHome },
+    { to: home, label: t("nav.home"), active: isHome && !location.hash },
+    {
+      to: `${home}#job-lincoln`,
+      label: t("nav.experience"),
+      active: location.hash === "#job-lincoln",
+      hash: "#job-lincoln",
+    },
     {
       to: `${home}#projects`,
       label: t("nav.projects"),
       active: location.hash === "#projects",
+      hash: "#projects",
     },
     {
       to: `${home}#contact`,
       label: t("nav.contact"),
       active: location.hash === "#contact",
+      hash: "#contact",
     },
   ];
 
@@ -82,6 +100,7 @@ export function PillNav({ theme = "dark" }: Props) {
           <li key={item.label}>
             <Link
               to={item.to}
+              onClick={item.hash ? (e) => handleHashClick(e, item.hash) : undefined}
               aria-current={item.active ? "page" : undefined}
               className="transition-all hover:!text-[#D9A648]"
               style={{
@@ -101,6 +120,29 @@ export function PillNav({ theme = "dark" }: Props) {
             </Link>
           </li>
         ))}
+        <li>
+          <a
+            href="/cv/Mathieu_Diep_CV.pdf"
+            download="Mathieu_Diep_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-all hover:!text-[#D9A648]"
+            style={{
+              padding: "6px 16px",
+              fontFamily: tokens.fontMono,
+              fontSize: 11,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: colors.textSecondary,
+              background: "transparent",
+              fontWeight: 400,
+              textDecoration: "none",
+              display: "inline-block",
+            }}
+          >
+            {t("nav.cv", { defaultValue: "CV" })}
+          </a>
+        </li>
         <li style={{ marginLeft: 8, listStyle: "none" }}>
           <VariantSwitchButton />
         </li>

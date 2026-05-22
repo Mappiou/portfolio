@@ -22,12 +22,15 @@ export function BioSection() {
         }
       />
 
-      <div className="relative w-full" style={{ padding: "140px 0 180px" }}>
+      <div
+        className="relative w-full"
+        style={{ padding: "clamp(60px, 14vw, 140px) 0 clamp(80px, 18vw, 180px)" }}
+      >
         <div
-          className="mx-auto px-6 grid grid-cols-12 gap-8 items-start"
+          className="mx-auto px-5 sm:px-6 grid grid-cols-12 gap-6 md:gap-8 items-start"
           style={{ maxWidth: 1440 }}
         >
-          <div className="col-span-12 md:col-span-7" style={{ paddingRight: 40 }}>
+          <div className="col-span-12 md:col-span-7 md:pr-10">
             <p
               style={{
                 fontFamily: tokens.fontTitle,
@@ -94,7 +97,7 @@ export function BioSection() {
               }}
             >
               <img
-                src="https://picsum.photos/seed/mathieu-portrait-dark/600/900"
+                src="/portrait.jpg"
                 alt=""
                 aria-hidden="true"
               />
@@ -103,10 +106,10 @@ export function BioSection() {
         </div>
 
         <div
-          className="mx-auto mt-32"
+          className="mx-auto mt-20 md:mt-32 mx-5 sm:mx-6 md:mx-auto"
           style={{
             maxWidth: 760,
-            paddingLeft: 40,
+            paddingLeft: "clamp(16px, 4vw, 40px)",
             borderLeft: "1px solid rgba(239,233,221,0.22)",
           }}
         >

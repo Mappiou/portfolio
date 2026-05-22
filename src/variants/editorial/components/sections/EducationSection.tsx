@@ -436,6 +436,7 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, onToggle }: EventProps) {
 
   return (
     <div
+      id={entry.id}
       className="absolute"
       style={{
         left,
@@ -443,6 +444,7 @@ function TimelineEvent({ entry, lang, isAbove, isOpen, onToggle }: EventProps) {
         transform: "translate(-50%, -50%)",
         width: CARD_WIDTH,
         height: "100%",
+        scrollMarginTop: 96,
       }}
     >
       <div className="relative w-full h-full flex items-center justify-center">

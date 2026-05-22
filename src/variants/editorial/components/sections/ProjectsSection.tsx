@@ -15,8 +15,9 @@ export function ProjectsSection() {
       className="relative z-10 mx-auto px-6 md:px-10"
       style={{
         maxWidth: tokens.pageMaxWidth,
-        paddingTop: "clamp(80px, 11vw, 140px)",
+        paddingTop: "clamp(40px, 6vw, 80px)",
         paddingBottom: "clamp(80px, 11vw, 140px)",
+        scrollMarginTop: 32,
       }}
       aria-labelledby="projects-heading"
     >

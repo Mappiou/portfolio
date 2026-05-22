@@ -27,8 +27,12 @@ export default function ProjectDetail() {
         description={project.description[lang]}
       />
       <article
-        className="relative z-10 mx-auto px-6 pt-24 pb-24"
-        style={{ maxWidth: tokens.pageMaxWidth }}
+        className="relative z-10 mx-auto"
+        style={{
+          maxWidth: tokens.pageMaxWidth,
+          padding:
+            "clamp(48px, 10vw, 96px) clamp(16px, 5vw, 24px) clamp(48px, 10vw, 96px)",
+        }}
       >
         <Link
           to={`/${VARIANT}/${lang}`}
@@ -40,6 +44,8 @@ export default function ProjectDetail() {
             textTransform: "uppercase",
             color: palette.textSecondary,
             textDecoration: "none",
+            minHeight: 44,
+            padding: "10px 0",
           }}
         >
           <ArrowLeft size={14} /> {t("projects.back")}
@@ -138,17 +144,18 @@ export default function ProjectDetail() {
           </div>
 
           <aside
-            className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5"
+            className="flex flex-col sm:flex-row items-center sm:items-stretch gap-5 w-full"
             aria-label={t("projects.scanQr")}
           >
             <PhoneMockup project={project} lang={lang} src={project.screenshots?.[0]} index={0} />
 
             <div
-              className="p-6 text-center flex flex-col"
+              className="p-6 text-center flex flex-col w-full sm:w-auto"
               style={{
                 background: "rgba(239,233,221,0.04)",
                 border: "1px solid rgba(239,233,221,0.12)",
-                width: 220,
+                maxWidth: 320,
+                minWidth: 220,
               }}
             >
               <p

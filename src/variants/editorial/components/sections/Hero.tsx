@@ -19,7 +19,7 @@ export function Hero() {
             style={{ aspectRatio: "4 / 5" }}
           >
             <img
-              src="https://picsum.photos/seed/mathieu-portrait/800/1000"
+              src="/portrait.jpg"
               alt="Mathieu Diep"
               style={{
                 width: "100%",
@@ -94,18 +94,6 @@ export function Hero() {
               }}
             />
           </h1>
-          <p
-            className="mt-9"
-            style={{
-              fontSize: 19,
-              lineHeight: 1.55,
-              color: palette.textPrimary,
-              maxWidth: 480,
-              fontWeight: 400,
-            }}
-          >
-            {t("bio.intro")}
-          </p>
           <a
             href="#about"
             className="inline-flex items-center gap-3 mt-14 transition-all"

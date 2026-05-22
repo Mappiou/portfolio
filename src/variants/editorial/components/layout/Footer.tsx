@@ -31,7 +31,7 @@ export function Footer({ theme = "light" }: { theme?: Theme }) {
       }}
     >
       <div
-        className="flex flex-wrap items-center justify-between gap-4"
+        className="flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-4"
         style={{ borderTop: `1px solid ${colors.border}`, paddingTop: 40 }}
       >
         <div
@@ -45,10 +45,10 @@ export function Footer({ theme = "light" }: { theme?: Theme }) {
           M<span style={{ color: colors.accent }}>.</span>D — {t("footer.signature")}
         </div>
         <div
-          className="flex gap-6"
+          className="flex flex-wrap gap-2 md:gap-6"
           style={{
             fontFamily: tokens.fontMono,
-            fontSize: 10,
+            fontSize: 11,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: colors.textInk,
@@ -59,9 +59,15 @@ export function Footer({ theme = "light" }: { theme?: Theme }) {
               href={profile.links.github}
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-[color:var(--accent)]"
+              className="transition-colors hover:text-[color:var(--accent)] inline-flex items-center"
               style={
-                { color: colors.textInk, textDecoration: "none", "--accent": colors.accent } as React.CSSProperties
+                {
+                  color: colors.textInk,
+                  textDecoration: "none",
+                  "--accent": colors.accent,
+                  minHeight: 44,
+                  padding: "10px 4px",
+                } as React.CSSProperties
               }
             >
               {t("contact.github")}
@@ -71,18 +77,30 @@ export function Footer({ theme = "light" }: { theme?: Theme }) {
             href={profile.links.linkedin}
             target="_blank"
             rel="noreferrer"
-            className="transition-colors hover:text-[color:var(--accent)]"
+            className="transition-colors hover:text-[color:var(--accent)] inline-flex items-center"
             style={
-              { color: colors.textInk, textDecoration: "none", "--accent": colors.accent } as React.CSSProperties
+              {
+                color: colors.textInk,
+                textDecoration: "none",
+                "--accent": colors.accent,
+                minHeight: 44,
+                padding: "10px 4px",
+              } as React.CSSProperties
             }
           >
             {t("contact.linkedin")}
           </a>
           <a
             href={`mailto:${profile.email}`}
-            className="transition-colors hover:text-[color:var(--accent)]"
+            className="transition-colors hover:text-[color:var(--accent)] inline-flex items-center"
             style={
-              { color: colors.textInk, textDecoration: "none", "--accent": colors.accent } as React.CSSProperties
+              {
+                color: colors.textInk,
+                textDecoration: "none",
+                "--accent": colors.accent,
+                minHeight: 44,
+                padding: "10px 4px",
+              } as React.CSSProperties
             }
           >
             {t("contact.email")}

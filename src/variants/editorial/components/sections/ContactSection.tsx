@@ -38,6 +38,7 @@ export function ContactSection() {
         paddingTop: "clamp(120px, 14vw, 180px)",
         paddingBottom: "clamp(100px, 12vw, 160px)",
         borderTop: `1px solid ${palette.hairline}`,
+        scrollMarginTop: -140,
       }}
       aria-labelledby="contact-heading"
     >
@@ -79,15 +80,6 @@ export function ContactSection() {
           >
             § {t("contactSection.kicker")}
           </p>
-          <p
-            style={{
-              fontSize: 17,
-              lineHeight: 1.55,
-              color: palette.textSecondary,
-            }}
-          >
-            {t("contactSection.body")}
-          </p>
         </div>
 
         <div
@@ -103,13 +95,11 @@ export function ContactSection() {
               href={line.href}
               target={line.external ? "_blank" : undefined}
               rel={line.external ? "noreferrer" : undefined}
-              className="contact-line"
+              className="contact-line flex flex-col md:grid md:items-center"
               style={{
-                display: "grid",
                 gridTemplateColumns: "minmax(100px, 140px) 1fr auto",
-                alignItems: "center",
-                gap: 32,
-                padding: "28px 0",
+                gap: 8,
+                padding: "20px 0",
                 borderBottom: `1px solid ${palette.hairline}`,
                 color: palette.textPrimary,
                 textDecoration: "none",
@@ -133,19 +123,22 @@ export function ContactSection() {
                   fontFamily: tokens.fontTitle,
                   fontStyle: "italic",
                   fontWeight: 400,
-                  fontSize: "clamp(22px, 3.2vw, 40px)",
+                  fontSize: "clamp(20px, 5.5vw, 40px)",
                   letterSpacing: "-0.02em",
-                  lineHeight: 1.05,
+                  lineHeight: 1.1,
                   position: "relative",
                   display: "inline-block",
                   color: palette.textPrimary,
                   borderBottom: `1px solid transparent`,
                   paddingBottom: 2,
+                  wordBreak: "break-word",
+                  overflowWrap: "anywhere",
                 }}
               >
                 {line.value}
               </span>
               <span
+                className="hidden md:inline"
                 style={{
                   fontFamily: tokens.fontMono,
                   fontSize: 18,

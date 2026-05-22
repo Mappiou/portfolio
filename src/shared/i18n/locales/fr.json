@@ -5,10 +5,14 @@
   },
   "nav": {
     "home": "Accueil",
+    "experience": "Expérience",
     "projects": "Projets",
     "contact": "Contact",
+    "cv": "CV",
     "language": "Langue",
-    "downloadCv": "Télécharger le CV"
+    "downloadCv": "Télécharger le CV",
+    "top": "Haut",
+    "sideDock": "Navigation rapide"
   },
   "language": {
     "fr": "Français",
@@ -20,7 +24,9 @@
   },
   "hero": {
     "kicker": "À propos",
-    "title": "Salut, je suis <italic>Mathieu.</italic>"
+    "title": "Salut, je suis <italic>Mathieu.</italic>",
+    "sceneLabel": "SCÈNE 01 / OUVERTURE",
+    "dateLabel": "MAI · 2026"
   },
   "bio": {
     "intro": "AI Engineer basé à Barcelone, je conçois et déploie des systèmes LLM/RAG que de vraies personnes utilisent, tous les jours.",
@@ -28,14 +34,6 @@
       "Je travaille actuellement chez Hexamind sur la generative AI — entre autres, un chatbot servant 90 000+ utilisateurs en production, articulé autour d'une architecture RAG et d'OpenAI.",
       "Mon obsession : la couture entre la recherche AI et les apps qu'on peut tendre à quelqu'un. J'écris beaucoup de Python, je sors des apps mobiles en Flutter en parallèle, et je cherche à rendre les choses techniques calmes et un peu joueuses."
     ]
-  },
-  "timeline": {
-    "title": "Quelques étapes <italic>en chemin.</italic>",
-    "note": "5 expériences · 6 années dans l'IA appliquée",
-    "expandHint": "Cliquez sur une expérience pour voir le détail",
-    "stackLabel": "Stack",
-    "expand": "Voir le détail",
-    "collapse": "Replier"
   },
   "education": {
     "kicker": "Formation",
@@ -52,7 +50,12 @@
   },
   "passions": {
     "kicker": "Passions",
-    "title": "Ce que j'aime <italic>en dehors du code.</italic>"
+    "title": "Ce que j'aime <italic>en dehors du code.</italic>",
+    "actI": "Acte I",
+    "actII": "Acte II",
+    "bodyTitle": "Le corps, <1>en mouvement</1><2>.</2>",
+    "bodyTitleEditorial": "Le corps, <1>en mouvement.</1>",
+    "count": "4 disciplines"
   },
   "travels": {
     "kicker": "Carnet de voyage",

@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { projects, getProjectById } from "@shared/data/projects";
-import { experiences } from "@shared/data/experiences";
 import { education } from "@shared/data/education";
 import { skills } from "@shared/data/skills";
 import { profile } from "@shared/data/profile";
@@ -30,20 +29,6 @@ describe("data integrity", () => {
     expect(getProjectById("scan2pdf")?.name).toBe("Scan2PDF");
     expect(getProjectById("triolinguo")?.name).toBe("Triolinguo");
     expect(getProjectById("nope")).toBeUndefined();
-  });
-
-  it("each experience has translations for all languages", () => {
-    expect(experiences.length).toBeGreaterThan(0);
-    for (const exp of experiences) {
-      for (const lang of SUPPORTED_LANGUAGES) {
-        expect(exp.role[lang]).toBeTruthy();
-        expect(exp.period[lang]).toBeTruthy();
-        expect(exp.description[lang]).toBeTruthy();
-        for (const bullet of exp.bullets) {
-          expect(bullet[lang]).toBeTruthy();
-        }
-      }
-    }
   });
 
   it("each education entry has translations + valid kind + a year", () => {

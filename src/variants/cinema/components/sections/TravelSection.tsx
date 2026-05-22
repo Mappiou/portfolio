@@ -193,8 +193,12 @@ export function TravelSection() {
       />
 
       <div
-        className="relative mx-auto px-6"
-        style={{ padding: "70px 24px 126px", maxWidth: tokens.pageMaxWidth }}
+        className="relative mx-auto"
+        style={{
+          padding:
+            "clamp(48px, 10vw, 70px) clamp(16px, 5vw, 24px) clamp(80px, 14vw, 126px)",
+          maxWidth: tokens.pageMaxWidth,
+        }}
       >
         <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 mb-12">
           <p
