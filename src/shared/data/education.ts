@@ -437,9 +437,9 @@ export const education: Education[] = [
       es: "París luego Barcelona",
     },
     period: {
-      fr: "Janvier 2024 — 2026",
-      en: "January 2024 — 2026",
-      es: "Enero 2024 — 2026",
+      fr: "Janvier 2025 — Juin 2026",
+      en: "January 2025 — June 2026",
+      es: "Enero 2025 — Junio 2026",
     },
     summary: {
       fr: "Generative AI : chatbot LLM/RAG en production servant 90 000+ utilisateurs.",
@@ -461,7 +461,7 @@ export const education: Education[] = [
   },
   {
     id: "job-conseils-plus",
-    year: 2026,
+    year: 2026.5,
     kind: "job",
     title: {
       fr: "AI Engineer (VIE) — Conseils Plus",
@@ -477,9 +477,9 @@ export const education: Education[] = [
     school: { fr: "Conseils Plus", en: "Conseils Plus", es: "Conseils Plus" },
     location: { fr: "Barcelone, Espagne", en: "Barcelona, Spain", es: "Barcelona, España" },
     period: {
-      fr: "2026 — présent · VIE",
-      en: "2026 — present · VIE",
-      es: "2026 — presente · VIE",
+      fr: "Juillet 2026 — présent · VIE",
+      en: "July 2026 — present · VIE",
+      es: "Julio 2026 — presente · VIE",
     },
     summary: {
       fr: "VIE à Barcelone : j'automatise tout type de processus de travail grâce à l'IA.",
