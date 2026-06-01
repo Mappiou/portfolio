@@ -18,8 +18,8 @@ export default function Home() {
       <Hero />
       <BioSection />
       <EducationSection />
-      <TravelSection />
       <PassionsSection />
+      <TravelSection />
       <ProjectsSection />
       <ContactSection />
     </>

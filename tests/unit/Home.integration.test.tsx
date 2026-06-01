@@ -36,7 +36,7 @@ describe("Home page integration", () => {
     expect(screen.getAllByText(/Hexamind/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: /baccalauréat/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /en dehors du code/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /trois apps/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /cinq apps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /construisons/i })).toBeInTheDocument();
   });
 
@@ -44,7 +44,7 @@ describe("Home page integration", () => {
     renderApp("/cinema/en");
     expect(screen.getByRole("heading", { name: /double degree/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /outside the code/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /three apps/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /five apps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /let's build/i })).toBeInTheDocument();
   });
 
@@ -52,7 +52,7 @@ describe("Home page integration", () => {
     renderApp("/cinema/es");
     expect(screen.getByRole("heading", { name: /doble título/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /fuera del código/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /tres apps/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /cinco apps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /construyamos/i })).toBeInTheDocument();
   });
 

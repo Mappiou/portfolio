@@ -69,8 +69,8 @@
   },
   "projects": {
     "kicker": "Proyectos personales",
-    "title": "Tres apps, <italic>escaneables.</italic>",
-    "intro": "Tres apps Android que construyo en mi tiempo libre. Escanea el QR para instalar directamente, o haz clic para los detalles.",
+    "title": "Cinco apps, <italic>escaneables.</italic>",
+    "intro": "Cinco apps Android que construyo en mi tiempo libre. Escanea el QR para instalar directamente, o haz clic para los detalles.",
     "viewMore": "Ver el proyecto",
     "downloadHint": "Escanear para instalar",
     "downloadApk": "Descargar APK",

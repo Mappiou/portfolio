@@ -5,6 +5,7 @@ import { projects } from "@shared/data/projects";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { ChapterCard } from "../ui/ChapterCard";
 import { VARIANT } from "../../lib/variant";
+import { PhoneMockup } from "../projects/PhoneMockup";
 
 export function ProjectsSection() {
   const { t } = useTranslation();
@@ -51,70 +52,52 @@ export function ProjectsSection() {
           {t("projects.intro")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-9">
-          {projects.map((project) => (
-            <Link
-              key={project.id}
-              to={`/${VARIANT}/${lang}/projects/${project.id}`}
-              className="group flex flex-col transition-all hover:-translate-y-1"
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <div
-                className="cinema-frame mb-7"
-                style={{
-                  aspectRatio: "3 / 4",
-                  width: "100%",
-                }}
+        <div className="mosaic-grid">
+          {projects.map((project, i) => (
+            <div className="mosaic-cell" key={project.id}>
+              <Link
+                to={`/${VARIANT}/${lang}/projects/${project.id}`}
+                className="mosaic-inner group"
+                style={{ textDecoration: "none" }}
               >
-                <img
-                  src={`https://picsum.photos/seed/${project.id}/450/600`}
-                  alt=""
-                  aria-hidden="true"
-                />
-              </div>
-              <h3
-                className="group-hover:!text-[#D9A648] transition-colors"
-                style={{
-                  fontFamily: tokens.fontTitle,
-                  fontStyle: "italic",
-                  fontWeight: 400,
-                  fontSize: 28,
-                  letterSpacing: "-0.015em",
-                  color: palette.textPrimary,
-                  marginBottom: 8,
-                }}
-              >
-                {project.name}
-              </h3>
-              <p
-                style={{
-                  fontFamily: tokens.fontBody,
-                  fontWeight: 300,
-                  fontSize: 14,
-                  lineHeight: 1.55,
-                  color: palette.textSecondary,
-                  marginBottom: 18,
-                }}
-              >
-                {project.tagline[lang]}
-              </p>
-              <div
-                className="mt-auto"
-                style={{
-                  paddingTop: 18,
-                  borderTop: "1px solid rgba(239,233,221,0.12)",
-                  fontFamily: tokens.fontMono,
-                  fontSize: 11,
-                  color: palette.textSecondary,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.16em",
-                }}
-              >
-                {project.stack.join(" · ")}
-              </div>
-            </Link>
+                <div className="flex justify-center mb-5">
+                  <div className="w-full max-w-[190px] mx-auto">
+                    <PhoneMockup
+                      project={project}
+                      lang={lang}
+                      src={project.screenshots?.[0]}
+                      index={i}
+                      width="100%"
+                    />
+                  </div>
+                </div>
+                <h3
+                  className="group-hover:!text-[#D9A648] transition-colors"
+                  style={{
+                    fontFamily: tokens.fontTitle,
+                    fontStyle: "italic",
+                    fontWeight: 400,
+                    fontSize: 22,
+                    letterSpacing: "-0.015em",
+                    color: palette.textPrimary,
+                    marginBottom: 6,
+                  }}
+                >
+                  {project.name}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: tokens.fontBody,
+                    fontWeight: 300,
+                    fontSize: 13,
+                    lineHeight: 1.5,
+                    color: palette.textSecondary,
+                  }}
+                >
+                  {project.tagline[lang]}
+                </p>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

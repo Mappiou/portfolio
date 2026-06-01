@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Project } from "@shared/types";
 import type { Language } from "@shared/i18n";
 import { palette } from "../../styles/palette";
@@ -7,6 +8,7 @@ const accentMap: Record<NonNullable<Project["accent"]>, string> = {
   green: palette.mint,
   blue: palette.babyblue,
   yellow: palette.yellow,
+  lilac: palette.lilac,
 };
 
 type Props = {
@@ -16,19 +18,24 @@ type Props = {
   src?: string;
   /** Index of this mockup in a row of mockups — used to slightly tilt them */
   index?: number;
+  /** Width of the mockup: px number or CSS string (e.g. "100%"). Default 220. */
+  width?: number | string;
   /** Pass a string time like "9:41" to display in the status bar */
   time?: string;
 };
 
-export function PhoneMockup({ project, lang, src, index = 0, time = "9:41" }: Props) {
+export function PhoneMockup({ project, lang, src, index = 0, width = 220, time = "9:41" }: Props) {
   const accent = accentMap[project.accent];
   const tilt = ((index % 3) - 1) * 1.5; // -1.5°, 0°, +1.5°
+  const [imgFailed, setImgFailed] = useState(false);
+  const showScreenshot = Boolean(src) && !imgFailed;
 
   return (
     <div
       className="relative shrink-0"
       style={{
-        width: 220,
+        width,
+        maxWidth: "100%",
         transform: `rotate(${tilt}deg)`,
         transition: "transform 0.3s ease",
       }}
@@ -47,7 +54,7 @@ export function PhoneMockup({ project, lang, src, index = 0, time = "9:41" }: Pr
         <div
           className="relative w-full h-full overflow-hidden rounded-[30px]"
           style={{
-            background: src
+            background: showScreenshot
               ? "#000"
               : `linear-gradient(180deg, ${accent} 0%, rgba(255,255,255,0.5) 100%)`,
           }}
@@ -64,10 +71,11 @@ export function PhoneMockup({ project, lang, src, index = 0, time = "9:41" }: Pr
             aria-hidden="true"
           />
 
-          {src ? (
+          {showScreenshot ? (
             <img
               src={src}
               alt={`${project.name} screenshot`}
+              onError={() => setImgFailed(true)}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (

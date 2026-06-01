@@ -17,6 +17,7 @@ const cardBg: Record<string, string> = {
   green: palette.mint,
   blue: palette.babyblue,
   yellow: palette.yellow,
+  lilac: palette.lilac,
 };
 
 export default function ProjectDetail() {

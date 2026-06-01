@@ -52,3 +52,47 @@ body {
   text-decoration: none;
   border-radius: 0.5rem;
 }
+
+/* ---- Mosaïque décalée — section projets (5 apps "alignées mais vivantes") ---- */
+.mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+  align-items: start;
+  padding-block: 42px;
+}
+.mosaic-cell {
+  will-change: transform;
+}
+.mosaic-cell:nth-child(odd) {
+  transform: translateY(-30px);
+}
+.mosaic-cell:nth-child(even) {
+  transform: translateY(30px);
+}
+.mosaic-inner {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mosaic-inner:hover {
+  transform: translateY(-12px);
+}
+
+@media (max-width: 1023px) {
+  .mosaic-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    padding-block: 0;
+  }
+  .mosaic-cell {
+    transform: none;
+  }
+}
+@media (max-width: 599px) {
+  .mosaic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+}

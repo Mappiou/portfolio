@@ -11,9 +11,9 @@ export const projects: Project[] = [
       es: "El tiempo ideal para jugar al voley",
     },
     description: {
-      fr: "App qui croise prévisions météo horaires et conditions idéales pour jouer au beach-volley à Barcelone. Affiche les meilleures fenêtres de la journée pour aller jouer.",
-      en: "App that combines hourly weather forecasts with ideal conditions for beach volleyball in Barcelona. Shows you the best windows of the day to play.",
-      es: "App que cruza previsiones meteorológicas horarias y condiciones ideales para jugar al voley playa en Barcelona. Muestra las mejores franjas del día para jugar.",
+      fr: "Vérifie les créneaux idéaux durant les sept prochains jours pour jouer au volley.",
+      en: "Check the ideal time slots over the next seven days to play volleyball.",
+      es: "Consulta las franjas ideales durante los próximos siete días para jugar al voley.",
     },
     features: [
       {
@@ -36,6 +36,7 @@ export const projects: Project[] = [
     apkUrl: "/apks/volley_meteo.apk",
     githubUrl: "https://github.com/Mappiou/volley_meteo",
     accent: "blue",
+    screenshots: ["/screenshots/volley-meteo.png"],
   },
   {
     id: "scan2pdf",
@@ -47,9 +48,9 @@ export const projects: Project[] = [
       es: "Escanea documentos a PDF, simple",
     },
     description: {
-      fr: "Scanner multi-pages avec détection automatique des bords. Convertit instantanément en PDF partageable via AirDrop, mail ou message.",
-      en: "Multi-page scanner with automatic edge detection. Instantly creates a PDF you can share via AirDrop, email or message.",
-      es: "Escáner multipágina con detección automática de bordes. Crea al instante un PDF compartible por AirDrop, mail o mensaje.",
+      fr: "Scanne tes documents en PDF, simplement et gratuitement, sans publicité.",
+      en: "Scan your documents to PDF, simply and for free, with no ads.",
+      es: "Escanea tus documentos a PDF, de forma sencilla y gratuita, sin publicidad.",
     },
     features: [
       {
@@ -72,6 +73,7 @@ export const projects: Project[] = [
     apkUrl: "/apks/scan2pdf.apk",
     githubUrl: "https://github.com/Mappiou/scan2pdf",
     accent: "red",
+    screenshots: ["/screenshots/scan2pdf.png"],
   },
   {
     id: "triolinguo",
@@ -108,6 +110,81 @@ export const projects: Project[] = [
     apkUrl: "/apks/triolinguo.apk",
     githubUrl: "https://github.com/Mappiou/Triolinguo",
     accent: "green",
+    screenshots: ["/screenshots/triolinguo.png"],
+  },
+  {
+    id: "torneo",
+    name: "Torneo",
+    emoji: "🏆",
+    tagline: {
+      fr: "Générateur de tournois beach-volley mixte",
+      en: "Mixed beach-volley tournament generator",
+      es: "Generador de torneos de voley playa mixto",
+    },
+    description: {
+      fr: "Génère des tableaux aléatoires avec les joueurs que tu veux, pour s'éclater sur la plage.",
+      en: "Generate random brackets with the players you want, to have a blast on the beach.",
+      es: "Genera cuadros aleatorios con los jugadores que quieras, para pasarlo en grande en la playa.",
+    },
+    features: [
+      {
+        fr: "Rotation automatique des partenaires",
+        en: "Automatic partner rotation",
+        es: "Rotación automática de parejas",
+      },
+      {
+        fr: "Classements intermédiaires et final en direct",
+        en: "Live intermediate and final rankings",
+        es: "Clasificaciones intermedias y final en directo",
+      },
+      {
+        fr: "Saisie des scores et export du classement",
+        en: "Score entry and standings export",
+        es: "Registro de marcadores y exportación de la clasificación",
+      },
+    ],
+    stack: ["Flutter", "Dart"],
+    apkUrl: "/apks/torneo.apk",
+    githubUrl: "https://github.com/Mappiou/torneo",
+    accent: "yellow",
+    screenshots: ["/screenshots/torneo.png"],
+  },
+  {
+    id: "noscroll",
+    name: "NoScroll",
+    emoji: "📵",
+    tagline: {
+      fr: "Bloque automatiquement Reels et Shorts",
+      en: "Automatically blocks Reels and Shorts",
+      es: "Bloquea automáticamente Reels y Shorts",
+    },
+    description: {
+      fr: "Pour une utilisation saine des réseaux sociaux, sans reels ni shorts.",
+      en: "For a healthy use of social media, without reels or shorts.",
+      es: "Para un uso saludable de las redes sociales, sin reels ni shorts.",
+    },
+    features: [
+      {
+        fr: "Détection automatique des surfaces Reels/Shorts",
+        en: "Automatic detection of Reels/Shorts surfaces",
+        es: "Detección automática de las superficies Reels/Shorts",
+      },
+      {
+        fr: "Pause configurable de 1 à 15 minutes",
+        en: "Configurable 1-to-15-minute pause",
+        es: "Pausa configurable de 1 a 15 minutos",
+      },
+      {
+        fr: "Couvre Instagram, YouTube et Facebook",
+        en: "Covers Instagram, YouTube and Facebook",
+        es: "Cubre Instagram, YouTube y Facebook",
+      },
+    ],
+    stack: ["Kotlin", "Jetpack Compose", "AccessibilityService"],
+    apkUrl: "/apks/noscroll.apk",
+    githubUrl: "https://github.com/Mappiou/noscroll",
+    accent: "lilac",
+    screenshots: ["/screenshots/noscroll.png"],
   },
 ];
 

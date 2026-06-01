@@ -4,6 +4,7 @@ import { palette, tokens } from "../../styles/palette";
 import { projects } from "@shared/data/projects";
 import { useLanguageRoute } from "../../hooks/useLanguageRoute";
 import { VARIANT } from "../../lib/variant";
+import { PhoneMockup } from "../projects/PhoneMockup";
 
 export function ProjectsSection() {
   const { t } = useTranslation();
@@ -72,99 +73,67 @@ export function ProjectsSection() {
         {t("projects.intro")}
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      <div className="mosaic-grid">
         {projects.map((project, i) => {
           const num = String(i + 1).padStart(2, "0");
           return (
-            <Link
-              key={project.id}
-              to={`/${VARIANT}/${lang}/projects/${project.id}`}
-              className="block transition-transform hover:-translate-y-1.5"
-              style={{
-                color: palette.textPrimary,
-                textDecoration: "none",
-              }}
-            >
-              <div className="overflow-hidden mb-7" style={{ aspectRatio: "1 / 1" }}>
-                <img
-                  src={`https://picsum.photos/seed/${project.id}/500/500`}
-                  alt=""
+            <div className="mosaic-cell" key={project.id}>
+              <Link
+                to={`/${VARIANT}/${lang}/projects/${project.id}`}
+                className="mosaic-inner group"
+                style={{ color: palette.textPrimary, textDecoration: "none" }}
+              >
+                <div className="flex justify-center mb-5">
+                  <div className="w-full max-w-[190px] mx-auto">
+                    <PhoneMockup
+                      project={project}
+                      lang={lang}
+                      src={project.screenshots?.[0]}
+                      index={i}
+                      width="100%"
+                    />
+                  </div>
+                </div>
+                <p
+                  className="mb-2"
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    filter: "sepia(8%) saturate(110%)",
-                    transition: "transform 0.7s ease, filter 0.5s ease",
+                    fontFamily: tokens.fontMono,
+                    fontSize: 10,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: palette.teal,
+                    fontWeight: 500,
                   }}
-                />
-              </div>
-              <p
-                className="mb-3"
-                style={{
-                  fontFamily: tokens.fontMono,
-                  fontSize: 11,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: palette.teal,
-                  fontWeight: 500,
-                }}
-              >
-                {num} — {project.stack[0] ?? "Mobile"}
-              </p>
-              <h3
-                style={{
-                  fontFamily: tokens.fontTitle,
-                  fontStyle: "italic",
-                  fontWeight: 400,
-                  fontSize: 28,
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1.1,
-                  color: palette.textPrimary,
-                  margin: 0,
-                  marginBottom: 10,
-                  fontFeatureSettings: '"ss01", "ss02"',
-                }}
-              >
-                {project.name}<span style={{ color: palette.teal }}>.</span>
-              </h3>
-              <p
-                className="mb-5"
-                style={{
-                  fontSize: 16,
-                  lineHeight: 1.5,
-                  color: palette.textSecondary,
-                  maxWidth: 320,
-                }}
-              >
-                {project.tagline[lang]}
-              </p>
-              <div
-                className="pt-4"
-                style={{
-                  borderTop: `1px solid ${palette.hairline}`,
-                  fontFamily: tokens.fontMono,
-                  fontSize: 10,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: palette.textSecondary,
-                }}
-              >
-                {project.stack.join(" · ")}
-              </div>
-              <p
-                className="mt-5 inline-flex items-center gap-2"
-                style={{
-                  fontFamily: tokens.fontMono,
-                  fontSize: 11,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: palette.teal,
-                  fontWeight: 500,
-                }}
-              >
-                → {t("projects.viewMore")}
-              </p>
-            </Link>
+                >
+                  {num} — {project.stack[0] ?? "Mobile"}
+                </p>
+                <h3
+                  style={{
+                    fontFamily: tokens.fontTitle,
+                    fontStyle: "italic",
+                    fontWeight: 400,
+                    fontSize: 22,
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1.1,
+                    color: palette.textPrimary,
+                    margin: 0,
+                    marginBottom: 6,
+                    fontFeatureSettings: '"ss01", "ss02"',
+                  }}
+                >
+                  {project.name}<span style={{ color: palette.teal }}>.</span>
+                </h3>
+                <p
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 1.45,
+                    color: palette.textSecondary,
+                  }}
+                >
+                  {project.tagline[lang]}
+                </p>
+              </Link>
+            </div>
           );
         })}
       </div>

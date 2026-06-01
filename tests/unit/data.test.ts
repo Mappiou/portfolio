@@ -6,8 +6,8 @@ import { profile } from "@shared/data/profile";
 import { SUPPORTED_LANGUAGES } from "@shared/i18n";
 
 describe("data integrity", () => {
-  it("has exactly 3 projects with translated content for all languages", () => {
-    expect(projects).toHaveLength(3);
+  it("has exactly 5 projects with translated content for all languages", () => {
+    expect(projects).toHaveLength(5);
     for (const project of projects) {
       for (const lang of SUPPORTED_LANGUAGES) {
         expect(project.tagline[lang]).toBeTruthy();
@@ -28,6 +28,8 @@ describe("data integrity", () => {
     expect(getProjectById("volley-meteo")?.name).toBe("Volley Météo");
     expect(getProjectById("scan2pdf")?.name).toBe("Scan2PDF");
     expect(getProjectById("triolinguo")?.name).toBe("Triolinguo");
+    expect(getProjectById("torneo")?.name).toBe("Torneo");
+    expect(getProjectById("noscroll")?.name).toBe("NoScroll");
     expect(getProjectById("nope")).toBeUndefined();
   });
 

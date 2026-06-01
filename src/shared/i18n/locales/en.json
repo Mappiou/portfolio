@@ -69,8 +69,8 @@
   },
   "projects": {
     "kicker": "Side projects",
-    "title": "Three apps, <italic>scannable.</italic>",
-    "intro": "Three Android apps I build on my own time. Scan the QR code to install directly, or click through for details.",
+    "title": "Five apps, <italic>scannable.</italic>",
+    "intro": "Five Android apps I build on my own time. Scan the QR code to install directly, or click through for details.",
     "viewMore": "View project",
     "downloadHint": "Scan to install",
     "downloadApk": "Download APK",
