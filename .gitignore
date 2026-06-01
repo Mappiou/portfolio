@@ -9,6 +9,9 @@ dist-ssr
 .vercel
 .vite
 
+# APKs are distributed via GitHub Releases, not committed (keeps the repo light)
+public/apks/*.apk
+
 # Tests
 coverage
 playwright-report
