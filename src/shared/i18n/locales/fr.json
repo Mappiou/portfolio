@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "Mathieu Diep — AI Engineer",
-    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer LLM/RAG basé à Barcelone. Parcours, principes, et 3 apps Android téléchargeables par QR code."
+    "siteDescription": "Le portfolio de Mathieu Diep, AI Engineer à Barcelone. Mon parcours, mes passions et mes projets perso."
   },
   "nav": {
     "home": "Accueil",
@@ -29,15 +29,16 @@
     "dateLabel": "MAI · 2026"
   },
   "bio": {
-    "intro": "AI Engineer basé à Barcelone, je conçois et déploie des systèmes LLM/RAG que de vraies personnes utilisent, tous les jours.",
+    "intro": "Ingénieur le jour, explorateur le week-end. J'adore automatiser tout type de processus et rendre le quotidien plus agréable grâce à l'IA.",
     "paragraphs": [
-      "Je travaille actuellement chez Hexamind sur la generative AI — entre autres, un chatbot servant 90 000+ utilisateurs en production, articulé autour d'une architecture RAG et d'OpenAI.",
-      "Mon obsession : la couture entre la recherche AI et les apps qu'on peut tendre à quelqu'un. J'écris beaucoup de Python, je sors des apps mobiles en Flutter en parallèle, et je cherche à rendre les choses techniques calmes et un peu joueuses."
-    ]
+      "Je suis actuellement en VIE à Barcelone, chez Conseils Plus, où j'automatise tout type de processus de travail.",
+      "Mon obsession : faire en sorte que chacun puisse consacrer toute sa charge mentale aux missions qui l'intéressent vraiment, et se libérer des tâches superflues. C'est exactement ce que je cherche à faire grâce à l'IA, au quotidien."
+    ],
+    "pullquote": "Libérer l'esprit des tâches superflues, pour ce qui compte vraiment."
   },
   "education": {
     "kicker": "Formation",
-    "title": "6 ans, du baccalauréat <italic>au double diplôme.</italic>",
+    "title": "De mon bac à aujourd'hui, <italic>en passant par mon double diplôme, mes Erasmus et mon voyage sabbatique.</italic>",
     "expandHint": "Faites défiler la frise et cliquez sur une étape pour voir les détails",
     "kind": {
       "milestone": "Étape",
@@ -50,7 +51,7 @@
   },
   "passions": {
     "kicker": "Passions",
-    "title": "Ce que j'aime <italic>en dehors du code.</italic>",
+    "title": "Loin de l'écran, <italic>ce qui me fait vibrer.</italic>",
     "actI": "Acte I",
     "actII": "Acte II",
     "bodyTitle": "Le corps, <1>en mouvement</1><2>.</2>",
@@ -59,9 +60,9 @@
   },
   "travels": {
     "kicker": "Carnet de voyage",
-    "title": "Un an sur la route, <italic>de Hanoï à Tulum.</italic>",
+    "title": "Un an autour du monde, <italic>avec ma vie dans mon backpack.</italic>",
     "prologueLabel": "Prologue",
-    "prologue": "Le voyage a commencé comme un pèlerinage — j'ai des origines vietnamiennes et laotiennes, et je voulais voir de mes yeux la terre dont parlaient mes parents. Deux mois en Asie, puis une chose en a entraîné une autre. Je suis tombé amoureux du backpacking, et je suis reparti pour un an en Amérique du Sud, de la Colombie au Brésil. Mexico a clôturé la boucle.",
+    "prologue": "Je suis parti pour comprendre d'où je viens : mes parents sont vietnamiens et laotiens, et je rêvais de voir ces pays en vrai. Deux mois en Asie plus tard, impossible de m'arrêter. J'ai remis le sac sur le dos pour un an en Amérique du Sud, de la Colombie au Brésil, jusqu'à Mexico. Du désert le plus aride du monde aux sommets à 6 000 mètres de Bolivie, en passant par la Patagonie et les chutes d'Iguazú : des paysages d'une diversité folle, et des rencontres inoubliables.",
     "expandHint": "Faites défiler la frise — chaque pays s'ouvre en bas",
     "highlightsLabel": "Étapes marquantes",
     "originLabel": "Origines",
@@ -69,7 +70,7 @@
   },
   "projects": {
     "kicker": "Projets perso",
-    "title": "Cinq apps, <italic>scannables.</italic>",
+    "title": "Cinq apps maison, <italic>à télécharger directement sur ton téléphone.</italic>",
     "intro": "Cinq apps Android que je construis sur mon temps libre. Scannez le QR code pour installer directement, ou cliquez pour les détails.",
     "viewMore": "Voir le projet",
     "downloadHint": "Scanner pour installer",
@@ -84,10 +85,10 @@
   "contactSection": {
     "kicker": "Contact",
     "title": "Construisons<br /> <italic>quelque chose ensemble.</italic>",
-    "body": "Je suis ouvert à discuter d'un nouveau poste, d'une mission, ou simplement d'un café (vrai ou virtuel) si vous travaillez sur des choses intéressantes."
+    "body": "Toujours partant pour discuter d'un nouveau poste, d'une mission, ou juste prendre un café (en vrai ou en visio) si tu fais des trucs intéressants."
   },
   "footer": {
-    "signature": "— Mathieu, à Barcelone.",
+    "signature": "Pensé et designé par Mathieu, codé exclusivement par son agent, sous la surveillance de son maître 😜",
     "rights": "© 2026 Mathieu Diep. Tous droits réservés."
   },
   "notFound": {
@@ -120,7 +121,7 @@
       "issueLabel": "Nº 01 — 2026",
       "kicker": "un portfolio trimestriel",
       "title": ["Editorial,", "un magazine", "tranquille"],
-      "tagline": "Clair, joyeux et chaleureux. Mon travail en magazine — composé en Newsreader, servi en crème et encre.",
+      "tagline": "Lumineux, joyeux, chaleureux. Moi en version magazine : crème, encre et caractères Newsreader.",
       "footerLabel": "Couverture · Nº 01",
       "cta": "Ouvrir ce numéro",
       "aria": "Portfolio Editorial — un magazine tranquille"
@@ -129,7 +130,7 @@
       "issueLabel": "Nº 02 — 2026",
       "kicker": "un portfolio nocturne",
       "title": ["Cinéma,", "un plan", "long"],
-      "tagline": "Sombre, artistique et lent. Mon travail en film — composé en Cormorant Garamond, servi en noir et or.",
+      "tagline": "Sombre et contemplatif, comme un plan-séquence. Noir, or et Cormorant Garamond.",
       "footerLabel": "Couverture · Nº 02",
       "cta": "Ouvrir ce numéro",
       "aria": "Portfolio Cinema — un plan long et nocturne"

@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "Mathieu Diep — AI Engineer",
-    "siteDescription": "Portfolio de Mathieu Diep, AI Engineer LLM/RAG basado en Barcelona. Trayectoria, principios, y 3 apps Android descargables por QR."
+    "siteDescription": "El portfolio de Mathieu Diep — AI Engineer en Barcelona. Mi trayectoria, mis pasiones y mis proyectos personales."
   },
   "nav": {
     "home": "Inicio",
@@ -29,15 +29,16 @@
     "dateLabel": "MAYO · 2026"
   },
   "bio": {
-    "intro": "AI Engineer basado en Barcelona, construyendo sistemas LLM/RAG que personas reales usan, cada día.",
+    "intro": "Ingeniero de día, explorador los fines de semana. Me encanta automatizar todo tipo de procesos y hacer el día a día más agradable gracias a la IA.",
     "paragraphs": [
-      "Actualmente lidero el trabajo de IA generativa en Hexamind — entre otras cosas, un chatbot que sirve a más de 90 000 usuarios en producción, construido sobre arquitecturas RAG y OpenAI.",
-      "Mi obsesión es la costura entre la IA de investigación y las apps que se le pueden pasar a un amigo. Escribo mucho Python, lanzo apps móviles en Flutter en paralelo, y trabajo en hacer que las cosas técnicas se sientan calmadas y un poco juguetonas."
-    ]
+      "Actualmente estoy en un VIE en Barcelona, en Conseils Plus, donde automatizo todo tipo de procesos de trabajo.",
+      "Mi obsesión: que cada persona pueda dedicar toda su energía mental a las misiones que de verdad le interesan, y librarse de las tareas superfluas. Es justo lo que intento lograr con la IA, cada día."
+    ],
+    "pullquote": "Liberar la mente de lo superfluo, para lo que de verdad importa."
   },
   "education": {
     "kicker": "Formación",
-    "title": "6 años, del bachillerato <italic>al doble título.</italic>",
+    "title": "De mi bachillerato hasta hoy, <italic>pasando por mi doble titulación, mis Erasmus y mi viaje sabático.</italic>",
     "expandHint": "Desplaza la línea y haz clic en una etapa para ver los detalles",
     "kind": {
       "milestone": "Hito",
@@ -50,7 +51,7 @@
   },
   "passions": {
     "kicker": "Pasiones",
-    "title": "Lo que me gusta <italic>fuera del código.</italic>",
+    "title": "Lejos de la pantalla, <italic>lo que me hace vibrar.</italic>",
     "actI": "Acto I",
     "actII": "Acto II",
     "bodyTitle": "El cuerpo, <1>en movimiento</1><2>.</2>",
@@ -59,9 +60,9 @@
   },
   "travels": {
     "kicker": "Cuaderno de viaje",
-    "title": "Un año en la ruta, <italic>de Hanói a Tulum.</italic>",
+    "title": "Un año alrededor del mundo, <italic>con mi vida en la mochila.</italic>",
     "prologueLabel": "Prólogo",
-    "prologue": "El viaje empezó como una peregrinación — tengo raíces vietnamitas y laosianas, y quería ver con mis propios ojos la tierra de la que hablaban mis padres. Dos meses en Asia, luego una cosa llevó a la otra. Me enamoré del mochileo, y me fui un año por Sudamérica, de Colombia a Brasil. México cerró el círculo.",
+    "prologue": "Me fui para entender de dónde vengo: mis padres son vietnamitas y laosianos, y soñaba con ver esos países en persona. Dos meses en Asia después, no podía parar. Volví a cargar la mochila para pasar un año en Sudamérica, de Colombia a Brasil, hasta México. Del desierto más árido del mundo a las cumbres de 6.000 metros de Bolivia, pasando por la Patagonia y las cataratas de Iguazú: paisajes de una diversidad increíble, y encuentros inolvidables.",
     "expandHint": "Desplaza la línea — cada país se abre abajo",
     "highlightsLabel": "Lugares destacados",
     "originLabel": "Raíces",
@@ -69,7 +70,7 @@
   },
   "projects": {
     "kicker": "Proyectos personales",
-    "title": "Cinco apps, <italic>escaneables.</italic>",
+    "title": "Cinco apps caseras, <italic>para descargar directamente en tu móvil.</italic>",
     "intro": "Cinco apps Android que construyo en mi tiempo libre. Escanea el QR para instalar directamente, o haz clic para los detalles.",
     "viewMore": "Ver el proyecto",
     "downloadHint": "Escanear para instalar",
@@ -84,10 +85,10 @@
   "contactSection": {
     "kicker": "Contacto",
     "title": "Construyamos<br /> <italic>algo juntos.</italic>",
-    "body": "Estoy abierto a hablar de un nuevo puesto, una misión, o simplemente un café (real o virtual) si trabajas en algo interesante."
+    "body": "Siempre dispuesto a hablar de un nuevo puesto, un proyecto, o simplemente tomar un café (en persona o por videollamada) si trabajas en cosas interesantes."
   },
   "footer": {
-    "signature": "— Mathieu, en Barcelona.",
+    "signature": "Pensado y diseñado por Mathieu, programado exclusivamente por su agente, bajo la atenta mirada de su maestro 😜",
     "rights": "© 2026 Mathieu Diep. Todos los derechos reservados."
   },
   "notFound": {
@@ -120,7 +121,7 @@
       "issueLabel": "Nº 01 — 2026",
       "kicker": "un portafolio trimestral",
       "title": ["Editorial,", "una revista", "tranquila"],
-      "tagline": "Claro, alegre y cálido. Mi trabajo como revista — compuesto en Newsreader, servido en crema y tinta.",
+      "tagline": "Luminoso, alegre, cálido. Yo en versión revista: crema, tinta y tipografía Newsreader.",
       "footerLabel": "Portada · Nº 01",
       "cta": "Abrir este número",
       "aria": "Portfolio Editorial — una revista tranquila"
@@ -129,7 +130,7 @@
       "issueLabel": "Nº 02 — 2026",
       "kicker": "un portafolio nocturno",
       "title": ["Cinema,", "un plano", "largo"],
-      "tagline": "Oscuro, artístico y lento. Mi trabajo como película — compuesto en Cormorant Garamond, servido en negro y oro.",
+      "tagline": "Oscuro y contemplativo, como un plano secuencia. Negro, oro y Cormorant Garamond.",
       "footerLabel": "Portada · Nº 02",
       "cta": "Abrir este número",
       "aria": "Portfolio Cinema — un plano largo y nocturno"

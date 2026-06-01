@@ -127,7 +127,7 @@ export function BioSection() {
             }}
           >
             <span style={{ color: palette.teal, fontWeight: 500 }}>«</span>{" "}
-            La couture entre la recherche AI et les apps qu'on peut tendre à quelqu'un.{" "}
+            {t("bio.pullquote")}{" "}
             <span style={{ color: palette.teal, fontWeight: 500 }}>»</span>
           </blockquote>
 

@@ -437,9 +437,9 @@ export const education: Education[] = [
       es: "París luego Barcelona",
     },
     period: {
-      fr: "Janvier 2024 — présent",
-      en: "January 2024 — present",
-      es: "Enero 2024 — presente",
+      fr: "Janvier 2024 — 2026",
+      en: "January 2024 — 2026",
+      es: "Enero 2024 — 2026",
     },
     summary: {
       fr: "Generative AI : chatbot LLM/RAG en production servant 90 000+ utilisateurs.",
@@ -458,5 +458,39 @@ export const education: Education[] = [
       { fr: "Suite d'évaluation continue en production", en: "Continuous evaluation suite in production", es: "Suite de evaluación continua en producción" },
     ],
     stack: ["LLM", "RAG", "Multi-agent", "Claude Code", "Python", "LangChain", "OpenAI", "Vector DB"],
+  },
+  {
+    id: "job-conseils-plus",
+    year: 2026,
+    kind: "job",
+    title: {
+      fr: "AI Engineer (VIE) — Conseils Plus",
+      en: "AI Engineer (VIE) — Conseils Plus",
+      es: "AI Engineer (VIE) — Conseils Plus",
+    },
+    shortTitle: { fr: "AI Engineer · VIE", en: "AI Engineer · VIE", es: "AI Engineer · VIE" },
+    shortSubtitle: {
+      fr: "Conseils Plus · Barcelone",
+      en: "Conseils Plus · Barcelona",
+      es: "Conseils Plus · Barcelona",
+    },
+    school: { fr: "Conseils Plus", en: "Conseils Plus", es: "Conseils Plus" },
+    location: { fr: "Barcelone, Espagne", en: "Barcelona, Spain", es: "Barcelona, España" },
+    period: {
+      fr: "2026 — présent · VIE",
+      en: "2026 — present · VIE",
+      es: "2026 — presente · VIE",
+    },
+    summary: {
+      fr: "VIE à Barcelone : j'automatise tout type de processus de travail grâce à l'IA.",
+      en: "VIE in Barcelona: automating all kinds of work processes with AI.",
+      es: "VIE en Barcelona: automatizo todo tipo de procesos de trabajo con IA.",
+    },
+    description: {
+      fr: "Volontariat International en Entreprise (VIE) à Barcelone, chez Conseils Plus. Mon rôle : automatiser tout type de processus de travail grâce à l'IA — concevoir des outils et des agents qui libèrent les équipes des tâches répétitives pour les concentrer sur ce qui compte vraiment.",
+      en: "International Corporate Volunteering (VIE) in Barcelona, at Conseils Plus. My role: automating all kinds of work processes with AI — building tools and agents that free teams from repetitive tasks so they can focus on what truly matters.",
+      es: "Voluntariado Internacional en Empresa (VIE) en Barcelona, en Conseils Plus. Mi rol: automatizar todo tipo de procesos de trabajo con IA — crear herramientas y agentes que liberan a los equipos de las tareas repetitivas para que se centren en lo que de verdad importa.",
+    },
+    stack: ["AI", "Automation", "Agents", "Python"],
   },
 ];

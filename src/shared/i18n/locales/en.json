@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteTitle": "Mathieu Diep — AI Engineer",
-    "siteDescription": "Portfolio of Mathieu Diep, LLM/RAG AI Engineer based in Barcelona. Career, principles, and 3 Android apps downloadable by QR code."
+    "siteDescription": "Mathieu Diep's portfolio — AI Engineer in Barcelona. My journey, my passions and my personal projects."
   },
   "nav": {
     "home": "Home",
@@ -29,15 +29,16 @@
     "dateLabel": "MAY · 2026"
   },
   "bio": {
-    "intro": "AI Engineer based in Barcelona, building LLM/RAG systems that real people use, every day.",
+    "intro": "Engineer by day, explorer on weekends. I love automating all kinds of processes and making everyday life nicer with AI.",
     "paragraphs": [
-      "I currently lead generative-AI work at Hexamind — among other things, a chatbot serving 90,000+ users in production, built around RAG architectures and OpenAI under the hood.",
-      "My focus is the seam between research-grade AI and apps you can hand to a friend. I write a lot of Python, ship Flutter mobile apps on the side, and obsess over making technical things feel calm and a little playful."
-    ]
+      "I'm currently on a VIE assignment in Barcelona, at Conseils Plus, where I automate all kinds of work processes.",
+      "My obsession: letting people pour all their mental energy into the work that truly matters to them, and freeing them from pointless busywork. That's exactly what I try to do with AI, every single day."
+    ],
+    "pullquote": "Freeing the mind from busywork, for what truly matters."
   },
   "education": {
     "kicker": "Education",
-    "title": "6 years, from high school <italic>to a double degree.</italic>",
+    "title": "From high school to today, <italic>through my double degree, my Erasmus exchanges and my gap-year trip.</italic>",
     "expandHint": "Scroll the timeline and click a step to see the details",
     "kind": {
       "milestone": "Milestone",
@@ -50,7 +51,7 @@
   },
   "passions": {
     "kicker": "Passions",
-    "title": "What I love <italic>outside the code.</italic>",
+    "title": "Away from the screen, <italic>what makes me tick.</italic>",
     "actI": "Act I",
     "actII": "Act II",
     "bodyTitle": "The body, <1>in motion</1><2>.</2>",
@@ -59,9 +60,9 @@
   },
   "travels": {
     "kicker": "Travel diary",
-    "title": "A year on the road, <italic>Hanoi to Tulum.</italic>",
+    "title": "A year around the world, <italic>with my whole life in my backpack.</italic>",
     "prologueLabel": "Prologue",
-    "prologue": "The trip began as a pilgrimage — I have Vietnamese and Laotian roots, and I wanted to see with my own eyes the land my parents spoke of. Two months in Asia, then one thing led to another. I fell in love with backpacking, and went off for a year in South America, from Colombia to Brazil. Mexico closed the loop.",
+    "prologue": "I left to understand where I come from: my parents are Vietnamese and Laotian, and I'd always dreamed of seeing those countries for real. Two months in Asia later, I couldn't stop. I threw my pack back on for a year in South America, from Colombia to Brazil, all the way to Mexico. From the driest desert on Earth to 6,000-metre peaks in Bolivia, through Patagonia and the Iguazú Falls: landscapes of wild variety, and unforgettable encounters.",
     "expandHint": "Scroll the timeline — each country opens below",
     "highlightsLabel": "Highlights",
     "originLabel": "Origins",
@@ -69,7 +70,7 @@
   },
   "projects": {
     "kicker": "Side projects",
-    "title": "Five apps, <italic>scannable.</italic>",
+    "title": "Five homemade apps, <italic>to download straight onto your phone.</italic>",
     "intro": "Five Android apps I build on my own time. Scan the QR code to install directly, or click through for details.",
     "viewMore": "View project",
     "downloadHint": "Scan to install",
@@ -84,10 +85,10 @@
   "contactSection": {
     "kicker": "Get in touch",
     "title": "Let's build<br /> <italic>something together.</italic>",
-    "body": "I'm open to talking about new roles, a mission, or just a coffee (real or virtual) if you're working on something interesting."
+    "body": "Always up for talking about a new role, a project, or just grabbing a coffee (in person or over a call) if you're working on something interesting."
   },
   "footer": {
-    "signature": "— Mathieu, in Barcelona.",
+    "signature": "Thought up and designed by Mathieu, coded exclusively by his agent, under his master's watchful eye 😜",
     "rights": "© 2026 Mathieu Diep. All rights reserved."
   },
   "notFound": {
@@ -120,7 +121,7 @@
       "issueLabel": "Nº 01 — 2026",
       "kicker": "a quarterly portfolio",
       "title": ["Editorial,", "a quiet", "magazine"],
-      "tagline": "Bright, joyful and warm. My work as a magazine — set in Newsreader, served in cream and ink.",
+      "tagline": "Bright, joyful, warm. Me in magazine form: cream, ink and Newsreader type.",
       "footerLabel": "Cover · Issue Nº 01",
       "cta": "Open this issue",
       "aria": "Portfolio Editorial — a quiet magazine"
@@ -129,7 +130,7 @@
       "issueLabel": "Nº 02 — 2026",
       "kicker": "a nocturnal portfolio",
       "title": ["Cinema,", "a long", "shot"],
-      "tagline": "Dark, artistic and slow. My work as a film — set in Cormorant Garamond, served in black and gold.",
+      "tagline": "Dark and contemplative, like a long take. Black, gold and Cormorant Garamond.",
       "footerLabel": "Cover · Issue Nº 02",
       "cta": "Open this issue",
       "aria": "Portfolio Cinema — a long nocturnal shot"
