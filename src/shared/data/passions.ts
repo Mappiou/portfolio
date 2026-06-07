@@ -72,7 +72,7 @@ export const passions: Passion[] = [
         },
         photoSrc: "/passions/beach.jpg",
         photoSeed: "beachvolley-bcn-sunset",
-        aspect: "9/16",
+        aspect: "16/10",
         kicker: {
           fr: "Plage · Été",
           en: "Beach · Summer",
@@ -87,18 +87,18 @@ export const passions: Passion[] = [
       {
         id: "badminton",
         label: { fr: "Badminton", en: "Badminton", es: "Bádminton" },
-        photoSrc: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1200&q=80&auto=format&fit=crop",
+        photoSrc: "/passions/badminton.jpg",
         photoSeed: "badminton-court-shuttle",
-        aspect: "16/10",
+        aspect: "4/5",
         kicker: {
-          fr: "Salle · Réflexes",
-          en: "Indoor · Reflexes",
-          es: "Sala · Reflejos",
+          fr: "En famille · Salle",
+          en: "Family · Indoor",
+          es: "En familia · Sala",
         },
         prose: {
-          fr: "Sport indoor, intensité en bursts courts. Quinze ans que j'y joue régulièrement — pour les réflexes et la fatigue propre des matchs serrés.",
-          en: "Indoor sport, intensity in short bursts. Fifteen years of regular play — for the reflexes and the clean exhaustion of tight matches.",
-          es: "Deporte de interior, intensidad en ráfagas cortas. Quince años jugando con regularidad — por los reflejos y el cansancio limpio de los partidos ajustados.",
+          fr: "Une passion de famille : on joue entre frères, sœurs, cousins et tontons. Sport indoor, intensité en bursts courts — quinze ans que j'y joue, pour les réflexes et la fatigue propre des matchs serrés.",
+          en: "A family passion: we play between brothers, sisters, cousins and uncles. Indoor sport, intensity in short bursts — fifteen years of regular play, for the reflexes and the clean exhaustion of tight matches.",
+          es: "Una pasión familiar: jugamos entre hermanos, hermanas, primos y tíos. Deporte de interior, intensidad en ráfagas cortas — quince años jugando, por los reflejos y el cansancio limpio de los partidos ajustados.",
         },
       },
       {

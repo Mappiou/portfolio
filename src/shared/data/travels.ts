@@ -31,10 +31,10 @@ export const travels: Travel[] = [
       { fr: "Hô Chi Minh-Ville", en: "Ho Chi Minh City", es: "Ho Chi Minh" },
     ],
     photos: [
-      { seed: "vietnam-sapa-rice" },
-      { seed: "vietnam-halong-1" },
-      { seed: "vietnam-hanoi-2" },
-      { seed: "vietnam-hoian-3" },
+      { seed: "vietnam-sapa-rice", src: "/travels/vietnam-1.jpg" },
+      { seed: "vietnam-halong-1", src: "/travels/vietnam-2.jpg" },
+      { seed: "vietnam-hanoi-2", src: "/travels/vietnam-3.jpg" },
+      { seed: "vietnam-hoian-3", src: "/travels/vietnam-4.jpg" },
     ],
   },
   {
@@ -66,10 +66,10 @@ export const travels: Travel[] = [
       { fr: "Vientiane", en: "Vientiane", es: "Vientián" },
     ],
     photos: [
-      { seed: "laos-luangprabang" },
-      { seed: "laos-mekong-1" },
-      { seed: "laos-temple-2" },
-      { seed: "laos-vientiane-3" },
+      { seed: "laos-luangprabang", src: "/travels/laos-1.jpg" },
+      { seed: "laos-mekong-1", src: "/travels/laos-2.jpg" },
+      { seed: "laos-temple-2", src: "/travels/laos-3.jpg" },
+      { seed: "laos-vientiane-3", src: "/travels/laos-4.jpg" },
     ],
   },
   {
@@ -96,10 +96,10 @@ export const travels: Travel[] = [
       { fr: "Leticia", en: "Leticia", es: "Leticia" },
     ],
     photos: [
-      { seed: "colombia-palomino-beach" },
-      { seed: "colombia-amazon-1" },
-      { seed: "colombia-bogota-2" },
-      { seed: "colombia-leticia-3" },
+      { seed: "colombia-palomino-beach", src: "/travels/colombia-1.jpg" },
+      { seed: "colombia-amazon-1", src: "/travels/colombia-2.jpg" },
+      { seed: "colombia-bogota-2", src: "/travels/colombia-3.jpg" },
+      { seed: "colombia-leticia-3", src: "/travels/colombia-4.jpg" },
     ],
   },
   {
@@ -131,10 +131,10 @@ export const travels: Travel[] = [
       { fr: "Cusco", en: "Cusco", es: "Cusco" },
     ],
     photos: [
-      { seed: "peru-machupicchu-hero" },
-      { seed: "peru-huacachina-1" },
-      { seed: "peru-vinicunca-2" },
-      { seed: "peru-cusco-3" },
+      { seed: "peru-machupicchu-hero", src: "/travels/peru-1.jpg" },
+      { seed: "peru-huacachina-1", src: "/travels/peru-2.jpg" },
+      { seed: "peru-vinicunca-2", src: "/travels/peru-3.jpg" },
+      { seed: "peru-cusco-3", src: "/travels/peru-4.jpg" },
     ],
   },
   {
@@ -161,40 +161,9 @@ export const travels: Travel[] = [
       { fr: "Sucre", en: "Sucre", es: "Sucre" },
     ],
     photos: [
-      { seed: "bolivia-uyuni-hero" },
-      { seed: "bolivia-huayna-1" },
-      { seed: "bolivia-lapaz-2" },
-      { seed: "bolivia-sucre-3" },
-    ],
-  },
-  {
-    id: "chile",
-    monthOffset: 8,
-    country: { fr: "Chili", en: "Chile", es: "Chile" },
-    flag: "🇨🇱",
-    period: { fr: "Septembre 2023", en: "September 2023", es: "Septiembre 2023" },
-    region: "atacama",
-    summary: {
-      fr: "Désert d'Atacama — ciels les plus purs du monde.",
-      en: "Atacama Desert — the purest skies on Earth.",
-      es: "Desierto de Atacama — los cielos más puros del mundo.",
-    },
-    description: {
-      fr: "Le désert le plus aride du monde. San Pedro, Vallée de la Lune, geysers du Tatio, et la Voie lactée à l'œil nu.",
-      en: "The driest desert on Earth. San Pedro, Valle de la Luna, Tatio geysers, and the Milky Way to the naked eye.",
-      es: "El desierto más árido del mundo. San Pedro, Valle de la Luna, géiseres del Tatio, y la Vía Láctea a simple vista.",
-    },
-    highlights: [
-      { fr: "San Pedro de Atacama", en: "San Pedro de Atacama", es: "San Pedro de Atacama" },
-      { fr: "Vallée de la Lune", en: "Valle de la Luna", es: "Valle de la Luna" },
-      { fr: "Lagunas Altiplánicas", en: "Altiplánico lagoons", es: "Lagunas Altiplánicas" },
-      { fr: "Geysers du Tatio", en: "Tatio geysers", es: "Géiseres del Tatio" },
-    ],
-    photos: [
-      { seed: "chile-atacama-hero" },
-      { seed: "chile-valle-luna-1" },
-      { seed: "chile-laguna-2" },
-      { seed: "chile-tatio-3" },
+      { seed: "bolivia-uyuni-hero", src: "/travels/bolivia-1.jpg" },
+      { seed: "bolivia-huayna-1", src: "/travels/bolivia-2.jpg" },
+      { seed: "bolivia-lapaz-2", src: "/travels/bolivia-3.jpg" },
     ],
   },
   {
@@ -227,10 +196,10 @@ export const travels: Travel[] = [
       { fr: "Salta", en: "Salta", es: "Salta" },
     ],
     photos: [
-      { seed: "argentina-patagonia-hero" },
-      { seed: "argentina-perito-1" },
-      { seed: "argentina-buenosaires-2" },
-      { seed: "argentina-salta-3" },
+      { seed: "argentina-patagonia-hero", src: "/travels/argentina-1.jpg" },
+      { seed: "argentina-perito-1", src: "/travels/argentina-2.jpg" },
+      { seed: "argentina-buenosaires-2", src: "/travels/argentina-3.jpg" },
+      { seed: "argentina-salta-3", src: "/travels/argentina-4.jpg" },
     ],
   },
   {
@@ -262,10 +231,10 @@ export const travels: Travel[] = [
       { fr: "Salvador de Bahia", en: "Salvador de Bahia", es: "Salvador de Bahía" },
     ],
     photos: [
-      { seed: "brazil-carnaval-hero" },
-      { seed: "brazil-iguazu-1" },
-      { seed: "brazil-rio-2" },
-      { seed: "brazil-salvador-3" },
+      { seed: "brazil-carnaval-hero", src: "/travels/brazil-1.jpg" },
+      { seed: "brazil-iguazu-1", src: "/travels/brazil-2.jpg" },
+      { seed: "brazil-rio-2", src: "/travels/brazil-3.jpg" },
+      { seed: "brazil-salvador-3", src: "/travels/brazil-4.jpg" },
     ],
   },
   {
@@ -293,10 +262,10 @@ export const travels: Travel[] = [
       { fr: "Cuisine mexicaine", en: "Mexican cuisine", es: "Cocina mexicana" },
     ],
     photos: [
-      { seed: "mexico-chichen-hero" },
-      { seed: "mexico-tacos-1" },
-      { seed: "mexico-cenote-2" },
-      { seed: "mexico-oaxaca-3" },
+      { seed: "mexico-chichen-hero", src: "/travels/mexico-1.jpg" },
+      { seed: "mexico-tacos-1", src: "/travels/mexico-2.jpg" },
+      { seed: "mexico-cenote-2", src: "/travels/mexico-3.jpg" },
+      { seed: "mexico-oaxaca-3", src: "/travels/mexico-4.jpg" },
     ],
   },
 ];
