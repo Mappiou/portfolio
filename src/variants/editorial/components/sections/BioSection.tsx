@@ -52,29 +52,18 @@ export function BioSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
         <div className="md:col-span-4">
-          <div className="overflow-hidden" style={{ aspectRatio: "3 / 4" }}>
+          <div className="overflow-hidden">
             <img
-              src="https://picsum.photos/seed/mathieu-desk/600/800"
+              src="/photo1.jpg"
               alt=""
               style={{
                 width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                height: "auto",
+                display: "block",
                 filter: "sepia(8%) saturate(110%)",
               }}
             />
           </div>
-          <p
-            className="mt-3"
-            style={{
-              fontFamily: tokens.fontItalic,
-              fontStyle: "italic",
-              fontSize: 14,
-              color: palette.textSecondary,
-            }}
-          >
-            — Mon bureau, vue sur les Catalanes. Barcelone.
-          </p>
         </div>
 
         <div className="md:col-span-7 md:col-start-6" style={{ paddingTop: 12 }}>
