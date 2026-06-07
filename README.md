@@ -24,7 +24,7 @@ Présente la bio, la timeline pro, les principes de travail, et 3 apps Android t
 | Lint              | **ESLint** strict + `jsx-a11y` + Prettier                                                           |
 | Analytics         | `@vercel/analytics` (sans cookies, gratuit)                                                         |
 | Hébergement cible | **Vercel** (sous-domaine gratuit)                                                                   |
-| Distribution APK  | **GitHub Releases** par app (lien permanent `releases/latest/download/`)                            |
+| Distribution APK  | **GitHub Releases** (release `apks`, URL `releases/download/apks/<app>.apk`)                         |
 
 Bundle prod : **360 KB JS / 117 KB gzipped · 16 KB CSS / 4 KB gzipped · 2 KB HTML**.
 
@@ -32,9 +32,97 @@ Bundle prod : **360 KB JS / 117 KB gzipped · 16 KB CSS / 4 KB gzipped · 2 KB H
 
 ## Démarrage
 
+> Site **100 % front-end** (Vite + React + TypeScript) : pas de backend, pas de base de données, **aucune variable d'environnement ni clé secrète** à configurer. Une fois les outils ci-dessous installés, trois commandes suffisent.
+
+### Prérequis à installer
+
+| Outil        | Pourquoi                                              | Version             |
+| ------------ | ----------------------------------------------------- | ------------------- |
+| **Git**      | cloner le dépôt                                       | récente             |
+| **Node.js**  | exécuter Vite                                         | **20.19+** (LTS conseillée, ex. Node 22) |
+| **pnpm**     | installer les dépendances (le projet a un `pnpm-lock.yaml`) | 10.x           |
+
+#### macOS (le plus simple, via Homebrew)
+
 ```bash
+# 1) Installer Homebrew s'il n'est pas déjà là
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2) Installer Git + Node
+brew install git node
+
+# 3) Activer pnpm (fourni par Node via Corepack — rien d'autre à installer)
+corepack enable
+```
+
+> Alternative si `corepack enable` pose problème : `npm install -g pnpm`
+
+#### Windows
+
+1. Installer **[Node.js LTS](https://nodejs.org)** (l'installeur inclut npm + Corepack).
+2. Installer **[Git for Windows](https://git-scm.com)**.
+3. Dans PowerShell : `corepack enable`, puis suivre les mêmes étapes que ci-dessous.
+
+#### Linux
+
+Installer Node via [`nvm`](https://github.com/nvm-sh/nvm) (ou le gestionnaire de paquets de la distrib), puis `corepack enable`. Git est généralement déjà présent (`sudo apt install git` sinon).
+
+#### Vérifier que tout est en place
+
+```bash
+git --version
+node -v       # doit afficher v20.19 ou plus
+pnpm -v
+```
+
+### Cloner et lancer
+
+```bash
+# 1) Cloner le dépôt (public — aucune authentification requise)
+git clone https://github.com/Mappiou/portfolio.git
+
+# 2) Entrer dans le dossier
+cd portfolio
+
+# 3) Installer les dépendances (lit le pnpm-lock.yaml)
 pnpm install
-pnpm dev              # http://localhost:5173
+
+# 4) Lancer le serveur de développement (HMR : recharge auto à chaque modif)
+pnpm dev
+```
+
+Vite affiche alors une URL du type `http://localhost:5173/`. Ouvre-la dans ton navigateur. Après l'écran de choix, les deux variantes sont :
+
+- `http://localhost:5173/editorial/fr`
+- `http://localhost:5173/cinema/fr`
+
+Pour **arrêter** le serveur : `Ctrl + C` dans le terminal.
+
+> Les APK téléchargeables ne sont **pas** dans le dépôt (elles sont hébergées en [GitHub Releases](#qr-codes--apk)) : rien à télécharger en plus, les boutons et QR codes du site pointent directement vers la release.
+
+### Version de production (optionnel)
+
+```bash
+pnpm build      # compile le site optimisé dans dist/
+pnpm preview    # sert ce build localement (http://localhost:4173)
+```
+
+### Récupérer les mises à jour plus tard
+
+```bash
+cd portfolio
+git pull
+pnpm install    # au cas où des dépendances auraient changé
+pnpm dev
+```
+
+### Récap minimal (outils déjà installés)
+
+```bash
+git clone https://github.com/Mappiou/portfolio.git
+cd portfolio
+pnpm install
+pnpm dev
 ```
 
 ## Scripts disponibles
@@ -63,7 +151,7 @@ Le contenu est désormais éclaté en plusieurs fichiers de données dans `src/s
 | `src/shared/data/profile.ts`         | Nom, email, téléphone, localisation, liens GitHub/LinkedIn             |
 | `src/shared/data/experiences.ts`     | Timeline pro (Hexamind, Lincoln, Capgemini, Aubay, Orange Labs)        |
 | `src/shared/data/education.ts`       | Timeline formation (Bac, UTT, Master Cybersécurité, échanges, stages)  |
-| `src/shared/data/projects.ts`        | 3 apps Android (Volley Météo, Scan2PDF, Triolinguo)                    |
+| `src/shared/data/projects.ts`        | 5 apps Android (Volley Météo, Scan2PDF, Triolinguo, Torneo, NoScroll)  |
 | `src/shared/data/skills.ts`          | Catégories de compétences (IA, Data, Programmation, Outils, Langues)   |
 | `src/shared/data/passions.ts`        | Sport / Nouvelles technologies                                         |
 | `src/shared/data/travels.ts`         | Section voyages (par région)                                           |
@@ -264,39 +352,97 @@ portfolio/
 
 ## QR codes & APK
 
-Les 3 APKs sont **bundlés dans le portfolio** sous `public/apks/<app>.apk` et servis par Vercel sur le même domaine que le site. Chaque projet expose dans `src/data/projects.ts` une `apkUrl` relative (`/apks/volley_meteo.apk`). Au rendu, `<QRCode />` la résout en URL absolue via `window.location.origin` (helper `src/lib/url.ts`) pour que le contenu du QR soit téléchargeable depuis n'importe quel téléphone.
+Les 5 APK sont distribuées en **[GitHub Releases](https://github.com/Mappiou/portfolio/releases/tag/apks)** (release `apks`), **pas** dans le dépôt — ce qui garde le repo léger. Chaque projet expose dans `src/shared/data/projects.ts` une `apkUrl` absolue :
 
-**En prod (Vercel)**, le QR pointe vers `https://<domaine>/apks/volley_meteo.apk` → le téléphone télécharge directement l'APK.
-
-**En local (dev/preview)**, le QR pointe vers `http://localhost:5173/apks/...` → utilisable seulement depuis la même machine. Pour tester depuis un téléphone, voir "Test QR depuis téléphone" plus bas.
-
-### Mettre à jour une APK
-
-```bash
-cd ../volley_meteo
-flutter build apk --release
-cp build/app/outputs/flutter-apk/app-release.apk \
-   ../portfolio/public/apks/volley_meteo.apk
-cd ../portfolio
-git add public/apks/volley_meteo.apk
-git commit -m "chore(apk): update volley_meteo to vX.Y.Z"
-git push  # Vercel redéploie automatiquement
+```
+https://github.com/Mappiou/portfolio/releases/download/apks/<app>.apk
 ```
 
-Tailles APK actuelles : volley_meteo 42 MB, scan2pdf 50 MB, triolinguo 42 MB. Vercel free tier accepte jusqu'à 100 MB/fichier.
+Au rendu, le bouton « Télécharger l'APK » utilise directement cette URL, et `<QRCode />` l'encode (le helper `resolveAbsoluteUrl` laisse passer les URL `https://` telles quelles). Résultat : depuis n'importe quel téléphone, scanner le QR ou cliquer le bouton télécharge l'APK directement depuis la release — en local **comme** en prod, puisque l'URL est absolue et publique.
 
-### Test QR depuis téléphone (en local)
+> `public/apks/*.apk` est **gitignoré**. Les fichiers présents localement (issus d'un build) ne sont jamais commités.
 
-Le téléphone ne peut pas atteindre `localhost`. Deux options :
+### Mettre à jour une APK (quand tu modifies une app)
 
-1. **Tunnel public** — `pnpm dlx ngrok http 5173` → URL publique, modifier `apkUrl` temporairement
-2. **Réseau local** — `pnpm dev --host`, le téléphone va à `http://<ip-mac>:5173`
+**Principe :** comme le site pointe vers une URL de release **fixe**, mettre à jour une app = reconstruire son APK puis **remplacer l'asset** portant le même nom dans la release `apks`. **Aucune modification de code n'est nécessaire dans le portfolio**, et **aucun redéploiement** : l'URL ne change pas, le bouton et le QR pointent automatiquement vers la nouvelle version.
 
-Le plus simple reste de déployer sur Vercel et de scanner depuis le domaine de prod.
+> ⚠️ Le **nom de l'asset ne doit jamais changer** (`volley_meteo.apk`, `scan2pdf.apk`, `triolinguo.apk`, `torneo.apk`, `noscroll.apk`). C'est lui qui fait le lien avec l'URL du site.
 
-### Migration vers GitHub Releases (futur, optionnel)
+#### Prérequis (une seule fois)
 
-Si la taille du repo devient un problème, il sera trivial de basculer vers GitHub Releases : remplacer dans `src/data/projects.ts` chaque `apkUrl: "/apks/<x>.apk"` par `apkUrl: "https://github.com/mathieudiep/<repo>/releases/latest/download/<x>.apk"` et publier les releases via `gh release create`.
+- **GitHub CLI** authentifié : `gh auth status` (sinon `gh auth login`).
+- La **toolchain** de l'app : Flutter (apps Dart) ou Android SDK + JDK (app Kotlin).
+
+#### Table de correspondance par app
+
+| App (id portfolio) | Dossier source       | Type    | Commande de build               | APK produite                                              | Nom d'asset (fixe)  |
+| ------------------ | -------------------- | ------- | ------------------------------- | --------------------------------------------------------- | ------------------- |
+| `volley-meteo`     | `../volley_meteo`    | Flutter | `flutter build apk --release`   | `build/app/outputs/flutter-apk/app-release.apk`           | `volley_meteo.apk`  |
+| `scan2pdf`         | `../scan2pdf`        | Flutter | `flutter build apk --release`   | `build/app/outputs/flutter-apk/app-release.apk`           | `scan2pdf.apk`      |
+| `triolinguo`       | `../Triolinguo`      | Flutter | `flutter build apk --release`   | `build/app/outputs/flutter-apk/app-release.apk`           | `triolinguo.apk`    |
+| `torneo`           | `../torneo`          | Flutter | `flutter build apk --release`   | `build/app/outputs/flutter-apk/app-release.apk`           | `torneo.apk`        |
+| `noscroll`         | `../noscroll`        | Kotlin  | `./gradlew :app:assembleDebug`  | `app/build/outputs/apk/debug/app-debug.apk`               | `noscroll.apk`      |
+
+> Les chemins `../` supposent que les projets d'apps sont **à côté** du dossier `portfolio` (tous dans `~/Claude/`). Adapte sinon.
+
+#### Cas Flutter (Volley Météo, Scan2PDF, Triolinguo, Torneo)
+
+Exemple avec **Volley Météo** :
+
+```bash
+# 1) Aller dans le projet de l'app et reconstruire l'APK
+cd ../volley_meteo
+flutter build apk --release
+
+# 2) Remplacer l'asset dans la release (depuis n'importe où)
+gh release upload apks \
+   build/app/outputs/flutter-apk/app-release.apk#volley_meteo.apk \
+   --clobber --repo Mappiou/portfolio
+```
+
+- La syntaxe `chemin/vers/app-release.apk#volley_meteo.apk` uploade le fichier **en le renommant** en `volley_meteo.apk` (le nom d'asset attendu par le site).
+- `--clobber` **écrase** l'asset existant du même nom (sinon GitHub refuse car il existe déjà).
+
+Pour une autre app Flutter, change juste le dossier (`cd ../scan2pdf`, etc.) et le nom d'asset (`#scan2pdf.apk`).
+
+#### Cas Kotlin (NoScroll)
+
+NoScroll se build en **debug** (le `release` n'est pas signé, donc non installable) :
+
+```bash
+cd ../noscroll
+./gradlew :app:assembleDebug
+
+gh release upload apks \
+   app/build/outputs/apk/debug/app-debug.apk#noscroll.apk \
+   --clobber --repo Mappiou/portfolio
+```
+
+#### Vérifier que la mise à jour est en ligne
+
+```bash
+# L'asset apparaît avec sa nouvelle taille / date :
+gh release view apks --repo Mappiou/portfolio --json assets \
+  -q '.assets[] | "\(.name)  \(.size) o  \(.updatedAt)"'
+
+# L'URL publique répond bien (200) :
+curl -sIL -o /dev/null -w "%{http_code}\n" \
+  https://github.com/Mappiou/portfolio/releases/download/apks/volley_meteo.apk
+```
+
+Sur le site, le téléchargement et le QR servent désormais la nouvelle APK — rien d'autre à faire.
+
+> Limite GitHub : **100 MB/fichier** (les APK actuelles vont de 16 à 52 MB).
+
+### Ajouter une nouvelle app
+
+1. Builder son APK et l'uploader sur la release `apks` (voir ci-dessus), avec un nom d'asset `<id>.apk`.
+2. Ajouter une entrée dans `src/shared/data/projects.ts` (avec `apkUrl: "https://github.com/Mappiou/portfolio/releases/download/apks/<id>.apk"`).
+3. Ajouter l'`id` à l'union de type `Project["id"]` (`src/shared/types/index.ts`) et les URL au `public/sitemap.xml`.
+
+### Test QR depuis téléphone
+
+Comme l'`apkUrl` est une URL GitHub publique, **le QR est scannable directement depuis n'importe quel téléphone**, même en dev local — pas besoin de tunnel ni d'IP locale.
 
 ## Workflow Git
 
