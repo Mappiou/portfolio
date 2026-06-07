@@ -588,7 +588,20 @@ function DetailPanel({
 }) {
   const tint = tintFor[entry.region];
 
-  const thumbs = entry.photos.slice(1, 4);
+  const [order, setOrder] = useState<number[]>(() => entry.photos.map((_, i) => i));
+  const heroPhoto = entry.photos[order[0]!]!;
+  const thumbOrder = order.slice(1, 4);
+
+  const swapToHero = (thumbPos: number) => {
+    setOrder((prev) => {
+      const next = [...prev];
+      const target = thumbPos + 1;
+      const tmp = next[0]!;
+      next[0] = next[target]!;
+      next[target] = tmp;
+      return next;
+    });
+  };
 
   return (
     <div
@@ -692,26 +705,38 @@ function DetailPanel({
             </div>
           </div>
         )}
-        {thumbs.length > 0 && (
+        {thumbOrder.length > 0 && (
           <div
             className="mt-6 grid gap-3"
             style={{
-              gridTemplateColumns: `repeat(${thumbs.length}, minmax(0, 1fr))`,
+              gridTemplateColumns: `repeat(${thumbOrder.length}, minmax(0, 1fr))`,
               maxWidth: 540,
             }}
           >
-            {thumbs.map((p, idx) => {
+            {thumbOrder.map((photoIdx, idx) => {
+              const p = entry.photos[photoIdx]!;
               const src = p.src ?? `https://picsum.photos/seed/${p.seed}/480/480`;
-              const a = p.caption?.[lang] ?? `${entry.country[lang]} — ${idx + 2}`;
+              const a = p.caption?.[lang] ?? `${entry.country[lang]} — ${photoIdx + 1}`;
               return (
-                <div
+                <button
                   key={p.seed}
-                  className="overflow-hidden relative"
-                  style={{ width: "100%", aspectRatio: "1 / 1" }}
+                  type="button"
+                  onClick={() => swapToHero(idx)}
+                  aria-label={`${a} — ${t("travels.enlargePhoto")}`}
+                  className="overflow-hidden relative cursor-pointer transition-transform hover:-translate-y-0.5"
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    padding: 0,
+                    border: `1px solid ${palette.hairline}`,
+                    borderRadius: 6,
+                  }}
                 >
-                  <img
+                  <motion.img
+                    layoutId={`travel-photo-${entry.id}-${p.seed}`}
                     src={src}
                     alt={a}
+                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -719,14 +744,15 @@ function DetailPanel({
                       filter: "sepia(10%) saturate(110%)",
                     }}
                   />
-                </div>
+                </button>
               );
             })}
           </div>
         )}
       </div>
       <PhotoHero
-        photo={entry.photos[0]!}
+        entryId={entry.id}
+        photo={heroPhoto}
         flag={entry.flag}
         tint={tint}
         alt={entry.country[lang]}
@@ -737,12 +763,14 @@ function DetailPanel({
 }
 
 function PhotoHero({
+  entryId,
   photo,
   flag,
   tint,
   alt,
   lang,
 }: {
+  entryId: string;
   photo: Travel["photos"][number];
   flag: string;
   tint: string;
@@ -757,9 +785,12 @@ function PhotoHero({
       className="overflow-hidden relative"
       style={{ width: "100%", height: "100%", minHeight: 380 }}
     >
-      <img
+      <motion.img
+        key={photo.seed}
+        layoutId={`travel-photo-${entryId}-${photo.seed}`}
         src={src}
         alt={heroAlt}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         style={{
           width: "100%",
           height: "100%",

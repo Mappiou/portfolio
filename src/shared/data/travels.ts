@@ -164,6 +164,7 @@ export const travels: Travel[] = [
       { seed: "bolivia-uyuni-hero", src: "/travels/bolivia-1.jpg" },
       { seed: "bolivia-huayna-1", src: "/travels/bolivia-2.jpg" },
       { seed: "bolivia-lapaz-2", src: "/travels/bolivia-3.jpg" },
+      { seed: "bolivia-sucre-3", src: "/travels/bolivia-4.jpg" },
     ],
   },
   {
